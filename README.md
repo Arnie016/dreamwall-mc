@@ -47,4 +47,8 @@ The MVP emits WorldEdit-style row instructions. The planned live demo layer is a
 
 ## Codex Track
 
-This project is being built with Codex as the coding agent. Public GitHub repo link will be added here after the first Codex-attributed commits are pushed.
+This project is being built with Codex as the coding agent.
+
+Public GitHub repo with Codex-attributed commits:
+
+https://github.com/Arnie016/dreamwall-mc
