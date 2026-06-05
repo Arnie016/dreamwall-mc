@@ -324,12 +324,12 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             art = gr.Image(label="Minecraft painting preview", type="pil", height=420)
     with gr.Row():
         report = gr.Markdown(label="Wall reading")
-        profile = gr.Code(label="Artist fingerprint", language="json", lines=12)
+        profile = gr.Textbox(label="Artist fingerprint", lines=12, max_lines=16)
     with gr.Tabs():
         with gr.Tab("WorldEdit / Plugin Plan"):
-            commands = gr.Code(label="Mural instructions", language="shell", lines=18)
+            commands = gr.Textbox(label="Mural instructions", lines=18, max_lines=24)
         with gr.Tab("Open Trace"):
-            trace = gr.Code(label="Trace for Sharing is Caring", language="json", lines=16)
+            trace = gr.Textbox(label="Trace for Sharing is Caring", lines=16, max_lines=20)
 
     button.click(
         gradio_generate,
