@@ -6,7 +6,7 @@ DreamWall MC is a tiny Minecraft art ritual. A player writes a sentence, signs i
 
 ## Why It Fits Build Small
 
-The project is not trying to use a giant model as a generic assistant. It uses a small embedding model to make language feel physical in a Minecraft world. The model is load-bearing because the prompt and player profile change the generated palette, symmetry, motifs, and wall instructions.
+The project is not trying to use a giant model as a generic assistant. It uses a tiny local semantic fingerprint engine to make language feel physical in a Minecraft world. The prompt and player profile are load-bearing because they change the generated palette, symmetry, motifs, and wall instructions.
 
 ## What Makes It Strange
 

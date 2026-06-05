@@ -9,8 +9,10 @@ This file records how Codex was used to build the hackathon entry.
 - Designed DreamWall MC as a Minecraft-native AI art wall.
 - Scaffolded the Gradio Space MVP with:
   - prompt/player/gallery-zone input
-  - tiny-model semantic fingerprinting
+  - tiny local semantic fingerprinting
   - Minecraft-style painting preview
   - block palette generation
   - WorldEdit/plugin instructions
   - open trace output for the `Sharing is Caring` badge
+- Fixed the initial Hugging Face runtime error by adding Python 3.13 audio compatibility.
+- Replaced the heavy Torch/sentence-transformers runtime with a fast local semantic fingerprint engine for a more reliable launch.

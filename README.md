@@ -16,22 +16,20 @@ tags:
   - game
   - agent-trace
   - codex
-models:
-  - sentence-transformers/all-MiniLM-L6-v2
 ---
 
 # DreamWall MC
 
 DreamWall MC is a Minecraft-native AI art wall for the Build Small Hackathon.
 
-Players type a short prompt and sign it with their player name. A tiny local embedding model turns the prompt, player signature, and wall zone into a Minecraft-style painting preview, a block palette, and WorldEdit/plugin instructions for placing the art into a shared server gallery.
+Players type a short prompt and sign it with their player name. A tiny local semantic fingerprint engine turns the prompt, player signature, and wall zone into a Minecraft-style painting preview, a block palette, and WorldEdit/plugin instructions for placing the art into a shared server gallery.
 
 The fun part is drift: tiny wording changes and different player names visibly change the painting. The wall acts like a shared server memory rather than a normal image generator.
 
 ## Hackathon Fit
 
 - **Track:** An Adventure in Thousand Token Wood
-- **Small model:** `sentence-transformers/all-MiniLM-L6-v2` is a compact embedding model, far below the 32B limit.
+- **Small model constraint:** the app uses a local semantic fingerprint engine, far below the 32B limit, with no cloud API dependency.
 - **Built on Gradio:** this Space is the official Gradio submission surface.
 - **Show, don't tell:** the demo is prompt -> painting -> Minecraft wall plan.
 

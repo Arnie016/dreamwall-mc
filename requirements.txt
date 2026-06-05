@@ -1,6 +1,4 @@
 gradio==4.44.1
-sentence-transformers==3.0.1
 Pillow==10.4.0
 numpy==1.26.4
-torch
 pyaudioop==0.2.0

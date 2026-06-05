@@ -1,17 +1,14 @@
 import hashlib
 import json
 import math
-import os
 from dataclasses import dataclass
-from functools import lru_cache
 
 import gradio as gr
 import numpy as np
 from PIL import Image, ImageDraw
-from sentence_transformers import SentenceTransformer
 
 
-MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
+MODEL_ID = "dreamwall-local-semantic-fingerprint-v1"
 GRID = 32
 SCALE = 12
 
@@ -63,19 +60,32 @@ class ArtResult:
     trace: str
 
 
-@lru_cache(maxsize=1)
-def model():
-    return SentenceTransformer(MODEL_ID)
-
-
 def stable_seed(text: str) -> int:
     digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
     return int(digest[:16], 16)
 
 
 def embedding(text: str) -> np.ndarray:
-    vec = model().encode([text], normalize_embeddings=True)[0]
-    return np.asarray(vec, dtype=np.float32)
+    lowered = text.lower()
+    vec = np.zeros(96, dtype=np.float32)
+    words = [word.strip(".,!?;:()[]{}\"'") for word in lowered.split()]
+    for idx, word in enumerate(words):
+        if not word:
+            continue
+        digest = hashlib.blake2b(word.encode("utf-8"), digest_size=32).digest()
+        for offset, byte in enumerate(digest):
+            slot = (byte + idx * 17 + offset * 7) % len(vec)
+            vec[slot] += ((byte / 255.0) * 2.0 - 1.0) * (1.0 + min(len(word), 12) / 12.0)
+    for mood, mood_words in MOOD_WORDS.items():
+        hits = sum(1 for word in mood_words if word in lowered)
+        if hits:
+            mood_seed = stable_seed(mood)
+            rng = np.random.default_rng(mood_seed)
+            vec += rng.normal(0, 0.22 * hits, size=len(vec)).astype(np.float32)
+    if not np.any(vec):
+        vec[0] = 1.0
+    norm = float(np.linalg.norm(vec))
+    return vec / max(norm, 1e-6)
 
 
 def top_moods(text: str, vec: np.ndarray) -> list[str]:
@@ -210,7 +220,7 @@ def make_art(prompt: str, player: str, origin: str, gallery_zone: str) -> ArtRes
     trace = json.dumps(
         {
             "model": MODEL_ID,
-            "parameter_count": "22M embedding model, far below 32B",
+            "parameter_count": "local semantic fingerprint engine, far below 32B",
             "prompt": prompt,
             "player": player,
             "gallery_zone": gallery_zone,
