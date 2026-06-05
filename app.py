@@ -1,6 +1,7 @@
 import hashlib
 import json
 import math
+import os
 from dataclasses import dataclass
 
 import gradio as gr
@@ -240,7 +241,7 @@ def gradio_generate(prompt: str, player: str, origin: str, gallery_zone: str):
         result.report,
         result.commands,
         result.trace,
-        result.profile,
+        json.dumps(result.profile, indent=2),
     )
 
 
@@ -323,7 +324,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             art = gr.Image(label="Minecraft painting preview", type="pil", height=420)
     with gr.Row():
         report = gr.Markdown(label="Wall reading")
-        profile = gr.JSON(label="Artist fingerprint")
+        profile = gr.Code(label="Artist fingerprint", language="json", lines=12)
     with gr.Tabs():
         with gr.Tab("WorldEdit / Plugin Plan"):
             commands = gr.Code(label="Mural instructions", language="shell", lines=18)
@@ -343,4 +344,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
 
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=int(os.getenv("PORT", "7860")),
+    )
