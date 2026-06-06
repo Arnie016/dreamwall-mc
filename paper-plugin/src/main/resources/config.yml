@@ -2,8 +2,10 @@ space-url: "https://build-small-hackathon-dreamwall-mc.hf.space"
 poll-enabled: false
 poll-seconds: 30
 gallery-world: "world"
+canvas-size: 12
+plot-size: 32
 gallery-origin:
-  x: 0
+  x: -192
   y: 80
-  z: 0
+  z: -192
 gallery-facing: "east"

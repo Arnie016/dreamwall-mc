@@ -18,3 +18,4 @@ This file records how Codex was used to build the hackathon entry.
 - Replaced the heavy Torch/sentence-transformers runtime with a fast local semantic fingerprint engine for a more reliable launch.
 - Added a `generate_art` API endpoint and plugin-ready bridge packet for Minecraft server integration.
 - Added a Paper plugin scaffold with `/dreamwall fetch` to test live Space connectivity from a Minecraft server.
+- Expanded the concept into a flat-world canvas economy: plot assignment, creative fusion, demo-point valuation, voting/auction packet, and Minecraft server blueprint.

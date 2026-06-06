@@ -46,6 +46,8 @@ public final class DreamWallPlugin extends JavaPlugin {
         }
 
         sender.sendMessage("DreamWall bridge is configured for: " + spaceUrl());
+        sender.sendMessage("Canvas: " + getConfig().getInt("canvas-size", 12) + "x" + getConfig().getInt("canvas-size", 12)
+                + " plots, plot size=" + getConfig().getInt("plot-size", 32));
         sender.sendMessage("Use /dreamwall fetch to test Hugging Face reachability.");
         return true;
     }
@@ -69,6 +71,7 @@ public final class DreamWallPlugin extends JavaPlugin {
                 String body = get(spaceUrl() + "/config");
                 sender.sendMessage("DreamWall Space reachable. Config bytes=" + body.length());
                 sender.sendMessage("Next step: call /gradio_api/call/generate_art and place row_runs.");
+                sender.sendMessage("V1 market mode: demo points only; no real-money or blockchain dependency.");
             } catch (IOException | InterruptedException e) {
                 sender.sendMessage("DreamWall fetch failed: " + e.getMessage());
                 Thread.currentThread().interrupt();

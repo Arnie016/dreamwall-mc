@@ -20,6 +20,8 @@ The Space emits a `dreamwall.mc.v1` JSON packet with:
 - `gallery_zone`
 - `origin`
 - `palette`
+- `plot`
+- `market`
 - `grid.row_runs`
 - WorldEdit preview lines
 
@@ -35,6 +37,22 @@ For the hackathon video, the safest route is:
 2. Copy the bridge packet or call the Gradio API.
 3. Use the Paper plugin to place the packet at a fixed gallery wall.
 4. Walk through the server gallery.
+
+## Flat World Canvas
+
+Recommended V1 canvas:
+
+- Flat Paper world
+- `12 x 12` plots
+- `32 x 32` blocks per plot
+- Canvas origin: `-192, 80, -192`
+- Use signs or floating text later for creator, prompt, value, and fusion history.
+
+The Space assigns the plot. The plugin should trust the packet and place the mural at:
+
+```text
+canvas_origin + plot.x * plot_size, y=80, canvas_origin_z + plot.z * plot_size
+```
 
 ## Build
 

@@ -50,6 +50,47 @@ MOOD_WORDS = {
     "royal": ["castle", "king", "queen", "gold", "throne", "banner"],
 }
 
+CANVAS_SIZE = 12
+PLOT_SCALE = 32
+EXISTING_ARTWORKS = [
+    {
+        "title": "Bird above the broken sky",
+        "player": "anonymous_heron",
+        "prompt": "a bird in the sky over a silver tree",
+        "x": 4,
+        "z": 5,
+        "moods": ["wild", "cozy"],
+        "value": 72,
+    },
+    {
+        "title": "Company sigil in emerald glass",
+        "player": "founder_ghost",
+        "prompt": "an ai logo for my company made of emerald glass",
+        "x": 5,
+        "z": 5,
+        "moods": ["mechanical", "royal"],
+        "value": 81,
+    },
+    {
+        "title": "Cloud treaty",
+        "player": "sky_bidder",
+        "prompt": "clouds gathering around a public tree",
+        "x": 5,
+        "z": 4,
+        "moods": ["wild", "ancient"],
+        "value": 64,
+    },
+    {
+        "title": "Nether receipt",
+        "player": "redacted",
+        "prompt": "a cursed vending machine that sells memories",
+        "x": 8,
+        "z": 8,
+        "moods": ["cursed", "mechanical"],
+        "value": 69,
+    },
+]
+
 
 @dataclass
 class ArtResult:
@@ -60,6 +101,8 @@ class ArtResult:
     report: str
     trace: str
     server_packet: str
+    canvas_report: str
+    valuation_packet: str
 
 
 def stable_seed(text: str) -> int:
@@ -214,6 +257,114 @@ def row_runs(grid: np.ndarray, palette: list) -> list[list[dict]]:
     return rows
 
 
+def prompt_density(prompt: str) -> float:
+    words = [word.strip(".,!?;:()[]{}\"'").lower() for word in prompt.split()]
+    words = [word for word in words if word]
+    if not words:
+        return 0.0
+    unique_ratio = len(set(words)) / len(words)
+    long_word_ratio = sum(1 for word in words if len(word) >= 7) / len(words)
+    symbol_hits = sum(1 for word in words if word in {"bird", "tree", "cloud", "logo", "castle", "machine", "temple", "sky"})
+    return min(1.0, unique_ratio * 0.55 + long_word_ratio * 0.25 + min(symbol_hits, 4) * 0.05)
+
+
+def plot_for_seed(seed: int) -> dict:
+    x = seed % CANVAS_SIZE
+    z = (seed // CANVAS_SIZE) % CANVAS_SIZE
+    return {
+        "x": int(x),
+        "z": int(z),
+        "world_x": int((x - CANVAS_SIZE // 2) * PLOT_SCALE),
+        "world_z": int((z - CANVAS_SIZE // 2) * PLOT_SCALE),
+        "size": PLOT_SCALE,
+    }
+
+
+def nearby_artworks(plot: dict) -> list[dict]:
+    near = []
+    for art in EXISTING_ARTWORKS:
+        distance = abs(art["x"] - plot["x"]) + abs(art["z"] - plot["z"])
+        if distance <= 2:
+            near.append({**art, "distance": distance})
+    return sorted(near, key=lambda item: (item["distance"], -item["value"]))[:3]
+
+
+def fusion_lines(prompt: str, player: str, moods: list[str], plot: dict) -> list[str]:
+    neighbors = nearby_artworks(plot)
+    if not neighbors:
+        return [
+            "No nearby fusion yet. This plot becomes a new anchor others can build around.",
+            "Value grows if future prompts land nearby and reuse its symbols.",
+        ]
+
+    lines = []
+    for art in neighbors:
+        shared_moods = sorted(set(moods).intersection(art["moods"]))
+        if shared_moods:
+            reason = f"shared {', '.join(shared_moods)} mood"
+        else:
+            reason = "spatial collision without mood overlap"
+        lines.append(
+            f"{player} fuses with {art['player']} at ({art['x']}, {art['z']}): "
+            f"{reason}. New concept: {prompt} woven into '{art['title']}'."
+        )
+    return lines
+
+
+def valuation(prompt: str, moods: list[str], palette_names: list[str], plot: dict) -> dict:
+    density = prompt_density(prompt)
+    neighbors = nearby_artworks(plot)
+    adjacency = min(1.0, sum(max(0, 3 - item["distance"]) for item in neighbors) / 6)
+    mood_diversity = len(set(moods)) / max(1, len(MOOD_WORDS))
+    palette_rarity = len(set(palette_names).intersection({"obsidian", "amethyst_block", "sea_lantern", "glowstone"})) / 4
+    score = 25 + density * 28 + adjacency * 24 + mood_diversity * 12 + palette_rarity * 16
+    votes = int(3 + score // 8 + len(neighbors) * 2)
+    reserve = int(max(5, score * 1.7))
+    return {
+        "creative_value": round(score, 2),
+        "syntactic_density": round(density, 3),
+        "context_adjacency": round(adjacency, 3),
+        "mood_diversity": round(mood_diversity, 3),
+        "palette_rarity": round(palette_rarity, 3),
+        "suggested_votes": votes,
+        "demo_reserve_points": reserve,
+        "market_note": "Demo points only; no real-money sale or blockchain required for the hackathon.",
+    }
+
+
+def canvas_report(prompt: str, player: str, moods: list[str], palette_names: list[str], plot: dict) -> tuple[str, str]:
+    value = valuation(prompt, moods, palette_names, plot)
+    fusions = fusion_lines(prompt, player, moods, plot)
+    report = [
+        f"Plot assigned: ({plot['x']}, {plot['z']}) -> Minecraft origin ({plot['world_x']}, 80, {plot['world_z']})",
+        f"Creative value: {value['creative_value']} demo points",
+        f"Suggested opening auction reserve: {value['demo_reserve_points']} demo points",
+        "",
+        "Why this plot has value:",
+        f"- syntactic density: {value['syntactic_density']}",
+        f"- context adjacency: {value['context_adjacency']}",
+        f"- mood diversity: {value['mood_diversity']}",
+        f"- palette rarity: {value['palette_rarity']}",
+        "",
+        "Fusion events:",
+    ]
+    report.extend(f"- {line}" for line in fusions)
+    packet = {
+        "protocol": "dreamwall.market.v1",
+        "plot": plot,
+        "valuation": value,
+        "fusion_events": fusions,
+        "auction": {
+            "mode": "demo_points",
+            "reserve": value["demo_reserve_points"],
+            "votes": value["suggested_votes"],
+            "real_money": False,
+            "blockchain": False,
+        },
+    }
+    return "\n".join(report), json.dumps(packet, indent=2)
+
+
 def server_packet_json(
     prompt: str,
     player: str,
@@ -224,7 +375,10 @@ def server_packet_json(
     palette_names: list[str],
     grid: np.ndarray,
     commands: str,
+    plot: dict,
+    value_packet: str,
 ) -> str:
+    value_data = json.loads(value_packet)
     packet = {
         "protocol": "dreamwall.mc.v1",
         "job_id": hashlib.sha256(f"{seed}:{prompt}:{player}:{gallery_zone}".encode("utf-8")).hexdigest()[:16],
@@ -235,6 +389,8 @@ def server_packet_json(
         "origin": origin,
         "moods": moods,
         "palette": palette_names,
+        "plot": plot,
+        "market": value_data,
         "grid": {
             "width": GRID,
             "height": GRID,
@@ -272,6 +428,10 @@ def make_art(prompt: str, player: str, origin: str, gallery_zone: str) -> ArtRes
     grid = generate_grid(vec, seed, palette)
     image = render_grid(grid, palette)
     palette_names = [name for name, _ in palette]
+    plot = plot_for_seed(seed)
+    if origin == "~ ~ ~":
+        origin = f"{plot['world_x']} 80 {plot['world_z']}"
+    canvas_text, value_packet = canvas_report(prompt, player, moods, palette_names, plot)
 
     profile = {
         "artist": player,
@@ -310,8 +470,10 @@ def make_art(prompt: str, player: str, origin: str, gallery_zone: str) -> ArtRes
         palette_names=palette_names,
         grid=grid,
         commands=commands,
+        plot=plot,
+        value_packet=value_packet,
     )
-    return ArtResult(image, profile, palette_names, commands, report, trace, server_packet)
+    return ArtResult(image, profile, palette_names, commands, report, trace, server_packet, canvas_text, value_packet)
 
 
 def gradio_generate(prompt: str, player: str, origin: str, gallery_zone: str):
@@ -323,6 +485,8 @@ def gradio_generate(prompt: str, player: str, origin: str, gallery_zone: str):
         result.trace,
         json.dumps(result.profile, indent=2),
         result.server_packet,
+        result.canvas_report,
+        result.valuation_packet,
     )
 
 
@@ -413,6 +577,9 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
                 lines=18,
                 max_lines=26,
             )
+        with gr.Tab("Canvas Value / Fusion"):
+            canvas = gr.Textbox(label="Plot, fusion, and value", lines=18, max_lines=24)
+            value_json = gr.Textbox(label="Voting / auction packet", lines=16, max_lines=22)
         with gr.Tab("WorldEdit / Plugin Plan"):
             commands = gr.Textbox(label="Mural instructions", lines=18, max_lines=24)
         with gr.Tab("Open Trace"):
@@ -421,13 +588,13 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     button.click(
         gradio_generate,
         inputs=[prompt, player, origin, gallery_zone],
-        outputs=[art, report, commands, trace, profile, packet],
+        outputs=[art, report, commands, trace, profile, packet, canvas, value_json],
         api_name="generate_art",
     )
     demo.load(
         gradio_generate,
         inputs=[prompt, player, origin, gallery_zone],
-        outputs=[art, report, commands, trace, profile, packet],
+        outputs=[art, report, commands, trace, profile, packet, canvas, value_json],
     )
 
 
