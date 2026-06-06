@@ -1,0 +1,9 @@
+space-url: "https://build-small-hackathon-dreamwall-mc.hf.space"
+poll-enabled: false
+poll-seconds: 30
+gallery-world: "world"
+gallery-origin:
+  x: 0
+  y: 80
+  z: 0
+gallery-facing: "east"

@@ -14,4 +14,15 @@ Two players can type the same sentence and get different paintings because the p
 
 ## Next Server Step
 
-The next layer is a Paper plugin for a live Minecraft server. The plugin will poll approved jobs from the Space and place them into a shared gallery using map art, item frames, or block mosaics.
+The next layer is a Paper plugin for a live Minecraft server. The repo now includes a bridge scaffold in `paper-plugin/`. The plugin already knows where the Space lives and can test Hugging Face reachability with `/dreamwall fetch`.
+
+The next implementation target is converting `grid.row_runs` from the Space packet into real block placement at a fixed gallery wall.
+
+## Competition Bet
+
+The project is designed to stand out by being a live shared world, not a static generator. The strongest demo is one continuous shot:
+
+1. Type a prompt in the Space.
+2. Show the generated Minecraft bridge packet.
+3. Run the bridge on a Paper server.
+4. Walk up to the DreamWall and see the new painting appear.

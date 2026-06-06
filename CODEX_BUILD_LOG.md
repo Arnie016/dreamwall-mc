@@ -16,3 +16,5 @@ This file records how Codex was used to build the hackathon entry.
   - open trace output for the `Sharing is Caring` badge
 - Fixed the initial Hugging Face runtime error by adding Python 3.13 audio compatibility.
 - Replaced the heavy Torch/sentence-transformers runtime with a fast local semantic fingerprint engine for a more reliable launch.
+- Added a `generate_art` API endpoint and plugin-ready bridge packet for Minecraft server integration.
+- Added a Paper plugin scaffold with `/dreamwall fetch` to test live Space connectivity from a Minecraft server.

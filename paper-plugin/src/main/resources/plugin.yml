@@ -1,0 +1,14 @@
+name: DreamWall
+version: 0.1.0
+main: com.dreamwall.DreamWallPlugin
+api-version: '1.21'
+author: Codex
+description: Bridge a Paper server to the DreamWall MC Hugging Face Space.
+commands:
+  dreamwall:
+    description: Show or test the DreamWall Space bridge.
+    usage: /dreamwall [fetch]
+    permission: dreamwall.use
+permissions:
+  dreamwall.use:
+    default: op

@@ -59,6 +59,7 @@ class ArtResult:
     commands: str
     report: str
     trace: str
+    server_packet: str
 
 
 def stable_seed(text: str) -> int:
@@ -190,6 +191,74 @@ def compact_commands(grid: np.ndarray, palette: list, origin: str) -> str:
     return "\n".join(commands)
 
 
+def row_runs(grid: np.ndarray, palette: list) -> list[list[dict]]:
+    rows = []
+    for y in range(GRID):
+        runs = []
+        start = 0
+        current = int(grid[y, 0])
+        for x in range(1, GRID + 1):
+            if x == GRID or int(grid[y, x]) != current:
+                runs.append(
+                    {
+                        "x1": start,
+                        "x2": x - 1,
+                        "y": y,
+                        "block": palette[current][0],
+                    }
+                )
+                if x < GRID:
+                    start = x
+                    current = int(grid[y, x])
+        rows.append(runs)
+    return rows
+
+
+def server_packet_json(
+    prompt: str,
+    player: str,
+    gallery_zone: str,
+    origin: str,
+    seed: int,
+    moods: list[str],
+    palette_names: list[str],
+    grid: np.ndarray,
+    commands: str,
+) -> str:
+    packet = {
+        "protocol": "dreamwall.mc.v1",
+        "job_id": hashlib.sha256(f"{seed}:{prompt}:{player}:{gallery_zone}".encode("utf-8")).hexdigest()[:16],
+        "status": "approved_for_demo",
+        "player": player,
+        "prompt": prompt,
+        "gallery_zone": gallery_zone,
+        "origin": origin,
+        "moods": moods,
+        "palette": palette_names,
+        "grid": {
+            "width": GRID,
+            "height": GRID,
+            "row_runs": row_runs(grid, [(name, color) for name, color in palette_from_names(palette_names)]),
+        },
+        "minecraft": {
+            "placement": "wall_mosaic",
+            "axis": "east_facing",
+            "worldedit_preview": commands.splitlines()[:40],
+        },
+        "trace": {
+            "model": MODEL_ID,
+            "small_model_constraint": "local semantic fingerprint engine; no cloud model API",
+            "identity_rule": "prompt + player + gallery zone jointly shape the wall artifact",
+        },
+    }
+    return json.dumps(packet, indent=2)
+
+
+def palette_from_names(names: list[str]) -> list[tuple[str, tuple[int, int, int]]]:
+    lookup = dict(BLOCKS)
+    return [(name, lookup[name]) for name in names if name in lookup]
+
+
 def make_art(prompt: str, player: str, origin: str, gallery_zone: str) -> ArtResult:
     prompt = (prompt or "").strip()
     player = (player or "anonymous").strip()
@@ -231,7 +300,18 @@ def make_art(prompt: str, player: str, origin: str, gallery_zone: str) -> ArtRes
         indent=2,
     )
     commands = compact_commands(grid, palette, origin)
-    return ArtResult(image, profile, palette_names, commands, report, trace)
+    server_packet = server_packet_json(
+        prompt=prompt,
+        player=player,
+        gallery_zone=gallery_zone,
+        origin=origin,
+        seed=seed,
+        moods=moods,
+        palette_names=palette_names,
+        grid=grid,
+        commands=commands,
+    )
+    return ArtResult(image, profile, palette_names, commands, report, trace, server_packet)
 
 
 def gradio_generate(prompt: str, player: str, origin: str, gallery_zone: str):
@@ -242,6 +322,7 @@ def gradio_generate(prompt: str, player: str, origin: str, gallery_zone: str):
         result.commands,
         result.trace,
         json.dumps(result.profile, indent=2),
+        result.server_packet,
     )
 
 
@@ -326,6 +407,12 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         report = gr.Markdown(label="Wall reading")
         profile = gr.Textbox(label="Artist fingerprint", lines=12, max_lines=16)
     with gr.Tabs():
+        with gr.Tab("Minecraft Bridge Packet"):
+            packet = gr.Textbox(
+                label="Plugin-ready JSON packet",
+                lines=18,
+                max_lines=26,
+            )
         with gr.Tab("WorldEdit / Plugin Plan"):
             commands = gr.Textbox(label="Mural instructions", lines=18, max_lines=24)
         with gr.Tab("Open Trace"):
@@ -334,12 +421,13 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     button.click(
         gradio_generate,
         inputs=[prompt, player, origin, gallery_zone],
-        outputs=[art, report, commands, trace, profile],
+        outputs=[art, report, commands, trace, profile, packet],
+        api_name="generate_art",
     )
     demo.load(
         gradio_generate,
         inputs=[prompt, player, origin, gallery_zone],
-        outputs=[art, report, commands, trace, profile],
+        outputs=[art, report, commands, trace, profile, packet],
     )
 
 
