@@ -7,15 +7,15 @@ DreamWall is a social Minecraft canvas where anonymous prompts become valuable p
 ## Script
 
 1. Show the Hugging Face Space.
-2. Prompt: `a bird in the sky over a public tree`.
-3. Show the painting preview and plot value.
-4. Prompt: `an AI logo for my company made of emerald glass`.
-5. Show that it lands near existing context and gains fusion value.
-6. Prompt: `clouds gathering around the public tree`.
-7. Show fusion: the wall now has a combined sky/tree/bird/company context.
-8. Switch to Minecraft.
-9. Walk through the flat-world canvas.
-10. Show signs: creator, prompt, value, fusion history.
+2. Hatch: `a shy thunder creature that protects redstone caves`.
+3. Show its name, survival odds, current state, and lineage.
+4. Show the survival leaderboard.
+5. Generate a DreamWall memory artifact for the same creator.
+6. Switch to Minecraft.
+7. Walk through the flat-world creature preserve.
+8. Show the leaderboard wall and lineage wall.
+9. Show the creature's name/sign/packet in the world.
+10. End with: "100 people hatch creatures; nobody knows what ecosystem survives."
 
 ## Video Requirements
 

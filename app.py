@@ -365,6 +365,184 @@ def canvas_report(prompt: str, player: str, moods: list[str], palette_names: lis
     return "\n".join(report), json.dumps(packet, indent=2)
 
 
+HABITATS = {
+    "redstone caves": ["electric", "mechanical", "small", "curious"],
+    "sky forest": ["flying", "social", "light", "watchful"],
+    "mushroom swamp": ["fungal", "patient", "camouflaged", "soft"],
+    "desert ruins": ["ancient", "defensive", "forager", "heatproof"],
+    "ocean cliffs": ["aquatic", "agile", "echoing", "storm"],
+    "nether garden": ["cursed", "glowing", "bold", "fireproof"],
+}
+
+CREATURE_HINTS = {
+    "electric": ["spark", "thunder", "yellow", "lightning", "battery"],
+    "flying": ["bird", "sky", "wing", "cloud", "feather"],
+    "aquatic": ["ocean", "fish", "wave", "rain", "river"],
+    "mechanical": ["robot", "gear", "circuit", "redstone", "machine"],
+    "ancient": ["dragon", "ruin", "fossil", "temple", "old"],
+    "fungal": ["mushroom", "spore", "swamp", "moss", "rot"],
+    "cursed": ["ghost", "void", "shadow", "haunted", "curse"],
+    "cozy": ["leaf", "soft", "tiny", "garden", "warm"],
+}
+
+SAMPLE_CREATURES = [
+    {"name": "Mossbyte", "creator": "feral_dev", "species": "moss circuit fox", "habitat": "redstone caves", "survival": 84, "generation": 3, "state": "foraging near copper lamps"},
+    {"name": "Cloudrill", "creator": "sky_bidder", "species": "cloud antler drake", "habitat": "sky forest", "survival": 79, "generation": 2, "state": "guarding a floating nest"},
+    {"name": "Funglow", "creator": "anonymous_heron", "species": "glowing swamp moth", "habitat": "mushroom swamp", "survival": 73, "generation": 4, "state": "pollinating red mushrooms"},
+    {"name": "Obsidip", "creator": "redacted", "species": "tiny nether seal", "habitat": "nether garden", "survival": 66, "generation": 1, "state": "sleeping under basalt leaves"},
+]
+
+
+def creature_traits(prompt: str, vec: np.ndarray) -> list[str]:
+    lowered = prompt.lower()
+    traits = []
+    for trait, hints in CREATURE_HINTS.items():
+        if any(hint in lowered for hint in hints):
+            traits.append(trait)
+    ranked = sorted(CREATURE_HINTS, key=lambda trait: vec[stable_seed(trait) % len(vec)], reverse=True)
+    for trait in ranked:
+        if trait not in traits:
+            traits.append(trait)
+        if len(traits) >= 5:
+            break
+    return traits[:5]
+
+
+def habitat_fit(traits: list[str], habitat: str) -> float:
+    wanted = HABITATS[habitat]
+    return sum(1 for trait in traits if trait in wanted) / max(1, len(wanted))
+
+
+def hatch_pet(prompt: str, player: str, island: str):
+    prompt = (prompt or "").strip() or "a quiet creature made of leaves"
+    player = (player or "anonymous").strip()
+    island = (island or "founder island").strip()
+    text = f"pet={player}\nisland={island}\nprompt={prompt}"
+    seed = stable_seed(text)
+    vec = embedding(text)
+    moods = top_moods(text, vec)
+    traits = creature_traits(prompt, vec)
+    habitat_names = list(HABITATS)
+    habitat = habitat_names[seed % len(habitat_names)]
+    fit = habitat_fit(traits, habitat)
+    rng = np.random.default_rng(seed)
+    stats = {
+        "speed": int(3 + abs(vec[1]) * 9),
+        "defense": int(3 + abs(vec[7]) * 9),
+        "foraging": int(3 + abs(vec[11]) * 9),
+        "social": int(3 + abs(vec[17]) * 9),
+        "mutation": int(3 + abs(vec[23]) * 9),
+    }
+    base_survival = 42 + fit * 28 + stats["foraging"] * 1.7 + stats["defense"] * 1.2 + stats["social"] * 0.9
+    survival = int(max(12, min(96, base_survival + rng.normal(0, 5))))
+    name_parts = ["Volt", "Moss", "Cloud", "Fang", "Bloom", "Rune", "Pip", "Ash", "Glim", "Root"]
+    suffixes = ["ling", "paw", "drake", "moth", "sprite", "cub", "wisp", "beak", "tail", "byte"]
+    name = name_parts[seed % len(name_parts)] + suffixes[(seed // 9) % len(suffixes)]
+    species = f"{traits[0]} {traits[1]} creature" if len(traits) > 1 else f"{traits[0]} creature"
+    generation = 1 + seed % 4
+    state_options = [
+        "searching for food",
+        "watching a stronger creature from tall grass",
+        "marking a new nest site",
+        "training near a redstone gate",
+        "avoiding a predator trail",
+        "looking for a fusion partner",
+    ]
+    state = state_options[(seed // 17) % len(state_options)]
+    cooldown = 45 + seed % 75
+    battle_score = int(stats["speed"] * 1.1 + stats["defense"] * 1.4 + stats["foraging"] * 0.8 + fit * 18)
+    lineage = [
+        f"Gen 0: {player}'s prompt seed",
+        f"Gen {generation}: {name} adapted to {habitat}",
+        f"Next possible fusion: {traits[0]} + {moods[0]} lineage",
+    ]
+    pet = {
+        "protocol": "neuropets.mc.v1",
+        "name": name,
+        "creator": player,
+        "species": species,
+        "prompt": prompt,
+        "island": island,
+        "habitat": habitat,
+        "traits": traits,
+        "moods": moods,
+        "stats": stats,
+        "survival": survival,
+        "battle_score": battle_score,
+        "generation": generation,
+        "state": state,
+        "cooldown_seconds": cooldown,
+        "lineage": lineage,
+        "spawn": {
+            "minecraft_entity": "fox" if "cozy" in traits or "electric" in traits else "allay",
+            "name_tag": f"{name} of {player}",
+            "particle": "electric_spark" if "electric" in traits else "happy_villager",
+            "habitat_marker": habitat,
+        },
+    }
+    return pet
+
+
+def render_pet_portrait(pet: dict) -> Image.Image:
+    seed = stable_seed(json.dumps(pet, sort_keys=True))
+    vec = embedding(" ".join(pet["traits"]) + pet["habitat"])
+    palette = palette_from_vector(vec, seed, pet["moods"])
+    grid = generate_grid(vec, seed, palette)
+    image = render_grid(grid, palette)
+    draw = ImageDraw.Draw(image)
+    draw.rectangle([8, 8, image.width - 8, 42], fill=(24, 18, 12))
+    draw.text((16, 17), pet["name"], fill=(245, 225, 169))
+    return image
+
+
+def pet_leaderboard(current: dict) -> str:
+    rows = SAMPLE_CREATURES + [
+        {
+            "name": current["name"],
+            "creator": current["creator"],
+            "species": current["species"],
+            "habitat": current["habitat"],
+            "survival": current["survival"],
+            "generation": current["generation"],
+            "state": current["state"],
+        }
+    ]
+    rows = sorted(rows, key=lambda row: (row["survival"], row["generation"]), reverse=True)
+    lines = ["# Survival Leaderboard", ""]
+    for i, row in enumerate(rows, 1):
+        lines.append(
+            f"{i}. **{row['name']}** by {row['creator']} - {row['survival']}% survival, "
+            f"Gen {row['generation']}, {row['habitat']} - {row['state']}"
+        )
+    return "\n".join(lines)
+
+
+def hatch_neuropet(prompt: str, player: str, island: str):
+    pet = hatch_pet(prompt, player, island)
+    card = [
+        f"# {pet['name']}",
+        f"Creator: **{pet['creator']}**",
+        f"Species: **{pet['species']}**",
+        f"Habitat: **{pet['habitat']}**",
+        f"Current state: **{pet['state']}**",
+        f"Survival odds: **{pet['survival']}%**",
+        f"Battle score: **{pet['battle_score']}**",
+        f"Cooldown before another hatch: **{pet['cooldown_seconds']}s**",
+        "",
+        "Traits: " + ", ".join(pet["traits"]),
+        "",
+        "Prompt abuse rule: power words become personality/aura, not uncapped strength.",
+    ]
+    lineage = "\n".join(f"- {item}" for item in pet["lineage"])
+    return (
+        render_pet_portrait(pet),
+        "\n".join(card),
+        pet_leaderboard(pet),
+        lineage,
+        json.dumps(pet, indent=2),
+    )
+
+
 def server_packet_json(
     prompt: str,
     player: str,
@@ -539,11 +717,11 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     gr.HTML(
         """
         <section class="dreamwall-hero">
-          <h1>DreamWall MC</h1>
+          <h1>NeuroPets + DreamWall MC</h1>
           <p>
-            A tiny Minecraft art ritual: type a sentence, sign it with a player name,
-            and a small model turns it into a public wall painting, palette, and build plan.
-            Tiny wording changes create different artifacts.
+            Hatch a named creature from a prompt, watch it survive in a Minecraft ecosystem,
+            then carve its memory into the DreamWall. Prompts become living pets, lineages,
+            fusions, and public artifacts.
           </p>
           <div class="badge-row">
             <span>Adventure in Thousand Token Wood</span>
@@ -554,6 +732,41 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         </section>
         """
     )
+    gr.HTML("<h2>NeuroPets Hatchery</h2>")
+    with gr.Row():
+        with gr.Column(scale=5):
+            pet_prompt = gr.Textbox(
+                label="Creature seed prompt",
+                lines=3,
+                value="a shy thunder creature that protects redstone caves",
+            )
+            pet_player = gr.Textbox(label="Creator name", value="ArnavS")
+            pet_island = gr.Textbox(label="Island / server zone", value="founder island")
+            hatch_button = gr.Button("Hatch NeuroPet", variant="primary")
+        with gr.Column(scale=4):
+            pet_image = gr.Image(label="Creature portrait", type="pil", height=360)
+    with gr.Row():
+        pet_card = gr.Markdown(label="Creature card")
+        pet_leaders = gr.Markdown(label="Survival leaderboard")
+    with gr.Tabs():
+        with gr.Tab("Lineage Wall"):
+            pet_lineage = gr.Textbox(label="Descendants and ancestry", lines=8, max_lines=12)
+        with gr.Tab("Minecraft Creature Packet"):
+            pet_packet = gr.Textbox(label="Spawn/simulation packet", lines=18, max_lines=26)
+
+    hatch_button.click(
+        hatch_neuropet,
+        inputs=[pet_prompt, pet_player, pet_island],
+        outputs=[pet_image, pet_card, pet_leaders, pet_lineage, pet_packet],
+        api_name="hatch_pet",
+    )
+    demo.load(
+        hatch_neuropet,
+        inputs=[pet_prompt, pet_player, pet_island],
+        outputs=[pet_image, pet_card, pet_leaders, pet_lineage, pet_packet],
+    )
+
+    gr.HTML("<h2>DreamWall Canvas</h2>")
     with gr.Row():
         with gr.Column(scale=5):
             prompt = gr.Textbox(

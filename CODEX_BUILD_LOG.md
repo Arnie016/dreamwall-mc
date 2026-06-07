@@ -19,3 +19,4 @@ This file records how Codex was used to build the hackathon entry.
 - Added a `generate_art` API endpoint and plugin-ready bridge packet for Minecraft server integration.
 - Added a Paper plugin scaffold with `/dreamwall fetch` to test live Space connectivity from a Minecraft server.
 - Expanded the concept into a flat-world canvas economy: plot assignment, creative fusion, demo-point valuation, voting/auction packet, and Minecraft server blueprint.
+- Added NeuroPets mini version: prompt-to-creature hatchery, survival leaderboard, lineage wall, cooldown, and Minecraft spawn packet.

@@ -31,6 +31,14 @@ The next plugin step is converting `grid.row_runs` into wall block placement:
 origin + (x, -y, 0) -> block
 ```
 
+The Space also emits a `neuropets.mc.v1` packet from the `hatch_pet` endpoint. The server can use it to create:
+
+- named creature sign
+- armor stand / mob placeholder
+- habitat marker
+- particle effect
+- leaderboard entry
+
 For the hackathon video, the safest route is:
 
 1. Generate art in the Space.

@@ -23,7 +23,7 @@ tags:
 
 DreamWall MC is a Minecraft-native AI art wall for the Build Small Hackathon.
 
-Players type a short prompt and sign it with their player name. A tiny local semantic fingerprint engine turns the prompt, player signature, and wall zone into a Minecraft-style painting preview, a block palette, a plot on a public canvas, and WorldEdit/plugin instructions for placing the art into a shared server gallery.
+Players can hatch a NeuroPet from a prompt, then carve the creature's memory into the DreamWall. A tiny local semantic fingerprint engine turns player language into creature traits, survival odds, plot placement, Minecraft packets, and public artifacts.
 
 The fun part is drift: tiny wording changes and different player names visibly change the painting. Nearby prompts can fuse into shared concepts, and each plot gets a demo value based on density, adjacency, rarity, and votes. The wall acts like a shared server memory rather than a normal image generator.
 
@@ -32,6 +32,7 @@ The fun part is drift: tiny wording changes and different player names visibly c
 Most hackathon apps stop at chat or image generation. DreamWall MC turns language into a shared place.
 
 - **Minecraft-native:** the output is a wall packet, block palette, and row-run placement plan, not just a picture.
+- **Creature-native:** prompts hatch named pets with survival odds, lineage, and server state.
 - **Identity-aware:** the same prompt changes when the player signature or gallery zone changes.
 - **Social artifact:** every prompt becomes part of a public server museum.
 - **Creative fusion:** nearby concepts combine into more valuable artifacts.
@@ -59,7 +60,9 @@ The MVP emits:
 - WorldEdit-style row instructions
 - a `dreamwall.mc.v1` JSON bridge packet
 - a `dreamwall.market.v1` demo valuation packet
+- a `neuropets.mc.v1` creature spawn/simulation packet
 - a named Gradio API endpoint: `generate_art`
+- a named Gradio API endpoint: `hatch_pet`
 
 The repo also includes a Paper plugin scaffold in [`paper-plugin/`](paper-plugin/) that can reach the live Space and is ready to extend into block placement.
 
@@ -89,6 +92,7 @@ The final output is a plugin-ready JSON packet with `job_id`, `player`, `prompt`
 - [`docs/COMPETITION_GOAL.md`](docs/COMPETITION_GOAL.md)
 - [`docs/MINECRAFT_SERVER_BLUEPRINT.md`](docs/MINECRAFT_SERVER_BLUEPRINT.md)
 - [`docs/CANVAS_ECONOMY.md`](docs/CANVAS_ECONOMY.md)
+- [`docs/NEUROPETS_MVP.md`](docs/NEUROPETS_MVP.md)
 - [`docs/DEMO_RUNBOOK.md`](docs/DEMO_RUNBOOK.md)
 
 ## How This Can Win
