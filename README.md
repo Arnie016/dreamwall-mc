@@ -74,6 +74,8 @@ The MVP emits:
 - a named Gradio API endpoint: `living_graffiti`
 - a named Gradio API endpoint: `living_canvas`
 
+Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
+
 The repo also includes a Paper plugin scaffold in [`paper-plugin/`](paper-plugin/) that can reach the live Space and is ready to extend into block placement.
 
 ### API Shape

@@ -65,12 +65,35 @@ total canvas: 384 x 384 blocks
 2. Install Paper and WorldEdit.
 3. Upload DreamWall bridge jar.
 4. Run `/dreamwall fetch`.
-5. Manually place one generated row-run mural on a test wall.
-6. Record a 20-second proof clip.
+5. Call the `living_canvas` Space endpoint and copy the `living_canvas.mc.v1` packet.
+6. Manually place one generated 32x32 tile from `tiles[].minecraft_origin` on a test wall.
+7. Add signs for title, creator, stage, weather, and value.
+8. Record a 20-second proof clip.
+
+## Living Canvas Packet
+
+The main demo packet is `living_canvas.mc.v1`.
+
+It gives the server:
+
+- stable tile coordinates
+- per-tile `minecraft_origin`
+- per-tile `minecraft_bounds`
+- `stage`, `weather`, `value`, and `mutation_rate`
+- `fusion_links` between tiles
+- `evolution_events` for narration
+- a `minecraft_animation_plan`
+
+The wall does not need physical redstone for V1. Use the Space GIF as proof of motion, then represent motion in Minecraft with one of:
+
+- animated map updates
+- particles between linked tiles
+- block-frame updates on a timer
+- lamps or command-block pulses around high-stage artifacts
 
 ## Second Server Milestone
 
-Implement real block placement from `grid.row_runs`:
+Implement real block placement from one `living_canvas.mc.v1` tile or one `dreamwall.mc.v1` `grid.row_runs` packet:
 
 ```text
 world_x = canvas_origin_x + plot.x * 32 + run.x

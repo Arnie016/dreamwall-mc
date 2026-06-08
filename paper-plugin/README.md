@@ -9,6 +9,7 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 - `/dreamwall` shows the configured Space endpoint.
 - `/dreamwall fetch` calls the Space app domain and confirms the bridge can reach Hugging Face.
 - A scheduled task can be extended to poll approved wall jobs.
+- The Space now emits `living_canvas.mc.v1`, a multi-prompt wall packet for the main hackathon demo.
 
 ## Planned Placement Behavior
 
@@ -24,6 +25,21 @@ The Space emits a `dreamwall.mc.v1` JSON packet with:
 - `market`
 - `grid.row_runs`
 - WorldEdit preview lines
+
+The stronger cash-prize path uses `living_canvas.mc.v1` from the `living_canvas` endpoint:
+
+- `tile_size_blocks`: `32 x 32`
+- `canvas_size_tiles`: `12 x 12`
+- `minecraft_wall_size_blocks`: `384 x 384`
+- `tiles[].minecraft_origin`
+- `tiles[].minecraft_bounds`
+- `tiles[].stage`
+- `tiles[].weather`
+- `fusion_links`
+- `evolution_events`
+- `minecraft_animation_plan`
+
+The plugin should treat each tile as a stable wall address. Motion comes from particles, map updates, or block-frame updates, not from moving the artifact to a new plot.
 
 The next plugin step is converting `grid.row_runs` into wall block placement:
 
@@ -41,10 +57,12 @@ The Space also emits a `neuropets.mc.v1` packet from the `hatch_pet` endpoint. T
 
 For the hackathon video, the safest route is:
 
-1. Generate art in the Space.
-2. Copy the bridge packet or call the Gradio API.
-3. Use the Paper plugin to place the packet at a fixed gallery wall.
-4. Walk through the server gallery.
+1. Run Living Moving Canvas in the Space.
+2. Copy the `living_canvas.mc.v1` packet or call the Gradio API.
+3. Place one or more `tiles[]` at their `minecraft_origin`.
+4. Add signs for creator, title, value, stage, and weather.
+5. Use particles or a command-block pulse to show fusion links.
+6. Walk through the server gallery.
 
 ## Flat World Canvas
 
@@ -61,6 +79,8 @@ The Space assigns the plot. The plugin should trust the packet and place the mur
 ```text
 canvas_origin + plot.x * plot_size, y=80, canvas_origin_z + plot.z * plot_size
 ```
+
+For `living_canvas.mc.v1`, the packet already includes `tiles[].minecraft_origin`, so the plugin can skip recomputing the address.
 
 ## Build
 
