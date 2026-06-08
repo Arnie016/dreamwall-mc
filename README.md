@@ -21,11 +21,13 @@ tags:
 
 # Living Graffiti MC
 
-Living Graffiti MC is a Minecraft-native animated wall for the Build Small Hackathon.
+Living Graffiti MC is a Minecraft-native living canvas for the Build Small Hackathon.
 
 Players type a prompt, sign it, and get a named 10-frame Minecraft-style animated wall artifact. Each artifact is designed as a **32x32 block wall tile** with **1,024 blocks per frame**, a wall slot, mutation rate, growth stage, fusion/value readout, creator credit, and a `living_graffiti.mc.v1` packet for the Minecraft server.
 
-NeuroPets and DreamWall remain as secondary modes, but the main cash-prize demo is now simple: prompt -> animated wall tile -> fusion/value -> Minecraft public wall.
+The next-level mode is a shared moving canvas: multiple people's prompts claim coordinates on a 12x12 Minecraft wall, mutate with attention weather, fuse with nearby ideas, and export a `living_canvas.mc.v1` server packet.
+
+NeuroPets and DreamWall remain as secondary modes, but the main cash-prize demo is now simple: imagination feed -> living canvas -> fusion/value -> Minecraft public wall.
 
 ## Why This Is Different
 
@@ -33,6 +35,8 @@ Most hackathon apps stop at chat or image generation. Living Graffiti turns lang
 
 - **Animated:** each prompt becomes a 10-frame artifact, not a static image.
 - **Grows:** artifacts unlock stages from seed sketch to server myth based on value and mutation.
+- **Collective:** many prompts become one shared moving canvas, not isolated images.
+- **Alive:** the wall has attention weather: myth storm, mutation wind, fusion bloom, quiet ruins, and steady glow.
 - **Minecraft-native:** the output is a wall packet, block palette, and row-run placement plan, not just a picture.
 - **Creature-native:** prompts hatch named pets with survival odds, lineage, and server state.
 - **Identity-aware:** the same prompt changes when the player signature or gallery zone changes.
@@ -67,6 +71,7 @@ The MVP emits:
 - a named Gradio API endpoint: `generate_art`
 - a named Gradio API endpoint: `hatch_pet`
 - a named Gradio API endpoint: `living_graffiti`
+- a named Gradio API endpoint: `living_canvas`
 
 The repo also includes a Paper plugin scaffold in [`paper-plugin/`](paper-plugin/) that can reach the live Space and is ready to extend into block placement.
 
@@ -106,7 +111,7 @@ DreamWall MC is aimed at **An Adventure in Thousand Token Wood** plus the **Open
 
 Judging fit:
 
-- **Genuinely delightful:** a shared Minecraft wall where language becomes animated graffiti.
+- **Genuinely delightful:** a shared Minecraft wall where language becomes a living, moving canvas.
 - **AI is load-bearing:** semantic drift and identity fingerprinting change the artifact.
 - **Originality:** it is a server ritual, not a chatbot wrapper.
 - **Polish:** custom Gradio skin plus Minecraft bridge packet.

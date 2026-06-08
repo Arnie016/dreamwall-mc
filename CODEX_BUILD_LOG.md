@@ -22,3 +22,4 @@ This file records how Codex was used to build the hackathon entry.
 - Added NeuroPets mini version: prompt-to-creature hatchery, survival leaderboard, lineage wall, cooldown, and Minecraft spawn packet.
 - Re-centered the cash-prize build around Living Graffiti: 10-frame animated Minecraft artifacts, mutation/fusion/value metadata, and a `living_graffiti.mc.v1` server packet.
 - Improved Living Graffiti with prompt-derived names, explicit 32x32 block sizing, 10-frame footprint metadata, and staged growth from seed sketch to server myth.
+- Added Living Moving Canvas mode: a multi-prompt 12x12 Minecraft wall simulation with neighbor fusion, attention weather, growth stages, and a `living_canvas.mc.v1` packet.
