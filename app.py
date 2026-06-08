@@ -570,6 +570,74 @@ def render_graffiti_gif(frames: list[Image.Image], seed: int) -> str:
     return path
 
 
+def keywords_for_title(prompt: str) -> list[str]:
+    stop = {
+        "the",
+        "and",
+        "with",
+        "from",
+        "that",
+        "this",
+        "into",
+        "through",
+        "around",
+        "made",
+        "your",
+        "their",
+        "over",
+        "under",
+        "for",
+        "a",
+        "an",
+        "of",
+        "in",
+        "on",
+    }
+    words = [word.strip(".,!?;:()[]{}\"'").lower() for word in prompt.split()]
+    words = [word for word in words if len(word) >= 4 and word not in stop]
+    ranked = sorted(set(words), key=lambda word: (-len(word), word))
+    return ranked[:3] or ["wall", "dream"]
+
+
+def artifact_title(prompt: str, seed: int, moods: list[str]) -> str:
+    keys = keywords_for_title(prompt)
+    prefix_bank = {
+        "cozy": ["Lantern", "Hearth", "Soft"],
+        "cursed": ["Cursed", "Void", "Haunt"],
+        "ancient": ["Relic", "Fossil", "Temple"],
+        "mechanical": ["Circuit", "Signal", "Chrome"],
+        "wild": ["Storm", "Root", "Cloud"],
+        "royal": ["Crown", "Banner", "Gold"],
+    }
+    prefix_options = prefix_bank.get(moods[0], ["Living", "Dream", "Wall"])
+    prefix = prefix_options[seed % len(prefix_options)]
+    core = "".join(word.capitalize() for word in keys[:2])
+    return f"{prefix} {core}"
+
+
+def growth_stages(value: float, mutation_rate: float) -> list[dict]:
+    max_stage = 1
+    if value >= 45:
+        max_stage = 2
+    if value >= 58:
+        max_stage = 3
+    if value >= 70:
+        max_stage = 4
+    if value >= 82 or mutation_rate >= 0.44:
+        max_stage = 5
+    labels = [
+        ("seed sketch", "appears as a small 16x16 study tile"),
+        ("wall tile", "claims a full 32x32 block slot"),
+        ("animated mural", "loops all 10 frames on the wall"),
+        ("fusion landmark", "can merge with nearby artifacts"),
+        ("server myth", "earns a named sign and center-wall placement"),
+    ]
+    return [
+        {"stage": idx + 1, "name": name, "unlocked": idx < max_stage, "meaning": meaning}
+        for idx, (name, meaning) in enumerate(labels)
+    ]
+
+
 def living_graffiti(prompt: str, player: str, wall_zone: str):
     prompt = (prompt or "").strip() or "a glowing bird made of storm clouds"
     player = (player or "anonymous").strip()
@@ -586,28 +654,30 @@ def living_graffiti(prompt: str, player: str, wall_zone: str):
     plot = plot_for_seed(seed)
     canvas_text, value_packet = canvas_report(prompt, player, moods, palette_names, plot)
     value_data = json.loads(value_packet)
-    title_words = [
-        "Cloud",
-        "Signal",
-        "Glyph",
-        "Shrine",
-        "Echo",
-        "Mascot",
-        "Portal",
-        "Comet",
-        "Bloom",
-        "Circuit",
-    ]
-    title = f"{title_words[seed % len(title_words)]} #{str(seed)[-4:]}"
+    title = artifact_title(prompt, seed, moods)
     mutation_rate = round(0.18 + abs(vec[5]) * 0.42, 3)
     permanence = int(40 + value_data["valuation"]["creative_value"] * 0.7)
+    stages = growth_stages(value_data["valuation"]["creative_value"], mutation_rate)
+    unlocked = [stage for stage in stages if stage["unlocked"]]
+    next_locked = next((stage for stage in stages if not stage["unlocked"]), None)
+    footprint = {
+        "blocks": "32 x 32",
+        "frames": 10,
+        "minecraft_area": "1,024 blocks per frame",
+        "wall_slot": f"({plot['x']}, {plot['z']})",
+        "world_origin": f"{plot['world_x']} 80 {plot['world_z']}",
+        "fallback": "first frame can be placed as static map art if animation is not wired yet",
+    }
     storyboard = [
         f"# {title}",
         f"Creator: **{player}**",
+        f"Size: **32x32 blocks**, **10 frames**, **1,024 blocks per frame**",
         f"Wall slot: **({plot['x']}, {plot['z']})** in {wall_zone}",
+        f"Minecraft origin: **{plot['world_x']} 80 {plot['world_z']}**",
         f"Mutation rate: **{mutation_rate}**",
         f"Creative value: **{value_data['valuation']['creative_value']} demo points**",
         f"Wall permanence: **{permanence}%**",
+        f"Growth stage: **{unlocked[-1]['stage']} - {unlocked[-1]['name']}**",
         "",
         "10-frame loop:",
         "1. seed image appears",
@@ -616,8 +686,25 @@ def living_graffiti(prompt: str, player: str, wall_zone: str):
         "4. nearby context mutates the pattern",
         "5. artifact stabilizes as a named wall memory",
         "",
-        "Why people use it: they can get their name and idea onto a public Minecraft wall that mutates and fuses with other prompts.",
+        "Growth path:",
     ]
+    storyboard.extend(
+        f"- {'unlocked' if stage['unlocked'] else 'locked'} Stage {stage['stage']}: {stage['name']} - {stage['meaning']}"
+        for stage in stages
+    )
+    if next_locked:
+        storyboard.extend(
+            [
+                "",
+                f"Next growth target: raise value/mutation to unlock **Stage {next_locked['stage']} - {next_locked['name']}**.",
+            ]
+        )
+    storyboard.extend(
+        [
+            "",
+            "Why people use it: they can get their name and idea onto a public Minecraft wall that mutates and fuses with other prompts.",
+        ]
+    )
     packet = {
         "protocol": "living_graffiti.mc.v1",
         "title": title,
@@ -626,14 +713,17 @@ def living_graffiti(prompt: str, player: str, wall_zone: str):
         "wall_zone": wall_zone,
         "plot": plot,
         "frames": 10,
+        "footprint": footprint,
         "palette": palette_names,
         "moods": moods,
         "mutation_rate": mutation_rate,
         "permanence": permanence,
+        "growth_stages": stages,
         "market": value_data,
         "minecraft": {
             "placement": "animated_wall_tile",
             "fallback": "use first frame as static map art if animation is unavailable",
+            "block_size": {"width": 32, "height": 32, "frames": 10},
             "world_origin": f"{plot['world_x']} 80 {plot['world_z']}",
             "wall_label": f"{title} by {player}",
         },
@@ -851,9 +941,9 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             )
             graffiti_player = gr.Textbox(label="Creator signature", value="ArnavS")
             graffiti_zone = gr.Textbox(label="Wall zone", value="main wall, launch row")
-            graffiti_button = gr.Button("Animate Wall Artifact", variant="primary")
+            graffiti_button = gr.Button("Grow Living Wall Artifact", variant="primary")
         with gr.Column(scale=4):
-            graffiti_gif = gr.Image(label="10-frame living graffiti loop", type="filepath", height=360)
+            graffiti_gif = gr.Image(label="10-frame 32x32-block living graffiti loop", type="filepath", height=360)
     with gr.Row():
         graffiti_story = gr.Markdown(label="Artifact story")
         graffiti_canvas = gr.Textbox(label="Fusion/value readout", lines=14, max_lines=20)

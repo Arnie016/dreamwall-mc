@@ -23,7 +23,7 @@ tags:
 
 Living Graffiti MC is a Minecraft-native animated wall for the Build Small Hackathon.
 
-Players type a prompt, sign it, and get a 10-frame Minecraft-style animated wall artifact. The artifact receives a wall slot, mutation rate, fusion/value readout, creator credit, and a `living_graffiti.mc.v1` packet for the Minecraft server.
+Players type a prompt, sign it, and get a named 10-frame Minecraft-style animated wall artifact. Each artifact is designed as a **32x32 block wall tile** with **1,024 blocks per frame**, a wall slot, mutation rate, growth stage, fusion/value readout, creator credit, and a `living_graffiti.mc.v1` packet for the Minecraft server.
 
 NeuroPets and DreamWall remain as secondary modes, but the main cash-prize demo is now simple: prompt -> animated wall tile -> fusion/value -> Minecraft public wall.
 
@@ -32,6 +32,7 @@ NeuroPets and DreamWall remain as secondary modes, but the main cash-prize demo 
 Most hackathon apps stop at chat or image generation. Living Graffiti turns language into a shared animated place.
 
 - **Animated:** each prompt becomes a 10-frame artifact, not a static image.
+- **Grows:** artifacts unlock stages from seed sketch to server myth based on value and mutation.
 - **Minecraft-native:** the output is a wall packet, block palette, and row-run placement plan, not just a picture.
 - **Creature-native:** prompts hatch named pets with survival odds, lineage, and server state.
 - **Identity-aware:** the same prompt changes when the player signature or gallery zone changes.
@@ -116,7 +117,7 @@ Bonus quests:
 - **Sharing is Caring:** open trace + server packet per generation.
 - **Field Notes:** this repo includes `FIELD_NOTES.md`.
 
-Next high-impact demo step: use PebbleHost Paper to show one generated animated artifact as a named wall slot, then record a 30-45 second video.
+Next high-impact demo step: use PebbleHost Paper to show one generated artifact as a named 32x32 wall slot, then record a 30-45 second video.
 
 ## Codex Track
 
