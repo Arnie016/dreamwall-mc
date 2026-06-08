@@ -25,7 +25,7 @@ Living Graffiti MC is a Minecraft-native living canvas for the Build Small Hacka
 
 Players type a prompt, sign it, and get a named 10-frame Minecraft-style animated wall artifact. Each artifact is designed as a **32x32 block wall tile** with **1,024 blocks per frame**, a wall slot, mutation rate, growth stage, fusion/value readout, creator credit, and a `living_graffiti.mc.v1` packet for the Minecraft server.
 
-The next-level mode is a shared moving canvas: multiple people's prompts claim coordinates on a 12x12 Minecraft wall, mutate with attention weather, fuse with nearby ideas, and export a `living_canvas.mc.v1` server packet.
+The next-level mode is a shared moving canvas: multiple people's prompts claim stable coordinates on a 12x12 Minecraft wall, pulse through timeline ticks, mutate with attention weather, draw visible fusion links with nearby ideas, and export a `living_canvas.mc.v1` server packet.
 
 NeuroPets and DreamWall remain as secondary modes, but the main cash-prize demo is now simple: imagination feed -> living canvas -> fusion/value -> Minecraft public wall.
 
@@ -36,7 +36,7 @@ Most hackathon apps stop at chat or image generation. Living Graffiti turns lang
 - **Animated:** each prompt becomes a 10-frame artifact, not a static image.
 - **Grows:** artifacts unlock stages from seed sketch to server myth based on value and mutation.
 - **Collective:** many prompts become one shared moving canvas, not isolated images.
-- **Alive:** the wall has attention weather: myth storm, mutation wind, fusion bloom, quiet ruins, and steady glow.
+- **Alive:** the wall has attention weather, timeline ticks, fusion links, and growth stages: myth storm, mutation wind, fusion bloom, quiet ruins, and steady glow.
 - **Minecraft-native:** the output is a wall packet, block palette, and row-run placement plan, not just a picture.
 - **Creature-native:** prompts hatch named pets with survival odds, lineage, and server state.
 - **Identity-aware:** the same prompt changes when the player signature or gallery zone changes.
@@ -65,6 +65,7 @@ The MVP emits:
 
 - WorldEdit-style row instructions
 - a `living_graffiti.mc.v1` animated wall packet
+- a `living_canvas.mc.v1` multi-prompt animated wall packet
 - a `dreamwall.mc.v1` JSON bridge packet
 - a `dreamwall.market.v1` demo valuation packet
 - a `neuropets.mc.v1` creature spawn/simulation packet
@@ -122,7 +123,7 @@ Bonus quests:
 - **Sharing is Caring:** open trace + server packet per generation.
 - **Field Notes:** this repo includes `FIELD_NOTES.md`.
 
-Next high-impact demo step: use PebbleHost Paper to show one generated artifact as a named 32x32 wall slot, then record a 30-45 second video.
+Next high-impact demo step: use PebbleHost Paper to show the 384x384 Living Moving Canvas wall with one named 32x32 slot placed from the packet, then record a 30-45 second video.
 
 ## Codex Track
 

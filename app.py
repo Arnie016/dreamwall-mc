@@ -769,12 +769,14 @@ def attention_weather(value: float, mutation_rate: float, neighbors: int) -> str
 def summarize_wall_tile(prompt: str, index: int, wall_zone: str, tick: int) -> dict:
     player = f"builder_{index + 1:02d}"
     text = f"living-wall={wall_zone}\ntick={tick}\nplayer={player}\nprompt={prompt}"
+    stable_text = f"living-wall={wall_zone}\nplayer={player}\nprompt={prompt}"
     seed = stable_seed(text)
+    stable_tile_seed = stable_seed(stable_text)
     vec = embedding(text)
     moods = top_moods(text, vec)
     palette = palette_from_vector(vec, seed, moods)
     palette_names = [name for name, _ in palette]
-    plot = plot_for_seed(seed + tick * 13 + index * 31)
+    plot = plot_for_seed(stable_tile_seed + index * 31)
     value = valuation(prompt, moods, palette_names, plot)
     mutation_rate = round(0.18 + abs(vec[(tick + index) % len(vec)]) * 0.42, 3)
     stages = growth_stages(value["creative_value"], mutation_rate)
@@ -795,7 +797,53 @@ def summarize_wall_tile(prompt: str, index: int, wall_zone: str, tick: int) -> d
     }
 
 
-def render_living_wall(tiles: list[dict], tick: int) -> Image.Image:
+def tile_distance(left: dict, right: dict) -> int:
+    return abs(left["plot"]["x"] - right["plot"]["x"]) + abs(left["plot"]["z"] - right["plot"]["z"])
+
+
+def fusion_links(tiles: list[dict]) -> list[dict]:
+    links = []
+    for left_idx, left in enumerate(tiles):
+        for right_idx, right in enumerate(tiles[left_idx + 1 :], left_idx + 1):
+            distance = tile_distance(left, right)
+            shared_moods = sorted(set(left["moods"]).intersection(right["moods"]))
+            if distance <= 2 or shared_moods:
+                strength = round(max(0.1, (3 - min(distance, 3)) / 3) + len(shared_moods) * 0.18, 2)
+                links.append(
+                    {
+                        "from": left["title"],
+                        "to": right["title"],
+                        "from_index": left_idx,
+                        "to_index": right_idx,
+                        "distance": distance,
+                        "shared_moods": shared_moods,
+                        "strength": strength,
+                        "fusion_name": artifact_title(
+                            f"{left['prompt']} {right['prompt']}",
+                            stable_seed(left["title"] + right["title"]),
+                            (shared_moods or left["moods"] or right["moods"])[:2],
+                        ),
+                    }
+                )
+    return sorted(links, key=lambda item: (-item["strength"], item["distance"]))[:12]
+
+
+def evolution_events(tiles: list[dict], links: list[dict], tick: int) -> list[str]:
+    events = []
+    for tile in sorted(tiles, key=lambda item: (-item["stage"]["stage"], -item["value"]))[:4]:
+        events.append(
+            f"tick {tick}: {tile['title']} holds Stage {tile['stage']['stage']} "
+            f"({tile['stage']['name']}) under {tile['weather']}."
+        )
+    for link in links[:4]:
+        events.append(
+            f"tick {tick}: {link['from']} and {link['to']} create fusion pressure "
+            f"toward {link['fusion_name']}."
+        )
+    return events
+
+
+def render_living_wall_frame(tiles: list[dict], links: list[dict], tick: int, frame: int) -> Image.Image:
     tile_px = 72
     pad = 16
     legend_h = 88
@@ -811,6 +859,16 @@ def render_living_wall(tiles: list[dict], tick: int) -> Image.Image:
         yy = pad + z * tile_px
         draw.line([pad, yy, pad + CANVAS_SIZE * tile_px, yy], fill=(67, 57, 45), width=1)
 
+    for link in links:
+        left = tiles[link["from_index"]]
+        right = tiles[link["to_index"]]
+        x0 = pad + left["plot"]["x"] * tile_px + tile_px // 2
+        y0 = pad + left["plot"]["z"] * tile_px + tile_px // 2
+        x1 = pad + right["plot"]["x"] * tile_px + tile_px // 2
+        y1 = pad + right["plot"]["z"] * tile_px + tile_px // 2
+        pulse = int((math.sin((tick + frame) * 0.9 + link["strength"]) + 1) * 35)
+        draw.line([x0, y0, x1, y1], fill=(140 + pulse, 216, 174), width=max(1, int(link["strength"] * 3)))
+
     weather_colors = {
         "myth storm": (240, 204, 86),
         "mutation wind": (180, 94, 210),
@@ -824,16 +882,36 @@ def render_living_wall(tiles: list[dict], tick: int) -> Image.Image:
         x1 = x0 + tile_px - 10
         y1 = y0 + tile_px - 10
         color = weather_colors[tile["weather"]]
-        pulse = int((math.sin((tick + tile["mutation_rate"] * 10) * 0.8) + 1) * 18)
+        pulse = int((math.sin((tick + frame + tile["mutation_rate"] * 10) * 0.8) + 1) * 18)
         fill = tuple(min(255, channel + pulse) for channel in color)
         draw.rectangle([x0, y0, x1, y1], fill=fill, outline=(246, 235, 196), width=2)
+        if tile["weather"] in {"mutation wind", "myth storm"}:
+            offset = 7 + (frame * 5 + int(tile["mutation_rate"] * 10)) % 34
+            draw.line([x0 + offset, y0 + 4, x0 + 4, y0 + offset], fill=(255, 245, 180), width=2)
+        if tile["stage"]["stage"] >= 4:
+            draw.rectangle([x0 - 3, y0 - 3, x1 + 3, y1 + 3], outline=(255, 216, 92), width=2)
         draw.text((x0 + 6, y0 + 6), tile["title"][:10], fill=(22, 20, 18))
         draw.text((x0 + 6, y1 - 18), f"S{tile['stage']['stage']} V{int(tile['value'])}", fill=(22, 20, 18))
 
     y = pad + CANVAS_SIZE * tile_px + 22
-    draw.text((pad, y), "Living Canvas: prompts claim space, mutate, fuse with neighbors, and grow into server myths.", fill=(244, 235, 214))
+    draw.text((pad, y), f"Living Canvas tick {tick}.{frame}: prompts claim space, mutate, fuse, and grow into server myths.", fill=(244, 235, 214))
     draw.text((pad, y + 28), "Weather: myth storm / mutation wind / fusion bloom / quiet ruins / steady glow", fill=(205, 190, 160))
     return image
+
+
+def render_living_wall_animation(tiles: list[dict], links: list[dict], tick: int) -> str:
+    frames = [render_living_wall_frame(tiles, links, tick, frame) for frame in range(8)]
+    digest = stable_seed(json.dumps([(tile["title"], tile["plot"], tile["weather"]) for tile in tiles], sort_keys=True))
+    path = os.path.join(tempfile.gettempdir(), f"dreamwall_living_canvas_{digest}_{tick}.gif")
+    frames[0].save(
+        path,
+        save_all=True,
+        append_images=frames[1:],
+        duration=180,
+        loop=0,
+        optimize=False,
+    )
+    return path
 
 
 def living_wall_canvas(prompt_block: str, wall_zone: str, tick: int):
@@ -841,7 +919,9 @@ def living_wall_canvas(prompt_block: str, wall_zone: str, tick: int):
     prompts = prompt_rows(prompt_block)
     tick = int(tick or 0)
     tiles = [summarize_wall_tile(prompt, idx, wall_zone, tick) for idx, prompt in enumerate(prompts)]
-    image = render_living_wall(tiles, tick)
+    links = fusion_links(tiles)
+    events = evolution_events(tiles, links, tick)
+    image = render_living_wall_animation(tiles, links, tick)
     ranked = sorted(tiles, key=lambda item: (item["stage"]["stage"], item["value"], item["mutation_rate"]), reverse=True)
     story = [
         "# Living Moving Canvas",
@@ -853,8 +933,15 @@ def living_wall_canvas(prompt_block: str, wall_zone: str, tick: int):
         "- It is alive: mutation, growth stages, and attention weather change what the wall becomes.",
         "- It is demoable: the judge can see the wall, not just read a chatbot answer.",
         "",
-        "Current strongest artifacts:",
+        "Evolution events:",
     ]
+    story.extend(f"- {event}" for event in events)
+    story.extend(
+        [
+            "",
+            "Current strongest artifacts:",
+        ]
+    )
     for tile in ranked[:5]:
         story.append(
             f"- **{tile['title']}** at ({tile['plot']['x']}, {tile['plot']['z']}): "
@@ -878,6 +965,8 @@ def living_wall_canvas(prompt_block: str, wall_zone: str, tick: int):
             "growth_stage_unlocks",
             "server_packet_export",
         ],
+        "fusion_links": links,
+        "evolution_events": events,
         "tiles": tiles,
     }
     return image, "\n".join(story), json.dumps(packet, indent=2)
@@ -1118,7 +1207,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             wall_tick = gr.Slider(label="Evolution tick", minimum=0, maximum=24, value=3, step=1)
             wall_button = gr.Button("Simulate Living Canvas", variant="primary")
         with gr.Column(scale=4):
-            wall_image = gr.Image(label="Shared 12x12 Minecraft wall map", type="pil", height=460)
+            wall_image = gr.Image(label="Animated shared 12x12 Minecraft wall map", type="filepath", height=460)
     with gr.Row():
         wall_story = gr.Markdown(label="Canvas behavior")
         wall_packet = gr.Textbox(label="living_canvas.mc.v1", lines=18, max_lines=26)

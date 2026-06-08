@@ -23,3 +23,4 @@ This file records how Codex was used to build the hackathon entry.
 - Re-centered the cash-prize build around Living Graffiti: 10-frame animated Minecraft artifacts, mutation/fusion/value metadata, and a `living_graffiti.mc.v1` server packet.
 - Improved Living Graffiti with prompt-derived names, explicit 32x32 block sizing, 10-frame footprint metadata, and staged growth from seed sketch to server myth.
 - Added Living Moving Canvas mode: a multi-prompt 12x12 Minecraft wall simulation with neighbor fusion, attention weather, growth stages, and a `living_canvas.mc.v1` packet.
+- Upgraded Living Moving Canvas into an animated wall: stable Minecraft coordinates, pulsing timeline frames, visible fusion links, evolution events, and a clearer Thousand Token Wood demo runbook.

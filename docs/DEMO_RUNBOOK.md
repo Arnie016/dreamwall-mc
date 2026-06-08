@@ -2,27 +2,28 @@
 
 ## Story
 
-Living Graffiti is a social Minecraft wall where anonymous prompts become animated public artifacts.
+Living Graffiti is a social Minecraft wall where anonymous prompts become animated public artifacts. Living Moving Canvas is the stronger demo: a feed of prompts becomes a shared wall that pulses, mutates, and draws fusion links between nearby ideas.
 
 ## Script
 
 1. Show the Hugging Face Space.
-2. Generate: `a cloud bird carrying a glowing AI sigil through a thunderstorm`.
-3. Show the 10-frame animated wall artifact.
-4. Show the wall slot, mutation rate, value, and fusion readout.
-5. Show the `living_graffiti.mc.v1` Minecraft packet.
-6. Generate a second artifact from a different creator.
-7. Show how nearby prompts can fuse.
-8. Switch to Minecraft.
-9. Show the flat wall / planned slot with creator name and value.
-10. End with: "100 people prompt the wall; nobody knows what public mural survives."
+2. Open **Living Moving Canvas**.
+3. Show six prompts becoming one animated 12x12 wall.
+4. Scrub the evolution tick and point to the pulsing tiles.
+5. Show visible fusion links between nearby or semantically related artifacts.
+6. Show strongest artifacts, attention weather, and growth stages.
+7. Open the `living_canvas.mc.v1` Minecraft packet.
+8. Generate one individual Living Graffiti artifact.
+9. Switch to Minecraft.
+10. Show the flat wall / planned slot with creator name and value.
+11. End with: "100 people prompt the wall; nobody knows what public mural survives."
 
 ## Video Requirements
 
 - Keep the final demo under 60 seconds.
 - Show both the Space and Minecraft world.
 - Do not explain implementation details in the voiceover.
-- Focus on the magic: people write language, the wall moves.
+- Focus on the magic: people write language, the wall moves, fuses, and grows.
 
 ## Submission Checklist
 
@@ -31,4 +32,4 @@ Living Graffiti is a social Minecraft wall where anonymous prompts become animat
 - GitHub commits are Codex-authored.
 - Field notes are present.
 - Demo video shows real UI and Minecraft proof.
-- Social post says this is a public animated Minecraft wall, not a chatbot.
+- Social post says this is a living public Minecraft wall, not a chatbot.
