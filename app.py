@@ -2,6 +2,7 @@ import hashlib
 import json
 import math
 import os
+import tempfile
 from dataclasses import dataclass
 
 import gradio as gr
@@ -543,6 +544,112 @@ def hatch_neuropet(prompt: str, player: str, island: str):
     )
 
 
+def mutate_grid(grid: np.ndarray, frame_index: int, seed: int, vec: np.ndarray) -> np.ndarray:
+    shifted = np.roll(grid, shift=(frame_index % 4) - 1, axis=1)
+    shifted = np.roll(shifted, shift=((frame_index * 2) % 5) - 2, axis=0)
+    rng = np.random.default_rng(seed + frame_index * 97)
+    mask = rng.random(grid.shape) < (0.035 + abs(vec[frame_index % len(vec)]) * 0.04)
+    mutated = shifted.copy()
+    mutated[mask] = (mutated[mask] + 1 + frame_index) % max(1, int(grid.max()) + 1)
+    if frame_index % 3 == 0:
+        band = (frame_index * 3) % GRID
+        mutated[band : min(GRID, band + 2), :] = np.fliplr(mutated[band : min(GRID, band + 2), :])
+    return mutated
+
+
+def render_graffiti_gif(frames: list[Image.Image], seed: int) -> str:
+    path = os.path.join(tempfile.gettempdir(), f"dreamwall_graffiti_{seed}.gif")
+    frames[0].save(
+        path,
+        save_all=True,
+        append_images=frames[1:],
+        duration=140,
+        loop=0,
+        optimize=False,
+    )
+    return path
+
+
+def living_graffiti(prompt: str, player: str, wall_zone: str):
+    prompt = (prompt or "").strip() or "a glowing bird made of storm clouds"
+    player = (player or "anonymous").strip()
+    wall_zone = (wall_zone or "main wall").strip()
+    text = f"graffiti={player}\nzone={wall_zone}\nprompt={prompt}"
+    seed = stable_seed(text)
+    vec = embedding(text)
+    moods = top_moods(text, vec)
+    palette = palette_from_vector(vec, seed, moods)
+    base_grid = generate_grid(vec, seed, palette)
+    frames = [render_grid(mutate_grid(base_grid, idx, seed, vec), palette) for idx in range(10)]
+    gif_path = render_graffiti_gif(frames, seed)
+    palette_names = [name for name, _ in palette]
+    plot = plot_for_seed(seed)
+    canvas_text, value_packet = canvas_report(prompt, player, moods, palette_names, plot)
+    value_data = json.loads(value_packet)
+    title_words = [
+        "Cloud",
+        "Signal",
+        "Glyph",
+        "Shrine",
+        "Echo",
+        "Mascot",
+        "Portal",
+        "Comet",
+        "Bloom",
+        "Circuit",
+    ]
+    title = f"{title_words[seed % len(title_words)]} #{str(seed)[-4:]}"
+    mutation_rate = round(0.18 + abs(vec[5]) * 0.42, 3)
+    permanence = int(40 + value_data["valuation"]["creative_value"] * 0.7)
+    storyboard = [
+        f"# {title}",
+        f"Creator: **{player}**",
+        f"Wall slot: **({plot['x']}, {plot['z']})** in {wall_zone}",
+        f"Mutation rate: **{mutation_rate}**",
+        f"Creative value: **{value_data['valuation']['creative_value']} demo points**",
+        f"Wall permanence: **{permanence}%**",
+        "",
+        "10-frame loop:",
+        "1. seed image appears",
+        "2. palette drifts",
+        "3. motion band crosses the tile",
+        "4. nearby context mutates the pattern",
+        "5. artifact stabilizes as a named wall memory",
+        "",
+        "Why people use it: they can get their name and idea onto a public Minecraft wall that mutates and fuses with other prompts.",
+    ]
+    packet = {
+        "protocol": "living_graffiti.mc.v1",
+        "title": title,
+        "creator": player,
+        "prompt": prompt,
+        "wall_zone": wall_zone,
+        "plot": plot,
+        "frames": 10,
+        "palette": palette_names,
+        "moods": moods,
+        "mutation_rate": mutation_rate,
+        "permanence": permanence,
+        "market": value_data,
+        "minecraft": {
+            "placement": "animated_wall_tile",
+            "fallback": "use first frame as static map art if animation is unavailable",
+            "world_origin": f"{plot['world_x']} 80 {plot['world_z']}",
+            "wall_label": f"{title} by {player}",
+        },
+        "trace": {
+            "model": MODEL_ID,
+            "codex_track_note": "Codex built the Space, packet contract, and demo scaffold.",
+        },
+    }
+    return (
+        gif_path,
+        "\n".join(storyboard),
+        canvas_text,
+        json.dumps(packet, indent=2),
+    )
+
+
 def server_packet_json(
     prompt: str,
     player: str,
@@ -717,21 +824,55 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     gr.HTML(
         """
         <section class="dreamwall-hero">
-          <h1>NeuroPets + DreamWall MC</h1>
+          <h1>Living Graffiti MC</h1>
           <p>
-            Hatch a named creature from a prompt, watch it survive in a Minecraft ecosystem,
-            then carve its memory into the DreamWall. Prompts become living pets, lineages,
-            fusions, and public artifacts.
+            Type a prompt, sign it, and mint a 10-frame Minecraft wall artifact.
+            The artifact mutates, earns a wall slot, fuses with nearby ideas, and lives
+            as a named public memory on the server.
           </p>
           <div class="badge-row">
             <span>Adventure in Thousand Token Wood</span>
+            <span>OpenAI Codex Track</span>
             <span>Off-Brand</span>
+            <span>Best Demo</span>
             <span>Sharing is Caring</span>
             <span>Field Notes</span>
           </div>
         </section>
         """
     )
+    gr.HTML("<h2>Living Graffiti Wall</h2>")
+    with gr.Row():
+        with gr.Column(scale=5):
+            graffiti_prompt = gr.Textbox(
+                label="Artifact prompt",
+                lines=3,
+                value="a cloud bird carrying a glowing AI sigil through a thunderstorm",
+            )
+            graffiti_player = gr.Textbox(label="Creator signature", value="ArnavS")
+            graffiti_zone = gr.Textbox(label="Wall zone", value="main wall, launch row")
+            graffiti_button = gr.Button("Animate Wall Artifact", variant="primary")
+        with gr.Column(scale=4):
+            graffiti_gif = gr.Image(label="10-frame living graffiti loop", type="filepath", height=360)
+    with gr.Row():
+        graffiti_story = gr.Markdown(label="Artifact story")
+        graffiti_canvas = gr.Textbox(label="Fusion/value readout", lines=14, max_lines=20)
+    with gr.Tabs():
+        with gr.Tab("Minecraft Animated Wall Packet"):
+            graffiti_packet = gr.Textbox(label="living_graffiti.mc.v1", lines=20, max_lines=28)
+
+    graffiti_button.click(
+        living_graffiti,
+        inputs=[graffiti_prompt, graffiti_player, graffiti_zone],
+        outputs=[graffiti_gif, graffiti_story, graffiti_canvas, graffiti_packet],
+        api_name="living_graffiti",
+    )
+    demo.load(
+        living_graffiti,
+        inputs=[graffiti_prompt, graffiti_player, graffiti_zone],
+        outputs=[graffiti_gif, graffiti_story, graffiti_canvas, graffiti_packet],
+    )
+
     gr.HTML("<h2>NeuroPets Hatchery</h2>")
     with gr.Row():
         with gr.Column(scale=5):

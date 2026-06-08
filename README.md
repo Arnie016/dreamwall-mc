@@ -1,5 +1,5 @@
 ---
-title: DreamWall MC
+title: Living Graffiti MC
 emoji: 🧱
 colorFrom: yellow
 colorTo: green
@@ -19,18 +19,19 @@ tags:
   - codex
 ---
 
-# DreamWall MC
+# Living Graffiti MC
 
-DreamWall MC is a Minecraft-native AI art wall for the Build Small Hackathon.
+Living Graffiti MC is a Minecraft-native animated wall for the Build Small Hackathon.
 
-Players can hatch a NeuroPet from a prompt, then carve the creature's memory into the DreamWall. A tiny local semantic fingerprint engine turns player language into creature traits, survival odds, plot placement, Minecraft packets, and public artifacts.
+Players type a prompt, sign it, and get a 10-frame Minecraft-style animated wall artifact. The artifact receives a wall slot, mutation rate, fusion/value readout, creator credit, and a `living_graffiti.mc.v1` packet for the Minecraft server.
 
-The fun part is drift: tiny wording changes and different player names visibly change the painting. Nearby prompts can fuse into shared concepts, and each plot gets a demo value based on density, adjacency, rarity, and votes. The wall acts like a shared server memory rather than a normal image generator.
+NeuroPets and DreamWall remain as secondary modes, but the main cash-prize demo is now simple: prompt -> animated wall tile -> fusion/value -> Minecraft public wall.
 
 ## Why This Is Different
 
-Most hackathon apps stop at chat or image generation. DreamWall MC turns language into a shared place.
+Most hackathon apps stop at chat or image generation. Living Graffiti turns language into a shared animated place.
 
+- **Animated:** each prompt becomes a 10-frame artifact, not a static image.
 - **Minecraft-native:** the output is a wall packet, block palette, and row-run placement plan, not just a picture.
 - **Creature-native:** prompts hatch named pets with survival odds, lineage, and server state.
 - **Identity-aware:** the same prompt changes when the player signature or gallery zone changes.
@@ -58,11 +59,13 @@ Most hackathon apps stop at chat or image generation. DreamWall MC turns languag
 The MVP emits:
 
 - WorldEdit-style row instructions
+- a `living_graffiti.mc.v1` animated wall packet
 - a `dreamwall.mc.v1` JSON bridge packet
 - a `dreamwall.market.v1` demo valuation packet
 - a `neuropets.mc.v1` creature spawn/simulation packet
 - a named Gradio API endpoint: `generate_art`
 - a named Gradio API endpoint: `hatch_pet`
+- a named Gradio API endpoint: `living_graffiti`
 
 The repo also includes a Paper plugin scaffold in [`paper-plugin/`](paper-plugin/) that can reach the live Space and is ready to extend into block placement.
 
@@ -92,6 +95,7 @@ The final output is a plugin-ready JSON packet with `job_id`, `player`, `prompt`
 - [`docs/COMPETITION_GOAL.md`](docs/COMPETITION_GOAL.md)
 - [`docs/MINECRAFT_SERVER_BLUEPRINT.md`](docs/MINECRAFT_SERVER_BLUEPRINT.md)
 - [`docs/CANVAS_ECONOMY.md`](docs/CANVAS_ECONOMY.md)
+- [`docs/LIVING_GRAFFITI_MVP.md`](docs/LIVING_GRAFFITI_MVP.md)
 - [`docs/NEUROPETS_MVP.md`](docs/NEUROPETS_MVP.md)
 - [`docs/DEMO_RUNBOOK.md`](docs/DEMO_RUNBOOK.md)
 
@@ -101,7 +105,7 @@ DreamWall MC is aimed at **An Adventure in Thousand Token Wood** plus the **Open
 
 Judging fit:
 
-- **Genuinely delightful:** a shared Minecraft museum where language becomes wall art.
+- **Genuinely delightful:** a shared Minecraft wall where language becomes animated graffiti.
 - **AI is load-bearing:** semantic drift and identity fingerprinting change the artifact.
 - **Originality:** it is a server ritual, not a chatbot wrapper.
 - **Polish:** custom Gradio skin plus Minecraft bridge packet.
@@ -112,7 +116,7 @@ Bonus quests:
 - **Sharing is Caring:** open trace + server packet per generation.
 - **Field Notes:** this repo includes `FIELD_NOTES.md`.
 
-Next high-impact demo step: use PebbleHost Paper + the bridge plugin to place one generated packet on a real wall, then record a 30-45 second video.
+Next high-impact demo step: use PebbleHost Paper to show one generated animated artifact as a named wall slot, then record a 30-45 second video.
 
 ## Codex Track
 

@@ -20,3 +20,4 @@ This file records how Codex was used to build the hackathon entry.
 - Added a Paper plugin scaffold with `/dreamwall fetch` to test live Space connectivity from a Minecraft server.
 - Expanded the concept into a flat-world canvas economy: plot assignment, creative fusion, demo-point valuation, voting/auction packet, and Minecraft server blueprint.
 - Added NeuroPets mini version: prompt-to-creature hatchery, survival leaderboard, lineage wall, cooldown, and Minecraft spawn packet.
+- Re-centered the cash-prize build around Living Graffiti: 10-frame animated Minecraft artifacts, mutation/fusion/value metadata, and a `living_graffiti.mc.v1` server packet.
