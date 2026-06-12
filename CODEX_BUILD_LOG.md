@@ -31,3 +31,5 @@ This file records how Codex was used to build the hackathon entry.
 - Added Gson shading plus explicit Maven Central resolution so the Paper jar compiles into a self-contained PebbleHost-friendly plugin.
 - Verified the shaded jar locally with temporary Maven 3.9.9 and prepared an ignored deploy bundle at `dist/pebblehost/` with the plugin jar, `AfterBlockMuseum.zip`, and hashes.
 - Added `/dreamwall pack`, `resource-pack-url`, `resource-pack-sha1`, and optional join-time pack offering so a Paper server can request the Hugging Face-hosted resource pack without separately hosting the ZIP.
+- Upgraded `/dreamwall demo` and `/dreamwall import` to spawn an `ItemDisplay` entity above the pedestal so the generated 3D custom model is visible in-world after the resource pack is accepted.
+- Verified the plugin in a temporary Paper 1.21.4 server on Java 21: DreamWall loaded, `/dreamwall fetch` reached the live Space, `/dreamwall pack` printed the public pack URL/SHA1, and the server stopped cleanly.

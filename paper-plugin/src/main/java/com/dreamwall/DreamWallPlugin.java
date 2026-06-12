@@ -22,6 +22,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Display.Billboard;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -138,7 +140,12 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             player.sendMessage("DreamWall resource-pack-url is blank in config.yml.");
             return;
         }
-        player.setResourcePack(url);
+        byte[] sha1 = resourcePackSha1Bytes();
+        if (sha1.length == 20) {
+            player.setResourcePack(url, sha1);
+        } else {
+            player.setResourcePack(url);
+        }
         player.sendMessage("Requested AfterBlockMuseum resource pack. Accept it to see CustomModelData relics.");
         player.sendMessage("Pack SHA1: " + resourcePackSha1());
     }
@@ -211,18 +218,13 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             sign.update();
         }
 
-        ItemStack item = new ItemStack(Material.PAPER);
-        ItemMeta meta = item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(trimLine(title) + " Passport");
-            int customModelData = integer(minecraft, "custom_model_data", 730001);
-            meta.setCustomModelData(customModelData);
-            item.setItemMeta(meta);
-        }
+        int customModelData = integer(minecraft, "custom_model_data", 730001);
+        ItemStack item = artifactItem(trimLine(title) + " Passport", customModelData);
         player.getInventory().addItem(item);
+        placeDisplayRelic(world, base, item);
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 38, 0.45, 0.65, 0.45, 0.015);
         player.sendMessage("Imported " + title + " by " + owner + " into " + hall + ".");
-        player.sendMessage("Gave Paper item with CustomModelData " + integer(minecraft, "custom_model_data", 730001) + ".");
+        player.sendMessage("Displayed and gave Paper item with CustomModelData " + customModelData + ".");
         if (!placeHere) {
             player.sendMessage("Placed at packet coordinates " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ()
                     + ". Use /dreamwall import here for a nearby proof.");
@@ -255,17 +257,12 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             sign.update();
         }
 
-        ItemStack item = new ItemStack(Material.PAPER);
-        ItemMeta meta = item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName("AfterBlock Artifact Passport");
-            meta.setCustomModelData(730002);
-            item.setItemMeta(meta);
-        }
+        ItemStack item = artifactItem("AfterBlock Artifact Passport", 730002);
         player.getInventory().addItem(item);
+        placeDisplayRelic(world, base, item);
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 28, 0.35, 0.55, 0.35, 0.01);
-        sender.sendMessage("Placed demo AfterBlock pedestal and gave Paper item with CustomModelData 730002.");
-        sender.sendMessage("Install the AfterBlockMuseum resource pack to see the generated item texture.");
+        sender.sendMessage("Placed demo AfterBlock pedestal, displayed relic item, and gave Paper item with CustomModelData 730002.");
+        sender.sendMessage("Run /dreamwall pack and accept the pack to see the generated item model.");
     }
 
     private String get(String url) throws IOException, InterruptedException {
@@ -334,6 +331,27 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         return cleaned.length() <= 15 ? cleaned : cleaned.substring(0, 15);
     }
 
+    private ItemStack artifactItem(String name, int customModelData) {
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(name);
+            meta.setCustomModelData(customModelData);
+            item.setItemMeta(meta);
+        }
+        return item;
+    }
+
+    private void placeDisplayRelic(World world, Location base, ItemStack item) {
+        Location displayLocation = base.clone().add(0.5, 1.85, 0.5);
+        world.spawn(displayLocation, ItemDisplay.class, display -> {
+            display.setItemStack(item.clone());
+            display.setBillboard(Billboard.CENTER);
+            display.setRotation(0, 0);
+            display.setGlowing(true);
+        });
+    }
+
     private String spaceUrl() {
         return getConfig().getString("space-url", "https://build-small-hackathon-dreamwall-mc.hf.space").replaceAll("/+$", "");
     }
@@ -345,5 +363,17 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
 
     private String resourcePackSha1() {
         return getConfig().getString("resource-pack-sha1", "a416175d3d7b3d5112ad5fef5ba1bb8c73adbdf9");
+    }
+
+    private byte[] resourcePackSha1Bytes() {
+        String hex = resourcePackSha1().replaceAll("[^0-9a-fA-F]", "");
+        if (hex.length() != 40) {
+            return new byte[0];
+        }
+        byte[] bytes = new byte[20];
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = (byte) Integer.parseInt(hex.substring(i * 2, i * 2 + 2), 16);
+        }
+        return bytes;
     }
 }

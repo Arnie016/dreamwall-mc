@@ -1,0 +1,25 @@
+{
+  "server_dir": "/tmp/dreamwall-paper-test",
+  "paper": "1.21.4 build 232",
+  "java": "Temurin 21.0.11",
+  "plugin_jar": "plugins/dreamwall-paper-bridge-0.1.0.jar",
+  "commands": [
+    "dreamwall",
+    "dreamwall fetch",
+    "dreamwall pack",
+    "stop"
+  ],
+  "passed": true,
+  "evidence_lines": [
+    "[18:22:06] [ServerMain/INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Eclipse Adoptium Temurin-21.0.11+10) on Mac OS X 26.3.1 (aarch64)",
+    "[18:22:07] [ServerMain/INFO]: [PluginInitializerManager] Bukkit plugins (1):",
+    " - DreamWall (0.1.0)",
+    "[18:22:16] [Server thread/INFO]: [DreamWall] Enabling DreamWall v0.1.0",
+    "[18:22:16] [Server thread/INFO]: [DreamWall] DreamWall bridge enabled. Space: https://build-small-hackathon-dreamwall-mc.hf.space",
+    "[18:22:56] [Server thread/INFO]: DreamWall bridge is configured for: https://build-small-hackathon-dreamwall-mc.hf.space",
+    "[18:22:56] [Server thread/INFO]: AfterBlockMuseum resource pack URL: https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip",
+    "[18:22:56] [Server thread/INFO]: SHA1: a416175d3d7b3d5112ad5fef5ba1bb8c73adbdf9",
+    "[18:22:59] [Craft Scheduler Thread - 4 - DreamWall/INFO]: DreamWall Space reachable. Config bytes=115190",
+    "[18:23:34] [Server thread/INFO]: [DreamWall] Disabling DreamWall v0.1.0"
+  ]
+}

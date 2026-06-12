@@ -82,7 +82,25 @@ Expected result:
 
 - `/dreamwall fetch` reports the Hugging Face Space is reachable.
 - `/dreamwall pack` asks the player to load `AfterBlockMuseum.zip`.
-- `/dreamwall demo` places a small pedestal and gives a Paper item using `CustomModelData 730002`.
-- `/dreamwall import here` calls the live `curate_artifact` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign beside the player, and gives a Paper item using the packet's `custom_model_data`.
+- `/dreamwall demo` places a small pedestal, sign, visible `ItemDisplay`, and gives a Paper item using `CustomModelData 730002`.
+- `/dreamwall import here` calls the live `curate_artifact` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign/`ItemDisplay` beside the player, and gives a Paper item using the packet's `custom_model_data`.
 
 If the Paper item looks like ordinary paper, the plugin is working but the resource pack is not loaded.
+
+## Local Proof
+
+Codex verified the plugin boots on Paper before PebbleHost install:
+
+```text
+Paper 1.21.4 build 232
+Java Temurin 21.0.11
+DreamWall enabled
+dreamwall fetch reached the Hugging Face Space
+dreamwall pack printed the public pack URL and SHA1
+```
+
+Proof file:
+
+```text
+artifacts/stress/paper_plugin_local_load_test.json
+```
