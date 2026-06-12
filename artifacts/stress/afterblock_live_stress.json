@@ -1,0 +1,17 @@
+{
+  "base": "https://build-small-hackathon-dreamwall-mc.hf.space",
+  "runs": 20,
+  "ok": 20,
+  "failures": [],
+  "latency_seconds": {
+    "min": 4.509,
+    "median": 4.566,
+    "max": 6.441
+  },
+  "sample": {
+    "case": "Book",
+    "hall": "Hall of Worlds",
+    "cmd": 730761,
+    "texture": "assets/afterblock_textures/items/book_selected.png"
+  }
+}
