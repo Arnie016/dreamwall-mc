@@ -977,6 +977,55 @@ def catalog_rows(collection: list[dict]) -> list[list]:
     return rows
 
 
+def artifact_wall_html(collection: list[dict]) -> str:
+    cards = []
+    for artifact in collection[:24]:
+        item = artifact.get("resource_pack_item", {})
+        score = artifact["curation_scores"]["curation_score"]
+        active = artifact.get("catalog_index", 1) == 0
+        color = hall_color(artifact["hall"])
+        rgb = f"rgb({color[0]}, {color[1]}, {color[2]})"
+        cards.append(
+            f"""
+            <article class="relic-card {'active' if active else ''}" style="--hall-color:{rgb}">
+              <div class="relic-object">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="relic-copy">
+                <strong>{artifact['title'][:34]}</strong>
+                <em>{artifact['owner_handle']} · {artifact['object_guess']}</em>
+                <small>{artifact['hall']} · score {score} · CMD {item.get('custom_model_data', '')}</small>
+              </div>
+              <details>
+                <summary>Inspect</summary>
+                <p>{artifact['plaque_line'][:130]}</p>
+                <code>/give @p minecraft:paper[minecraft:custom_model_data={item.get('custom_model_data', 0)}] 1</code>
+              </details>
+            </article>
+            """
+        )
+    return f"""
+    <section class="museum-wall">
+      <div class="wall-heading">
+        <h3>Walk the AfterBlock wall</h3>
+        <p>Hover a relic to lift it. Open Inspect for the plaque, owner, and Minecraft item command.</p>
+      </div>
+      <div class="relic-grid">{''.join(cards)}</div>
+    </section>
+    """
+
+
+def input_type_from_prompt(prompt: str) -> str:
+    text = (prompt or "").lower()
+    if any(word in text for word in ["painting", "poster", "mural", "canvas", "draw"]):
+        return "painting_prompt"
+    if any(word in text for word in ["creature", "pet", "animal", "spirit", "dragon", "bird"]):
+        return "animal_spirit"
+    if any(word in text for word in ["memory", "childhood", "first", "old", "kept", "carried"]):
+        return "memory_prompt"
+    return "object_photo"
+
+
 def build_museum_artifact(
     owner_name: str,
     owner_handle: str,
@@ -1145,11 +1194,27 @@ def curate_afterblock_artifact(
     return (
         preview_path,
         catalog_rows(collection),
+        artifact_wall_html(collection),
         "\n".join(placement),
         spirit_lines and "\n".join(spirit_lines),
         passport,
         json.dumps(packet, indent=2),
     )
+
+
+def quick_curate_afterblock_artifact(
+    source_prompt: str,
+    owner_name: str,
+    owner_handle: str,
+    relic_image_path: str | None = None,
+):
+    source_prompt = (source_prompt or "").strip() or "a water bottle beside a laptop monitor"
+    input_type = input_type_from_prompt(source_prompt)
+    memory_text = (
+        "One-line museum intake. The curator extracts the object, hall, texture profile, and Minecraft placement from the prompt."
+    )
+    outputs = curate_afterblock_artifact(owner_name, owner_handle, input_type, source_prompt, memory_text, relic_image_path)
+    return (*outputs, input_type, source_prompt, memory_text)
 
 
 def load_demo_artifact(name: str):
@@ -1913,22 +1978,26 @@ body, .gradio-container {
   color: var(--mc-ink);
 }
 .gradio-container {
-  max-width: 1180px !important;
+  max-width: 1240px !important;
 }
 .dreamwall-hero {
-  background: linear-gradient(135deg, #1b1d1b 0%, #322719 100%);
-  border: 3px solid #8b6a3d;
-  box-shadow: 0 10px 0 #060605, inset 0 0 28px rgba(242, 193, 95, 0.12);
-  padding: 22px;
-  margin: 14px 0 18px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(14,15,13,0.96) 0%, rgba(24,20,14,0.88) 48%, rgba(12,13,11,0.96) 100%),
+    repeating-linear-gradient(90deg, rgba(242,193,95,0.06) 0 1px, transparent 1px 72px);
+  border: 2px solid #8b6a3d;
+  box-shadow: 0 10px 0 #060605, inset 0 0 36px rgba(242, 193, 95, 0.13);
+  padding: 24px 28px;
+  margin: 14px 0 14px;
 }
 .dreamwall-hero h1 {
   margin: 0;
-  font-size: 42px;
+  font-size: 38px;
   color: #ffe4a3;
 }
 .dreamwall-hero p {
-  max-width: 760px;
+  max-width: 820px;
   font-size: 17px;
   line-height: 1.45;
   color: #ead7b0;
@@ -1950,6 +2019,147 @@ body, .gradio-container {
   margin: 10px 0;
   color: #d8c9a6;
   font-size: 13px;
+}
+.museum-kiosk {
+  background: #181713;
+  border: 1px solid #75623d;
+  box-shadow: 0 8px 0 #060605, inset 0 0 22px rgba(242, 193, 95, 0.08);
+  padding: 14px;
+  margin-bottom: 14px;
+}
+.museum-kiosk .form {
+  border: 0 !important;
+}
+.museum-kiosk textarea, .museum-kiosk input {
+  background: #f4e8cc !important;
+  color: #201913 !important;
+  border: 2px solid #b88b49 !important;
+  font-size: 15px !important;
+}
+.museum-kiosk button.primary, .museum-kiosk .primary {
+  min-height: 46px;
+  font-weight: 800 !important;
+}
+.museum-stage {
+  background: radial-gradient(circle at 50% 0%, rgba(242,193,95,0.12), transparent 44%), #11120f;
+  border: 1px solid #4f432b;
+  padding: 10px;
+}
+.museum-wall {
+  background: #191812;
+  border: 2px solid #7d6335;
+  box-shadow: inset 0 0 24px rgba(0,0,0,0.5);
+  padding: 14px;
+}
+.wall-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+  border-bottom: 1px solid #5c4d32;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+.wall-heading h3 {
+  margin: 0;
+  color: #ffe4a3;
+  font-size: 22px;
+}
+.wall-heading p {
+  margin: 0;
+  max-width: 440px;
+  color: #cdbd9b;
+  font-size: 12px;
+}
+.relic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.relic-card {
+  position: relative;
+  min-height: 156px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.16)),
+    #28231a;
+  border: 1px solid color-mix(in srgb, var(--hall-color) 72%, #171410);
+  padding: 10px;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+.relic-card:hover, .relic-card.active {
+  transform: translateY(-5px);
+  border-color: #ffe4a3;
+  box-shadow: 0 10px 0 #080705, 0 0 22px color-mix(in srgb, var(--hall-color) 46%, transparent);
+}
+.relic-object {
+  height: 58px;
+  display: grid;
+  place-items: center;
+  perspective: 180px;
+}
+.relic-object span:first-child {
+  width: 52px;
+  height: 40px;
+  transform: rotateX(58deg) rotateZ(-25deg);
+  background: linear-gradient(135deg, var(--hall-color), #f5d27a);
+  border: 4px solid #1b160e;
+  box-shadow: 14px 12px 0 rgba(0,0,0,0.28);
+}
+.relic-object span:nth-child(2) {
+  position: absolute;
+  width: 22px;
+  height: 10px;
+  margin-top: 42px;
+  background: #d5b36b;
+  border: 2px solid #1b160e;
+}
+.relic-object span:nth-child(3) {
+  position: absolute;
+  width: 76px;
+  height: 9px;
+  margin-top: 66px;
+  background: #44351f;
+}
+.relic-copy strong, .relic-copy em, .relic-copy small {
+  display: block;
+}
+.relic-copy strong {
+  color: #fff0bd;
+  font-size: 13px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.relic-copy em {
+  color: #d8c9a6;
+  font-style: normal;
+  font-size: 11px;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.relic-copy small {
+  color: #a99976;
+  font-size: 10px;
+  margin-top: 3px;
+  overflow-wrap: anywhere;
+}
+.relic-card details {
+  margin-top: 9px;
+  color: #e8dcc1;
+  font-size: 11px;
+}
+.relic-card summary {
+  cursor: pointer;
+  color: #ffcf75;
+  font-weight: 800;
+}
+.relic-card code {
+  display: block;
+  white-space: normal;
+  word-break: break-word;
+  background: #f3e4c3 !important;
+  color: #1e170f !important;
+  padding: 6px;
+  margin-top: 6px;
 }
 .passport-card {
   background: #221d16;
@@ -2031,6 +2241,14 @@ textarea, input {
   font-size: 13px;
   margin: 0 0 8px;
 }
+@media (max-width: 860px) {
+  .relic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .wall-heading {
+    display: block;
+  }
+}
 """
 
 
@@ -2040,8 +2258,8 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         <section class="dreamwall-hero">
           <h1>DreamWall: AfterBlock Museum</h1>
           <p>
-            A compact Gradio control room for a Minecraft museum where personal relics become
-            textured items, labeled halls, living wall tiles, and server-ready packets.
+            Type one relic, memory, object, or creature. The museum classifies it, chooses a hall,
+            renders a labeled collection, and emits a Minecraft-ready item packet.
           </p>
           <div class="badge-row">
             <span>Adventure in Thousand Token Wood</span>
@@ -2053,8 +2271,44 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         """
     )
     gr.HTML("<h2>AfterBlock Museum</h2>")
+    with gr.Group(elem_classes=["museum-kiosk"]):
+        with gr.Row():
+            quick_prompt = gr.Textbox(
+                label="Museum prompt",
+                placeholder="Example: my scratched blue water bottle from school, with a sticker of a moon on it",
+                lines=2,
+                value="white AirPods from my first year of university",
+                scale=7,
+            )
+            quick_image = gr.Image(label="Optional object photo", type="filepath", height=118, scale=2)
+            quick_button = gr.Button("Place in Museum", variant="primary", scale=2)
+
     with gr.Row():
+        with gr.Column(scale=6):
+            with gr.Group(elem_classes=["museum-stage"]):
+                museum_preview = gr.Image(label="Museum render: 100 labeled artifacts", type="filepath", height=520)
+            museum_wall = gr.HTML(label="Interactive artifact wall")
         with gr.Column(scale=4):
+            with gr.Tabs():
+                with gr.Tab("Placement"):
+                    museum_placement = gr.Markdown()
+                with gr.Tab("Spirit"):
+                    museum_spirit = gr.Markdown()
+                with gr.Tab("Passport"):
+                    museum_passport = gr.HTML()
+                with gr.Tab("Minecraft Packet"):
+                    museum_packet = gr.Textbox(label="dreamwall.museum.v1", lines=14, max_lines=24)
+            with gr.Accordion("Catalog table", open=False):
+                museum_catalog = gr.Dataframe(
+                    headers=["#", "handle", "title", "object", "hall", "score", "xyz", "cmd"],
+                    label="Artifact catalog",
+                    row_count=8,
+                    col_count=(8, "fixed"),
+                    interactive=False,
+                )
+
+    with gr.Accordion("Advanced curator controls", open=False):
+        with gr.Row():
             demo_choice = gr.Dropdown(
                 label="Seeded demo relic",
                 choices=list(DEMO_ARTIFACTS),
@@ -2062,6 +2316,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             )
             owner_name = gr.Textbox(label="Owner name", value="Arnav")
             owner_handle = gr.Textbox(label="Owner handle", value="@Wildstash")
+        with gr.Row():
             input_type = gr.Dropdown(
                 label="Input type",
                 choices=["object_photo", "painting_prompt", "memory_prompt", "animal_spirit"],
@@ -2077,42 +2332,41 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
                 lines=2,
                 value="They carried private worlds through public noise during my first year away.",
             )
-            relic_image = gr.Image(label="Optional relic image", type="filepath", height=160)
-            museum_button = gr.Button("Curate Artifact", variant="primary")
-        with gr.Column(scale=6):
-            museum_preview = gr.Image(label="Museum render: 100 labeled artifacts", type="filepath", height=560)
-            museum_catalog = gr.Dataframe(
-                headers=["#", "handle", "title", "object", "hall", "score", "xyz", "cmd"],
-                label="Artifact catalog",
-                row_count=8,
-                col_count=(8, "fixed"),
-                interactive=False,
-            )
-            with gr.Tabs():
-                with gr.Tab("Curate Placement"):
-                    museum_placement = gr.Markdown()
-                with gr.Tab("Awaken Spirit"):
-                    museum_spirit = gr.Markdown()
-                with gr.Tab("Passport Card"):
-                    museum_passport = gr.HTML()
-                with gr.Tab("Minecraft Bridge"):
-                    museum_packet = gr.Textbox(label="dreamwall.museum.v1", lines=22, max_lines=32)
+        relic_image = gr.Image(label="Advanced image override", type="filepath", height=120)
+        museum_button = gr.Button("Curate with Advanced Controls", variant="secondary")
 
     demo_choice.change(
         load_demo_artifact,
         inputs=[demo_choice],
         outputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text],
     )
+    quick_button.click(
+        quick_curate_afterblock_artifact,
+        inputs=[quick_prompt, owner_name, owner_handle, quick_image],
+        outputs=[
+            museum_preview,
+            museum_catalog,
+            museum_wall,
+            museum_placement,
+            museum_spirit,
+            museum_passport,
+            museum_packet,
+            input_type,
+            relic_prompt,
+            memory_text,
+        ],
+        api_name="quick_curate",
+    )
     museum_button.click(
         curate_afterblock_artifact,
         inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
-        outputs=[museum_preview, museum_catalog, museum_placement, museum_spirit, museum_passport, museum_packet],
+        outputs=[museum_preview, museum_catalog, museum_wall, museum_placement, museum_spirit, museum_passport, museum_packet],
         api_name="curate_artifact",
     )
     demo.load(
         curate_afterblock_artifact,
         inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
-        outputs=[museum_preview, museum_catalog, museum_placement, museum_spirit, museum_passport, museum_packet],
+        outputs=[museum_preview, museum_catalog, museum_wall, museum_placement, museum_spirit, museum_passport, museum_packet],
     )
 
     with gr.Accordion("Resource Pack Browser", open=False):

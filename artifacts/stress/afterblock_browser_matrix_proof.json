@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-06-12T15:29:12.568Z",
+  "browser": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "checks": [
+    {
+      "kind": "local_gradio_dom",
+      "contains_afterblock": true,
+      "contains_2400": false,
+      "contains_museum": true,
+      "body_chars": 3487
+    },
+    {
+      "url": "http://127.0.0.1:7860/",
+      "screenshot": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/dreamwall-mc/artifacts/stress/afterblock_local_gradio_browser_matrix.png",
+      "elapsed_ms": 9918,
+      "title": "DreamWall MC"
+    },
+    {
+      "kind": "local_gallery_search",
+      "query": "water_bottle",
+      "visible_cards": 0,
+      "contains_cmd": true,
+      "contains_profile": true
+    },
+    {
+      "url": "file:///Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/dreamwall-mc/assets/afterblock_textures/gallery/index.html",
+      "screenshot": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/dreamwall-mc/artifacts/stress/afterblock_gallery_search_browser_matrix.png",
+      "elapsed_ms": 2620,
+      "title": "AfterBlock Texture Gallery"
+    },
+    {
+      "kind": "local_gallery_search_fixed",
+      "query": "water bottle",
+      "total_articles": 2400,
+      "visible_articles": 60,
+      "contains_2400": true,
+      "contains_cmd": true,
+      "contains_profile": true,
+      "screenshot": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/dreamwall-mc/artifacts/stress/afterblock_gallery_water_bottle_browser_matrix.png"
+    },
+    {
+      "kind": "local_gradio_resource_browser_open",
+      "contains_resource_pack_browser": true,
+      "contains_2400_or_page80": true,
+      "contains_give_command": true,
+      "contains_model_profile": true,
+      "screenshot": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/dreamwall-mc/artifacts/stress/afterblock_gradio_resource_browser_open.png",
+      "body_chars": 8115
+    }
+  ]
+}

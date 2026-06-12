@@ -178,12 +178,21 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         for (String line : stream.split("\\R")) {
             if (line.startsWith("data: ")) {
                 JsonArray outputs = JsonParser.parseString(line.substring(6)).getAsJsonArray();
-                JsonObject packet = JsonParser.parseString(outputs.get(5).getAsString()).getAsJsonObject();
-                String type = text(packet, "type", "");
-                if (!"dreamwall.museum.v1".equals(type)) {
-                    throw new IOException("unexpected packet type " + type);
+                for (JsonElement output : outputs) {
+                    if (!output.isJsonPrimitive() || !output.getAsJsonPrimitive().isString()) {
+                        continue;
+                    }
+                    String candidate = output.getAsString();
+                    if (!candidate.contains("\"dreamwall.museum.v1\"")) {
+                        continue;
+                    }
+                    JsonObject packet = JsonParser.parseString(candidate).getAsJsonObject();
+                    String type = text(packet, "type", "");
+                    if ("dreamwall.museum.v1".equals(type)) {
+                        return packet;
+                    }
                 }
-                return packet;
+                throw new IOException("dreamwall.museum.v1 packet was not present in Gradio outputs");
             }
         }
         throw new IOException("no data event returned by Gradio");

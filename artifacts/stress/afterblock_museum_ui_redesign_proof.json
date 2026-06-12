@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-06-12T16:54:47Z",
+  "mode": "direct_function_smoke_no_socket",
+  "quick_outputs": 10,
+  "quick_wall_html": true,
+  "quick_inspect_controls": true,
+  "quick_packet_ok": true,
+  "quick_inferred_type": "object_photo",
+  "curate_outputs": 7,
+  "curate_wall_html": true,
+  "curate_packet_ok": true
+}
