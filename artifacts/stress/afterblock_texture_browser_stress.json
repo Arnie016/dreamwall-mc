@@ -1,0 +1,15 @@
+{
+  "base": "https://build-small-hackathon-dreamwall-mc.hf.space",
+  "runs": 20,
+  "ok": 20,
+  "failures": [],
+  "latency_seconds": {
+    "min": 4.301,
+    "median": 4.57,
+    "max": 5.226
+  },
+  "endpoints": [
+    "browse_textures",
+    "curate_artifact"
+  ]
+}
