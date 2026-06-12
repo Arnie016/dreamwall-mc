@@ -27,3 +27,6 @@ This file records how Codex was used to build the hackathon entry.
 - Added per-tile Minecraft origins/bounds and documented the Paper bridge path for placing Living Canvas tiles and representing motion through particles, map updates, or block-frame updates.
 - Reframed the project as DreamWall: AfterBlock Museum with `dreamwall.museum.v1`, deterministic hall placement, curation scores, artifact spirits, passport cards, seeded relic demos, museum-terminal UI, and a GitHub Actions Paper plugin build workflow.
 - Expanded AfterBlock assets into a resource-pack pipeline: 1,200 generated item textures, 1,200 3D model JSONs, custom model data overrides, contact-sheet screenshots, a browser gallery, and a `/dreamwall demo` Paper command for an in-game pedestal proof.
+- Added `/dreamwall import` and `/dreamwall import here` to the Paper bridge. The plugin now calls the live Gradio `curate_artifact` endpoint, parses `dreamwall.museum.v1`, and places a packet-derived pedestal/sign/item in Minecraft.
+- Added Gson shading plus explicit Maven Central resolution so the Paper jar compiles into a self-contained PebbleHost-friendly plugin.
+- Verified the shaded jar locally with temporary Maven 3.9.9 and prepared an ignored deploy bundle at `dist/pebblehost/` with the plugin jar, `AfterBlockMuseum.zip`, and hashes.

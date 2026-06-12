@@ -7,7 +7,7 @@ description: Bridge a Paper server to the DreamWall MC Hugging Face Space.
 commands:
   dreamwall:
     description: Show or test the DreamWall Space bridge.
-    usage: /dreamwall [fetch|demo]
+    usage: /dreamwall [fetch|demo|import]
     permission: dreamwall.use
 permissions:
   dreamwall.use:

@@ -9,6 +9,8 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 - `/dreamwall` shows the configured Space endpoint.
 - `/dreamwall fetch` calls the Space app domain and confirms the bridge can reach Hugging Face.
 - `/dreamwall demo` places a safe local pedestal/sign proof and gives the player a Paper item with `CustomModelData 730002`.
+- `/dreamwall import` calls the live `curate_artifact` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, and places a packet-derived pedestal/sign/item at the artifact coordinates.
+- `/dreamwall import here` uses the same live packet but places it two blocks in front of the player for fast video proof.
 - A scheduled task can be extended to poll approved museum artifacts.
 - The Space now emits `dreamwall.museum.v1`, the main AfterBlock packet for the hackathon demo.
 - The Space also emits `living_canvas.mc.v1` for the secondary wall/canvas mode.
@@ -28,7 +30,7 @@ The main Space endpoint is `curate_artifact`, which emits `dreamwall.museum.v1` 
 - curation scores
 - resonance links
 
-Expected `/dreamwall fetch` V1 behavior:
+Implemented `/dreamwall import` V1 behavior:
 
 1. Fetch latest artifact packet.
 2. Place pedestal/sign/painting marker at coordinates.
@@ -125,3 +127,4 @@ The jar will be in `target/dreamwall-paper-bridge-0.1.0.jar`.
 5. Edit `plugins/DreamWall/config.yml` if needed.
 6. Run `/dreamwall fetch` in game or console.
 7. Run `/dreamwall demo` in game to place a pedestal proof and receive the AirPods demo item.
+8. Run `/dreamwall import here` in game to place a live Hugging Face artifact packet beside you.
