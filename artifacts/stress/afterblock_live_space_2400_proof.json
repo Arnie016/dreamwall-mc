@@ -1,0 +1,26 @@
+{
+  "url": "https://build-small-hackathon-dreamwall-mc.hf.space",
+  "timestamp": "2026-06-12T11:42:19Z",
+  "curate_outputs": 6,
+  "curate_packet_ok": true,
+  "curate_image": "/private/var/folders/g5/2b9m7bfd4rd65w_1rczp9y240000gn/T/gradio/964b26a01a77615b9d9d2a1cf3c2baf000d80cb1be4e7fa1947e87c5",
+  "curate_rows": 101,
+  "browse_gallery_count": 30,
+  "browse_rows": 30,
+  "browse_cols": 10,
+  "browse_status": "Showing 30 of 2400 items | page 80/80 | base item: minecraft:paper",
+  "browse_first_row": [
+    732371,
+    "Charger 60",
+    "charger",
+    "plug",
+    "handheld_diagonal",
+    "diagonal handheld relic",
+    "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
+    2,
+    "assets/minecraft/models/item/afterblock/afterblock_2371.json",
+    "/give @p minecraft:paper[minecraft:custom_model_data=732371] 1"
+  ],
+  "living_canvas_packet_ok": true,
+  "living_canvas_image": "/private/var/folders/g5/2b9m7bfd4rd65w_1rczp9y240000gn/T/gradio/e3374368b0e3aad111cddd348e906394472725366e2891731111db84"
+}
