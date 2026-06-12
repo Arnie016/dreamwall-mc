@@ -8,6 +8,7 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 
 - `/dreamwall` shows the configured Space endpoint.
 - `/dreamwall fetch` calls the Space app domain and confirms the bridge can reach Hugging Face.
+- `/dreamwall pack` asks the player client to load the Hugging Face-hosted `AfterBlockMuseum.zip` resource pack.
 - `/dreamwall demo` places a safe local pedestal/sign proof and gives the player a Paper item with `CustomModelData 730002`.
 - `/dreamwall import` calls the live `curate_artifact` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, and places a packet-derived pedestal/sign/item at the artifact coordinates.
 - `/dreamwall import here` uses the same live packet but places it two blocks in front of the player for fast video proof.
@@ -122,9 +123,10 @@ The jar will be in `target/dreamwall-paper-bridge-0.1.0.jar`.
 
 1. Stop the PebbleHost Paper server.
 2. Upload the jar to `plugins/`.
-3. Upload or link the `resource-pack/AfterBlockMuseum/` zip as a server resource pack if you want custom item rendering.
+3. Upload or link the `resource-pack/AfterBlockMuseum/` zip as a server resource pack if you want custom item rendering. The default config can also request the Hugging Face-hosted pack with `/dreamwall pack`.
 4. Start the server.
 5. Edit `plugins/DreamWall/config.yml` if needed.
 6. Run `/dreamwall fetch` in game or console.
-7. Run `/dreamwall demo` in game to place a pedestal proof and receive the AirPods demo item.
-8. Run `/dreamwall import here` in game to place a live Hugging Face artifact packet beside you.
+7. Run `/dreamwall pack` in game and accept the resource pack.
+8. Run `/dreamwall demo` in game to place a pedestal proof and receive the AirPods demo item.
+9. Run `/dreamwall import here` in game to place a live Hugging Face artifact packet beside you.

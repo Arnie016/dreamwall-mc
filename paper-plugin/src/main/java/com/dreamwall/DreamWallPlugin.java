@@ -23,12 +23,15 @@ import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-public final class DreamWallPlugin extends JavaPlugin {
+public final class DreamWallPlugin extends JavaPlugin implements Listener {
     private HttpClient httpClient;
     private BukkitTask pollTask;
 
@@ -38,6 +41,7 @@ public final class DreamWallPlugin extends JavaPlugin {
         httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(8))
                 .build();
+        getServer().getPluginManager().registerEvents(this, this);
 
         if (getConfig().getBoolean("poll-enabled", false)) {
             startPolling();
@@ -68,14 +72,26 @@ public final class DreamWallPlugin extends JavaPlugin {
             importArtifact(sender, placeHere);
             return true;
         }
+        if (args.length > 0 && args[0].equalsIgnoreCase("pack")) {
+            offerResourcePack(sender);
+            return true;
+        }
 
         sender.sendMessage("DreamWall bridge is configured for: " + spaceUrl());
         sender.sendMessage("Canvas: " + getConfig().getInt("canvas-size", 12) + "x" + getConfig().getInt("canvas-size", 12)
                 + " plots, plot size=" + getConfig().getInt("plot-size", 32));
         sender.sendMessage("Use /dreamwall fetch to test Hugging Face reachability.");
+        sender.sendMessage("Use /dreamwall pack to load the AfterBlockMuseum resource pack.");
         sender.sendMessage("Use /dreamwall demo in-game to place a safe AfterBlock pedestal proof.");
         sender.sendMessage("Use /dreamwall import or /dreamwall import here to place a live Space artifact packet.");
         return true;
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        if (getConfig().getBoolean("offer-resource-pack-on-join", false)) {
+            getServer().getScheduler().runTaskLater(this, () -> sendResourcePack(event.getPlayer()), 40L);
+        }
     }
 
     private void startPolling() {
@@ -98,11 +114,33 @@ public final class DreamWallPlugin extends JavaPlugin {
                 sender.sendMessage("DreamWall Space reachable. Config bytes=" + body.length());
                 sender.sendMessage("Next step: call /gradio_api/call/curate_artifact and import dreamwall.museum.v1.");
                 sender.sendMessage("Use /dreamwall demo for a local pedestal proof with custom model data.");
+                sender.sendMessage("Use /dreamwall pack to load the custom item models from Hugging Face.");
             } catch (IOException | InterruptedException e) {
                 sender.sendMessage("DreamWall fetch failed: " + e.getMessage());
                 Thread.currentThread().interrupt();
             }
         });
+    }
+
+    private void offerResourcePack(CommandSender sender) {
+        sender.sendMessage("AfterBlockMuseum resource pack URL: " + resourcePackUrl());
+        sender.sendMessage("SHA1: " + resourcePackSha1());
+        if (sender instanceof Player player) {
+            sendResourcePack(player);
+        } else {
+            sender.sendMessage("Run /dreamwall pack in-game to request the pack on a player client.");
+        }
+    }
+
+    private void sendResourcePack(Player player) {
+        String url = resourcePackUrl();
+        if (url.isBlank()) {
+            player.sendMessage("DreamWall resource-pack-url is blank in config.yml.");
+            return;
+        }
+        player.setResourcePack(url);
+        player.sendMessage("Requested AfterBlockMuseum resource pack. Accept it to see CustomModelData relics.");
+        player.sendMessage("Pack SHA1: " + resourcePackSha1());
     }
 
     private void importArtifact(CommandSender sender, boolean placeHere) {
@@ -298,5 +336,14 @@ public final class DreamWallPlugin extends JavaPlugin {
 
     private String spaceUrl() {
         return getConfig().getString("space-url", "https://build-small-hackathon-dreamwall-mc.hf.space").replaceAll("/+$", "");
+    }
+
+    private String resourcePackUrl() {
+        return getConfig().getString("resource-pack-url",
+                "https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip");
+    }
+
+    private String resourcePackSha1() {
+        return getConfig().getString("resource-pack-sha1", "a416175d3d7b3d5112ad5fef5ba1bb8c73adbdf9");
     }
 }

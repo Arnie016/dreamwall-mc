@@ -22,7 +22,7 @@ Current hashes from the verified local bundle:
 
 ```text
 8854b0d78b4e2d252a2c3c8dd635c1dc20e06dd5f8323bd0b3a608c50bd089bf  AfterBlockMuseum.zip
-0bc7e6b3bb2e80b01943cea42bb3efdd7432eac6db39e394b3564dbfc584829e  dreamwall-paper-bridge-0.1.0.jar
+05a5eb0a371508faee57213a30f4f973f05c2b6186bc555f382a764c9d94da41  dreamwall-paper-bridge-0.1.0.jar
 ```
 
 ## Upload Targets
@@ -50,6 +50,14 @@ In the PebbleHost panel or `server.properties`, set the server resource pack URL
 AfterBlockMuseum.zip
 ```
 
+The plugin also includes this default Hugging Face-hosted pack URL:
+
+```text
+https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip
+```
+
+Run `/dreamwall pack` in-game to ask the client to load that pack. Set `offer-resource-pack-on-join: true` in `plugins/DreamWall/config.yml` only if you want the server to offer it automatically when players join.
+
 The pack contains:
 
 ```text
@@ -65,6 +73,7 @@ After restarting the server, run these as an op player:
 ```text
 /dreamwall
 /dreamwall fetch
+/dreamwall pack
 /dreamwall demo
 /dreamwall import here
 ```
@@ -72,6 +81,7 @@ After restarting the server, run these as an op player:
 Expected result:
 
 - `/dreamwall fetch` reports the Hugging Face Space is reachable.
+- `/dreamwall pack` asks the player to load `AfterBlockMuseum.zip`.
 - `/dreamwall demo` places a small pedestal and gives a Paper item using `CustomModelData 730002`.
 - `/dreamwall import here` calls the live `curate_artifact` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign beside the player, and gives a Paper item using the packet's `custom_model_data`.
 

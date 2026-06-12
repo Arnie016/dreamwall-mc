@@ -30,3 +30,4 @@ This file records how Codex was used to build the hackathon entry.
 - Added `/dreamwall import` and `/dreamwall import here` to the Paper bridge. The plugin now calls the live Gradio `curate_artifact` endpoint, parses `dreamwall.museum.v1`, and places a packet-derived pedestal/sign/item in Minecraft.
 - Added Gson shading plus explicit Maven Central resolution so the Paper jar compiles into a self-contained PebbleHost-friendly plugin.
 - Verified the shaded jar locally with temporary Maven 3.9.9 and prepared an ignored deploy bundle at `dist/pebblehost/` with the plugin jar, `AfterBlockMuseum.zip`, and hashes.
+- Added `/dreamwall pack`, `resource-pack-url`, `resource-pack-sha1`, and optional join-time pack offering so a Paper server can request the Hugging Face-hosted resource pack without separately hosting the ZIP.

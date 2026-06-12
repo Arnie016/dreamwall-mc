@@ -1,4 +1,7 @@
 space-url: "https://build-small-hackathon-dreamwall-mc.hf.space"
+resource-pack-url: "https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip"
+resource-pack-sha1: "a416175d3d7b3d5112ad5fef5ba1bb8c73adbdf9"
+offer-resource-pack-on-join: false
 poll-enabled: false
 poll-seconds: 30
 gallery-world: "world"
