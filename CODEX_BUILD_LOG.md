@@ -25,3 +25,4 @@ This file records how Codex was used to build the hackathon entry.
 - Added Living Moving Canvas mode: a multi-prompt 12x12 Minecraft wall simulation with neighbor fusion, attention weather, growth stages, and a `living_canvas.mc.v1` packet.
 - Upgraded Living Moving Canvas into an animated wall: stable Minecraft coordinates, pulsing timeline frames, visible fusion links, evolution events, and a clearer Thousand Token Wood demo runbook.
 - Added per-tile Minecraft origins/bounds and documented the Paper bridge path for placing Living Canvas tiles and representing motion through particles, map updates, or block-frame updates.
+- Reframed the project as DreamWall: AfterBlock Museum with `dreamwall.museum.v1`, deterministic hall placement, curation scores, artifact spirits, passport cards, seeded relic demos, museum-terminal UI, and a GitHub Actions Paper plugin build workflow.

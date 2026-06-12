@@ -1,5 +1,5 @@
 ---
-title: Living Graffiti MC
+title: DreamWall AfterBlock Museum
 emoji: 🧱
 colorFrom: yellow
 colorTo: green
@@ -19,20 +19,24 @@ tags:
   - codex
 ---
 
-# Living Graffiti MC
+# DreamWall: AfterBlock Museum
 
-Living Graffiti MC is a Minecraft-native living canvas for the Build Small Hackathon.
+AfterBlock Museum is a Minecraft-native memory museum for the Build Small Hackathon.
 
-Players type a prompt, sign it, and get a named 10-frame Minecraft-style animated wall artifact. Each artifact is designed as a **32x32 block wall tile** with **1,024 blocks per frame**, a wall slot, mutation rate, growth stage, fusion/value readout, creator credit, and a `living_graffiti.mc.v1` packet for the Minecraft server.
+Visitors scan a relic, memory, animal spirit, or prompted painting. The app assigns a museum hall, computes a curation score, awakens a tiny artifact spirit, prints a shareable passport card, and emits a `dreamwall.museum.v1` packet for the Minecraft server.
 
-The next-level mode is a shared moving canvas: multiple people's prompts claim stable coordinates on a 12x12 Minecraft wall, pulse through timeline ticks, mutate with attention weather, draw visible fusion links with nearby ideas, and export a `living_canvas.mc.v1` server packet.
+Living Graffiti and Living Moving Canvas remain as secondary modes. They power museum placement, resonance, and Minecraft wall mechanics.
 
-NeuroPets and DreamWall remain as secondary modes, but the main cash-prize demo is now simple: imagination feed -> living canvas -> fusion/value -> Minecraft public wall.
+The main cash-prize demo is now simple: relic -> hall -> spirit -> passport -> Minecraft museum placement.
 
 ## Why This Is Different
 
-Most hackathon apps stop at chat or image generation. Living Graffiti turns language into a shared animated place.
+Most hackathon apps stop at chat or image generation. AfterBlock turns language and memory into a place visitors can walk through.
 
+- **Museum-native:** every input becomes an artifact with a hall, plaque, passport, and Minecraft coordinates.
+- **Spirit-bearing:** each artifact awakens a constrained spirit that speaks only from its object and lore.
+- **Resonance-based:** curation score replaces market/auction language.
+- **Off-brand:** the Gradio app feels like a Minecraft museum terminal.
 - **Animated:** each prompt becomes a 10-frame artifact, not a static image.
 - **Grows:** artifacts unlock stages from seed sketch to server myth based on value and mutation.
 - **Collective:** many prompts become one shared moving canvas, not isolated images.
@@ -51,12 +55,12 @@ Most hackathon apps stop at chat or image generation. Living Graffiti turns lang
 - **Track:** An Adventure in Thousand Token Wood
 - **Small model constraint:** the app uses a local semantic fingerprint engine, far below the 32B limit, with no cloud API dependency.
 - **Built on Gradio:** this Space is the official Gradio submission surface.
-- **Show, don't tell:** the demo is prompt -> painting -> Minecraft wall plan.
+- **Show, don't tell:** the demo is scan relic -> hall placement -> spirit -> passport -> Minecraft pedestal.
 
 ## Bonus Quests
 
-- **Off-Brand:** custom Minecraft/map-wall UI styling.
-- **Sharing is Caring:** the app emits an open trace for each painting.
+- **Off-Brand:** custom Minecraft museum terminal UI styling.
+- **Sharing is Caring:** the app emits open museum and bridge packets for each artifact.
 - **Field Notes:** see `FIELD_NOTES.md`.
 
 ## Minecraft Server Layer
@@ -64,6 +68,7 @@ Most hackathon apps stop at chat or image generation. Living Graffiti turns lang
 The MVP emits:
 
 - WorldEdit-style row instructions
+- a `dreamwall.museum.v1` artifact/passport/spirit packet
 - a `living_graffiti.mc.v1` animated wall packet
 - a `living_canvas.mc.v1` multi-prompt animated wall packet
 - a `dreamwall.mc.v1` JSON bridge packet
@@ -73,6 +78,7 @@ The MVP emits:
 - a named Gradio API endpoint: `hatch_pet`
 - a named Gradio API endpoint: `living_graffiti`
 - a named Gradio API endpoint: `living_canvas`
+- a named Gradio API endpoint: `curate_artifact`
 
 Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
 
@@ -83,27 +89,28 @@ The repo also includes a Paper plugin scaffold in [`paper-plugin/`](paper-plugin
 Use the Space API with the named endpoint:
 
 ```text
-POST https://build-small-hackathon-dreamwall-mc.hf.space/gradio_api/call/generate_art
+POST https://build-small-hackathon-dreamwall-mc.hf.space/gradio_api/call/curate_artifact
 ```
 
 Input order:
 
 ```json
 [
-  "a tiny fox wizard guarding a ruined ocean temple",
-  "ArnavS",
-  "~ ~ ~",
-  "moss wing, west wall"
+  "Arnav",
+  "@Wildstash",
+  "object_photo",
+  "white AirPods from my first year of university",
+  "They carried private worlds through public noise during my first year away."
 ]
 ```
 
-The final output is a plugin-ready JSON packet with `job_id`, `player`, `prompt`, `palette`, `grid.row_runs`, and placement hints.
+The final output is a plugin-ready museum packet with artifact title, hall, coordinates, palette/materials, plaque text, spirit first line, owner handle, and passport payload.
 
 ## Design Docs
 
 - [`docs/COMPETITION_GOAL.md`](docs/COMPETITION_GOAL.md)
 - [`docs/MINECRAFT_SERVER_BLUEPRINT.md`](docs/MINECRAFT_SERVER_BLUEPRINT.md)
-- [`docs/CANVAS_ECONOMY.md`](docs/CANVAS_ECONOMY.md)
+- [`docs/MUSEUM_CURATION.md`](docs/MUSEUM_CURATION.md)
 - [`docs/LIVING_GRAFFITI_MVP.md`](docs/LIVING_GRAFFITI_MVP.md)
 - [`docs/NEUROPETS_MVP.md`](docs/NEUROPETS_MVP.md)
 - [`docs/DEMO_RUNBOOK.md`](docs/DEMO_RUNBOOK.md)
@@ -114,9 +121,9 @@ DreamWall MC is aimed at **An Adventure in Thousand Token Wood** plus the **Open
 
 Judging fit:
 
-- **Genuinely delightful:** a shared Minecraft wall where language becomes a living, moving canvas.
-- **AI is load-bearing:** semantic drift and identity fingerprinting change the artifact.
-- **Originality:** it is a server ritual, not a chatbot wrapper.
+- **Genuinely delightful:** ordinary objects become Minecraft museum artifacts with tiny spirits.
+- **AI is load-bearing:** semantic curation chooses halls, spirits, plaques, resonance, and placement.
+- **Originality:** it is a memory museum ritual, not a chatbot wrapper.
 - **Polish:** custom Gradio skin plus Minecraft bridge packet.
 
 Bonus quests:
@@ -125,7 +132,7 @@ Bonus quests:
 - **Sharing is Caring:** open trace + server packet per generation.
 - **Field Notes:** this repo includes `FIELD_NOTES.md`.
 
-Next high-impact demo step: use PebbleHost Paper to show the 384x384 Living Moving Canvas wall with one named 32x32 slot placed from the packet, then record a 30-45 second video.
+Next high-impact demo step: use PebbleHost Paper to place one AfterBlock artifact pedestal/sign from the `dreamwall.museum.v1` packet, then record a 45-75 second video.
 
 ## Codex Track
 

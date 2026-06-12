@@ -29,7 +29,7 @@ Optional:
 
 ## World Shape
 
-Flat world with one giant public canvas.
+Flat world with one museum campus plus the existing public canvas as a secondary wing.
 
 Suggested layout:
 
@@ -37,10 +37,10 @@ Suggested layout:
 spawn
   |
   +-- welcome board
-  +-- rules board
-  +-- DreamWall canvas at y=80
-  +-- 12x12 plot grid
-  +-- each plot is 32x32 blocks
+  +-- AfterBlock Museum terminal
+  +-- hall corridor
+  +-- artifact pedestals/signs
+  +-- DreamWall canvas wing at y=80
 ```
 
 Coordinates:
@@ -52,12 +52,13 @@ grid: 12 x 12
 total canvas: 384 x 384 blocks
 ```
 
-## Plot Rules
+## Museum Rules
 
-- Each submission gets a deterministic plot from prompt + player + gallery zone.
-- Nearby plots can fuse if their symbols/moods align.
-- Names are shown as signs or hologram-style text later.
-- Value is demo points, not real money.
+- Each submission gets a deterministic hall, zone, plot, and Minecraft coordinate.
+- Curation score replaces market value.
+- Plaques show title, owner handle, spirit first line, and hall.
+- Resonance links connect nearby or emotionally similar artifacts.
+- No real-money ownership, blockchain, or NFT claims.
 
 ## First Server Milestone
 
@@ -65,14 +66,32 @@ total canvas: 384 x 384 blocks
 2. Install Paper and WorldEdit.
 3. Upload DreamWall bridge jar.
 4. Run `/dreamwall fetch`.
-5. Call the `living_canvas` Space endpoint and copy the `living_canvas.mc.v1` packet.
-6. Manually place one generated 32x32 tile from `tiles[].minecraft_origin` on a test wall.
-7. Add signs for title, creator, stage, weather, and value.
+5. Call the `curate_artifact` Space endpoint and copy the `dreamwall.museum.v1` packet.
+6. Manually place one pedestal/sign at `museum.coordinates`.
+7. Add signs for title, owner handle, hall, plaque line, and spirit first line.
 8. Record a 20-second proof clip.
+
+## Museum Packet
+
+The main demo packet is `dreamwall.museum.v1`.
+
+It gives the server:
+
+- artifact title
+- owner handle
+- hall and zone
+- plot and coordinates
+- block palette/materials
+- plaque text
+- spirit first line
+- passport QR payload
+- curation scores and resonance links
+
+The Paper plugin V1 only needs to import the packet and place a pedestal/sign/painting marker at the coordinates.
 
 ## Living Canvas Packet
 
-The main demo packet is `living_canvas.mc.v1`.
+The secondary canvas packet is `living_canvas.mc.v1`.
 
 It gives the server:
 

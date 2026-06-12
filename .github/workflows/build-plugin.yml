@@ -1,0 +1,38 @@
+name: Build Paper Plugin
+
+on:
+  push:
+    paths:
+      - "paper-plugin/**"
+      - ".github/workflows/build-plugin.yml"
+  pull_request:
+    paths:
+      - "paper-plugin/**"
+      - ".github/workflows/build-plugin.yml"
+  workflow_dispatch:
+
+jobs:
+  build-plugin:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: paper-plugin
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Build jar
+        run: mvn -B package
+
+      - name: Upload plugin jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: dreamwall-paper-bridge
+          path: paper-plugin/target/*.jar

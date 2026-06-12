@@ -1,19 +1,19 @@
-# DreamWall MC Competition Goal
+# DreamWall: AfterBlock Museum Competition Goal
 
 ## Goal
 
-Win the Build Small Hackathon by making DreamWall MC feel like a new way to interact with a world: a living public Minecraft canvas where prompts become named 32x32 artifacts, visibly mutate, gain value through context, and fuse into shared landmarks.
+Win the Build Small Hackathon by making DreamWall feel like a new way to preserve memory: an emotional Minecraft museum where real objects, prompted paintings, animals, and personal symbols become placed artifacts with passports and tiny spirits.
 
 ## Submission Bet
 
-DreamWall is not a chatbot and not a normal image generator. It is a social imagination wall inside Minecraft:
+AfterBlock Museum is not a chatbot and not a normal image generator. It is a Minecraft museum ritual:
 
-- people submit prompts through the Hugging Face Space
-- each prompt gets a stable 32x32 wall slot on a flat-world canvas
-- each artifact has a name, mood, mutation rate, growth stage, and attention weather
-- nearby concepts draw visible fusion links when semantic/context rules line up
-- the system assigns demo value based on density, adjacency, rarity, and votes
-- the Minecraft server becomes the proof surface and the Space emits the bridge packet
+- visitors scan a relic, memory, animal spirit, or prompted painting
+- the curator assigns a hall and museum placement
+- each artifact receives curation scores, resonance links, and a plaque
+- a constrained spirit awakens and speaks from the artifact lore
+- the app prints a passport card and emits `dreamwall.museum.v1`
+- the Minecraft server becomes the proof surface
 
 ## What To Avoid For V1
 
@@ -22,25 +22,25 @@ DreamWall is not a chatbot and not a normal image generator. It is a social imag
 - Complex ownership law
 - Persistent public multiplayer economy before the demo works
 
-Use **demo points** and **auction-style voting** first. That gives the same emotional loop without compliance risk.
+Use **curation score**, **visitor echoes**, and **resonance** instead of auction language.
 
 ## Winning Demo
 
 One continuous video:
 
 1. Open the Hugging Face Space.
-2. Open **Living Moving Canvas**.
-3. Paste a short feed of six prompts from different imagined players.
-4. Move the evolution tick and show the wall pulsing.
-5. Point out visible fusion links, attention weather, and growth stages.
-6. Show the `living_canvas.mc.v1` packet with 32x32 tiles and 384x384 wall size.
-7. Generate one individual Living Graffiti artifact.
-8. Join the Minecraft flat world.
-9. Walk to the giant canvas and show names, values, and fused plot labels.
-10. End with: "100 people prompt the wall; nobody knows what public mural survives."
+2. Pick the AirPods seeded demo.
+3. Show the hall assignment, curation score, and placement reason.
+4. Open **Awaken Spirit** and read the first line: "I carried private worlds through public noise."
+5. Open **Passport Card** and show the Minecraft coordinates.
+6. Open **Minecraft Bridge** and show `dreamwall.museum.v1`.
+7. Switch to Minecraft.
+8. Place or mock one pedestal/sign using the packet coordinates.
+9. End with: "AfterBlock turns the things people would throw away into places they can visit."
 
 ## Target Prizes
 
 - OpenAI Codex Track: public GitHub repo with Codex-authored commits.
-- Adventure in Thousand Token Wood: strange, social, delightful, AI-load-bearing, and small enough to run without a giant model dependency.
-- NVIDIA GPU prize: video must make the world feel worth rendering/exploring.
+- Adventure in Thousand Token Wood: strange, emotional, delightful, AI-load-bearing, and small enough to run without a giant model dependency.
+- Off-Brand: Minecraft museum terminal rather than default chatbot UI.
+- Best Demo: object to hall to spirit to passport to Minecraft proof in under 75 seconds.

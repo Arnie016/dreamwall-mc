@@ -4,6 +4,7 @@ import math
 import os
 import tempfile
 from dataclasses import dataclass
+from datetime import datetime, timezone
 
 import gradio as gr
 import numpy as np
@@ -100,6 +101,56 @@ LIVING_WALL_PROMPTS = [
     "a crown made of moss floating over a village gate",
     "a cloud dragon sleeping inside a circuit board",
 ]
+
+MUSEUM_HALLS = [
+    "Hall of Firsts",
+    "Hall of Companions",
+    "Hall of Turning Points",
+    "Hall of Worlds",
+    "Hall of Soft Things",
+    "Hall of Tools",
+    "Hall of Lost Signals",
+    "Grand Painting Hall",
+    "Animal Spirit Grove",
+]
+
+DEMO_ARTIFACTS = {
+    "Star Wars childhood book": {
+        "owner_name": "Arnav",
+        "owner_handle": "@Wildstash",
+        "input_type": "memory_prompt",
+        "source_prompt": "a worn Star Wars childhood book with bent corners and a silver spaceship on the cover",
+        "memory_text": "I kept reopening it because the galaxy felt bigger than my room.",
+    },
+    "AirPods from first year of university": {
+        "owner_name": "Arnav",
+        "owner_handle": "@Wildstash",
+        "input_type": "object_photo",
+        "source_prompt": "white AirPods from my first year of university",
+        "memory_text": "They carried private worlds through public noise during my first year away.",
+    },
+    "Monitor used for first Bitcoin trade": {
+        "owner_name": "Arnav",
+        "owner_handle": "@Wildstash",
+        "input_type": "object_photo",
+        "source_prompt": "a black monitor used for my first Bitcoin trade",
+        "memory_text": "A screen where numbers first started feeling like weather.",
+    },
+    "School bag carried through exams": {
+        "owner_name": "Arnav",
+        "owner_handle": "@Wildstash",
+        "input_type": "object_photo",
+        "source_prompt": "a school bag carried through exams",
+        "memory_text": "It held pencils, snacks, panic, and the weight of every morning.",
+    },
+    "Prompted painting: red dragon above childhood home": {
+        "owner_name": "Arnav",
+        "owner_handle": "@Wildstash",
+        "input_type": "painting_prompt",
+        "source_prompt": "a red dragon above my childhood home",
+        "memory_text": "A fantasy guardian hovering over the place I learned to imagine from.",
+    },
+}
 
 
 @dataclass
@@ -373,6 +424,371 @@ def canvas_report(prompt: str, player: str, moods: list[str], palette_names: lis
         },
     }
     return "\n".join(report), json.dumps(packet, indent=2)
+
+
+def object_guess_for(input_type: str, source_prompt: str, memory_text: str) -> str:
+    text = f"{source_prompt} {memory_text}".lower()
+    guesses = [
+        ("book", ["book", "novel", "comic", "star wars", "cover"]),
+        ("earbuds", ["airpods", "earpods", "earbuds", "headphones", "music"]),
+        ("monitor", ["monitor", "screen", "display", "trade", "bitcoin"]),
+        ("school bag", ["bag", "backpack", "exams", "school"]),
+        ("painting", ["painting", "dragon", "prompted", "canvas"]),
+        ("animal spirit", ["pet", "animal", "dog", "cat", "bird", "creature"]),
+        ("tool", ["tool", "keyboard", "mouse", "camera", "phone"]),
+    ]
+    for guess, hints in guesses:
+        if any(hint in text for hint in hints):
+            return guess
+    if input_type == "painting_prompt":
+        return "prompted painting"
+    if input_type == "animal_spirit":
+        return "animal spirit"
+    return "personal relic"
+
+
+def hall_for_artifact(input_type: str, object_guess: str, source_prompt: str, memory_text: str, seed: int) -> tuple[str, str]:
+    text = f"{object_guess} {source_prompt} {memory_text}".lower()
+    if input_type == "painting_prompt":
+        return "Grand Painting Hall", "paintings that were imagined before they were found"
+    if input_type == "animal_spirit" or any(word in text for word in ["pet", "animal", "dog", "cat", "bird", "creature"]):
+        return "Animal Spirit Grove", "the artifact behaves more like a companion than an object"
+    if any(word in text for word in ["first", "university", "bitcoin", "started"]):
+        return "Hall of Firsts", "the memory marks a first threshold"
+    if any(word in text for word in ["airpods", "bag", "friend", "carried", "companion"]):
+        return "Hall of Companions", "it stayed close to the owner through ordinary days"
+    if any(word in text for word in ["exam", "trade", "turning", "changed", "panic"]):
+        return "Hall of Turning Points", "the object sits near a decision or pressure point"
+    if any(word in text for word in ["star wars", "galaxy", "home", "world", "dragon"]):
+        return "Hall of Worlds", "it opened a world larger than the room around it"
+    if any(word in text for word in ["soft", "noise", "private", "morning"]):
+        return "Hall of Soft Things", "the memory is quiet, protective, and intimate"
+    if any(word in text for word in ["monitor", "tool", "screen", "keyboard"]):
+        return "Hall of Tools", "the artifact helped the owner act on the world"
+    if any(word in text for word in ["signal", "lost", "radio", "noise"]):
+        return "Hall of Lost Signals", "the artifact carries private signal through public static"
+    hall = MUSEUM_HALLS[seed % len(MUSEUM_HALLS)]
+    return hall, "the museum placed it by symbolic resonance"
+
+
+def museum_zone_for(hall: str, seed: int) -> str:
+    zones = {
+        "Hall of Firsts": ["threshold alcove", "first-light row", "origin cabinet"],
+        "Hall of Companions": ["pocket gallery", "everyday pedestal", "quiet bench"],
+        "Hall of Turning Points": ["pressure corridor", "exam arch", "decision stair"],
+        "Hall of Worlds": ["portal bay", "map room", "myth shelf"],
+        "Hall of Soft Things": ["hush wing", "warm glass case", "felt-lit corner"],
+        "Hall of Tools": ["workbench row", "instrument vault", "copper desk"],
+        "Hall of Lost Signals": ["static aisle", "radio archive", "dim receiver"],
+        "Grand Painting Hall": ["large frame wall", "dragon bay", "painted sky"],
+        "Animal Spirit Grove": ["moss enclosure", "companion path", "moonlit pen"],
+    }
+    choices = zones.get(hall, ["west wing"])
+    return choices[seed % len(choices)]
+
+
+def curation_scores(
+    source_prompt: str,
+    memory_text: str,
+    input_type: str,
+    moods: list[str],
+    palette_names: list[str],
+    plot: dict,
+) -> dict:
+    text = f"{source_prompt} {memory_text}".lower()
+    density = prompt_density(text)
+    neighbors = nearby_artworks(plot)
+    adjacency = min(1.0, sum(max(0, 3 - item["distance"]) for item in neighbors) / 6)
+    palette_rarity = len(set(palette_names).intersection({"obsidian", "amethyst_block", "sea_lantern", "glowstone"})) / 4
+    def score(words: list[str], base: float = 28.0) -> int:
+        hits = sum(1 for word in words if word in text)
+        return int(min(100, base + density * 35 + hits * 14))
+
+    scores = {
+        "nostalgia": score(["childhood", "school", "first", "home", "kept", "morning"]),
+        "symbolism": score(["dragon", "galaxy", "signal", "cover", "weather", "guardian"]),
+        "identity": score(["my", "first", "owner", "university", "trade"], 34),
+        "companionship": score(["carried", "airpods", "bag", "private", "through"], 30),
+        "transformation": score(["first", "trade", "exam", "changed", "started"], 26),
+        "rarity": int(min(100, 35 + len(set(moods)) * 10 + density * 25)),
+        "palette_rarity": int(round(palette_rarity * 100)),
+        "adjacency_resonance": int(round(adjacency * 100)),
+        "visitor_echoes": int(min(100, 12 + len(neighbors) * 17 + density * 34)),
+    }
+    weighted = (
+        scores["nostalgia"] * 0.16
+        + scores["symbolism"] * 0.14
+        + scores["identity"] * 0.14
+        + scores["companionship"] * 0.12
+        + scores["transformation"] * 0.12
+        + scores["rarity"] * 0.1
+        + scores["palette_rarity"] * 0.08
+        + scores["adjacency_resonance"] * 0.08
+        + scores["visitor_echoes"] * 0.06
+    )
+    scores["curation_score"] = int(round(weighted))
+    return scores
+
+
+def spirit_for_artifact(title: str, object_guess: str, memory_text: str, hall: str, seed: int) -> dict:
+    traits_bank = {
+        "book": ["wide-eyed", "paper-worn", "portal-minded"],
+        "earbuds": ["private", "signal-carrying", "soft-spoken"],
+        "monitor": ["watchful", "electric", "threshold-bound"],
+        "school bag": ["patient", "burdened", "loyal"],
+        "painting": ["mythic", "paint-lit", "protective"],
+        "animal spirit": ["restless", "companionable", "wild"],
+        "personal relic": ["quiet", "symbolic", "half-remembered"],
+    }
+    traits = traits_bank.get(object_guess, traits_bank["personal relic"])
+    suffix = ["mote", "keeper", "echo", "sprite", "shade", "wisp"][seed % 6]
+    spirit_name = "".join(word.capitalize() for word in keywords_for_title(title)[:1]) + suffix.capitalize()
+    first_line = f"I am what remained when {object_guess} became a place."
+    if "airpods" in object_guess or object_guess == "earbuds":
+        first_line = "I carried private worlds through public noise."
+    elif object_guess == "book":
+        first_line = "I opened a galaxy small enough to fit in your hands."
+    elif object_guess == "monitor":
+        first_line = "I watched numbers become weather."
+    elif object_guess == "school bag":
+        first_line = "I carried the mornings you were not ready for."
+    elif object_guess == "painting":
+        first_line = "I guard the home that imagination returned to."
+    questions = [
+        "What do you remember?",
+        "Why are you in this hall?",
+        "What should visitors notice?",
+    ]
+    responses = [
+        first_line,
+        f"The curator placed me in {hall} because this memory still has a shape.",
+        f"Look for the detail that does not shout: {memory_text[:110]}",
+    ]
+    return {
+        "spirit_name": spirit_name,
+        "spirit_traits": traits,
+        "spirit_first_line": first_line,
+        "rules": [
+            "speak only from the object, memory, and artifact lore",
+            "do not behave like a generic assistant",
+            "answer as a quiet museum presence",
+        ],
+        "sample_visitor_questions": questions,
+        "sample_spirit_responses": responses,
+    }
+
+
+def resonance_links_for_artifact(hall: str, moods: list[str], plot: dict) -> list[dict]:
+    links = []
+    for art in nearby_artworks(plot):
+        shared = sorted(set(moods).intersection(art["moods"]))
+        links.append(
+            {
+                "title": art["title"],
+                "creator": art["player"],
+                "distance": art["distance"],
+                "resonance": "shared mood" if shared else "nearby museum placement",
+                "shared_moods": shared,
+                "hall_echo": hall,
+            }
+        )
+    return links
+
+
+def passport_html(artifact: dict) -> str:
+    palette = artifact["palette"][:5]
+    swatches = "".join(
+        f"<span class='museum-swatch' title='{name}' style='background: rgb({rgb[0]}, {rgb[1]}, {rgb[2]})'></span>"
+        for name, rgb in [next((block for block in BLOCKS if block[0] == item), ("stone", (120, 120, 120))) for item in palette]
+    )
+    return f"""
+    <section class="passport-card">
+      <div class="passport-kicker">Preserved in AfterBlock Museum</div>
+      <h2>{artifact['title']}</h2>
+      <p class="passport-owner">{artifact['owner_handle']} · {artifact['hall']}</p>
+      <div class="passport-grid">
+        <div class="passport-preview">{swatches}<strong>{artifact['spirit_name']}</strong></div>
+        <div>
+          <p><strong>Plot</strong> ({artifact['plot']['x']}, {artifact['plot']['z']})</p>
+          <p><strong>Coordinates</strong> {artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}</p>
+          <p><strong>Plaque</strong> {artifact['plaque_line']}</p>
+          <p><strong>QR payload</strong> <code>{artifact['qr_payload']}</code></p>
+        </div>
+      </div>
+    </section>
+    """
+
+
+def floor_map_html(artifact: dict) -> str:
+    cells = []
+    for z in range(CANVAS_SIZE):
+        for x in range(CANVAS_SIZE):
+            active = x == artifact["plot"]["x"] and z == artifact["plot"]["z"]
+            label = "★" if active else ""
+            cells.append(f"<span class='floor-cell {'active' if active else ''}'>{label}</span>")
+    return f"<div class='floor-map'>{''.join(cells)}</div>"
+
+
+def build_museum_artifact(
+    owner_name: str,
+    owner_handle: str,
+    input_type: str,
+    source_prompt: str,
+    memory_text: str,
+) -> dict:
+    owner_name = (owner_name or "Anonymous").strip()
+    owner_handle = (owner_handle or "@unknown").strip()
+    input_type = (input_type or "memory_prompt").strip()
+    source_prompt = (source_prompt or "a mysterious object from a half-remembered room").strip()
+    memory_text = (memory_text or "No memory text was provided, so the museum listens to the object itself.").strip()
+    text = f"afterblock={owner_name}|{owner_handle}|{input_type}|{source_prompt}|{memory_text}"
+    seed = stable_seed(text)
+    vec = embedding(text)
+    moods = top_moods(text, vec)
+    palette = palette_from_vector(vec, seed, moods)
+    palette_names = [name for name, _ in palette]
+    object_guess = object_guess_for(input_type, source_prompt, memory_text)
+    hall, placement_reason = hall_for_artifact(input_type, object_guess, source_prompt, memory_text, seed)
+    zone = museum_zone_for(hall, seed)
+    plot = plot_for_seed(seed)
+    title = artifact_title(source_prompt, seed, moods)
+    artifact_id = hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+    scores = curation_scores(source_prompt, memory_text, input_type, moods, palette_names, plot)
+    spirit = spirit_for_artifact(title, object_guess, memory_text, hall, seed)
+    coordinates = {"x": plot["world_x"], "y": 80, "z": plot["world_z"]}
+    plaque_line = spirit["spirit_first_line"]
+    lore_short = f"{object_guess.title()} placed in {hall.lower()} because {placement_reason}."
+    artifact = {
+        "artifact_id": artifact_id,
+        "owner_name": owner_name,
+        "owner_handle": owner_handle,
+        "input_type": input_type,
+        "title": title,
+        "source_prompt": source_prompt,
+        "memory_text": memory_text,
+        "object_guess": object_guess,
+        "hall": hall,
+        "zone": zone,
+        "plot": plot,
+        "minecraft_coordinates": coordinates,
+        "palette": palette_names,
+        "minecraft_materials": palette_names,
+        "plaque_line": plaque_line,
+        "lore_short": lore_short,
+        "spirit_name": spirit["spirit_name"],
+        "spirit_traits": spirit["spirit_traits"],
+        "spirit_first_line": spirit["spirit_first_line"],
+        "placement_reason": placement_reason,
+        "curation_scores": scores,
+        "resonance_links": resonance_links_for_artifact(hall, moods, plot),
+        "passport_card": {
+            "title": title,
+            "owner_handle": owner_handle,
+            "hall": hall,
+            "plot": plot,
+            "minecraft_coordinates": coordinates,
+            "plaque_line": plaque_line,
+            "preservation_line": "Preserved in AfterBlock Museum",
+        },
+        "qr_payload": f"afterblock://artifact/{artifact_id}",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    artifact.update(spirit)
+    return artifact
+
+
+def museum_packet_for(artifact: dict) -> dict:
+    return {
+        "type": "dreamwall.museum.v1",
+        "artifact": artifact,
+        "museum": {
+            "hall": artifact["hall"],
+            "zone": artifact["zone"],
+            "plot": artifact["plot"],
+            "coordinates": artifact["minecraft_coordinates"],
+            "placement_reason": artifact["placement_reason"],
+        },
+        "spirit": {
+            "name": artifact["spirit_name"],
+            "traits": artifact["spirit_traits"],
+            "first_line": artifact["spirit_first_line"],
+            "rules": artifact["rules"],
+            "sample_visitor_questions": artifact["sample_visitor_questions"],
+            "sample_spirit_responses": artifact["sample_spirit_responses"],
+        },
+        "passport": artifact["passport_card"],
+        "minecraft": {
+            "protocol": "dreamwall.mc.v1",
+            "import_mode": "museum_artifact",
+            "title": artifact["title"],
+            "hall": artifact["hall"],
+            "coordinates": artifact["minecraft_coordinates"],
+            "materials": artifact["minecraft_materials"],
+            "plaque_text": artifact["plaque_line"],
+            "spirit_first_line": artifact["spirit_first_line"],
+            "owner_handle": artifact["owner_handle"],
+            "passport_qr_payload": artifact["qr_payload"],
+            "pedestal": "place sign, item frame, and blocky preview at coordinates",
+        },
+    }
+
+
+def curate_afterblock_artifact(
+    owner_name: str,
+    owner_handle: str,
+    input_type: str,
+    source_prompt: str,
+    memory_text: str,
+):
+    artifact = build_museum_artifact(owner_name, owner_handle, input_type, source_prompt, memory_text)
+    packet = museum_packet_for(artifact)
+    placement = [
+        f"# {artifact['title']}",
+        f"Owner: **{artifact['owner_handle']}**",
+        f"Hall: **{artifact['hall']}** / {artifact['zone']}",
+        f"Plot: **({artifact['plot']['x']}, {artifact['plot']['z']})**",
+        f"Minecraft coordinates: **{artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}**",
+        f"Curation score: **{artifact['curation_scores']['curation_score']}**",
+        "",
+        f"Placement reason: {artifact['placement_reason']}",
+        f"Plaque: _{artifact['plaque_line']}_",
+        "",
+        "Resonance links:",
+    ]
+    if artifact["resonance_links"]:
+        placement.extend(
+            f"- {link['title']} by {link['creator']}: {link['resonance']}, distance {link['distance']}"
+            for link in artifact["resonance_links"]
+        )
+    else:
+        placement.append("- No nearby resonance yet. This artifact becomes an anchor for future visitors.")
+    spirit_lines = [
+        f"# {artifact['spirit_name']}",
+        f"Traits: {', '.join(artifact['spirit_traits'])}",
+        f"First line: _{artifact['spirit_first_line']}_",
+        "",
+        "Visitor questions and spirit responses:",
+    ]
+    for question, response in zip(artifact["sample_visitor_questions"], artifact["sample_spirit_responses"]):
+        spirit_lines.append(f"- **{question}** {response}")
+    passport = passport_html(artifact) + floor_map_html(artifact)
+    return (
+        "\n".join(placement),
+        spirit_lines and "\n".join(spirit_lines),
+        passport,
+        json.dumps(packet, indent=2),
+    )
+
+
+def load_demo_artifact(name: str):
+    data = DEMO_ARTIFACTS.get(name) or next(iter(DEMO_ARTIFACTS.values()))
+    return (
+        data["owner_name"],
+        data["owner_handle"],
+        data["input_type"],
+        data["source_prompt"],
+        data["memory_text"],
+    )
 
 
 HABITATS = {
@@ -1118,42 +1534,116 @@ def gradio_generate(prompt: str, player: str, origin: str, gallery_zone: str):
 
 CSS = """
 :root {
-  --mc-ink: #24170e;
-  --mc-paper: #f4ecd8;
+  --mc-ink: #f4ecd8;
+  --mc-paper: #171410;
   --mc-green: #57744a;
   --mc-gold: #d39b45;
+  --museum-stone: #1f211f;
+  --museum-panel: #2b251c;
+  --museum-glow: #f2c15f;
 }
 body, .gradio-container {
-  background: #18130f !important;
+  background: #10110f !important;
   color: var(--mc-ink);
 }
 .gradio-container {
   max-width: 1180px !important;
 }
 .dreamwall-hero {
-  background: linear-gradient(135deg, #f4ecd8 0%, #e5d0a3 100%);
-  border: 3px solid #4a2f1f;
-  box-shadow: 0 10px 0 #2a1a12;
+  background: linear-gradient(135deg, #1b1d1b 0%, #322719 100%);
+  border: 3px solid #8b6a3d;
+  box-shadow: 0 10px 0 #060605, inset 0 0 28px rgba(242, 193, 95, 0.12);
   padding: 22px;
   margin: 14px 0 18px;
 }
 .dreamwall-hero h1 {
   margin: 0;
   font-size: 42px;
-  color: #2a1a12;
+  color: #ffe4a3;
 }
 .dreamwall-hero p {
   max-width: 760px;
   font-size: 17px;
   line-height: 1.45;
+  color: #ead7b0;
 }
 .badge-row span {
   display: inline-block;
-  border: 2px solid #4a2f1f;
-  background: #fff6dd;
+  border: 2px solid #8b6a3d;
+  background: #211a12;
+  color: #ffdc8a;
   padding: 6px 10px;
   margin: 4px 5px 0 0;
   font-weight: 700;
+}
+.museum-terminal {
+  background: #171916;
+  border: 2px solid #6f6a57;
+  box-shadow: inset 0 0 18px rgba(242, 193, 95, 0.1);
+  padding: 14px;
+  margin: 10px 0;
+}
+.passport-card {
+  background: #221d16;
+  border: 3px solid #b98a46;
+  box-shadow: 0 8px 0 #080705, inset 0 0 24px rgba(242, 193, 95, 0.14);
+  color: #f9e4b4;
+  padding: 18px;
+}
+.passport-card h2 {
+  margin: 4px 0;
+  font-size: 30px;
+  color: #ffe6a6;
+}
+.passport-kicker {
+  color: #e2b86f;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.passport-owner {
+  color: #cdbd9b;
+}
+.passport-grid {
+  display: grid;
+  grid-template-columns: minmax(160px, 240px) 1fr;
+  gap: 16px;
+}
+.passport-preview {
+  min-height: 150px;
+  border: 2px solid #6f6a57;
+  background: repeating-linear-gradient(45deg, #2b2d29 0, #2b2d29 10px, #242520 10px, #242520 20px);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+}
+.museum-swatch {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #0b0b09;
+  display: inline-block;
+}
+.floor-map {
+  display: grid;
+  grid-template-columns: repeat(12, 18px);
+  gap: 3px;
+  margin-top: 12px;
+}
+.floor-cell {
+  width: 18px;
+  height: 18px;
+  background: #34372f;
+  border: 1px solid #57513f;
+  color: #1b160e;
+  text-align: center;
+  line-height: 18px;
+}
+.floor-cell.active {
+  background: #f2c15f;
+  box-shadow: 0 0 10px #f2c15f;
 }
 textarea, input {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
@@ -1165,11 +1655,11 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     gr.HTML(
         """
         <section class="dreamwall-hero">
-          <h1>Living Graffiti MC</h1>
+          <h1>DreamWall: AfterBlock Museum</h1>
           <p>
-            Type a prompt, sign it, and mint a 10-frame Minecraft wall artifact.
-            The artifact mutates, earns a wall slot, fuses with nearby ideas, and lives
-            as a named public memory on the server.
+            Scan a relic, memory, animal spirit, or prompted painting. The museum assigns
+            a hall, chisels a Minecraft placement, awakens a tiny spirit, and prints an
+            artifact passport for the server.
           </p>
           <div class="badge-row">
             <span>Adventure in Thousand Token Wood</span>
@@ -1182,6 +1672,60 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         </section>
         """
     )
+    gr.HTML("<h2>AfterBlock Museum Terminal</h2><div class='museum-terminal'>chiseling memory into blocks... consulting the museum curator... assigning hall placement... awakening artifact spirit...</div>")
+    with gr.Row():
+        with gr.Column(scale=5):
+            demo_choice = gr.Dropdown(
+                label="Seeded demo relic",
+                choices=list(DEMO_ARTIFACTS),
+                value="AirPods from first year of university",
+            )
+            owner_name = gr.Textbox(label="Owner name", value="Arnav")
+            owner_handle = gr.Textbox(label="Owner handle", value="@Wildstash")
+            input_type = gr.Dropdown(
+                label="Input type",
+                choices=["object_photo", "painting_prompt", "memory_prompt", "animal_spirit"],
+                value="object_photo",
+            )
+            relic_prompt = gr.Textbox(
+                label="Scan relic / prompt",
+                lines=3,
+                value="white AirPods from my first year of university",
+            )
+            memory_text = gr.Textbox(
+                label="Memory text",
+                lines=3,
+                value="They carried private worlds through public noise during my first year away.",
+            )
+            museum_button = gr.Button("Curate Artifact", variant="primary")
+        with gr.Column(scale=5):
+            with gr.Tabs():
+                with gr.Tab("Curate Placement"):
+                    museum_placement = gr.Markdown()
+                with gr.Tab("Awaken Spirit"):
+                    museum_spirit = gr.Markdown()
+                with gr.Tab("Passport Card"):
+                    museum_passport = gr.HTML()
+                with gr.Tab("Minecraft Bridge"):
+                    museum_packet = gr.Textbox(label="dreamwall.museum.v1", lines=22, max_lines=32)
+
+    demo_choice.change(
+        load_demo_artifact,
+        inputs=[demo_choice],
+        outputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text],
+    )
+    museum_button.click(
+        curate_afterblock_artifact,
+        inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text],
+        outputs=[museum_placement, museum_spirit, museum_passport, museum_packet],
+        api_name="curate_artifact",
+    )
+    demo.load(
+        curate_afterblock_artifact,
+        inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text],
+        outputs=[museum_placement, museum_spirit, museum_passport, museum_packet],
+    )
+
     gr.HTML("<h2>Living Graffiti Wall</h2>")
     with gr.Row():
         with gr.Column(scale=5):

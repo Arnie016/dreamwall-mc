@@ -1,29 +1,28 @@
-# Demo Runbook
+# AfterBlock Demo Runbook
 
 ## Story
 
-Living Graffiti is a social Minecraft wall where anonymous prompts become animated public artifacts. Living Moving Canvas is the stronger demo: a feed of prompts becomes a shared wall that pulses, mutates, and draws fusion links between nearby ideas.
+AfterBlock Museum preserves ordinary objects as Minecraft artifacts. The Space acts like a museum terminal: it scans a relic, assigns a hall, awakens a tiny spirit, prints a passport card, and emits a bridge packet for the server.
 
 ## Script
 
 1. Show the Hugging Face Space.
-2. Open **Living Moving Canvas**.
-3. Show six prompts becoming one animated 12x12 wall.
-4. Scrub the evolution tick and point to the pulsing tiles.
-5. Show visible fusion links between nearby or semantically related artifacts.
-6. Show strongest artifacts, attention weather, and growth stages.
-7. Open the `living_canvas.mc.v1` Minecraft packet.
-8. Generate one individual Living Graffiti artifact.
-9. Switch to Minecraft.
-10. Show the flat wall / planned slot with creator name and value.
-11. End with: "100 people prompt the wall; nobody knows what public mural survives."
+2. Select **AirPods from first year of university**.
+3. Click **Curate Artifact**.
+4. Show **Curate Placement**: Hall of Companions or Lost Signals, plot, coordinates, curation score.
+5. Open **Awaken Spirit** and read: "I carried private worlds through public noise."
+6. Open **Passport Card** and show the blocky card/floor map.
+7. Open **Minecraft Bridge** and show `dreamwall.museum.v1`.
+8. Switch to Minecraft.
+9. Show a pedestal/sign/painting marker at the packet coordinates.
+10. End with: "AfterBlock turns the things people would throw away into places they can visit."
 
 ## Video Requirements
 
-- Keep the final demo under 60 seconds.
+- Keep the final demo under 75 seconds.
 - Show both the Space and Minecraft world.
 - Do not explain implementation details in the voiceover.
-- Focus on the magic: people write language, the wall moves, fuses, and grows.
+- Focus on the magic: a memory becomes a place with a spirit.
 
 ## Submission Checklist
 
@@ -32,4 +31,4 @@ Living Graffiti is a social Minecraft wall where anonymous prompts become animat
 - GitHub commits are Codex-authored.
 - Field notes are present.
 - Demo video shows real UI and Minecraft proof.
-- Social post says this is a living public Minecraft wall, not a chatbot.
+- Social post says this is a Minecraft memory museum, not a chatbot.

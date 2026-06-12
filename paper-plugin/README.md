@@ -1,6 +1,6 @@
-# DreamWall Paper Bridge
+# DreamWall AfterBlock Paper Bridge
 
-This is the Minecraft server bridge for DreamWall MC.
+This is the Minecraft server bridge for DreamWall: AfterBlock Museum.
 
 The hackathon Space is the official submission surface. This plugin scaffold is the live-demo layer: it connects a Paper server to the Space API and prepares the path for placing generated wall art inside Minecraft.
 
@@ -8,12 +8,33 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 
 - `/dreamwall` shows the configured Space endpoint.
 - `/dreamwall fetch` calls the Space app domain and confirms the bridge can reach Hugging Face.
-- A scheduled task can be extended to poll approved wall jobs.
-- The Space now emits `living_canvas.mc.v1`, a multi-prompt wall packet for the main hackathon demo.
+- A scheduled task can be extended to poll approved museum artifacts.
+- The Space now emits `dreamwall.museum.v1`, the main AfterBlock packet for the hackathon demo.
+- The Space also emits `living_canvas.mc.v1` for the secondary wall/canvas mode.
 
 ## Planned Placement Behavior
 
-The Space emits a `dreamwall.mc.v1` JSON packet with:
+The main Space endpoint is `curate_artifact`, which emits `dreamwall.museum.v1` with:
+
+- artifact title
+- owner handle
+- hall and zone
+- plot and coordinates
+- block palette/materials
+- plaque text
+- spirit first line
+- passport QR payload
+- curation scores
+- resonance links
+
+Expected `/dreamwall fetch` V1 behavior:
+
+1. Fetch latest artifact packet.
+2. Place pedestal/sign/painting marker at coordinates.
+3. Display plaque line and owner handle.
+4. Optionally create particles or a simple animation based on artifact type.
+
+The legacy `generate_art` endpoint emits a `dreamwall.mc.v1` JSON packet with:
 
 - `job_id`
 - `player`
@@ -26,7 +47,7 @@ The Space emits a `dreamwall.mc.v1` JSON packet with:
 - `grid.row_runs`
 - WorldEdit preview lines
 
-The stronger cash-prize path uses `living_canvas.mc.v1` from the `living_canvas` endpoint:
+The secondary canvas path uses `living_canvas.mc.v1` from the `living_canvas` endpoint:
 
 - `tile_size_blocks`: `32 x 32`
 - `canvas_size_tiles`: `12 x 12`
@@ -57,12 +78,12 @@ The Space also emits a `neuropets.mc.v1` packet from the `hatch_pet` endpoint. T
 
 For the hackathon video, the safest route is:
 
-1. Run Living Moving Canvas in the Space.
-2. Copy the `living_canvas.mc.v1` packet or call the Gradio API.
-3. Place one or more `tiles[]` at their `minecraft_origin`.
-4. Add signs for creator, title, value, stage, and weather.
-5. Use particles or a command-block pulse to show fusion links.
-6. Walk through the server gallery.
+1. Run AfterBlock Museum in the Space.
+2. Copy the `dreamwall.museum.v1` packet or call the Gradio API.
+3. Place one artifact pedestal/sign at `museum.coordinates`.
+4. Add signs for owner, title, hall, plaque, and spirit first line.
+5. Use particles around the pedestal for the artifact spirit.
+6. Walk through the museum gallery.
 
 ## Flat World Canvas
 
@@ -83,6 +104,10 @@ canvas_origin + plot.x * plot_size, y=80, canvas_origin_z + plot.z * plot_size
 For `living_canvas.mc.v1`, the packet already includes `tiles[].minecraft_origin`, so the plugin can skip recomputing the address.
 
 ## Build
+
+GitHub Actions builds the jar through `.github/workflows/build-plugin.yml`.
+
+Local build, if Maven is installed:
 
 ```bash
 mvn package
