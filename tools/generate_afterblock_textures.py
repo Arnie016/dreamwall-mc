@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-TARGET_COUNT = 1200
+TARGET_COUNT = 2400
 CUSTOM_MODEL_BASE = 730000
 
 
@@ -60,6 +60,33 @@ def shade(color, amount):
 def px(draw, box, fill, scale=4):
     x1, y1, x2, y2 = box
     draw.rectangle([x1 * scale, y1 * scale, (x2 + 1) * scale - 1, (y2 + 1) * scale - 1], fill=fill)
+
+
+def add_variant_marks(draw, variant, accent, ink):
+    motif = variant % 8
+    if motif == 0:
+        return
+    if motif in {1, 5}:
+        for x in range(4, 13, 3):
+            px(draw, (x, 3, x, 13), accent)
+    if motif in {2, 6}:
+        for y in range(4, 13, 3):
+            px(draw, (3, y, 13, y), accent)
+    if motif == 3:
+        for step in range(4, 13, 2):
+            px(draw, (step, step, step, step), accent)
+    if motif == 4:
+        px(draw, (3, 3, 5, 5), accent)
+        px(draw, (11, 11, 13, 13), accent)
+    if motif == 5:
+        px(draw, (12, 4, 13, 5), ink)
+        px(draw, (4, 12, 5, 13), ink)
+    if motif == 6:
+        px(draw, (7, 3, 9, 3), ink)
+        px(draw, (7, 13, 9, 13), ink)
+    if motif == 7:
+        for x, y in ((4, 5), (8, 7), (12, 10), (6, 12)):
+            px(draw, (x, y, x, y), accent)
 
 
 def draw_icon(kind, color, shape, variant):
@@ -149,14 +176,121 @@ def draw_icon(kind, color, shape, variant):
         px(d, (2, 13, 3, 14), (113, 188, 132))
     elif variant % 4 == 3:
         px(d, (13, 13, 14, 14), (185, 120, 215))
+    add_variant_marks(d, variant, accent, ink)
     return img
 
 
-def element_model(kind, texture_ref):
+def model_variant_profile(shape, variant):
+    profiles = [
+        {
+            "name": "pedestal_front",
+            "orientation": "upright pedestal",
+            "scale": 1.0,
+            "x_shift": 0.0,
+            "y_shift": 0.0,
+            "z_scale": 1.0,
+            "gui_rotation": [30, 225, 0],
+            "fixed_rotation": [0, 180, 0],
+            "itemdisplay": "ItemDisplay.Transform.FIXED",
+        },
+        {
+            "name": "wall_tilt_left",
+            "orientation": "left-tilted wall relic",
+            "scale": 0.94,
+            "x_shift": -0.35,
+            "y_shift": 0.25,
+            "z_scale": 0.82,
+            "gui_rotation": [30, 210, 0],
+            "fixed_rotation": [0, 168, 0],
+            "itemdisplay": "ItemDisplay.Transform.HEAD",
+        },
+        {
+            "name": "wall_tilt_right",
+            "orientation": "right-tilted wall relic",
+            "scale": 0.94,
+            "x_shift": 0.35,
+            "y_shift": 0.25,
+            "z_scale": 0.82,
+            "gui_rotation": [30, 240, 0],
+            "fixed_rotation": [0, 192, 0],
+            "itemdisplay": "ItemDisplay.Transform.HEAD",
+        },
+        {
+            "name": "tabletop_low",
+            "orientation": "low tabletop object",
+            "scale": 0.86,
+            "x_shift": 0.0,
+            "y_shift": -0.45,
+            "z_scale": 1.25,
+            "gui_rotation": [42, 225, 0],
+            "fixed_rotation": [8, 180, 0],
+            "itemdisplay": "ItemDisplay.Transform.GROUND",
+        },
+        {
+            "name": "tall_showcase",
+            "orientation": "tall glass-case object",
+            "scale": 1.08,
+            "x_shift": 0.0,
+            "y_shift": 0.45,
+            "z_scale": 0.9,
+            "gui_rotation": [25, 220, 0],
+            "fixed_rotation": [0, 180, 0],
+            "itemdisplay": "ItemDisplay.Transform.FIXED",
+        },
+        {
+            "name": "handheld_diagonal",
+            "orientation": "diagonal handheld relic",
+            "scale": 0.9,
+            "x_shift": 0.0,
+            "y_shift": 0.0,
+            "z_scale": 0.88,
+            "gui_rotation": [35, 235, 12],
+            "fixed_rotation": [0, 205, 0],
+            "itemdisplay": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
+        },
+    ]
+    bulky_shapes = {"bag", "box", "box_lens", "controller", "plush", "lamp", "bottle"}
+    flat_shapes = {"thin_rect", "framed_square", "photo", "ticket", "card", "wide_flat", "screen"}
+    profile = dict(profiles[variant % len(profiles)])
+    if shape in bulky_shapes and profile["name"].startswith("wall_tilt"):
+        profile = dict(profiles[0 if variant % 2 == 0 else 4])
+    if shape in flat_shapes and profile["name"] == "tabletop_low":
+        profile = dict(profiles[1 + (variant % 2)])
+    return profile
+
+
+def transform_element(from_, to_, profile, variant):
+    scale = profile["scale"]
+    z_scale = profile["z_scale"]
+    x_shift = profile["x_shift"]
+    y_shift = profile["y_shift"]
+    depth_bias = ((variant % 5) - 2) * 0.08
+
+    def transform_point(point):
+        x, y, z = point
+        nx = 8 + (x - 8) * scale + x_shift
+        ny = 8 + (y - 8) * scale + y_shift
+        nz = 8 + (z - 8) * z_scale + depth_bias
+        return [
+            round(max(0, min(16, nx)), 3),
+            round(max(0, min(16, ny)), 3),
+            round(max(0, min(16, nz)), 3),
+        ]
+
+    a = transform_point(from_)
+    b = transform_point(to_)
+    return (
+        [min(a[0], b[0]), min(a[1], b[1]), min(a[2], b[2])],
+        [max(a[0], b[0]), max(a[1], b[1]), max(a[2], b[2])],
+    )
+
+
+def element_model(shape, texture_ref, variant):
+    profile = model_variant_profile(shape, variant)
     displays = {
-        "gui": {"rotation": [30, 225, 0], "translation": [0, 0, 0], "scale": [0.9, 0.9, 0.9]},
+        "gui": {"rotation": profile["gui_rotation"], "translation": [0, 0, 0], "scale": [0.9, 0.9, 0.9]},
         "ground": {"rotation": [0, 0, 0], "translation": [0, 3, 0], "scale": [0.35, 0.35, 0.35]},
-        "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [0.7, 0.7, 0.7]},
+        "fixed": {"rotation": profile["fixed_rotation"], "translation": [0, 0, 0], "scale": [0.7, 0.7, 0.7]},
         "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.38, 0.38, 0.38]},
         "firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 2, 0], "scale": [0.4, 0.4, 0.4]},
     }
@@ -196,19 +330,27 @@ def element_model(kind, texture_ref):
         "umbrella": [([3, 9, 5], [13, 13, 9]), ([8, 3, 6], [9, 9, 8])],
     }
     elements = []
-    for from_, to_ in shape_elements.get(kind, shape_elements["box"]):
-        elements.append(
-            {
-                "from": from_,
-                "to": to_,
-                "faces": {
-                    face: {"texture": "#all"}
-                    for face in ["north", "south", "east", "west", "up", "down"]
-                },
+    for index, (from_, to_) in enumerate(shape_elements.get(shape, shape_elements["box"])):
+        adjusted_from, adjusted_to = transform_element(from_, to_, profile, variant)
+        element = {
+            "from": adjusted_from,
+            "to": adjusted_to,
+            "faces": {
+                face: {"texture": "#all"}
+                for face in ["north", "south", "east", "west", "up", "down"]
+            },
+        }
+        if profile["name"].startswith("wall_tilt") and index == 0:
+            element["rotation"] = {
+                "origin": [8, 8, 8],
+                "axis": "y",
+                "angle": -22.5 if profile["name"].endswith("left") else 22.5,
+                "rescale": True,
             }
-        )
+        elements.append(element)
     return {
         "credit": "Generated by AfterBlock Museum texture pipeline",
+        "afterblock_profile": profile,
         "textures": {"all": texture_ref, "particle": texture_ref},
         "elements": elements,
         "display": displays,
@@ -251,10 +393,12 @@ def build_gallery(manifest, root):
         )
         cards.append(
             f"<article data-kind='{item['kind']}' data-shape='{item['shape']}' "
-            f"data-text='{item['label'].lower()} {item['kind']} {item['shape']} {item['custom_model_data']}'>"
+            f"data-profile='{item['model_profile']}' "
+            f"data-text='{item['label'].lower()} {item['kind']} {item['shape']} {item['model_profile']} {item['orientation']} {item['custom_model_data']}'>"
             f"<img src='previews/{item['id']}.png' alt='{item['label']}'>"
             f"<strong>{item['label']}</strong>"
             f"<span>{item['kind']} | {item['shape']} | CMD {item['custom_model_data']}</span>"
+            f"<span>{item['model_profile']} | {item['orientation']}</span>"
             f"<code>{item['model']}</code>"
             f"<button data-command=\"{give_command}\">Copy /give</button>"
             "</article>"
@@ -291,11 +435,11 @@ def build_gallery(manifest, root):
 <body>
   <header>
     <h1>AfterBlock Texture Gallery</h1>
-    <div>{len(manifest)} generated item textures and 3D model JSONs. Every card has a PNG preview, model path, shape, and CustomModelData command.</div>
+    <div>{len(manifest)} generated item textures and 3D model JSONs. Every card has a PNG preview, shape, orientation profile, and CustomModelData command.</div>
     <div class="controls">
-      <input id="search" placeholder="Search label, kind, shape, or custom model data">
+      <input id="search" placeholder="Search label, kind, shape, model profile, orientation, or custom model data">
       <div class="filters">{''.join(kind_buttons)}</div>
-      <div class="stats"><span id="visible">{len(manifest)}</span> visible / {len(manifest)} total | {len(kinds)} kinds | {len(shapes)} model shapes</div>
+      <div class="stats"><span id="visible">{len(manifest)}</span> visible / {len(manifest)} total | {len(kinds)} kinds | {len(shapes)} model shapes | {len({item['model_profile'] for item in manifest})} display profiles</div>
     </div>
   </header>
   <main class="grid">{''.join(cards)}</main>
@@ -343,8 +487,10 @@ def build_gallery(manifest, root):
             "total_items": len(manifest),
             "total_kinds": len(kinds),
             "total_shapes": len(shapes),
+            "total_model_profiles": len({item["model_profile"] for item in manifest}),
             "kind_counts": kind_counts,
             "shapes": shapes,
+            "model_profiles": sorted({item["model_profile"] for item in manifest}),
             "custom_model_data_range": [
                 min(item["custom_model_data"] for item in manifest),
                 max(item["custom_model_data"] for item in manifest),
@@ -395,7 +541,7 @@ def main():
         img.save(loose / loose_name)
         img.save(texture_root / f"{item_id}.png")
         texture_ref = f"minecraft:item/afterblock/{item_id}"
-        model = element_model(shape, texture_ref)
+        model = element_model(shape, texture_ref, variant)
         write_json(model_root / f"{item_id}.json", model)
         custom_model_data = CUSTOM_MODEL_BASE + i + 1
         overrides.append({"predicate": {"custom_model_data": custom_model_data}, "model": f"minecraft:item/afterblock/{item_id}"})
@@ -411,7 +557,11 @@ def main():
                 "model": f"assets/minecraft/models/item/afterblock/{item_id}.json",
                 "custom_model_data": custom_model_data,
                 "recommended_item": "minecraft:paper",
-                "display_strategy": "3D item model with GUI, ground, fixed, first-person, and third-person transforms",
+                "model_profile": model["afterblock_profile"]["name"],
+                "orientation": model["afterblock_profile"]["orientation"],
+                "itemdisplay_transform": model["afterblock_profile"]["itemdisplay"],
+                "element_count": len(model["elements"]),
+                "display_strategy": "Per-relic 3D item model with variant display pose, GUI, ground, fixed, first-person, and third-person transforms",
             }
         )
 
@@ -438,8 +588,10 @@ def main():
     (Path("assets/afterblock_textures/README.md")).write_text(
         "# AfterBlock generated texture set\n\n"
         f"Generated {len(manifest)} Minecraft-style item textures, 3D item model JSON files, "
-        "a resource-pack skeleton, contact sheets, and a browser gallery.\n\n"
+        "variant display profiles, a resource-pack skeleton, contact sheets, and a browser gallery.\n\n"
         "- Gallery: `assets/afterblock_textures/gallery/index.html`\n"
+        "- Report: `assets/afterblock_textures/gallery/library_report.json`\n"
+        "- Contact sheets: `assets/afterblock_textures/gallery/contact_sheet_01.png` through `assets/afterblock_textures/gallery/contact_sheet_24.png`\n"
         "- Resource pack: `resource-pack/AfterBlockMuseum/`\n"
         "- Manifest: `assets/afterblock_textures/afterblock_manifest.json`\n",
         encoding="utf-8",

@@ -40,7 +40,8 @@ Most hackathon apps stop at chat or image generation. AfterBlock turns language 
 - **Resonance-based:** curation score replaces market/auction language.
 - **Off-brand:** the Gradio app feels like a Minecraft museum terminal.
 - **Rendered preview:** a floor-map image shows the museum populated with 100 demo artifacts.
-- **Texture path:** 1,200 generated PNG textures plus 1,200 3D item model JSONs are generated for a Minecraft resource pack.
+- **Texture path:** 2,400 generated PNG textures plus 2,400 3D item model JSONs are generated for a Minecraft resource pack.
+- **Texture review links:** see `docs/TEXTURE_LINKS.md` for the searchable gallery, contact sheets, proofs, manifest, and resource-pack URLs.
 - **Animated:** each prompt becomes a 10-frame artifact, not a static image.
 - **Grows:** artifacts unlock stages from seed sketch to server myth based on value and mutation.
 - **Collective:** many prompts become one shared moving canvas, not isolated images.

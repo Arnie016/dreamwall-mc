@@ -26,7 +26,7 @@ This file records how Codex was used to build the hackathon entry.
 - Upgraded Living Moving Canvas into an animated wall: stable Minecraft coordinates, pulsing timeline frames, visible fusion links, evolution events, and a clearer Thousand Token Wood demo runbook.
 - Added per-tile Minecraft origins/bounds and documented the Paper bridge path for placing Living Canvas tiles and representing motion through particles, map updates, or block-frame updates.
 - Reframed the project as DreamWall: AfterBlock Museum with `dreamwall.museum.v1`, deterministic hall placement, curation scores, artifact spirits, passport cards, seeded relic demos, museum-terminal UI, and a GitHub Actions Paper plugin build workflow.
-- Expanded AfterBlock assets into a resource-pack pipeline: 1,200 generated item textures, 1,200 3D model JSONs, custom model data overrides, contact-sheet screenshots, a browser gallery, and a `/dreamwall demo` Paper command for an in-game pedestal proof.
+- Expanded AfterBlock assets into a resource-pack pipeline: 2,400 generated item textures, 2,400 3D model JSONs, custom model data overrides, contact-sheet screenshots, a browser gallery, and a `/dreamwall demo` Paper command for an in-game pedestal proof.
 - Added `/dreamwall import` and `/dreamwall import here` to the Paper bridge. The plugin now calls the live Gradio `curate_artifact` endpoint, parses `dreamwall.museum.v1`, and places a packet-derived pedestal/sign/item in Minecraft.
 - Added Gson shading plus explicit Maven Central resolution so the Paper jar compiles into a self-contained PebbleHost-friendly plugin.
 - Verified the shaded jar locally with temporary Maven 3.9.9 and prepared an ignored deploy bundle at `dist/pebblehost/` with the plugin jar, `AfterBlockMuseum.zip`, and hashes.
@@ -34,3 +34,4 @@ This file records how Codex was used to build the hackathon entry.
 - Upgraded `/dreamwall demo` and `/dreamwall import` to spawn an `ItemDisplay` entity above the pedestal so the generated 3D custom model is visible in-world after the resource pack is accepted.
 - Verified the plugin in a temporary Paper 1.21.4 server on Java 21: DreamWall loaded, `/dreamwall fetch` reached the live Space, `/dreamwall pack` printed the public pack URL/SHA1, and the server stopped cleanly.
 - Polished the Gradio demo for clarity: the museum now renders a detailed 9-hall isometric preview with 100 labeled relic placements, 40 everyday object families, selected-relic metadata, and click-to-run secondary demos instead of cluttered auto-filled sections.
+- Regenerated the texture pack to 2,400 relic items across 40 object families, 33 model shapes, six per-item display profiles, 24 contact sheets, and updated the Paper resource-pack SHA1 to the new `AfterBlockMuseum.zip`.

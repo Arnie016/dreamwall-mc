@@ -7203,6 +7203,7206 @@
         "custom_model_data": 731200
       },
       "model": "minecraft:item/afterblock/afterblock_1200"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731201
+      },
+      "model": "minecraft:item/afterblock/afterblock_1201"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731202
+      },
+      "model": "minecraft:item/afterblock/afterblock_1202"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731203
+      },
+      "model": "minecraft:item/afterblock/afterblock_1203"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731204
+      },
+      "model": "minecraft:item/afterblock/afterblock_1204"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731205
+      },
+      "model": "minecraft:item/afterblock/afterblock_1205"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731206
+      },
+      "model": "minecraft:item/afterblock/afterblock_1206"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731207
+      },
+      "model": "minecraft:item/afterblock/afterblock_1207"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731208
+      },
+      "model": "minecraft:item/afterblock/afterblock_1208"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731209
+      },
+      "model": "minecraft:item/afterblock/afterblock_1209"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731210
+      },
+      "model": "minecraft:item/afterblock/afterblock_1210"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731211
+      },
+      "model": "minecraft:item/afterblock/afterblock_1211"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731212
+      },
+      "model": "minecraft:item/afterblock/afterblock_1212"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731213
+      },
+      "model": "minecraft:item/afterblock/afterblock_1213"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731214
+      },
+      "model": "minecraft:item/afterblock/afterblock_1214"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731215
+      },
+      "model": "minecraft:item/afterblock/afterblock_1215"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731216
+      },
+      "model": "minecraft:item/afterblock/afterblock_1216"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731217
+      },
+      "model": "minecraft:item/afterblock/afterblock_1217"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731218
+      },
+      "model": "minecraft:item/afterblock/afterblock_1218"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731219
+      },
+      "model": "minecraft:item/afterblock/afterblock_1219"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731220
+      },
+      "model": "minecraft:item/afterblock/afterblock_1220"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731221
+      },
+      "model": "minecraft:item/afterblock/afterblock_1221"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731222
+      },
+      "model": "minecraft:item/afterblock/afterblock_1222"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731223
+      },
+      "model": "minecraft:item/afterblock/afterblock_1223"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731224
+      },
+      "model": "minecraft:item/afterblock/afterblock_1224"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731225
+      },
+      "model": "minecraft:item/afterblock/afterblock_1225"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731226
+      },
+      "model": "minecraft:item/afterblock/afterblock_1226"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731227
+      },
+      "model": "minecraft:item/afterblock/afterblock_1227"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731228
+      },
+      "model": "minecraft:item/afterblock/afterblock_1228"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731229
+      },
+      "model": "minecraft:item/afterblock/afterblock_1229"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731230
+      },
+      "model": "minecraft:item/afterblock/afterblock_1230"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731231
+      },
+      "model": "minecraft:item/afterblock/afterblock_1231"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731232
+      },
+      "model": "minecraft:item/afterblock/afterblock_1232"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731233
+      },
+      "model": "minecraft:item/afterblock/afterblock_1233"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731234
+      },
+      "model": "minecraft:item/afterblock/afterblock_1234"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731235
+      },
+      "model": "minecraft:item/afterblock/afterblock_1235"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731236
+      },
+      "model": "minecraft:item/afterblock/afterblock_1236"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731237
+      },
+      "model": "minecraft:item/afterblock/afterblock_1237"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731238
+      },
+      "model": "minecraft:item/afterblock/afterblock_1238"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731239
+      },
+      "model": "minecraft:item/afterblock/afterblock_1239"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731240
+      },
+      "model": "minecraft:item/afterblock/afterblock_1240"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731241
+      },
+      "model": "minecraft:item/afterblock/afterblock_1241"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731242
+      },
+      "model": "minecraft:item/afterblock/afterblock_1242"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731243
+      },
+      "model": "minecraft:item/afterblock/afterblock_1243"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731244
+      },
+      "model": "minecraft:item/afterblock/afterblock_1244"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731245
+      },
+      "model": "minecraft:item/afterblock/afterblock_1245"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731246
+      },
+      "model": "minecraft:item/afterblock/afterblock_1246"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731247
+      },
+      "model": "minecraft:item/afterblock/afterblock_1247"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731248
+      },
+      "model": "minecraft:item/afterblock/afterblock_1248"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731249
+      },
+      "model": "minecraft:item/afterblock/afterblock_1249"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731250
+      },
+      "model": "minecraft:item/afterblock/afterblock_1250"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731251
+      },
+      "model": "minecraft:item/afterblock/afterblock_1251"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731252
+      },
+      "model": "minecraft:item/afterblock/afterblock_1252"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731253
+      },
+      "model": "minecraft:item/afterblock/afterblock_1253"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731254
+      },
+      "model": "minecraft:item/afterblock/afterblock_1254"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731255
+      },
+      "model": "minecraft:item/afterblock/afterblock_1255"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731256
+      },
+      "model": "minecraft:item/afterblock/afterblock_1256"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731257
+      },
+      "model": "minecraft:item/afterblock/afterblock_1257"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731258
+      },
+      "model": "minecraft:item/afterblock/afterblock_1258"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731259
+      },
+      "model": "minecraft:item/afterblock/afterblock_1259"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731260
+      },
+      "model": "minecraft:item/afterblock/afterblock_1260"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731261
+      },
+      "model": "minecraft:item/afterblock/afterblock_1261"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731262
+      },
+      "model": "minecraft:item/afterblock/afterblock_1262"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731263
+      },
+      "model": "minecraft:item/afterblock/afterblock_1263"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731264
+      },
+      "model": "minecraft:item/afterblock/afterblock_1264"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731265
+      },
+      "model": "minecraft:item/afterblock/afterblock_1265"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731266
+      },
+      "model": "minecraft:item/afterblock/afterblock_1266"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731267
+      },
+      "model": "minecraft:item/afterblock/afterblock_1267"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731268
+      },
+      "model": "minecraft:item/afterblock/afterblock_1268"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731269
+      },
+      "model": "minecraft:item/afterblock/afterblock_1269"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731270
+      },
+      "model": "minecraft:item/afterblock/afterblock_1270"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731271
+      },
+      "model": "minecraft:item/afterblock/afterblock_1271"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731272
+      },
+      "model": "minecraft:item/afterblock/afterblock_1272"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731273
+      },
+      "model": "minecraft:item/afterblock/afterblock_1273"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731274
+      },
+      "model": "minecraft:item/afterblock/afterblock_1274"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731275
+      },
+      "model": "minecraft:item/afterblock/afterblock_1275"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731276
+      },
+      "model": "minecraft:item/afterblock/afterblock_1276"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731277
+      },
+      "model": "minecraft:item/afterblock/afterblock_1277"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731278
+      },
+      "model": "minecraft:item/afterblock/afterblock_1278"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731279
+      },
+      "model": "minecraft:item/afterblock/afterblock_1279"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731280
+      },
+      "model": "minecraft:item/afterblock/afterblock_1280"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731281
+      },
+      "model": "minecraft:item/afterblock/afterblock_1281"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731282
+      },
+      "model": "minecraft:item/afterblock/afterblock_1282"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731283
+      },
+      "model": "minecraft:item/afterblock/afterblock_1283"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731284
+      },
+      "model": "minecraft:item/afterblock/afterblock_1284"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731285
+      },
+      "model": "minecraft:item/afterblock/afterblock_1285"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731286
+      },
+      "model": "minecraft:item/afterblock/afterblock_1286"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731287
+      },
+      "model": "minecraft:item/afterblock/afterblock_1287"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731288
+      },
+      "model": "minecraft:item/afterblock/afterblock_1288"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731289
+      },
+      "model": "minecraft:item/afterblock/afterblock_1289"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731290
+      },
+      "model": "minecraft:item/afterblock/afterblock_1290"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731291
+      },
+      "model": "minecraft:item/afterblock/afterblock_1291"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731292
+      },
+      "model": "minecraft:item/afterblock/afterblock_1292"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731293
+      },
+      "model": "minecraft:item/afterblock/afterblock_1293"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731294
+      },
+      "model": "minecraft:item/afterblock/afterblock_1294"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731295
+      },
+      "model": "minecraft:item/afterblock/afterblock_1295"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731296
+      },
+      "model": "minecraft:item/afterblock/afterblock_1296"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731297
+      },
+      "model": "minecraft:item/afterblock/afterblock_1297"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731298
+      },
+      "model": "minecraft:item/afterblock/afterblock_1298"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731299
+      },
+      "model": "minecraft:item/afterblock/afterblock_1299"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731300
+      },
+      "model": "minecraft:item/afterblock/afterblock_1300"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731301
+      },
+      "model": "minecraft:item/afterblock/afterblock_1301"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731302
+      },
+      "model": "minecraft:item/afterblock/afterblock_1302"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731303
+      },
+      "model": "minecraft:item/afterblock/afterblock_1303"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731304
+      },
+      "model": "minecraft:item/afterblock/afterblock_1304"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731305
+      },
+      "model": "minecraft:item/afterblock/afterblock_1305"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731306
+      },
+      "model": "minecraft:item/afterblock/afterblock_1306"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731307
+      },
+      "model": "minecraft:item/afterblock/afterblock_1307"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731308
+      },
+      "model": "minecraft:item/afterblock/afterblock_1308"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731309
+      },
+      "model": "minecraft:item/afterblock/afterblock_1309"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731310
+      },
+      "model": "minecraft:item/afterblock/afterblock_1310"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731311
+      },
+      "model": "minecraft:item/afterblock/afterblock_1311"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731312
+      },
+      "model": "minecraft:item/afterblock/afterblock_1312"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731313
+      },
+      "model": "minecraft:item/afterblock/afterblock_1313"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731314
+      },
+      "model": "minecraft:item/afterblock/afterblock_1314"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731315
+      },
+      "model": "minecraft:item/afterblock/afterblock_1315"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731316
+      },
+      "model": "minecraft:item/afterblock/afterblock_1316"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731317
+      },
+      "model": "minecraft:item/afterblock/afterblock_1317"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731318
+      },
+      "model": "minecraft:item/afterblock/afterblock_1318"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731319
+      },
+      "model": "minecraft:item/afterblock/afterblock_1319"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731320
+      },
+      "model": "minecraft:item/afterblock/afterblock_1320"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731321
+      },
+      "model": "minecraft:item/afterblock/afterblock_1321"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731322
+      },
+      "model": "minecraft:item/afterblock/afterblock_1322"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731323
+      },
+      "model": "minecraft:item/afterblock/afterblock_1323"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731324
+      },
+      "model": "minecraft:item/afterblock/afterblock_1324"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731325
+      },
+      "model": "minecraft:item/afterblock/afterblock_1325"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731326
+      },
+      "model": "minecraft:item/afterblock/afterblock_1326"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731327
+      },
+      "model": "minecraft:item/afterblock/afterblock_1327"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731328
+      },
+      "model": "minecraft:item/afterblock/afterblock_1328"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731329
+      },
+      "model": "minecraft:item/afterblock/afterblock_1329"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731330
+      },
+      "model": "minecraft:item/afterblock/afterblock_1330"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731331
+      },
+      "model": "minecraft:item/afterblock/afterblock_1331"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731332
+      },
+      "model": "minecraft:item/afterblock/afterblock_1332"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731333
+      },
+      "model": "minecraft:item/afterblock/afterblock_1333"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731334
+      },
+      "model": "minecraft:item/afterblock/afterblock_1334"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731335
+      },
+      "model": "minecraft:item/afterblock/afterblock_1335"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731336
+      },
+      "model": "minecraft:item/afterblock/afterblock_1336"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731337
+      },
+      "model": "minecraft:item/afterblock/afterblock_1337"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731338
+      },
+      "model": "minecraft:item/afterblock/afterblock_1338"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731339
+      },
+      "model": "minecraft:item/afterblock/afterblock_1339"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731340
+      },
+      "model": "minecraft:item/afterblock/afterblock_1340"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731341
+      },
+      "model": "minecraft:item/afterblock/afterblock_1341"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731342
+      },
+      "model": "minecraft:item/afterblock/afterblock_1342"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731343
+      },
+      "model": "minecraft:item/afterblock/afterblock_1343"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731344
+      },
+      "model": "minecraft:item/afterblock/afterblock_1344"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731345
+      },
+      "model": "minecraft:item/afterblock/afterblock_1345"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731346
+      },
+      "model": "minecraft:item/afterblock/afterblock_1346"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731347
+      },
+      "model": "minecraft:item/afterblock/afterblock_1347"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731348
+      },
+      "model": "minecraft:item/afterblock/afterblock_1348"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731349
+      },
+      "model": "minecraft:item/afterblock/afterblock_1349"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731350
+      },
+      "model": "minecraft:item/afterblock/afterblock_1350"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731351
+      },
+      "model": "minecraft:item/afterblock/afterblock_1351"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731352
+      },
+      "model": "minecraft:item/afterblock/afterblock_1352"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731353
+      },
+      "model": "minecraft:item/afterblock/afterblock_1353"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731354
+      },
+      "model": "minecraft:item/afterblock/afterblock_1354"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731355
+      },
+      "model": "minecraft:item/afterblock/afterblock_1355"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731356
+      },
+      "model": "minecraft:item/afterblock/afterblock_1356"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731357
+      },
+      "model": "minecraft:item/afterblock/afterblock_1357"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731358
+      },
+      "model": "minecraft:item/afterblock/afterblock_1358"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731359
+      },
+      "model": "minecraft:item/afterblock/afterblock_1359"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731360
+      },
+      "model": "minecraft:item/afterblock/afterblock_1360"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731361
+      },
+      "model": "minecraft:item/afterblock/afterblock_1361"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731362
+      },
+      "model": "minecraft:item/afterblock/afterblock_1362"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731363
+      },
+      "model": "minecraft:item/afterblock/afterblock_1363"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731364
+      },
+      "model": "minecraft:item/afterblock/afterblock_1364"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731365
+      },
+      "model": "minecraft:item/afterblock/afterblock_1365"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731366
+      },
+      "model": "minecraft:item/afterblock/afterblock_1366"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731367
+      },
+      "model": "minecraft:item/afterblock/afterblock_1367"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731368
+      },
+      "model": "minecraft:item/afterblock/afterblock_1368"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731369
+      },
+      "model": "minecraft:item/afterblock/afterblock_1369"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731370
+      },
+      "model": "minecraft:item/afterblock/afterblock_1370"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731371
+      },
+      "model": "minecraft:item/afterblock/afterblock_1371"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731372
+      },
+      "model": "minecraft:item/afterblock/afterblock_1372"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731373
+      },
+      "model": "minecraft:item/afterblock/afterblock_1373"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731374
+      },
+      "model": "minecraft:item/afterblock/afterblock_1374"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731375
+      },
+      "model": "minecraft:item/afterblock/afterblock_1375"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731376
+      },
+      "model": "minecraft:item/afterblock/afterblock_1376"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731377
+      },
+      "model": "minecraft:item/afterblock/afterblock_1377"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731378
+      },
+      "model": "minecraft:item/afterblock/afterblock_1378"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731379
+      },
+      "model": "minecraft:item/afterblock/afterblock_1379"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731380
+      },
+      "model": "minecraft:item/afterblock/afterblock_1380"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731381
+      },
+      "model": "minecraft:item/afterblock/afterblock_1381"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731382
+      },
+      "model": "minecraft:item/afterblock/afterblock_1382"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731383
+      },
+      "model": "minecraft:item/afterblock/afterblock_1383"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731384
+      },
+      "model": "minecraft:item/afterblock/afterblock_1384"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731385
+      },
+      "model": "minecraft:item/afterblock/afterblock_1385"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731386
+      },
+      "model": "minecraft:item/afterblock/afterblock_1386"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731387
+      },
+      "model": "minecraft:item/afterblock/afterblock_1387"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731388
+      },
+      "model": "minecraft:item/afterblock/afterblock_1388"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731389
+      },
+      "model": "minecraft:item/afterblock/afterblock_1389"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731390
+      },
+      "model": "minecraft:item/afterblock/afterblock_1390"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731391
+      },
+      "model": "minecraft:item/afterblock/afterblock_1391"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731392
+      },
+      "model": "minecraft:item/afterblock/afterblock_1392"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731393
+      },
+      "model": "minecraft:item/afterblock/afterblock_1393"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731394
+      },
+      "model": "minecraft:item/afterblock/afterblock_1394"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731395
+      },
+      "model": "minecraft:item/afterblock/afterblock_1395"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731396
+      },
+      "model": "minecraft:item/afterblock/afterblock_1396"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731397
+      },
+      "model": "minecraft:item/afterblock/afterblock_1397"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731398
+      },
+      "model": "minecraft:item/afterblock/afterblock_1398"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731399
+      },
+      "model": "minecraft:item/afterblock/afterblock_1399"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731400
+      },
+      "model": "minecraft:item/afterblock/afterblock_1400"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731401
+      },
+      "model": "minecraft:item/afterblock/afterblock_1401"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731402
+      },
+      "model": "minecraft:item/afterblock/afterblock_1402"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731403
+      },
+      "model": "minecraft:item/afterblock/afterblock_1403"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731404
+      },
+      "model": "minecraft:item/afterblock/afterblock_1404"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731405
+      },
+      "model": "minecraft:item/afterblock/afterblock_1405"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731406
+      },
+      "model": "minecraft:item/afterblock/afterblock_1406"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731407
+      },
+      "model": "minecraft:item/afterblock/afterblock_1407"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731408
+      },
+      "model": "minecraft:item/afterblock/afterblock_1408"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731409
+      },
+      "model": "minecraft:item/afterblock/afterblock_1409"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731410
+      },
+      "model": "minecraft:item/afterblock/afterblock_1410"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731411
+      },
+      "model": "minecraft:item/afterblock/afterblock_1411"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731412
+      },
+      "model": "minecraft:item/afterblock/afterblock_1412"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731413
+      },
+      "model": "minecraft:item/afterblock/afterblock_1413"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731414
+      },
+      "model": "minecraft:item/afterblock/afterblock_1414"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731415
+      },
+      "model": "minecraft:item/afterblock/afterblock_1415"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731416
+      },
+      "model": "minecraft:item/afterblock/afterblock_1416"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731417
+      },
+      "model": "minecraft:item/afterblock/afterblock_1417"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731418
+      },
+      "model": "minecraft:item/afterblock/afterblock_1418"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731419
+      },
+      "model": "minecraft:item/afterblock/afterblock_1419"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731420
+      },
+      "model": "minecraft:item/afterblock/afterblock_1420"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731421
+      },
+      "model": "minecraft:item/afterblock/afterblock_1421"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731422
+      },
+      "model": "minecraft:item/afterblock/afterblock_1422"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731423
+      },
+      "model": "minecraft:item/afterblock/afterblock_1423"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731424
+      },
+      "model": "minecraft:item/afterblock/afterblock_1424"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731425
+      },
+      "model": "minecraft:item/afterblock/afterblock_1425"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731426
+      },
+      "model": "minecraft:item/afterblock/afterblock_1426"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731427
+      },
+      "model": "minecraft:item/afterblock/afterblock_1427"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731428
+      },
+      "model": "minecraft:item/afterblock/afterblock_1428"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731429
+      },
+      "model": "minecraft:item/afterblock/afterblock_1429"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731430
+      },
+      "model": "minecraft:item/afterblock/afterblock_1430"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731431
+      },
+      "model": "minecraft:item/afterblock/afterblock_1431"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731432
+      },
+      "model": "minecraft:item/afterblock/afterblock_1432"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731433
+      },
+      "model": "minecraft:item/afterblock/afterblock_1433"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731434
+      },
+      "model": "minecraft:item/afterblock/afterblock_1434"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731435
+      },
+      "model": "minecraft:item/afterblock/afterblock_1435"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731436
+      },
+      "model": "minecraft:item/afterblock/afterblock_1436"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731437
+      },
+      "model": "minecraft:item/afterblock/afterblock_1437"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731438
+      },
+      "model": "minecraft:item/afterblock/afterblock_1438"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731439
+      },
+      "model": "minecraft:item/afterblock/afterblock_1439"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731440
+      },
+      "model": "minecraft:item/afterblock/afterblock_1440"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731441
+      },
+      "model": "minecraft:item/afterblock/afterblock_1441"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731442
+      },
+      "model": "minecraft:item/afterblock/afterblock_1442"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731443
+      },
+      "model": "minecraft:item/afterblock/afterblock_1443"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731444
+      },
+      "model": "minecraft:item/afterblock/afterblock_1444"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731445
+      },
+      "model": "minecraft:item/afterblock/afterblock_1445"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731446
+      },
+      "model": "minecraft:item/afterblock/afterblock_1446"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731447
+      },
+      "model": "minecraft:item/afterblock/afterblock_1447"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731448
+      },
+      "model": "minecraft:item/afterblock/afterblock_1448"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731449
+      },
+      "model": "minecraft:item/afterblock/afterblock_1449"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731450
+      },
+      "model": "minecraft:item/afterblock/afterblock_1450"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731451
+      },
+      "model": "minecraft:item/afterblock/afterblock_1451"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731452
+      },
+      "model": "minecraft:item/afterblock/afterblock_1452"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731453
+      },
+      "model": "minecraft:item/afterblock/afterblock_1453"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731454
+      },
+      "model": "minecraft:item/afterblock/afterblock_1454"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731455
+      },
+      "model": "minecraft:item/afterblock/afterblock_1455"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731456
+      },
+      "model": "minecraft:item/afterblock/afterblock_1456"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731457
+      },
+      "model": "minecraft:item/afterblock/afterblock_1457"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731458
+      },
+      "model": "minecraft:item/afterblock/afterblock_1458"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731459
+      },
+      "model": "minecraft:item/afterblock/afterblock_1459"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731460
+      },
+      "model": "minecraft:item/afterblock/afterblock_1460"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731461
+      },
+      "model": "minecraft:item/afterblock/afterblock_1461"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731462
+      },
+      "model": "minecraft:item/afterblock/afterblock_1462"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731463
+      },
+      "model": "minecraft:item/afterblock/afterblock_1463"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731464
+      },
+      "model": "minecraft:item/afterblock/afterblock_1464"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731465
+      },
+      "model": "minecraft:item/afterblock/afterblock_1465"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731466
+      },
+      "model": "minecraft:item/afterblock/afterblock_1466"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731467
+      },
+      "model": "minecraft:item/afterblock/afterblock_1467"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731468
+      },
+      "model": "minecraft:item/afterblock/afterblock_1468"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731469
+      },
+      "model": "minecraft:item/afterblock/afterblock_1469"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731470
+      },
+      "model": "minecraft:item/afterblock/afterblock_1470"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731471
+      },
+      "model": "minecraft:item/afterblock/afterblock_1471"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731472
+      },
+      "model": "minecraft:item/afterblock/afterblock_1472"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731473
+      },
+      "model": "minecraft:item/afterblock/afterblock_1473"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731474
+      },
+      "model": "minecraft:item/afterblock/afterblock_1474"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731475
+      },
+      "model": "minecraft:item/afterblock/afterblock_1475"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731476
+      },
+      "model": "minecraft:item/afterblock/afterblock_1476"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731477
+      },
+      "model": "minecraft:item/afterblock/afterblock_1477"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731478
+      },
+      "model": "minecraft:item/afterblock/afterblock_1478"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731479
+      },
+      "model": "minecraft:item/afterblock/afterblock_1479"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731480
+      },
+      "model": "minecraft:item/afterblock/afterblock_1480"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731481
+      },
+      "model": "minecraft:item/afterblock/afterblock_1481"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731482
+      },
+      "model": "minecraft:item/afterblock/afterblock_1482"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731483
+      },
+      "model": "minecraft:item/afterblock/afterblock_1483"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731484
+      },
+      "model": "minecraft:item/afterblock/afterblock_1484"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731485
+      },
+      "model": "minecraft:item/afterblock/afterblock_1485"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731486
+      },
+      "model": "minecraft:item/afterblock/afterblock_1486"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731487
+      },
+      "model": "minecraft:item/afterblock/afterblock_1487"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731488
+      },
+      "model": "minecraft:item/afterblock/afterblock_1488"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731489
+      },
+      "model": "minecraft:item/afterblock/afterblock_1489"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731490
+      },
+      "model": "minecraft:item/afterblock/afterblock_1490"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731491
+      },
+      "model": "minecraft:item/afterblock/afterblock_1491"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731492
+      },
+      "model": "minecraft:item/afterblock/afterblock_1492"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731493
+      },
+      "model": "minecraft:item/afterblock/afterblock_1493"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731494
+      },
+      "model": "minecraft:item/afterblock/afterblock_1494"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731495
+      },
+      "model": "minecraft:item/afterblock/afterblock_1495"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731496
+      },
+      "model": "minecraft:item/afterblock/afterblock_1496"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731497
+      },
+      "model": "minecraft:item/afterblock/afterblock_1497"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731498
+      },
+      "model": "minecraft:item/afterblock/afterblock_1498"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731499
+      },
+      "model": "minecraft:item/afterblock/afterblock_1499"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731500
+      },
+      "model": "minecraft:item/afterblock/afterblock_1500"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731501
+      },
+      "model": "minecraft:item/afterblock/afterblock_1501"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731502
+      },
+      "model": "minecraft:item/afterblock/afterblock_1502"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731503
+      },
+      "model": "minecraft:item/afterblock/afterblock_1503"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731504
+      },
+      "model": "minecraft:item/afterblock/afterblock_1504"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731505
+      },
+      "model": "minecraft:item/afterblock/afterblock_1505"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731506
+      },
+      "model": "minecraft:item/afterblock/afterblock_1506"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731507
+      },
+      "model": "minecraft:item/afterblock/afterblock_1507"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731508
+      },
+      "model": "minecraft:item/afterblock/afterblock_1508"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731509
+      },
+      "model": "minecraft:item/afterblock/afterblock_1509"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731510
+      },
+      "model": "minecraft:item/afterblock/afterblock_1510"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731511
+      },
+      "model": "minecraft:item/afterblock/afterblock_1511"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731512
+      },
+      "model": "minecraft:item/afterblock/afterblock_1512"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731513
+      },
+      "model": "minecraft:item/afterblock/afterblock_1513"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731514
+      },
+      "model": "minecraft:item/afterblock/afterblock_1514"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731515
+      },
+      "model": "minecraft:item/afterblock/afterblock_1515"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731516
+      },
+      "model": "minecraft:item/afterblock/afterblock_1516"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731517
+      },
+      "model": "minecraft:item/afterblock/afterblock_1517"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731518
+      },
+      "model": "minecraft:item/afterblock/afterblock_1518"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731519
+      },
+      "model": "minecraft:item/afterblock/afterblock_1519"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731520
+      },
+      "model": "minecraft:item/afterblock/afterblock_1520"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731521
+      },
+      "model": "minecraft:item/afterblock/afterblock_1521"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731522
+      },
+      "model": "minecraft:item/afterblock/afterblock_1522"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731523
+      },
+      "model": "minecraft:item/afterblock/afterblock_1523"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731524
+      },
+      "model": "minecraft:item/afterblock/afterblock_1524"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731525
+      },
+      "model": "minecraft:item/afterblock/afterblock_1525"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731526
+      },
+      "model": "minecraft:item/afterblock/afterblock_1526"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731527
+      },
+      "model": "minecraft:item/afterblock/afterblock_1527"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731528
+      },
+      "model": "minecraft:item/afterblock/afterblock_1528"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731529
+      },
+      "model": "minecraft:item/afterblock/afterblock_1529"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731530
+      },
+      "model": "minecraft:item/afterblock/afterblock_1530"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731531
+      },
+      "model": "minecraft:item/afterblock/afterblock_1531"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731532
+      },
+      "model": "minecraft:item/afterblock/afterblock_1532"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731533
+      },
+      "model": "minecraft:item/afterblock/afterblock_1533"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731534
+      },
+      "model": "minecraft:item/afterblock/afterblock_1534"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731535
+      },
+      "model": "minecraft:item/afterblock/afterblock_1535"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731536
+      },
+      "model": "minecraft:item/afterblock/afterblock_1536"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731537
+      },
+      "model": "minecraft:item/afterblock/afterblock_1537"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731538
+      },
+      "model": "minecraft:item/afterblock/afterblock_1538"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731539
+      },
+      "model": "minecraft:item/afterblock/afterblock_1539"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731540
+      },
+      "model": "minecraft:item/afterblock/afterblock_1540"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731541
+      },
+      "model": "minecraft:item/afterblock/afterblock_1541"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731542
+      },
+      "model": "minecraft:item/afterblock/afterblock_1542"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731543
+      },
+      "model": "minecraft:item/afterblock/afterblock_1543"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731544
+      },
+      "model": "minecraft:item/afterblock/afterblock_1544"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731545
+      },
+      "model": "minecraft:item/afterblock/afterblock_1545"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731546
+      },
+      "model": "minecraft:item/afterblock/afterblock_1546"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731547
+      },
+      "model": "minecraft:item/afterblock/afterblock_1547"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731548
+      },
+      "model": "minecraft:item/afterblock/afterblock_1548"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731549
+      },
+      "model": "minecraft:item/afterblock/afterblock_1549"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731550
+      },
+      "model": "minecraft:item/afterblock/afterblock_1550"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731551
+      },
+      "model": "minecraft:item/afterblock/afterblock_1551"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731552
+      },
+      "model": "minecraft:item/afterblock/afterblock_1552"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731553
+      },
+      "model": "minecraft:item/afterblock/afterblock_1553"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731554
+      },
+      "model": "minecraft:item/afterblock/afterblock_1554"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731555
+      },
+      "model": "minecraft:item/afterblock/afterblock_1555"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731556
+      },
+      "model": "minecraft:item/afterblock/afterblock_1556"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731557
+      },
+      "model": "minecraft:item/afterblock/afterblock_1557"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731558
+      },
+      "model": "minecraft:item/afterblock/afterblock_1558"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731559
+      },
+      "model": "minecraft:item/afterblock/afterblock_1559"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731560
+      },
+      "model": "minecraft:item/afterblock/afterblock_1560"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731561
+      },
+      "model": "minecraft:item/afterblock/afterblock_1561"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731562
+      },
+      "model": "minecraft:item/afterblock/afterblock_1562"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731563
+      },
+      "model": "minecraft:item/afterblock/afterblock_1563"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731564
+      },
+      "model": "minecraft:item/afterblock/afterblock_1564"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731565
+      },
+      "model": "minecraft:item/afterblock/afterblock_1565"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731566
+      },
+      "model": "minecraft:item/afterblock/afterblock_1566"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731567
+      },
+      "model": "minecraft:item/afterblock/afterblock_1567"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731568
+      },
+      "model": "minecraft:item/afterblock/afterblock_1568"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731569
+      },
+      "model": "minecraft:item/afterblock/afterblock_1569"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731570
+      },
+      "model": "minecraft:item/afterblock/afterblock_1570"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731571
+      },
+      "model": "minecraft:item/afterblock/afterblock_1571"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731572
+      },
+      "model": "minecraft:item/afterblock/afterblock_1572"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731573
+      },
+      "model": "minecraft:item/afterblock/afterblock_1573"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731574
+      },
+      "model": "minecraft:item/afterblock/afterblock_1574"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731575
+      },
+      "model": "minecraft:item/afterblock/afterblock_1575"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731576
+      },
+      "model": "minecraft:item/afterblock/afterblock_1576"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731577
+      },
+      "model": "minecraft:item/afterblock/afterblock_1577"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731578
+      },
+      "model": "minecraft:item/afterblock/afterblock_1578"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731579
+      },
+      "model": "minecraft:item/afterblock/afterblock_1579"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731580
+      },
+      "model": "minecraft:item/afterblock/afterblock_1580"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731581
+      },
+      "model": "minecraft:item/afterblock/afterblock_1581"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731582
+      },
+      "model": "minecraft:item/afterblock/afterblock_1582"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731583
+      },
+      "model": "minecraft:item/afterblock/afterblock_1583"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731584
+      },
+      "model": "minecraft:item/afterblock/afterblock_1584"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731585
+      },
+      "model": "minecraft:item/afterblock/afterblock_1585"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731586
+      },
+      "model": "minecraft:item/afterblock/afterblock_1586"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731587
+      },
+      "model": "minecraft:item/afterblock/afterblock_1587"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731588
+      },
+      "model": "minecraft:item/afterblock/afterblock_1588"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731589
+      },
+      "model": "minecraft:item/afterblock/afterblock_1589"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731590
+      },
+      "model": "minecraft:item/afterblock/afterblock_1590"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731591
+      },
+      "model": "minecraft:item/afterblock/afterblock_1591"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731592
+      },
+      "model": "minecraft:item/afterblock/afterblock_1592"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731593
+      },
+      "model": "minecraft:item/afterblock/afterblock_1593"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731594
+      },
+      "model": "minecraft:item/afterblock/afterblock_1594"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731595
+      },
+      "model": "minecraft:item/afterblock/afterblock_1595"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731596
+      },
+      "model": "minecraft:item/afterblock/afterblock_1596"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731597
+      },
+      "model": "minecraft:item/afterblock/afterblock_1597"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731598
+      },
+      "model": "minecraft:item/afterblock/afterblock_1598"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731599
+      },
+      "model": "minecraft:item/afterblock/afterblock_1599"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731600
+      },
+      "model": "minecraft:item/afterblock/afterblock_1600"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731601
+      },
+      "model": "minecraft:item/afterblock/afterblock_1601"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731602
+      },
+      "model": "minecraft:item/afterblock/afterblock_1602"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731603
+      },
+      "model": "minecraft:item/afterblock/afterblock_1603"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731604
+      },
+      "model": "minecraft:item/afterblock/afterblock_1604"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731605
+      },
+      "model": "minecraft:item/afterblock/afterblock_1605"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731606
+      },
+      "model": "minecraft:item/afterblock/afterblock_1606"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731607
+      },
+      "model": "minecraft:item/afterblock/afterblock_1607"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731608
+      },
+      "model": "minecraft:item/afterblock/afterblock_1608"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731609
+      },
+      "model": "minecraft:item/afterblock/afterblock_1609"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731610
+      },
+      "model": "minecraft:item/afterblock/afterblock_1610"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731611
+      },
+      "model": "minecraft:item/afterblock/afterblock_1611"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731612
+      },
+      "model": "minecraft:item/afterblock/afterblock_1612"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731613
+      },
+      "model": "minecraft:item/afterblock/afterblock_1613"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731614
+      },
+      "model": "minecraft:item/afterblock/afterblock_1614"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731615
+      },
+      "model": "minecraft:item/afterblock/afterblock_1615"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731616
+      },
+      "model": "minecraft:item/afterblock/afterblock_1616"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731617
+      },
+      "model": "minecraft:item/afterblock/afterblock_1617"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731618
+      },
+      "model": "minecraft:item/afterblock/afterblock_1618"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731619
+      },
+      "model": "minecraft:item/afterblock/afterblock_1619"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731620
+      },
+      "model": "minecraft:item/afterblock/afterblock_1620"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731621
+      },
+      "model": "minecraft:item/afterblock/afterblock_1621"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731622
+      },
+      "model": "minecraft:item/afterblock/afterblock_1622"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731623
+      },
+      "model": "minecraft:item/afterblock/afterblock_1623"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731624
+      },
+      "model": "minecraft:item/afterblock/afterblock_1624"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731625
+      },
+      "model": "minecraft:item/afterblock/afterblock_1625"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731626
+      },
+      "model": "minecraft:item/afterblock/afterblock_1626"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731627
+      },
+      "model": "minecraft:item/afterblock/afterblock_1627"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731628
+      },
+      "model": "minecraft:item/afterblock/afterblock_1628"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731629
+      },
+      "model": "minecraft:item/afterblock/afterblock_1629"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731630
+      },
+      "model": "minecraft:item/afterblock/afterblock_1630"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731631
+      },
+      "model": "minecraft:item/afterblock/afterblock_1631"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731632
+      },
+      "model": "minecraft:item/afterblock/afterblock_1632"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731633
+      },
+      "model": "minecraft:item/afterblock/afterblock_1633"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731634
+      },
+      "model": "minecraft:item/afterblock/afterblock_1634"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731635
+      },
+      "model": "minecraft:item/afterblock/afterblock_1635"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731636
+      },
+      "model": "minecraft:item/afterblock/afterblock_1636"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731637
+      },
+      "model": "minecraft:item/afterblock/afterblock_1637"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731638
+      },
+      "model": "minecraft:item/afterblock/afterblock_1638"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731639
+      },
+      "model": "minecraft:item/afterblock/afterblock_1639"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731640
+      },
+      "model": "minecraft:item/afterblock/afterblock_1640"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731641
+      },
+      "model": "minecraft:item/afterblock/afterblock_1641"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731642
+      },
+      "model": "minecraft:item/afterblock/afterblock_1642"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731643
+      },
+      "model": "minecraft:item/afterblock/afterblock_1643"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731644
+      },
+      "model": "minecraft:item/afterblock/afterblock_1644"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731645
+      },
+      "model": "minecraft:item/afterblock/afterblock_1645"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731646
+      },
+      "model": "minecraft:item/afterblock/afterblock_1646"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731647
+      },
+      "model": "minecraft:item/afterblock/afterblock_1647"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731648
+      },
+      "model": "minecraft:item/afterblock/afterblock_1648"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731649
+      },
+      "model": "minecraft:item/afterblock/afterblock_1649"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731650
+      },
+      "model": "minecraft:item/afterblock/afterblock_1650"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731651
+      },
+      "model": "minecraft:item/afterblock/afterblock_1651"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731652
+      },
+      "model": "minecraft:item/afterblock/afterblock_1652"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731653
+      },
+      "model": "minecraft:item/afterblock/afterblock_1653"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731654
+      },
+      "model": "minecraft:item/afterblock/afterblock_1654"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731655
+      },
+      "model": "minecraft:item/afterblock/afterblock_1655"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731656
+      },
+      "model": "minecraft:item/afterblock/afterblock_1656"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731657
+      },
+      "model": "minecraft:item/afterblock/afterblock_1657"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731658
+      },
+      "model": "minecraft:item/afterblock/afterblock_1658"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731659
+      },
+      "model": "minecraft:item/afterblock/afterblock_1659"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731660
+      },
+      "model": "minecraft:item/afterblock/afterblock_1660"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731661
+      },
+      "model": "minecraft:item/afterblock/afterblock_1661"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731662
+      },
+      "model": "minecraft:item/afterblock/afterblock_1662"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731663
+      },
+      "model": "minecraft:item/afterblock/afterblock_1663"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731664
+      },
+      "model": "minecraft:item/afterblock/afterblock_1664"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731665
+      },
+      "model": "minecraft:item/afterblock/afterblock_1665"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731666
+      },
+      "model": "minecraft:item/afterblock/afterblock_1666"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731667
+      },
+      "model": "minecraft:item/afterblock/afterblock_1667"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731668
+      },
+      "model": "minecraft:item/afterblock/afterblock_1668"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731669
+      },
+      "model": "minecraft:item/afterblock/afterblock_1669"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731670
+      },
+      "model": "minecraft:item/afterblock/afterblock_1670"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731671
+      },
+      "model": "minecraft:item/afterblock/afterblock_1671"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731672
+      },
+      "model": "minecraft:item/afterblock/afterblock_1672"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731673
+      },
+      "model": "minecraft:item/afterblock/afterblock_1673"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731674
+      },
+      "model": "minecraft:item/afterblock/afterblock_1674"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731675
+      },
+      "model": "minecraft:item/afterblock/afterblock_1675"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731676
+      },
+      "model": "minecraft:item/afterblock/afterblock_1676"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731677
+      },
+      "model": "minecraft:item/afterblock/afterblock_1677"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731678
+      },
+      "model": "minecraft:item/afterblock/afterblock_1678"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731679
+      },
+      "model": "minecraft:item/afterblock/afterblock_1679"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731680
+      },
+      "model": "minecraft:item/afterblock/afterblock_1680"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731681
+      },
+      "model": "minecraft:item/afterblock/afterblock_1681"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731682
+      },
+      "model": "minecraft:item/afterblock/afterblock_1682"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731683
+      },
+      "model": "minecraft:item/afterblock/afterblock_1683"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731684
+      },
+      "model": "minecraft:item/afterblock/afterblock_1684"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731685
+      },
+      "model": "minecraft:item/afterblock/afterblock_1685"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731686
+      },
+      "model": "minecraft:item/afterblock/afterblock_1686"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731687
+      },
+      "model": "minecraft:item/afterblock/afterblock_1687"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731688
+      },
+      "model": "minecraft:item/afterblock/afterblock_1688"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731689
+      },
+      "model": "minecraft:item/afterblock/afterblock_1689"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731690
+      },
+      "model": "minecraft:item/afterblock/afterblock_1690"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731691
+      },
+      "model": "minecraft:item/afterblock/afterblock_1691"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731692
+      },
+      "model": "minecraft:item/afterblock/afterblock_1692"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731693
+      },
+      "model": "minecraft:item/afterblock/afterblock_1693"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731694
+      },
+      "model": "minecraft:item/afterblock/afterblock_1694"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731695
+      },
+      "model": "minecraft:item/afterblock/afterblock_1695"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731696
+      },
+      "model": "minecraft:item/afterblock/afterblock_1696"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731697
+      },
+      "model": "minecraft:item/afterblock/afterblock_1697"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731698
+      },
+      "model": "minecraft:item/afterblock/afterblock_1698"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731699
+      },
+      "model": "minecraft:item/afterblock/afterblock_1699"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731700
+      },
+      "model": "minecraft:item/afterblock/afterblock_1700"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731701
+      },
+      "model": "minecraft:item/afterblock/afterblock_1701"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731702
+      },
+      "model": "minecraft:item/afterblock/afterblock_1702"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731703
+      },
+      "model": "minecraft:item/afterblock/afterblock_1703"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731704
+      },
+      "model": "minecraft:item/afterblock/afterblock_1704"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731705
+      },
+      "model": "minecraft:item/afterblock/afterblock_1705"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731706
+      },
+      "model": "minecraft:item/afterblock/afterblock_1706"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731707
+      },
+      "model": "minecraft:item/afterblock/afterblock_1707"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731708
+      },
+      "model": "minecraft:item/afterblock/afterblock_1708"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731709
+      },
+      "model": "minecraft:item/afterblock/afterblock_1709"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731710
+      },
+      "model": "minecraft:item/afterblock/afterblock_1710"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731711
+      },
+      "model": "minecraft:item/afterblock/afterblock_1711"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731712
+      },
+      "model": "minecraft:item/afterblock/afterblock_1712"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731713
+      },
+      "model": "minecraft:item/afterblock/afterblock_1713"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731714
+      },
+      "model": "minecraft:item/afterblock/afterblock_1714"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731715
+      },
+      "model": "minecraft:item/afterblock/afterblock_1715"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731716
+      },
+      "model": "minecraft:item/afterblock/afterblock_1716"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731717
+      },
+      "model": "minecraft:item/afterblock/afterblock_1717"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731718
+      },
+      "model": "minecraft:item/afterblock/afterblock_1718"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731719
+      },
+      "model": "minecraft:item/afterblock/afterblock_1719"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731720
+      },
+      "model": "minecraft:item/afterblock/afterblock_1720"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731721
+      },
+      "model": "minecraft:item/afterblock/afterblock_1721"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731722
+      },
+      "model": "minecraft:item/afterblock/afterblock_1722"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731723
+      },
+      "model": "minecraft:item/afterblock/afterblock_1723"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731724
+      },
+      "model": "minecraft:item/afterblock/afterblock_1724"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731725
+      },
+      "model": "minecraft:item/afterblock/afterblock_1725"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731726
+      },
+      "model": "minecraft:item/afterblock/afterblock_1726"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731727
+      },
+      "model": "minecraft:item/afterblock/afterblock_1727"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731728
+      },
+      "model": "minecraft:item/afterblock/afterblock_1728"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731729
+      },
+      "model": "minecraft:item/afterblock/afterblock_1729"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731730
+      },
+      "model": "minecraft:item/afterblock/afterblock_1730"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731731
+      },
+      "model": "minecraft:item/afterblock/afterblock_1731"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731732
+      },
+      "model": "minecraft:item/afterblock/afterblock_1732"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731733
+      },
+      "model": "minecraft:item/afterblock/afterblock_1733"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731734
+      },
+      "model": "minecraft:item/afterblock/afterblock_1734"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731735
+      },
+      "model": "minecraft:item/afterblock/afterblock_1735"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731736
+      },
+      "model": "minecraft:item/afterblock/afterblock_1736"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731737
+      },
+      "model": "minecraft:item/afterblock/afterblock_1737"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731738
+      },
+      "model": "minecraft:item/afterblock/afterblock_1738"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731739
+      },
+      "model": "minecraft:item/afterblock/afterblock_1739"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731740
+      },
+      "model": "minecraft:item/afterblock/afterblock_1740"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731741
+      },
+      "model": "minecraft:item/afterblock/afterblock_1741"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731742
+      },
+      "model": "minecraft:item/afterblock/afterblock_1742"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731743
+      },
+      "model": "minecraft:item/afterblock/afterblock_1743"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731744
+      },
+      "model": "minecraft:item/afterblock/afterblock_1744"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731745
+      },
+      "model": "minecraft:item/afterblock/afterblock_1745"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731746
+      },
+      "model": "minecraft:item/afterblock/afterblock_1746"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731747
+      },
+      "model": "minecraft:item/afterblock/afterblock_1747"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731748
+      },
+      "model": "minecraft:item/afterblock/afterblock_1748"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731749
+      },
+      "model": "minecraft:item/afterblock/afterblock_1749"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731750
+      },
+      "model": "minecraft:item/afterblock/afterblock_1750"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731751
+      },
+      "model": "minecraft:item/afterblock/afterblock_1751"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731752
+      },
+      "model": "minecraft:item/afterblock/afterblock_1752"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731753
+      },
+      "model": "minecraft:item/afterblock/afterblock_1753"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731754
+      },
+      "model": "minecraft:item/afterblock/afterblock_1754"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731755
+      },
+      "model": "minecraft:item/afterblock/afterblock_1755"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731756
+      },
+      "model": "minecraft:item/afterblock/afterblock_1756"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731757
+      },
+      "model": "minecraft:item/afterblock/afterblock_1757"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731758
+      },
+      "model": "minecraft:item/afterblock/afterblock_1758"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731759
+      },
+      "model": "minecraft:item/afterblock/afterblock_1759"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731760
+      },
+      "model": "minecraft:item/afterblock/afterblock_1760"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731761
+      },
+      "model": "minecraft:item/afterblock/afterblock_1761"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731762
+      },
+      "model": "minecraft:item/afterblock/afterblock_1762"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731763
+      },
+      "model": "minecraft:item/afterblock/afterblock_1763"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731764
+      },
+      "model": "minecraft:item/afterblock/afterblock_1764"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731765
+      },
+      "model": "minecraft:item/afterblock/afterblock_1765"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731766
+      },
+      "model": "minecraft:item/afterblock/afterblock_1766"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731767
+      },
+      "model": "minecraft:item/afterblock/afterblock_1767"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731768
+      },
+      "model": "minecraft:item/afterblock/afterblock_1768"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731769
+      },
+      "model": "minecraft:item/afterblock/afterblock_1769"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731770
+      },
+      "model": "minecraft:item/afterblock/afterblock_1770"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731771
+      },
+      "model": "minecraft:item/afterblock/afterblock_1771"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731772
+      },
+      "model": "minecraft:item/afterblock/afterblock_1772"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731773
+      },
+      "model": "minecraft:item/afterblock/afterblock_1773"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731774
+      },
+      "model": "minecraft:item/afterblock/afterblock_1774"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731775
+      },
+      "model": "minecraft:item/afterblock/afterblock_1775"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731776
+      },
+      "model": "minecraft:item/afterblock/afterblock_1776"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731777
+      },
+      "model": "minecraft:item/afterblock/afterblock_1777"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731778
+      },
+      "model": "minecraft:item/afterblock/afterblock_1778"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731779
+      },
+      "model": "minecraft:item/afterblock/afterblock_1779"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731780
+      },
+      "model": "minecraft:item/afterblock/afterblock_1780"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731781
+      },
+      "model": "minecraft:item/afterblock/afterblock_1781"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731782
+      },
+      "model": "minecraft:item/afterblock/afterblock_1782"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731783
+      },
+      "model": "minecraft:item/afterblock/afterblock_1783"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731784
+      },
+      "model": "minecraft:item/afterblock/afterblock_1784"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731785
+      },
+      "model": "minecraft:item/afterblock/afterblock_1785"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731786
+      },
+      "model": "minecraft:item/afterblock/afterblock_1786"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731787
+      },
+      "model": "minecraft:item/afterblock/afterblock_1787"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731788
+      },
+      "model": "minecraft:item/afterblock/afterblock_1788"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731789
+      },
+      "model": "minecraft:item/afterblock/afterblock_1789"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731790
+      },
+      "model": "minecraft:item/afterblock/afterblock_1790"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731791
+      },
+      "model": "minecraft:item/afterblock/afterblock_1791"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731792
+      },
+      "model": "minecraft:item/afterblock/afterblock_1792"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731793
+      },
+      "model": "minecraft:item/afterblock/afterblock_1793"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731794
+      },
+      "model": "minecraft:item/afterblock/afterblock_1794"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731795
+      },
+      "model": "minecraft:item/afterblock/afterblock_1795"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731796
+      },
+      "model": "minecraft:item/afterblock/afterblock_1796"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731797
+      },
+      "model": "minecraft:item/afterblock/afterblock_1797"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731798
+      },
+      "model": "minecraft:item/afterblock/afterblock_1798"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731799
+      },
+      "model": "minecraft:item/afterblock/afterblock_1799"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731800
+      },
+      "model": "minecraft:item/afterblock/afterblock_1800"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731801
+      },
+      "model": "minecraft:item/afterblock/afterblock_1801"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731802
+      },
+      "model": "minecraft:item/afterblock/afterblock_1802"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731803
+      },
+      "model": "minecraft:item/afterblock/afterblock_1803"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731804
+      },
+      "model": "minecraft:item/afterblock/afterblock_1804"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731805
+      },
+      "model": "minecraft:item/afterblock/afterblock_1805"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731806
+      },
+      "model": "minecraft:item/afterblock/afterblock_1806"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731807
+      },
+      "model": "minecraft:item/afterblock/afterblock_1807"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731808
+      },
+      "model": "minecraft:item/afterblock/afterblock_1808"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731809
+      },
+      "model": "minecraft:item/afterblock/afterblock_1809"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731810
+      },
+      "model": "minecraft:item/afterblock/afterblock_1810"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731811
+      },
+      "model": "minecraft:item/afterblock/afterblock_1811"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731812
+      },
+      "model": "minecraft:item/afterblock/afterblock_1812"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731813
+      },
+      "model": "minecraft:item/afterblock/afterblock_1813"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731814
+      },
+      "model": "minecraft:item/afterblock/afterblock_1814"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731815
+      },
+      "model": "minecraft:item/afterblock/afterblock_1815"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731816
+      },
+      "model": "minecraft:item/afterblock/afterblock_1816"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731817
+      },
+      "model": "minecraft:item/afterblock/afterblock_1817"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731818
+      },
+      "model": "minecraft:item/afterblock/afterblock_1818"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731819
+      },
+      "model": "minecraft:item/afterblock/afterblock_1819"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731820
+      },
+      "model": "minecraft:item/afterblock/afterblock_1820"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731821
+      },
+      "model": "minecraft:item/afterblock/afterblock_1821"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731822
+      },
+      "model": "minecraft:item/afterblock/afterblock_1822"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731823
+      },
+      "model": "minecraft:item/afterblock/afterblock_1823"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731824
+      },
+      "model": "minecraft:item/afterblock/afterblock_1824"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731825
+      },
+      "model": "minecraft:item/afterblock/afterblock_1825"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731826
+      },
+      "model": "minecraft:item/afterblock/afterblock_1826"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731827
+      },
+      "model": "minecraft:item/afterblock/afterblock_1827"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731828
+      },
+      "model": "minecraft:item/afterblock/afterblock_1828"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731829
+      },
+      "model": "minecraft:item/afterblock/afterblock_1829"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731830
+      },
+      "model": "minecraft:item/afterblock/afterblock_1830"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731831
+      },
+      "model": "minecraft:item/afterblock/afterblock_1831"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731832
+      },
+      "model": "minecraft:item/afterblock/afterblock_1832"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731833
+      },
+      "model": "minecraft:item/afterblock/afterblock_1833"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731834
+      },
+      "model": "minecraft:item/afterblock/afterblock_1834"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731835
+      },
+      "model": "minecraft:item/afterblock/afterblock_1835"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731836
+      },
+      "model": "minecraft:item/afterblock/afterblock_1836"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731837
+      },
+      "model": "minecraft:item/afterblock/afterblock_1837"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731838
+      },
+      "model": "minecraft:item/afterblock/afterblock_1838"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731839
+      },
+      "model": "minecraft:item/afterblock/afterblock_1839"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731840
+      },
+      "model": "minecraft:item/afterblock/afterblock_1840"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731841
+      },
+      "model": "minecraft:item/afterblock/afterblock_1841"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731842
+      },
+      "model": "minecraft:item/afterblock/afterblock_1842"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731843
+      },
+      "model": "minecraft:item/afterblock/afterblock_1843"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731844
+      },
+      "model": "minecraft:item/afterblock/afterblock_1844"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731845
+      },
+      "model": "minecraft:item/afterblock/afterblock_1845"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731846
+      },
+      "model": "minecraft:item/afterblock/afterblock_1846"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731847
+      },
+      "model": "minecraft:item/afterblock/afterblock_1847"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731848
+      },
+      "model": "minecraft:item/afterblock/afterblock_1848"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731849
+      },
+      "model": "minecraft:item/afterblock/afterblock_1849"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731850
+      },
+      "model": "minecraft:item/afterblock/afterblock_1850"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731851
+      },
+      "model": "minecraft:item/afterblock/afterblock_1851"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731852
+      },
+      "model": "minecraft:item/afterblock/afterblock_1852"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731853
+      },
+      "model": "minecraft:item/afterblock/afterblock_1853"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731854
+      },
+      "model": "minecraft:item/afterblock/afterblock_1854"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731855
+      },
+      "model": "minecraft:item/afterblock/afterblock_1855"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731856
+      },
+      "model": "minecraft:item/afterblock/afterblock_1856"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731857
+      },
+      "model": "minecraft:item/afterblock/afterblock_1857"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731858
+      },
+      "model": "minecraft:item/afterblock/afterblock_1858"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731859
+      },
+      "model": "minecraft:item/afterblock/afterblock_1859"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731860
+      },
+      "model": "minecraft:item/afterblock/afterblock_1860"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731861
+      },
+      "model": "minecraft:item/afterblock/afterblock_1861"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731862
+      },
+      "model": "minecraft:item/afterblock/afterblock_1862"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731863
+      },
+      "model": "minecraft:item/afterblock/afterblock_1863"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731864
+      },
+      "model": "minecraft:item/afterblock/afterblock_1864"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731865
+      },
+      "model": "minecraft:item/afterblock/afterblock_1865"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731866
+      },
+      "model": "minecraft:item/afterblock/afterblock_1866"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731867
+      },
+      "model": "minecraft:item/afterblock/afterblock_1867"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731868
+      },
+      "model": "minecraft:item/afterblock/afterblock_1868"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731869
+      },
+      "model": "minecraft:item/afterblock/afterblock_1869"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731870
+      },
+      "model": "minecraft:item/afterblock/afterblock_1870"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731871
+      },
+      "model": "minecraft:item/afterblock/afterblock_1871"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731872
+      },
+      "model": "minecraft:item/afterblock/afterblock_1872"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731873
+      },
+      "model": "minecraft:item/afterblock/afterblock_1873"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731874
+      },
+      "model": "minecraft:item/afterblock/afterblock_1874"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731875
+      },
+      "model": "minecraft:item/afterblock/afterblock_1875"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731876
+      },
+      "model": "minecraft:item/afterblock/afterblock_1876"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731877
+      },
+      "model": "minecraft:item/afterblock/afterblock_1877"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731878
+      },
+      "model": "minecraft:item/afterblock/afterblock_1878"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731879
+      },
+      "model": "minecraft:item/afterblock/afterblock_1879"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731880
+      },
+      "model": "minecraft:item/afterblock/afterblock_1880"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731881
+      },
+      "model": "minecraft:item/afterblock/afterblock_1881"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731882
+      },
+      "model": "minecraft:item/afterblock/afterblock_1882"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731883
+      },
+      "model": "minecraft:item/afterblock/afterblock_1883"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731884
+      },
+      "model": "minecraft:item/afterblock/afterblock_1884"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731885
+      },
+      "model": "minecraft:item/afterblock/afterblock_1885"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731886
+      },
+      "model": "minecraft:item/afterblock/afterblock_1886"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731887
+      },
+      "model": "minecraft:item/afterblock/afterblock_1887"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731888
+      },
+      "model": "minecraft:item/afterblock/afterblock_1888"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731889
+      },
+      "model": "minecraft:item/afterblock/afterblock_1889"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731890
+      },
+      "model": "minecraft:item/afterblock/afterblock_1890"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731891
+      },
+      "model": "minecraft:item/afterblock/afterblock_1891"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731892
+      },
+      "model": "minecraft:item/afterblock/afterblock_1892"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731893
+      },
+      "model": "minecraft:item/afterblock/afterblock_1893"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731894
+      },
+      "model": "minecraft:item/afterblock/afterblock_1894"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731895
+      },
+      "model": "minecraft:item/afterblock/afterblock_1895"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731896
+      },
+      "model": "minecraft:item/afterblock/afterblock_1896"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731897
+      },
+      "model": "minecraft:item/afterblock/afterblock_1897"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731898
+      },
+      "model": "minecraft:item/afterblock/afterblock_1898"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731899
+      },
+      "model": "minecraft:item/afterblock/afterblock_1899"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731900
+      },
+      "model": "minecraft:item/afterblock/afterblock_1900"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731901
+      },
+      "model": "minecraft:item/afterblock/afterblock_1901"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731902
+      },
+      "model": "minecraft:item/afterblock/afterblock_1902"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731903
+      },
+      "model": "minecraft:item/afterblock/afterblock_1903"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731904
+      },
+      "model": "minecraft:item/afterblock/afterblock_1904"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731905
+      },
+      "model": "minecraft:item/afterblock/afterblock_1905"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731906
+      },
+      "model": "minecraft:item/afterblock/afterblock_1906"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731907
+      },
+      "model": "minecraft:item/afterblock/afterblock_1907"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731908
+      },
+      "model": "minecraft:item/afterblock/afterblock_1908"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731909
+      },
+      "model": "minecraft:item/afterblock/afterblock_1909"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731910
+      },
+      "model": "minecraft:item/afterblock/afterblock_1910"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731911
+      },
+      "model": "minecraft:item/afterblock/afterblock_1911"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731912
+      },
+      "model": "minecraft:item/afterblock/afterblock_1912"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731913
+      },
+      "model": "minecraft:item/afterblock/afterblock_1913"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731914
+      },
+      "model": "minecraft:item/afterblock/afterblock_1914"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731915
+      },
+      "model": "minecraft:item/afterblock/afterblock_1915"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731916
+      },
+      "model": "minecraft:item/afterblock/afterblock_1916"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731917
+      },
+      "model": "minecraft:item/afterblock/afterblock_1917"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731918
+      },
+      "model": "minecraft:item/afterblock/afterblock_1918"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731919
+      },
+      "model": "minecraft:item/afterblock/afterblock_1919"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731920
+      },
+      "model": "minecraft:item/afterblock/afterblock_1920"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731921
+      },
+      "model": "minecraft:item/afterblock/afterblock_1921"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731922
+      },
+      "model": "minecraft:item/afterblock/afterblock_1922"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731923
+      },
+      "model": "minecraft:item/afterblock/afterblock_1923"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731924
+      },
+      "model": "minecraft:item/afterblock/afterblock_1924"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731925
+      },
+      "model": "minecraft:item/afterblock/afterblock_1925"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731926
+      },
+      "model": "minecraft:item/afterblock/afterblock_1926"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731927
+      },
+      "model": "minecraft:item/afterblock/afterblock_1927"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731928
+      },
+      "model": "minecraft:item/afterblock/afterblock_1928"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731929
+      },
+      "model": "minecraft:item/afterblock/afterblock_1929"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731930
+      },
+      "model": "minecraft:item/afterblock/afterblock_1930"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731931
+      },
+      "model": "minecraft:item/afterblock/afterblock_1931"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731932
+      },
+      "model": "minecraft:item/afterblock/afterblock_1932"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731933
+      },
+      "model": "minecraft:item/afterblock/afterblock_1933"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731934
+      },
+      "model": "minecraft:item/afterblock/afterblock_1934"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731935
+      },
+      "model": "minecraft:item/afterblock/afterblock_1935"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731936
+      },
+      "model": "minecraft:item/afterblock/afterblock_1936"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731937
+      },
+      "model": "minecraft:item/afterblock/afterblock_1937"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731938
+      },
+      "model": "minecraft:item/afterblock/afterblock_1938"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731939
+      },
+      "model": "minecraft:item/afterblock/afterblock_1939"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731940
+      },
+      "model": "minecraft:item/afterblock/afterblock_1940"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731941
+      },
+      "model": "minecraft:item/afterblock/afterblock_1941"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731942
+      },
+      "model": "minecraft:item/afterblock/afterblock_1942"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731943
+      },
+      "model": "minecraft:item/afterblock/afterblock_1943"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731944
+      },
+      "model": "minecraft:item/afterblock/afterblock_1944"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731945
+      },
+      "model": "minecraft:item/afterblock/afterblock_1945"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731946
+      },
+      "model": "minecraft:item/afterblock/afterblock_1946"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731947
+      },
+      "model": "minecraft:item/afterblock/afterblock_1947"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731948
+      },
+      "model": "minecraft:item/afterblock/afterblock_1948"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731949
+      },
+      "model": "minecraft:item/afterblock/afterblock_1949"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731950
+      },
+      "model": "minecraft:item/afterblock/afterblock_1950"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731951
+      },
+      "model": "minecraft:item/afterblock/afterblock_1951"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731952
+      },
+      "model": "minecraft:item/afterblock/afterblock_1952"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731953
+      },
+      "model": "minecraft:item/afterblock/afterblock_1953"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731954
+      },
+      "model": "minecraft:item/afterblock/afterblock_1954"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731955
+      },
+      "model": "minecraft:item/afterblock/afterblock_1955"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731956
+      },
+      "model": "minecraft:item/afterblock/afterblock_1956"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731957
+      },
+      "model": "minecraft:item/afterblock/afterblock_1957"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731958
+      },
+      "model": "minecraft:item/afterblock/afterblock_1958"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731959
+      },
+      "model": "minecraft:item/afterblock/afterblock_1959"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731960
+      },
+      "model": "minecraft:item/afterblock/afterblock_1960"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731961
+      },
+      "model": "minecraft:item/afterblock/afterblock_1961"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731962
+      },
+      "model": "minecraft:item/afterblock/afterblock_1962"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731963
+      },
+      "model": "minecraft:item/afterblock/afterblock_1963"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731964
+      },
+      "model": "minecraft:item/afterblock/afterblock_1964"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731965
+      },
+      "model": "minecraft:item/afterblock/afterblock_1965"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731966
+      },
+      "model": "minecraft:item/afterblock/afterblock_1966"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731967
+      },
+      "model": "minecraft:item/afterblock/afterblock_1967"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731968
+      },
+      "model": "minecraft:item/afterblock/afterblock_1968"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731969
+      },
+      "model": "minecraft:item/afterblock/afterblock_1969"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731970
+      },
+      "model": "minecraft:item/afterblock/afterblock_1970"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731971
+      },
+      "model": "minecraft:item/afterblock/afterblock_1971"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731972
+      },
+      "model": "minecraft:item/afterblock/afterblock_1972"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731973
+      },
+      "model": "minecraft:item/afterblock/afterblock_1973"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731974
+      },
+      "model": "minecraft:item/afterblock/afterblock_1974"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731975
+      },
+      "model": "minecraft:item/afterblock/afterblock_1975"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731976
+      },
+      "model": "minecraft:item/afterblock/afterblock_1976"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731977
+      },
+      "model": "minecraft:item/afterblock/afterblock_1977"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731978
+      },
+      "model": "minecraft:item/afterblock/afterblock_1978"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731979
+      },
+      "model": "minecraft:item/afterblock/afterblock_1979"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731980
+      },
+      "model": "minecraft:item/afterblock/afterblock_1980"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731981
+      },
+      "model": "minecraft:item/afterblock/afterblock_1981"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731982
+      },
+      "model": "minecraft:item/afterblock/afterblock_1982"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731983
+      },
+      "model": "minecraft:item/afterblock/afterblock_1983"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731984
+      },
+      "model": "minecraft:item/afterblock/afterblock_1984"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731985
+      },
+      "model": "minecraft:item/afterblock/afterblock_1985"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731986
+      },
+      "model": "minecraft:item/afterblock/afterblock_1986"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731987
+      },
+      "model": "minecraft:item/afterblock/afterblock_1987"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731988
+      },
+      "model": "minecraft:item/afterblock/afterblock_1988"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731989
+      },
+      "model": "minecraft:item/afterblock/afterblock_1989"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731990
+      },
+      "model": "minecraft:item/afterblock/afterblock_1990"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731991
+      },
+      "model": "minecraft:item/afterblock/afterblock_1991"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731992
+      },
+      "model": "minecraft:item/afterblock/afterblock_1992"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731993
+      },
+      "model": "minecraft:item/afterblock/afterblock_1993"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731994
+      },
+      "model": "minecraft:item/afterblock/afterblock_1994"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731995
+      },
+      "model": "minecraft:item/afterblock/afterblock_1995"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731996
+      },
+      "model": "minecraft:item/afterblock/afterblock_1996"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731997
+      },
+      "model": "minecraft:item/afterblock/afterblock_1997"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731998
+      },
+      "model": "minecraft:item/afterblock/afterblock_1998"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731999
+      },
+      "model": "minecraft:item/afterblock/afterblock_1999"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732000
+      },
+      "model": "minecraft:item/afterblock/afterblock_2000"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732001
+      },
+      "model": "minecraft:item/afterblock/afterblock_2001"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732002
+      },
+      "model": "minecraft:item/afterblock/afterblock_2002"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732003
+      },
+      "model": "minecraft:item/afterblock/afterblock_2003"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732004
+      },
+      "model": "minecraft:item/afterblock/afterblock_2004"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732005
+      },
+      "model": "minecraft:item/afterblock/afterblock_2005"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732006
+      },
+      "model": "minecraft:item/afterblock/afterblock_2006"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732007
+      },
+      "model": "minecraft:item/afterblock/afterblock_2007"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732008
+      },
+      "model": "minecraft:item/afterblock/afterblock_2008"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732009
+      },
+      "model": "minecraft:item/afterblock/afterblock_2009"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732010
+      },
+      "model": "minecraft:item/afterblock/afterblock_2010"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732011
+      },
+      "model": "minecraft:item/afterblock/afterblock_2011"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732012
+      },
+      "model": "minecraft:item/afterblock/afterblock_2012"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732013
+      },
+      "model": "minecraft:item/afterblock/afterblock_2013"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732014
+      },
+      "model": "minecraft:item/afterblock/afterblock_2014"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732015
+      },
+      "model": "minecraft:item/afterblock/afterblock_2015"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732016
+      },
+      "model": "minecraft:item/afterblock/afterblock_2016"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732017
+      },
+      "model": "minecraft:item/afterblock/afterblock_2017"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732018
+      },
+      "model": "minecraft:item/afterblock/afterblock_2018"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732019
+      },
+      "model": "minecraft:item/afterblock/afterblock_2019"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732020
+      },
+      "model": "minecraft:item/afterblock/afterblock_2020"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732021
+      },
+      "model": "minecraft:item/afterblock/afterblock_2021"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732022
+      },
+      "model": "minecraft:item/afterblock/afterblock_2022"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732023
+      },
+      "model": "minecraft:item/afterblock/afterblock_2023"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732024
+      },
+      "model": "minecraft:item/afterblock/afterblock_2024"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732025
+      },
+      "model": "minecraft:item/afterblock/afterblock_2025"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732026
+      },
+      "model": "minecraft:item/afterblock/afterblock_2026"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732027
+      },
+      "model": "minecraft:item/afterblock/afterblock_2027"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732028
+      },
+      "model": "minecraft:item/afterblock/afterblock_2028"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732029
+      },
+      "model": "minecraft:item/afterblock/afterblock_2029"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732030
+      },
+      "model": "minecraft:item/afterblock/afterblock_2030"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732031
+      },
+      "model": "minecraft:item/afterblock/afterblock_2031"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732032
+      },
+      "model": "minecraft:item/afterblock/afterblock_2032"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732033
+      },
+      "model": "minecraft:item/afterblock/afterblock_2033"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732034
+      },
+      "model": "minecraft:item/afterblock/afterblock_2034"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732035
+      },
+      "model": "minecraft:item/afterblock/afterblock_2035"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732036
+      },
+      "model": "minecraft:item/afterblock/afterblock_2036"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732037
+      },
+      "model": "minecraft:item/afterblock/afterblock_2037"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732038
+      },
+      "model": "minecraft:item/afterblock/afterblock_2038"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732039
+      },
+      "model": "minecraft:item/afterblock/afterblock_2039"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732040
+      },
+      "model": "minecraft:item/afterblock/afterblock_2040"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732041
+      },
+      "model": "minecraft:item/afterblock/afterblock_2041"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732042
+      },
+      "model": "minecraft:item/afterblock/afterblock_2042"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732043
+      },
+      "model": "minecraft:item/afterblock/afterblock_2043"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732044
+      },
+      "model": "minecraft:item/afterblock/afterblock_2044"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732045
+      },
+      "model": "minecraft:item/afterblock/afterblock_2045"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732046
+      },
+      "model": "minecraft:item/afterblock/afterblock_2046"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732047
+      },
+      "model": "minecraft:item/afterblock/afterblock_2047"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732048
+      },
+      "model": "minecraft:item/afterblock/afterblock_2048"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732049
+      },
+      "model": "minecraft:item/afterblock/afterblock_2049"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732050
+      },
+      "model": "minecraft:item/afterblock/afterblock_2050"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732051
+      },
+      "model": "minecraft:item/afterblock/afterblock_2051"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732052
+      },
+      "model": "minecraft:item/afterblock/afterblock_2052"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732053
+      },
+      "model": "minecraft:item/afterblock/afterblock_2053"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732054
+      },
+      "model": "minecraft:item/afterblock/afterblock_2054"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732055
+      },
+      "model": "minecraft:item/afterblock/afterblock_2055"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732056
+      },
+      "model": "minecraft:item/afterblock/afterblock_2056"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732057
+      },
+      "model": "minecraft:item/afterblock/afterblock_2057"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732058
+      },
+      "model": "minecraft:item/afterblock/afterblock_2058"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732059
+      },
+      "model": "minecraft:item/afterblock/afterblock_2059"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732060
+      },
+      "model": "minecraft:item/afterblock/afterblock_2060"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732061
+      },
+      "model": "minecraft:item/afterblock/afterblock_2061"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732062
+      },
+      "model": "minecraft:item/afterblock/afterblock_2062"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732063
+      },
+      "model": "minecraft:item/afterblock/afterblock_2063"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732064
+      },
+      "model": "minecraft:item/afterblock/afterblock_2064"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732065
+      },
+      "model": "minecraft:item/afterblock/afterblock_2065"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732066
+      },
+      "model": "minecraft:item/afterblock/afterblock_2066"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732067
+      },
+      "model": "minecraft:item/afterblock/afterblock_2067"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732068
+      },
+      "model": "minecraft:item/afterblock/afterblock_2068"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732069
+      },
+      "model": "minecraft:item/afterblock/afterblock_2069"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732070
+      },
+      "model": "minecraft:item/afterblock/afterblock_2070"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732071
+      },
+      "model": "minecraft:item/afterblock/afterblock_2071"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732072
+      },
+      "model": "minecraft:item/afterblock/afterblock_2072"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732073
+      },
+      "model": "minecraft:item/afterblock/afterblock_2073"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732074
+      },
+      "model": "minecraft:item/afterblock/afterblock_2074"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732075
+      },
+      "model": "minecraft:item/afterblock/afterblock_2075"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732076
+      },
+      "model": "minecraft:item/afterblock/afterblock_2076"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732077
+      },
+      "model": "minecraft:item/afterblock/afterblock_2077"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732078
+      },
+      "model": "minecraft:item/afterblock/afterblock_2078"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732079
+      },
+      "model": "minecraft:item/afterblock/afterblock_2079"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732080
+      },
+      "model": "minecraft:item/afterblock/afterblock_2080"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732081
+      },
+      "model": "minecraft:item/afterblock/afterblock_2081"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732082
+      },
+      "model": "minecraft:item/afterblock/afterblock_2082"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732083
+      },
+      "model": "minecraft:item/afterblock/afterblock_2083"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732084
+      },
+      "model": "minecraft:item/afterblock/afterblock_2084"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732085
+      },
+      "model": "minecraft:item/afterblock/afterblock_2085"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732086
+      },
+      "model": "minecraft:item/afterblock/afterblock_2086"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732087
+      },
+      "model": "minecraft:item/afterblock/afterblock_2087"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732088
+      },
+      "model": "minecraft:item/afterblock/afterblock_2088"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732089
+      },
+      "model": "minecraft:item/afterblock/afterblock_2089"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732090
+      },
+      "model": "minecraft:item/afterblock/afterblock_2090"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732091
+      },
+      "model": "minecraft:item/afterblock/afterblock_2091"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732092
+      },
+      "model": "minecraft:item/afterblock/afterblock_2092"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732093
+      },
+      "model": "minecraft:item/afterblock/afterblock_2093"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732094
+      },
+      "model": "minecraft:item/afterblock/afterblock_2094"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732095
+      },
+      "model": "minecraft:item/afterblock/afterblock_2095"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732096
+      },
+      "model": "minecraft:item/afterblock/afterblock_2096"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732097
+      },
+      "model": "minecraft:item/afterblock/afterblock_2097"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732098
+      },
+      "model": "minecraft:item/afterblock/afterblock_2098"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732099
+      },
+      "model": "minecraft:item/afterblock/afterblock_2099"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732100
+      },
+      "model": "minecraft:item/afterblock/afterblock_2100"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732101
+      },
+      "model": "minecraft:item/afterblock/afterblock_2101"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732102
+      },
+      "model": "minecraft:item/afterblock/afterblock_2102"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732103
+      },
+      "model": "minecraft:item/afterblock/afterblock_2103"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732104
+      },
+      "model": "minecraft:item/afterblock/afterblock_2104"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732105
+      },
+      "model": "minecraft:item/afterblock/afterblock_2105"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732106
+      },
+      "model": "minecraft:item/afterblock/afterblock_2106"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732107
+      },
+      "model": "minecraft:item/afterblock/afterblock_2107"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732108
+      },
+      "model": "minecraft:item/afterblock/afterblock_2108"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732109
+      },
+      "model": "minecraft:item/afterblock/afterblock_2109"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732110
+      },
+      "model": "minecraft:item/afterblock/afterblock_2110"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732111
+      },
+      "model": "minecraft:item/afterblock/afterblock_2111"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732112
+      },
+      "model": "minecraft:item/afterblock/afterblock_2112"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732113
+      },
+      "model": "minecraft:item/afterblock/afterblock_2113"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732114
+      },
+      "model": "minecraft:item/afterblock/afterblock_2114"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732115
+      },
+      "model": "minecraft:item/afterblock/afterblock_2115"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732116
+      },
+      "model": "minecraft:item/afterblock/afterblock_2116"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732117
+      },
+      "model": "minecraft:item/afterblock/afterblock_2117"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732118
+      },
+      "model": "minecraft:item/afterblock/afterblock_2118"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732119
+      },
+      "model": "minecraft:item/afterblock/afterblock_2119"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732120
+      },
+      "model": "minecraft:item/afterblock/afterblock_2120"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732121
+      },
+      "model": "minecraft:item/afterblock/afterblock_2121"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732122
+      },
+      "model": "minecraft:item/afterblock/afterblock_2122"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732123
+      },
+      "model": "minecraft:item/afterblock/afterblock_2123"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732124
+      },
+      "model": "minecraft:item/afterblock/afterblock_2124"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732125
+      },
+      "model": "minecraft:item/afterblock/afterblock_2125"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732126
+      },
+      "model": "minecraft:item/afterblock/afterblock_2126"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732127
+      },
+      "model": "minecraft:item/afterblock/afterblock_2127"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732128
+      },
+      "model": "minecraft:item/afterblock/afterblock_2128"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732129
+      },
+      "model": "minecraft:item/afterblock/afterblock_2129"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732130
+      },
+      "model": "minecraft:item/afterblock/afterblock_2130"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732131
+      },
+      "model": "minecraft:item/afterblock/afterblock_2131"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732132
+      },
+      "model": "minecraft:item/afterblock/afterblock_2132"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732133
+      },
+      "model": "minecraft:item/afterblock/afterblock_2133"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732134
+      },
+      "model": "minecraft:item/afterblock/afterblock_2134"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732135
+      },
+      "model": "minecraft:item/afterblock/afterblock_2135"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732136
+      },
+      "model": "minecraft:item/afterblock/afterblock_2136"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732137
+      },
+      "model": "minecraft:item/afterblock/afterblock_2137"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732138
+      },
+      "model": "minecraft:item/afterblock/afterblock_2138"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732139
+      },
+      "model": "minecraft:item/afterblock/afterblock_2139"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732140
+      },
+      "model": "minecraft:item/afterblock/afterblock_2140"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732141
+      },
+      "model": "minecraft:item/afterblock/afterblock_2141"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732142
+      },
+      "model": "minecraft:item/afterblock/afterblock_2142"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732143
+      },
+      "model": "minecraft:item/afterblock/afterblock_2143"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732144
+      },
+      "model": "minecraft:item/afterblock/afterblock_2144"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732145
+      },
+      "model": "minecraft:item/afterblock/afterblock_2145"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732146
+      },
+      "model": "minecraft:item/afterblock/afterblock_2146"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732147
+      },
+      "model": "minecraft:item/afterblock/afterblock_2147"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732148
+      },
+      "model": "minecraft:item/afterblock/afterblock_2148"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732149
+      },
+      "model": "minecraft:item/afterblock/afterblock_2149"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732150
+      },
+      "model": "minecraft:item/afterblock/afterblock_2150"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732151
+      },
+      "model": "minecraft:item/afterblock/afterblock_2151"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732152
+      },
+      "model": "minecraft:item/afterblock/afterblock_2152"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732153
+      },
+      "model": "minecraft:item/afterblock/afterblock_2153"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732154
+      },
+      "model": "minecraft:item/afterblock/afterblock_2154"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732155
+      },
+      "model": "minecraft:item/afterblock/afterblock_2155"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732156
+      },
+      "model": "minecraft:item/afterblock/afterblock_2156"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732157
+      },
+      "model": "minecraft:item/afterblock/afterblock_2157"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732158
+      },
+      "model": "minecraft:item/afterblock/afterblock_2158"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732159
+      },
+      "model": "minecraft:item/afterblock/afterblock_2159"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732160
+      },
+      "model": "minecraft:item/afterblock/afterblock_2160"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732161
+      },
+      "model": "minecraft:item/afterblock/afterblock_2161"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732162
+      },
+      "model": "minecraft:item/afterblock/afterblock_2162"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732163
+      },
+      "model": "minecraft:item/afterblock/afterblock_2163"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732164
+      },
+      "model": "minecraft:item/afterblock/afterblock_2164"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732165
+      },
+      "model": "minecraft:item/afterblock/afterblock_2165"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732166
+      },
+      "model": "minecraft:item/afterblock/afterblock_2166"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732167
+      },
+      "model": "minecraft:item/afterblock/afterblock_2167"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732168
+      },
+      "model": "minecraft:item/afterblock/afterblock_2168"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732169
+      },
+      "model": "minecraft:item/afterblock/afterblock_2169"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732170
+      },
+      "model": "minecraft:item/afterblock/afterblock_2170"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732171
+      },
+      "model": "minecraft:item/afterblock/afterblock_2171"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732172
+      },
+      "model": "minecraft:item/afterblock/afterblock_2172"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732173
+      },
+      "model": "minecraft:item/afterblock/afterblock_2173"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732174
+      },
+      "model": "minecraft:item/afterblock/afterblock_2174"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732175
+      },
+      "model": "minecraft:item/afterblock/afterblock_2175"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732176
+      },
+      "model": "minecraft:item/afterblock/afterblock_2176"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732177
+      },
+      "model": "minecraft:item/afterblock/afterblock_2177"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732178
+      },
+      "model": "minecraft:item/afterblock/afterblock_2178"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732179
+      },
+      "model": "minecraft:item/afterblock/afterblock_2179"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732180
+      },
+      "model": "minecraft:item/afterblock/afterblock_2180"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732181
+      },
+      "model": "minecraft:item/afterblock/afterblock_2181"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732182
+      },
+      "model": "minecraft:item/afterblock/afterblock_2182"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732183
+      },
+      "model": "minecraft:item/afterblock/afterblock_2183"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732184
+      },
+      "model": "minecraft:item/afterblock/afterblock_2184"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732185
+      },
+      "model": "minecraft:item/afterblock/afterblock_2185"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732186
+      },
+      "model": "minecraft:item/afterblock/afterblock_2186"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732187
+      },
+      "model": "minecraft:item/afterblock/afterblock_2187"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732188
+      },
+      "model": "minecraft:item/afterblock/afterblock_2188"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732189
+      },
+      "model": "minecraft:item/afterblock/afterblock_2189"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732190
+      },
+      "model": "minecraft:item/afterblock/afterblock_2190"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732191
+      },
+      "model": "minecraft:item/afterblock/afterblock_2191"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732192
+      },
+      "model": "minecraft:item/afterblock/afterblock_2192"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732193
+      },
+      "model": "minecraft:item/afterblock/afterblock_2193"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732194
+      },
+      "model": "minecraft:item/afterblock/afterblock_2194"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732195
+      },
+      "model": "minecraft:item/afterblock/afterblock_2195"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732196
+      },
+      "model": "minecraft:item/afterblock/afterblock_2196"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732197
+      },
+      "model": "minecraft:item/afterblock/afterblock_2197"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732198
+      },
+      "model": "minecraft:item/afterblock/afterblock_2198"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732199
+      },
+      "model": "minecraft:item/afterblock/afterblock_2199"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732200
+      },
+      "model": "minecraft:item/afterblock/afterblock_2200"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732201
+      },
+      "model": "minecraft:item/afterblock/afterblock_2201"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732202
+      },
+      "model": "minecraft:item/afterblock/afterblock_2202"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732203
+      },
+      "model": "minecraft:item/afterblock/afterblock_2203"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732204
+      },
+      "model": "minecraft:item/afterblock/afterblock_2204"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732205
+      },
+      "model": "minecraft:item/afterblock/afterblock_2205"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732206
+      },
+      "model": "minecraft:item/afterblock/afterblock_2206"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732207
+      },
+      "model": "minecraft:item/afterblock/afterblock_2207"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732208
+      },
+      "model": "minecraft:item/afterblock/afterblock_2208"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732209
+      },
+      "model": "minecraft:item/afterblock/afterblock_2209"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732210
+      },
+      "model": "minecraft:item/afterblock/afterblock_2210"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732211
+      },
+      "model": "minecraft:item/afterblock/afterblock_2211"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732212
+      },
+      "model": "minecraft:item/afterblock/afterblock_2212"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732213
+      },
+      "model": "minecraft:item/afterblock/afterblock_2213"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732214
+      },
+      "model": "minecraft:item/afterblock/afterblock_2214"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732215
+      },
+      "model": "minecraft:item/afterblock/afterblock_2215"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732216
+      },
+      "model": "minecraft:item/afterblock/afterblock_2216"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732217
+      },
+      "model": "minecraft:item/afterblock/afterblock_2217"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732218
+      },
+      "model": "minecraft:item/afterblock/afterblock_2218"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732219
+      },
+      "model": "minecraft:item/afterblock/afterblock_2219"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732220
+      },
+      "model": "minecraft:item/afterblock/afterblock_2220"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732221
+      },
+      "model": "minecraft:item/afterblock/afterblock_2221"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732222
+      },
+      "model": "minecraft:item/afterblock/afterblock_2222"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732223
+      },
+      "model": "minecraft:item/afterblock/afterblock_2223"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732224
+      },
+      "model": "minecraft:item/afterblock/afterblock_2224"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732225
+      },
+      "model": "minecraft:item/afterblock/afterblock_2225"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732226
+      },
+      "model": "minecraft:item/afterblock/afterblock_2226"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732227
+      },
+      "model": "minecraft:item/afterblock/afterblock_2227"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732228
+      },
+      "model": "minecraft:item/afterblock/afterblock_2228"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732229
+      },
+      "model": "minecraft:item/afterblock/afterblock_2229"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732230
+      },
+      "model": "minecraft:item/afterblock/afterblock_2230"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732231
+      },
+      "model": "minecraft:item/afterblock/afterblock_2231"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732232
+      },
+      "model": "minecraft:item/afterblock/afterblock_2232"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732233
+      },
+      "model": "minecraft:item/afterblock/afterblock_2233"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732234
+      },
+      "model": "minecraft:item/afterblock/afterblock_2234"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732235
+      },
+      "model": "minecraft:item/afterblock/afterblock_2235"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732236
+      },
+      "model": "minecraft:item/afterblock/afterblock_2236"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732237
+      },
+      "model": "minecraft:item/afterblock/afterblock_2237"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732238
+      },
+      "model": "minecraft:item/afterblock/afterblock_2238"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732239
+      },
+      "model": "minecraft:item/afterblock/afterblock_2239"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732240
+      },
+      "model": "minecraft:item/afterblock/afterblock_2240"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732241
+      },
+      "model": "minecraft:item/afterblock/afterblock_2241"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732242
+      },
+      "model": "minecraft:item/afterblock/afterblock_2242"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732243
+      },
+      "model": "minecraft:item/afterblock/afterblock_2243"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732244
+      },
+      "model": "minecraft:item/afterblock/afterblock_2244"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732245
+      },
+      "model": "minecraft:item/afterblock/afterblock_2245"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732246
+      },
+      "model": "minecraft:item/afterblock/afterblock_2246"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732247
+      },
+      "model": "minecraft:item/afterblock/afterblock_2247"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732248
+      },
+      "model": "minecraft:item/afterblock/afterblock_2248"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732249
+      },
+      "model": "minecraft:item/afterblock/afterblock_2249"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732250
+      },
+      "model": "minecraft:item/afterblock/afterblock_2250"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732251
+      },
+      "model": "minecraft:item/afterblock/afterblock_2251"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732252
+      },
+      "model": "minecraft:item/afterblock/afterblock_2252"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732253
+      },
+      "model": "minecraft:item/afterblock/afterblock_2253"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732254
+      },
+      "model": "minecraft:item/afterblock/afterblock_2254"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732255
+      },
+      "model": "minecraft:item/afterblock/afterblock_2255"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732256
+      },
+      "model": "minecraft:item/afterblock/afterblock_2256"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732257
+      },
+      "model": "minecraft:item/afterblock/afterblock_2257"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732258
+      },
+      "model": "minecraft:item/afterblock/afterblock_2258"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732259
+      },
+      "model": "minecraft:item/afterblock/afterblock_2259"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732260
+      },
+      "model": "minecraft:item/afterblock/afterblock_2260"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732261
+      },
+      "model": "minecraft:item/afterblock/afterblock_2261"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732262
+      },
+      "model": "minecraft:item/afterblock/afterblock_2262"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732263
+      },
+      "model": "minecraft:item/afterblock/afterblock_2263"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732264
+      },
+      "model": "minecraft:item/afterblock/afterblock_2264"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732265
+      },
+      "model": "minecraft:item/afterblock/afterblock_2265"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732266
+      },
+      "model": "minecraft:item/afterblock/afterblock_2266"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732267
+      },
+      "model": "minecraft:item/afterblock/afterblock_2267"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732268
+      },
+      "model": "minecraft:item/afterblock/afterblock_2268"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732269
+      },
+      "model": "minecraft:item/afterblock/afterblock_2269"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732270
+      },
+      "model": "minecraft:item/afterblock/afterblock_2270"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732271
+      },
+      "model": "minecraft:item/afterblock/afterblock_2271"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732272
+      },
+      "model": "minecraft:item/afterblock/afterblock_2272"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732273
+      },
+      "model": "minecraft:item/afterblock/afterblock_2273"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732274
+      },
+      "model": "minecraft:item/afterblock/afterblock_2274"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732275
+      },
+      "model": "minecraft:item/afterblock/afterblock_2275"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732276
+      },
+      "model": "minecraft:item/afterblock/afterblock_2276"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732277
+      },
+      "model": "minecraft:item/afterblock/afterblock_2277"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732278
+      },
+      "model": "minecraft:item/afterblock/afterblock_2278"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732279
+      },
+      "model": "minecraft:item/afterblock/afterblock_2279"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732280
+      },
+      "model": "minecraft:item/afterblock/afterblock_2280"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732281
+      },
+      "model": "minecraft:item/afterblock/afterblock_2281"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732282
+      },
+      "model": "minecraft:item/afterblock/afterblock_2282"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732283
+      },
+      "model": "minecraft:item/afterblock/afterblock_2283"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732284
+      },
+      "model": "minecraft:item/afterblock/afterblock_2284"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732285
+      },
+      "model": "minecraft:item/afterblock/afterblock_2285"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732286
+      },
+      "model": "minecraft:item/afterblock/afterblock_2286"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732287
+      },
+      "model": "minecraft:item/afterblock/afterblock_2287"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732288
+      },
+      "model": "minecraft:item/afterblock/afterblock_2288"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732289
+      },
+      "model": "minecraft:item/afterblock/afterblock_2289"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732290
+      },
+      "model": "minecraft:item/afterblock/afterblock_2290"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732291
+      },
+      "model": "minecraft:item/afterblock/afterblock_2291"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732292
+      },
+      "model": "minecraft:item/afterblock/afterblock_2292"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732293
+      },
+      "model": "minecraft:item/afterblock/afterblock_2293"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732294
+      },
+      "model": "minecraft:item/afterblock/afterblock_2294"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732295
+      },
+      "model": "minecraft:item/afterblock/afterblock_2295"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732296
+      },
+      "model": "minecraft:item/afterblock/afterblock_2296"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732297
+      },
+      "model": "minecraft:item/afterblock/afterblock_2297"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732298
+      },
+      "model": "minecraft:item/afterblock/afterblock_2298"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732299
+      },
+      "model": "minecraft:item/afterblock/afterblock_2299"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732300
+      },
+      "model": "minecraft:item/afterblock/afterblock_2300"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732301
+      },
+      "model": "minecraft:item/afterblock/afterblock_2301"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732302
+      },
+      "model": "minecraft:item/afterblock/afterblock_2302"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732303
+      },
+      "model": "minecraft:item/afterblock/afterblock_2303"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732304
+      },
+      "model": "minecraft:item/afterblock/afterblock_2304"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732305
+      },
+      "model": "minecraft:item/afterblock/afterblock_2305"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732306
+      },
+      "model": "minecraft:item/afterblock/afterblock_2306"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732307
+      },
+      "model": "minecraft:item/afterblock/afterblock_2307"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732308
+      },
+      "model": "minecraft:item/afterblock/afterblock_2308"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732309
+      },
+      "model": "minecraft:item/afterblock/afterblock_2309"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732310
+      },
+      "model": "minecraft:item/afterblock/afterblock_2310"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732311
+      },
+      "model": "minecraft:item/afterblock/afterblock_2311"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732312
+      },
+      "model": "minecraft:item/afterblock/afterblock_2312"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732313
+      },
+      "model": "minecraft:item/afterblock/afterblock_2313"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732314
+      },
+      "model": "minecraft:item/afterblock/afterblock_2314"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732315
+      },
+      "model": "minecraft:item/afterblock/afterblock_2315"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732316
+      },
+      "model": "minecraft:item/afterblock/afterblock_2316"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732317
+      },
+      "model": "minecraft:item/afterblock/afterblock_2317"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732318
+      },
+      "model": "minecraft:item/afterblock/afterblock_2318"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732319
+      },
+      "model": "minecraft:item/afterblock/afterblock_2319"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732320
+      },
+      "model": "minecraft:item/afterblock/afterblock_2320"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732321
+      },
+      "model": "minecraft:item/afterblock/afterblock_2321"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732322
+      },
+      "model": "minecraft:item/afterblock/afterblock_2322"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732323
+      },
+      "model": "minecraft:item/afterblock/afterblock_2323"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732324
+      },
+      "model": "minecraft:item/afterblock/afterblock_2324"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732325
+      },
+      "model": "minecraft:item/afterblock/afterblock_2325"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732326
+      },
+      "model": "minecraft:item/afterblock/afterblock_2326"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732327
+      },
+      "model": "minecraft:item/afterblock/afterblock_2327"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732328
+      },
+      "model": "minecraft:item/afterblock/afterblock_2328"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732329
+      },
+      "model": "minecraft:item/afterblock/afterblock_2329"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732330
+      },
+      "model": "minecraft:item/afterblock/afterblock_2330"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732331
+      },
+      "model": "minecraft:item/afterblock/afterblock_2331"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732332
+      },
+      "model": "minecraft:item/afterblock/afterblock_2332"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732333
+      },
+      "model": "minecraft:item/afterblock/afterblock_2333"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732334
+      },
+      "model": "minecraft:item/afterblock/afterblock_2334"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732335
+      },
+      "model": "minecraft:item/afterblock/afterblock_2335"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732336
+      },
+      "model": "minecraft:item/afterblock/afterblock_2336"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732337
+      },
+      "model": "minecraft:item/afterblock/afterblock_2337"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732338
+      },
+      "model": "minecraft:item/afterblock/afterblock_2338"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732339
+      },
+      "model": "minecraft:item/afterblock/afterblock_2339"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732340
+      },
+      "model": "minecraft:item/afterblock/afterblock_2340"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732341
+      },
+      "model": "minecraft:item/afterblock/afterblock_2341"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732342
+      },
+      "model": "minecraft:item/afterblock/afterblock_2342"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732343
+      },
+      "model": "minecraft:item/afterblock/afterblock_2343"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732344
+      },
+      "model": "minecraft:item/afterblock/afterblock_2344"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732345
+      },
+      "model": "minecraft:item/afterblock/afterblock_2345"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732346
+      },
+      "model": "minecraft:item/afterblock/afterblock_2346"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732347
+      },
+      "model": "minecraft:item/afterblock/afterblock_2347"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732348
+      },
+      "model": "minecraft:item/afterblock/afterblock_2348"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732349
+      },
+      "model": "minecraft:item/afterblock/afterblock_2349"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732350
+      },
+      "model": "minecraft:item/afterblock/afterblock_2350"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732351
+      },
+      "model": "minecraft:item/afterblock/afterblock_2351"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732352
+      },
+      "model": "minecraft:item/afterblock/afterblock_2352"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732353
+      },
+      "model": "minecraft:item/afterblock/afterblock_2353"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732354
+      },
+      "model": "minecraft:item/afterblock/afterblock_2354"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732355
+      },
+      "model": "minecraft:item/afterblock/afterblock_2355"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732356
+      },
+      "model": "minecraft:item/afterblock/afterblock_2356"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732357
+      },
+      "model": "minecraft:item/afterblock/afterblock_2357"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732358
+      },
+      "model": "minecraft:item/afterblock/afterblock_2358"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732359
+      },
+      "model": "minecraft:item/afterblock/afterblock_2359"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732360
+      },
+      "model": "minecraft:item/afterblock/afterblock_2360"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732361
+      },
+      "model": "minecraft:item/afterblock/afterblock_2361"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732362
+      },
+      "model": "minecraft:item/afterblock/afterblock_2362"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732363
+      },
+      "model": "minecraft:item/afterblock/afterblock_2363"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732364
+      },
+      "model": "minecraft:item/afterblock/afterblock_2364"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732365
+      },
+      "model": "minecraft:item/afterblock/afterblock_2365"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732366
+      },
+      "model": "minecraft:item/afterblock/afterblock_2366"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732367
+      },
+      "model": "minecraft:item/afterblock/afterblock_2367"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732368
+      },
+      "model": "minecraft:item/afterblock/afterblock_2368"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732369
+      },
+      "model": "minecraft:item/afterblock/afterblock_2369"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732370
+      },
+      "model": "minecraft:item/afterblock/afterblock_2370"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732371
+      },
+      "model": "minecraft:item/afterblock/afterblock_2371"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732372
+      },
+      "model": "minecraft:item/afterblock/afterblock_2372"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732373
+      },
+      "model": "minecraft:item/afterblock/afterblock_2373"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732374
+      },
+      "model": "minecraft:item/afterblock/afterblock_2374"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732375
+      },
+      "model": "minecraft:item/afterblock/afterblock_2375"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732376
+      },
+      "model": "minecraft:item/afterblock/afterblock_2376"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732377
+      },
+      "model": "minecraft:item/afterblock/afterblock_2377"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732378
+      },
+      "model": "minecraft:item/afterblock/afterblock_2378"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732379
+      },
+      "model": "minecraft:item/afterblock/afterblock_2379"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732380
+      },
+      "model": "minecraft:item/afterblock/afterblock_2380"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732381
+      },
+      "model": "minecraft:item/afterblock/afterblock_2381"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732382
+      },
+      "model": "minecraft:item/afterblock/afterblock_2382"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732383
+      },
+      "model": "minecraft:item/afterblock/afterblock_2383"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732384
+      },
+      "model": "minecraft:item/afterblock/afterblock_2384"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732385
+      },
+      "model": "minecraft:item/afterblock/afterblock_2385"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732386
+      },
+      "model": "minecraft:item/afterblock/afterblock_2386"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732387
+      },
+      "model": "minecraft:item/afterblock/afterblock_2387"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732388
+      },
+      "model": "minecraft:item/afterblock/afterblock_2388"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732389
+      },
+      "model": "minecraft:item/afterblock/afterblock_2389"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732390
+      },
+      "model": "minecraft:item/afterblock/afterblock_2390"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732391
+      },
+      "model": "minecraft:item/afterblock/afterblock_2391"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732392
+      },
+      "model": "minecraft:item/afterblock/afterblock_2392"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732393
+      },
+      "model": "minecraft:item/afterblock/afterblock_2393"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732394
+      },
+      "model": "minecraft:item/afterblock/afterblock_2394"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732395
+      },
+      "model": "minecraft:item/afterblock/afterblock_2395"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732396
+      },
+      "model": "minecraft:item/afterblock/afterblock_2396"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732397
+      },
+      "model": "minecraft:item/afterblock/afterblock_2397"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732398
+      },
+      "model": "minecraft:item/afterblock/afterblock_2398"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732399
+      },
+      "model": "minecraft:item/afterblock/afterblock_2399"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732400
+      },
+      "model": "minecraft:item/afterblock/afterblock_2400"
     }
   ]
 }

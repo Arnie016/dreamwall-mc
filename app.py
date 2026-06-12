@@ -718,6 +718,20 @@ def resource_manifest() -> list[dict]:
         return []
 
 
+def resource_pack_stats() -> dict:
+    manifest = resource_manifest()
+    kinds = {item.get("kind", "unknown") for item in manifest}
+    shapes = {item.get("shape", "unknown") for item in manifest}
+    profiles = {item.get("model_profile", "legacy") for item in manifest}
+    return {
+        "total_items": len(manifest),
+        "total_kinds": len(kinds),
+        "total_shapes": len(shapes),
+        "total_model_profiles": len(profiles),
+        "page_count": max(1, math.ceil(len(manifest) / 30)),
+    }
+
+
 def resource_pack_item_for(object_guess: str, seed_hint: int = 0) -> dict:
     key = texture_key_for(object_guess)
     manifest = resource_manifest()
@@ -763,6 +777,10 @@ def browse_texture_library(kind: str, page: int):
             item["label"],
             item["kind"],
             item["shape"],
+            item.get("model_profile", "legacy"),
+            item.get("orientation", "standard"),
+            item.get("itemdisplay_transform", "ItemDisplay.Transform.FIXED"),
+            item.get("element_count", ""),
             item["model"],
             f"/give @p minecraft:paper[minecraft:custom_model_data={item['custom_model_data']}] 1",
         ]
@@ -822,6 +840,7 @@ def render_museum_preview(selected: dict, collection: list[dict]) -> str:
     font_hall = load_font(14)
     font_body = load_font(13)
     font_tiny = load_font(10)
+    pack_stats = resource_pack_stats()
 
     def shade(rgb: tuple[int, int, int], factor: float) -> tuple[int, int, int]:
         return tuple(max(0, min(255, int(channel * factor))) for channel in rgb)
@@ -839,7 +858,7 @@ def render_museum_preview(selected: dict, collection: list[dict]) -> str:
     draw.rectangle([26, 26, width - 26, height - 26], outline=(150, 112, 58), width=4)
     draw.rectangle([38, 38, width - 38, 106], fill=(29, 25, 19), outline=(94, 74, 48), width=2)
     draw.text((58, 50), "AFTERBLOCK MUSEUM", fill=(255, 225, 154), font=font_title)
-    draw.text((58, 82), "100 labeled relics - 40 object families - 1,200 Minecraft PNG models - live server packets", fill=(190, 176, 142), font=font_body)
+    draw.text((58, 82), f"100 labeled relics - {pack_stats['total_kinds']} object families - {pack_stats['total_items']} Minecraft PNG models - live server packets", fill=(190, 176, 142), font=font_body)
     draw.text((1180, 66), "minecraft:paper + CustomModelData", fill=(211, 190, 128), font=font_body)
 
     # Grand floor and central sightline.
@@ -919,8 +938,9 @@ def render_museum_preview(selected: dict, collection: list[dict]) -> str:
 
     stats = [
         ("artifact passports", len(collection)),
-        ("object families", 40),
-        ("resource models", 1200),
+        ("object families", pack_stats["total_kinds"]),
+        ("resource models", pack_stats["total_items"]),
+        ("display profiles", pack_stats["total_model_profiles"]),
         ("server import", "ready"),
         ("resource pack", "AfterBlockMuseum.zip"),
     ]
@@ -2098,7 +2118,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     with gr.Accordion("Resource Pack Browser", open=False):
         with gr.Row():
             texture_kind = gr.Dropdown(label="Kind", choices=texture_kind_choices(), value="all")
-            texture_page = gr.Slider(label="Page", minimum=1, maximum=40, value=1, step=1)
+            texture_page = gr.Slider(label="Page", minimum=1, maximum=resource_pack_stats()["page_count"], value=1, step=1)
             texture_button = gr.Button("Browse Textures")
         texture_status = gr.Markdown()
         texture_gallery = gr.Gallery(
@@ -2108,10 +2128,10 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             object_fit="contain",
         )
         texture_table = gr.Dataframe(
-            headers=["cmd", "label", "kind", "shape", "model", "give command"],
+            headers=["cmd", "label", "kind", "shape", "profile", "orientation", "itemdisplay", "elements", "model", "give command"],
             label="Minecraft model rows",
             row_count=8,
-            col_count=(6, "fixed"),
+            col_count=(10, "fixed"),
             interactive=False,
         )
         with gr.Row():

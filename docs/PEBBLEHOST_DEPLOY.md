@@ -21,8 +21,8 @@ dist/pebblehost/SHA256SUMS
 Current hashes from the verified local bundle:
 
 ```text
-8854b0d78b4e2d252a2c3c8dd635c1dc20e06dd5f8323bd0b3a608c50bd089bf  AfterBlockMuseum.zip
-d0634a5b6851c3e2aa8f09fa39461c2b7a5de1709623d2293147429a479a696c  dreamwall-paper-bridge-0.1.0.jar
+966e33cc34e7969daf7bb1261f444b3c89dd01c92fe6b158f7843ddff5514bac  AfterBlockMuseum.zip
+c69b035337114ae2007450619070ff913342989172abeb2a27548ea3f868024c  dreamwall-paper-bridge-0.1.0.jar
 ```
 
 ## Upload Targets
@@ -61,9 +61,10 @@ Run `/dreamwall pack` in-game to ask the client to load that pack. Set `offer-re
 The pack contains:
 
 ```text
-1,200 PNG item textures
-1,200 item model JSON files
-1,200 CustomModelData overrides on minecraft:paper
+2,400 PNG item textures
+2,400 item model JSON files
+2,400 CustomModelData overrides on minecraft:paper
+6 variant display profiles for pedestal, wall, tabletop, showcase, and handheld rendering
 ```
 
 ## In-Game Smoke Test

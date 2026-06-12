@@ -1,0 +1,17 @@
+{
+  "tested_at": "2026-06-12T11:33:03.715821+00:00",
+  "base": "http://127.0.0.1:7860",
+  "checks": {
+    "curate_artifact_outputs": 6,
+    "curate_artifact_packet": "dreamwall.museum.v1",
+    "browse_textures_page": 80,
+    "browse_textures_expected_total": 2400,
+    "browse_textures_rows": 30,
+    "browse_textures_columns": 10
+  },
+  "passed": true,
+  "screenshots": [
+    "artifacts/stress/afterblock_gradio_ui_screenshot.png",
+    "artifacts/stress/afterblock_texture_gallery_2400.png"
+  ]
+}
