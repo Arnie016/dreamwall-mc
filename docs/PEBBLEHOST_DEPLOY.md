@@ -22,7 +22,7 @@ Current hashes from the verified local bundle:
 
 ```text
 7ace99dec709e01c3f118bb48cde406b9711d6683d74e848707015692a78087c  AfterBlockMuseum.zip
-992102a2c04ffd0b2d4868e5eb47b673638f48ade1ed869bc3826208845c04b9  dreamwall-paper-bridge-0.1.0.jar
+0bc7e6b3bb2e80b01943cea42bb3efdd7432eac6db39e394b3564dbfc584829e  dreamwall-paper-bridge-0.1.0.jar
 ```
 
 ## Upload Targets
