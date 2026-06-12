@@ -21,7 +21,7 @@ dist/pebblehost/SHA256SUMS
 Current hashes from the verified local bundle:
 
 ```text
-7ace99dec709e01c3f118bb48cde406b9711d6683d74e848707015692a78087c  AfterBlockMuseum.zip
+8854b0d78b4e2d252a2c3c8dd635c1dc20e06dd5f8323bd0b3a608c50bd089bf  AfterBlockMuseum.zip
 0bc7e6b3bb2e80b01943cea42bb3efdd7432eac6db39e394b3564dbfc584829e  dreamwall-paper-bridge-0.1.0.jar
 ```
 

@@ -6,8 +6,10 @@
 - 1,200 generated 3D item model JSON files
 - 1,200 `minecraft:paper` custom model data overrides
 - 40 everyday object archetypes
-- 4 contact-sheet screenshots
-- browser gallery for the first 240 isometric previews
+- 12 contact-sheet screenshots
+- browser gallery for all 1,200 isometric previews
+- searchable/filterable full-library HTML with copyable `/give` commands
+- Gradio Resource Pack Browser for paging through the pack inside the live Space
 
 Open locally:
 
@@ -20,8 +22,9 @@ Screenshots:
 ```text
 assets/afterblock_textures/gallery/contact_sheet_01.png
 assets/afterblock_textures/gallery/contact_sheet_02.png
-assets/afterblock_textures/gallery/contact_sheet_03.png
-assets/afterblock_textures/gallery/contact_sheet_04.png
+...
+assets/afterblock_textures/gallery/contact_sheet_12.png
+assets/afterblock_textures/gallery/library_report.json
 ```
 
 Resource pack skeleton:
@@ -69,6 +72,14 @@ To reach thousands of objects without hand-drawing every file:
 6. Map `custom_model_data` into the Minecraft bridge packet.
 
 The current generator does this deterministically, so an object can be recreated from prompt, owner, and artifact metadata.
+
+## Inspection Strategy
+
+The repo now exposes the pack in three ways:
+
+1. `assets/afterblock_textures/gallery/index.html` shows every item with search, kind filters, model path, and copyable `/give` commands.
+2. `assets/afterblock_textures/gallery/contact_sheet_01.png` through `contact_sheet_12.png` provide screenshot-friendly proof pages.
+3. The Gradio app includes a collapsed Resource Pack Browser so judges can inspect PNG previews, model paths, shapes, and `CustomModelData` values without leaving the Space.
 
 ## Next Upgrade
 

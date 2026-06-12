@@ -85,7 +85,8 @@ The MVP emits:
 - a named Gradio API endpoint: `curate_artifact`
 - generated texture PNGs in `assets/afterblock_textures/items/`
 - resource-pack skeleton in `resource-pack/AfterBlockMuseum/`
-- texture gallery in `assets/afterblock_textures/gallery/index.html`
+- searchable full texture gallery in `assets/afterblock_textures/gallery/index.html`
+- Gradio Resource Pack Browser endpoint: `browse_textures`
 
 Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
 

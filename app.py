@@ -715,6 +715,47 @@ def resource_pack_item_for(object_guess: str, seed_hint: int = 0) -> dict:
     return matches[seed_hint % len(matches)]
 
 
+def texture_kind_choices() -> list[str]:
+    kinds = sorted({item.get("kind", "unknown") for item in resource_manifest()})
+    return ["all"] + kinds
+
+
+def browse_texture_library(kind: str, page: int):
+    manifest = resource_manifest()
+    if kind and kind != "all":
+        manifest = [item for item in manifest if item.get("kind") == kind]
+    page_size = 30
+    total = len(manifest)
+    page_count = max(1, math.ceil(total / page_size))
+    page_index = max(1, min(int(page or 1), page_count))
+    start = (page_index - 1) * page_size
+    items = manifest[start : start + page_size]
+    gallery = [
+        (
+            f"assets/afterblock_textures/gallery/previews/{item['id']}.png",
+            f"{item['label']} | CMD {item['custom_model_data']}",
+        )
+        for item in items
+    ]
+    rows = [
+        [
+            item["custom_model_data"],
+            item["label"],
+            item["kind"],
+            item["shape"],
+            item["model"],
+            f"/give @p minecraft:paper[minecraft:custom_model_data={item['custom_model_data']}] 1",
+        ]
+        for item in items
+    ]
+    status = (
+        f"Showing {len(items)} of {total} items"
+        f" | page {page_index}/{page_count}"
+        " | base item: minecraft:paper"
+    )
+    return gallery, rows, status
+
+
 def museum_collection(selected: dict, count: int = 100) -> list[dict]:
     artifacts = [demo_collection_artifact(i) for i in range(count)]
     selected_copy = dict(selected)
@@ -1961,6 +2002,42 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
         outputs=[museum_preview, museum_catalog, museum_placement, museum_spirit, museum_passport, museum_packet],
     )
+
+    with gr.Accordion("Resource Pack Browser", open=False):
+        gr.Markdown("Inspect the generated Minecraft item pack without leaving the Space.")
+        with gr.Row():
+            texture_kind = gr.Dropdown(label="Kind", choices=texture_kind_choices(), value="all")
+            texture_page = gr.Slider(label="Page", minimum=1, maximum=40, value=1, step=1)
+            texture_button = gr.Button("Browse Textures")
+        texture_status = gr.Markdown()
+        texture_gallery = gr.Gallery(
+            label="PNG previews with CustomModelData",
+            columns=5,
+            height=360,
+            object_fit="contain",
+        )
+        texture_table = gr.Dataframe(
+            headers=["cmd", "label", "kind", "shape", "model", "give command"],
+            label="Minecraft model rows",
+            row_count=8,
+            col_count=(6, "fixed"),
+            interactive=False,
+        )
+        with gr.Row():
+            gr.File(value="resource-pack/AfterBlockMuseum.zip", label="Download resource pack")
+            gr.File(value="assets/afterblock_textures/afterblock_manifest.json", label="Download manifest")
+            gr.File(value="assets/afterblock_textures/gallery/index.html", label="Download full texture gallery")
+        texture_button.click(
+            browse_texture_library,
+            inputs=[texture_kind, texture_page],
+            outputs=[texture_gallery, texture_table, texture_status],
+            api_name="browse_textures",
+        )
+        demo.load(
+            browse_texture_library,
+            inputs=[texture_kind, texture_page],
+            outputs=[texture_gallery, texture_table, texture_status],
+        )
 
     gr.HTML("<h2>Living Graffiti Wall</h2>")
     with gr.Row():

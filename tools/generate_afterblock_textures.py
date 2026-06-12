@@ -236,21 +236,32 @@ def build_gallery(manifest, root):
     gallery_dir.mkdir(parents=True, exist_ok=True)
     thumb_dir = gallery_dir / "previews"
     thumb_dir.mkdir(exist_ok=True)
-    preview_count = min(len(manifest), 400)
-    for item in manifest[:preview_count]:
+    for item in manifest:
         preview = render_isometric_preview(item["kind"], tuple(item["color"]), item["shape"], item["variant"])
         preview.save(thumb_dir / f"{item['id']}.png")
 
+    kinds = sorted({item["kind"] for item in manifest})
+    shapes = sorted({item["shape"] for item in manifest})
+    kind_counts = {kind: sum(1 for item in manifest if item["kind"] == kind) for kind in kinds}
     cards = []
-    for item in manifest[:240]:
+    for item in manifest:
+        give_command = (
+            f"/give @p minecraft:paper[minecraft:custom_model_data={item['custom_model_data']},"
+            f"minecraft:item_name='\"{item['label']}\"'] 1"
+        )
         cards.append(
-            "<article>"
+            f"<article data-kind='{item['kind']}' data-shape='{item['shape']}' "
+            f"data-text='{item['label'].lower()} {item['kind']} {item['shape']} {item['custom_model_data']}'>"
             f"<img src='previews/{item['id']}.png' alt='{item['label']}'>"
             f"<strong>{item['label']}</strong>"
-            f"<span>{item['kind']} · CMD {item['custom_model_data']}</span>"
+            f"<span>{item['kind']} | {item['shape']} | CMD {item['custom_model_data']}</span>"
             f"<code>{item['model']}</code>"
+            f"<button data-command=\"{give_command}\">Copy /give</button>"
             "</article>"
         )
+    kind_buttons = ["<button class='filter active' data-kind='all'>all</button>"] + [
+        f"<button class='filter' data-kind='{kind}'>{kind} ({kind_counts[kind]})</button>" for kind in kinds
+    ]
     html = f"""<!doctype html>
 <html>
 <head>
@@ -260,28 +271,91 @@ def build_gallery(manifest, root):
     body {{ margin: 0; background: #11120f; color: #eadfbd; font-family: ui-monospace, Menlo, monospace; }}
     header {{ position: sticky; top: 0; background: #191a16; border-bottom: 2px solid #9d7a42; padding: 18px 24px; z-index: 1; }}
     h1 {{ margin: 0 0 6px; color: #ffd87c; }}
-    .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; padding: 20px; }}
+    .controls {{ display: grid; gap: 10px; margin-top: 14px; }}
+    input {{ background: #0f100d; color: #ffe6a3; border: 1px solid #725f37; padding: 10px; font: inherit; }}
+    .filters {{ display: flex; flex-wrap: wrap; gap: 8px; max-height: 92px; overflow: auto; }}
+    button {{ background: #29251b; color: #ffe6a3; border: 1px solid #7d6436; padding: 7px 9px; font: inherit; cursor: pointer; }}
+    button.active, article button:hover {{ background: #6f5425; color: #fff7c8; }}
+    .stats {{ color: #bdb08f; }}
+    .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; padding: 20px; }}
     article {{ background: #201d17; border: 2px solid #5e523d; padding: 10px; min-height: 190px; }}
+    article.hidden {{ display: none; }}
     img {{ width: 140px; height: 120px; object-fit: contain; display: block; margin: 0 auto 8px; background: #161712; }}
     strong, span, code {{ display: block; overflow-wrap: anywhere; }}
     strong {{ color: #fff0b8; }}
     span {{ color: #bdb08f; margin: 4px 0; }}
     code {{ color: #9fd3b1; font-size: 11px; }}
+    article button {{ width: 100%; margin-top: 8px; }}
   </style>
 </head>
 <body>
   <header>
     <h1>AfterBlock Texture Gallery</h1>
-    <div>{len(manifest)} generated item textures and 3D model JSONs. Showing first 240 previews.</div>
+    <div>{len(manifest)} generated item textures and 3D model JSONs. Every card has a PNG preview, model path, shape, and CustomModelData command.</div>
+    <div class="controls">
+      <input id="search" placeholder="Search label, kind, shape, or custom model data">
+      <div class="filters">{''.join(kind_buttons)}</div>
+      <div class="stats"><span id="visible">{len(manifest)}</span> visible / {len(manifest)} total | {len(kinds)} kinds | {len(shapes)} model shapes</div>
+    </div>
   </header>
   <main class="grid">{''.join(cards)}</main>
+  <script>
+    const cards = [...document.querySelectorAll('article')];
+    const visible = document.querySelector('#visible');
+    const search = document.querySelector('#search');
+    let activeKind = 'all';
+    function applyFilter() {{
+      const q = search.value.trim().toLowerCase();
+      let count = 0;
+      for (const card of cards) {{
+        const kindOk = activeKind === 'all' || card.dataset.kind === activeKind;
+        const textOk = !q || card.dataset.text.includes(q);
+        const show = kindOk && textOk;
+        card.classList.toggle('hidden', !show);
+        if (show) count++;
+      }}
+      visible.textContent = count;
+    }}
+    document.querySelectorAll('.filter').forEach(button => {{
+      button.addEventListener('click', () => {{
+        document.querySelectorAll('.filter').forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        activeKind = button.dataset.kind;
+        applyFilter();
+      }});
+    }});
+    search.addEventListener('input', applyFilter);
+    document.querySelectorAll('article button').forEach(button => {{
+      button.addEventListener('click', async () => {{
+        await navigator.clipboard.writeText(button.dataset.command);
+        button.textContent = 'Copied';
+        setTimeout(() => button.textContent = 'Copy /give', 900);
+      }});
+    }});
+  </script>
 </body>
 </html>
 """
     (gallery_dir / "index.html").write_text(html, encoding="utf-8")
+    write_json(
+        gallery_dir / "library_report.json",
+        {
+            "total_items": len(manifest),
+            "total_kinds": len(kinds),
+            "total_shapes": len(shapes),
+            "kind_counts": kind_counts,
+            "shapes": shapes,
+            "custom_model_data_range": [
+                min(item["custom_model_data"] for item in manifest),
+                max(item["custom_model_data"] for item in manifest),
+            ],
+            "browser_gallery": "assets/afterblock_textures/gallery/index.html",
+            "resource_pack": "resource-pack/AfterBlockMuseum.zip",
+        },
+    )
 
     page_size = 100
-    for page, start in enumerate(range(0, min(len(manifest), 400), page_size), 1):
+    for page, start in enumerate(range(0, len(manifest), page_size), 1):
         sheet = Image.new("RGB", (1600, 1200), (20, 21, 18))
         draw = ImageDraw.Draw(sheet)
         draw.text((20, 14), f"AfterBlock generated textures page {page}", fill=(250, 220, 140))
