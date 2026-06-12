@@ -152,6 +152,36 @@ DEMO_ARTIFACTS = {
     },
 }
 
+SOCIAL_HANDLES = [
+    "@mossbyte", "@skyreceipt", "@quietbag", "@pixelmira", "@redstoneivy",
+    "@lostadapter", "@softsignal", "@bookishnova", "@lampkeeper", "@tinymoon",
+    "@schoolghost", "@mintmonitor", "@cloudpocket", "@driftcase", "@noiseferry",
+    "@glasssparrow", "@examrunner", "@coppernote", "@homebutton", "@tidyvoid",
+]
+
+OBJECT_LIBRARY = [
+    ("Star Wars childhood book", "memory_prompt", "a worn Star Wars childhood book with bent corners", "I kept reopening it because the galaxy felt bigger than my room.", "book"),
+    ("AirPods", "object_photo", "white AirPods from first year of university", "They carried private worlds through public noise.", "earbuds"),
+    ("Bitcoin monitor", "object_photo", "black monitor used for a first Bitcoin trade", "Numbers first started feeling like weather.", "monitor"),
+    ("Exam school bag", "object_photo", "school bag carried through exams", "It held pencils, snacks, panic, and every morning.", "school bag"),
+    ("Red dragon painting", "painting_prompt", "a red dragon above my childhood home", "A fantasy guardian over the place I learned to imagine.", "painting"),
+    ("Water bottle", "object_photo", "scratched blue water bottle", "It waited on every desk like a tiny reservoir.", "water bottle"),
+    ("Desk lamp", "object_photo", "warm desk lamp beside late night notes", "It kept one square of the room awake.", "lamp"),
+    ("Microphone", "object_photo", "black microphone used for first recordings", "It learned my voice before anyone else did.", "microphone"),
+    ("Tissue packet", "object_photo", "small tissue packet from a long train ride", "It was ordinary until the day was not.", "tissue"),
+    ("Keyboard", "object_photo", "keyboard with shiny worn keys", "It translated nervous thoughts into work.", "keyboard"),
+    ("Phone charger", "object_photo", "fraying white phone charger", "It rescued the last percent of the day.", "charger"),
+    ("Coffee mug", "object_photo", "ceramic coffee mug with a chipped handle", "It warmed decisions before they became plans.", "mug"),
+    ("Running shoes", "object_photo", "old running shoes with rain marks", "They carried promises the body almost kept.", "shoes"),
+    ("House key", "object_photo", "single house key on a faded ring", "It made a door feel like a return.", "key"),
+    ("Toy car", "memory_prompt", "tiny red toy car from a childhood shelf", "It was speed before I knew distance.", "toy car"),
+    ("Notebook", "object_photo", "notebook full of half-started ideas", "It preserved versions of me that did not ship.", "notebook"),
+    ("Glasses", "object_photo", "black glasses with a scratched lens", "They made the world sharper and less certain.", "glasses"),
+    ("Wallet", "object_photo", "old wallet with expired cards", "It held small permissions to be outside.", "wallet"),
+    ("USB drive", "object_photo", "silver USB drive with unknown files", "It carries a sealed room of forgotten work.", "usb drive"),
+    ("Alarm clock", "object_photo", "small alarm clock from exam mornings", "It was the sound of responsibility arriving.", "clock"),
+]
+
 
 @dataclass
 class ArtResult:
@@ -629,19 +659,166 @@ def floor_map_html(artifact: dict) -> str:
     return f"<div class='floor-map'>{''.join(cells)}</div>"
 
 
+def demo_collection_artifact(index: int) -> dict:
+    base = OBJECT_LIBRARY[index % len(OBJECT_LIBRARY)]
+    name, input_kind, prompt, memory, object_kind = base
+    handle = SOCIAL_HANDLES[index % len(SOCIAL_HANDLES)]
+    variant = index // len(OBJECT_LIBRARY)
+    owner = handle.strip("@").replace("_", " ").title()
+    suffixes = ["launch", "rain", "exam", "midnight", "first-room"]
+    source_prompt = f"{prompt}, {suffixes[variant % len(suffixes)]} variant {variant + 1}"
+    memory_text = f"{memory} Visitor echo #{index + 1}."
+    artifact = build_museum_artifact(owner, handle, input_kind, source_prompt, memory_text)
+    artifact["catalog_index"] = index + 1
+    artifact["object_kind"] = object_kind
+    artifact["texture_path"] = f"assets/afterblock_textures/items/{object_kind.replace(' ', '_')}_{index + 1:03d}.png"
+    return artifact
+
+
+def texture_key_for(object_guess: str) -> str:
+    key = object_guess.replace(" ", "_")
+    aliases = {
+        "prompted_painting": "painting",
+        "personal_relic": "notebook",
+        "animal_spirit": "toy_car",
+    }
+    return aliases.get(key, key)
+
+
+def museum_collection(selected: dict, count: int = 100) -> list[dict]:
+    artifacts = [demo_collection_artifact(i) for i in range(count)]
+    selected_copy = dict(selected)
+    selected_copy["catalog_index"] = 0
+    selected_copy["texture_path"] = f"assets/afterblock_textures/items/{texture_key_for(selected['object_guess'])}_selected.png"
+    return [selected_copy] + artifacts
+
+
+def hall_color(hall: str) -> tuple[int, int, int]:
+    colors = {
+        "Hall of Firsts": (236, 191, 82),
+        "Hall of Companions": (104, 178, 132),
+        "Hall of Turning Points": (204, 114, 92),
+        "Hall of Worlds": (104, 145, 214),
+        "Hall of Soft Things": (222, 159, 184),
+        "Hall of Tools": (151, 151, 164),
+        "Hall of Lost Signals": (149, 112, 194),
+        "Grand Painting Hall": (205, 132, 72),
+        "Animal Spirit Grove": (111, 164, 86),
+    }
+    return colors.get(hall, (180, 160, 120))
+
+
+def render_museum_preview(selected: dict, collection: list[dict]) -> str:
+    width, height = 1400, 980
+    image = Image.new("RGB", (width, height), (18, 19, 17))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle([28, 28, width - 28, height - 28], outline=(144, 115, 66), width=4)
+    draw.text((48, 42), "AFTERBLOCK MUSEUM / LIVE FLOOR PREVIEW", fill=(245, 214, 142))
+    draw.text((48, 68), "100 demo artifacts with owner handles, halls, curation, and Minecraft-ready placements", fill=(186, 174, 147))
+
+    hall_positions = {
+        "Hall of Firsts": (60, 120, 380, 330),
+        "Hall of Companions": (410, 120, 730, 330),
+        "Hall of Turning Points": (760, 120, 1080, 330),
+        "Hall of Worlds": (60, 360, 380, 570),
+        "Hall of Soft Things": (410, 360, 730, 570),
+        "Hall of Tools": (760, 360, 1080, 570),
+        "Hall of Lost Signals": (60, 600, 380, 810),
+        "Grand Painting Hall": (410, 600, 730, 810),
+        "Animal Spirit Grove": (760, 600, 1080, 810),
+    }
+    for hall, box in hall_positions.items():
+        color = hall_color(hall)
+        draw.rectangle(box, fill=tuple(max(20, c // 4) for c in color), outline=color, width=3)
+        draw.text((box[0] + 12, box[1] + 10), hall.upper(), fill=(250, 230, 170))
+
+    placed_counts = {hall: 0 for hall in hall_positions}
+    for artifact in collection:
+        hall = artifact["hall"]
+        if hall not in hall_positions:
+            continue
+        box = hall_positions[hall]
+        slot = placed_counts[hall]
+        placed_counts[hall] += 1
+        col = slot % 5
+        row = (slot // 5) % 5
+        x = box[0] + 28 + col * 56
+        y = box[1] + 44 + row * 31
+        active = artifact["artifact_id"] == selected["artifact_id"]
+        color = (255, 230, 125) if active else hall_color(hall)
+        draw.rectangle([x, y, x + 38, y + 20], fill=color, outline=(25, 22, 18), width=2)
+        label = artifact["owner_handle"][:9]
+        draw.text((x, y + 22), label, fill=(240, 230, 210) if active else (194, 184, 158))
+        if active:
+            draw.rectangle([x - 6, y - 6, x + 44, y + 48], outline=(255, 246, 180), width=3)
+
+    detail_x = 1110
+    draw.rectangle([detail_x, 120, width - 52, 810], fill=(31, 27, 22), outline=(144, 115, 66), width=3)
+    details = [
+        "SELECTED ARTIFACT",
+        selected["title"],
+        selected["owner_handle"],
+        selected["hall"],
+        f"Plot ({selected['plot']['x']}, {selected['plot']['z']})",
+        f"XYZ {selected['minecraft_coordinates']['x']} {selected['minecraft_coordinates']['y']} {selected['minecraft_coordinates']['z']}",
+        f"Curation {selected['curation_scores']['curation_score']}",
+        selected["object_guess"],
+        selected["spirit_first_line"][:34],
+    ]
+    yy = 142
+    for idx, line in enumerate(details):
+        fill = (255, 226, 150) if idx == 0 else (230, 217, 188)
+        draw.text((detail_x + 18, yy), line, fill=fill)
+        yy += 38 if idx in {0, 1} else 30
+
+    path = os.path.join(tempfile.gettempdir(), f"afterblock_museum_preview_{selected['artifact_id']}.png")
+    image.save(path)
+    return path
+
+
+def catalog_rows(collection: list[dict]) -> list[list]:
+    rows = []
+    for artifact in collection[:101]:
+        rows.append(
+            [
+                artifact.get("catalog_index", 0),
+                artifact["owner_handle"],
+                artifact["title"],
+                artifact["object_guess"],
+                artifact["hall"],
+                artifact["curation_scores"]["curation_score"],
+                f"{artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}",
+            ]
+        )
+    return rows
+
+
 def build_museum_artifact(
     owner_name: str,
     owner_handle: str,
     input_type: str,
     source_prompt: str,
     memory_text: str,
+    relic_image_path: str | None = None,
 ) -> dict:
     owner_name = (owner_name or "Anonymous").strip()
     owner_handle = (owner_handle or "@unknown").strip()
     input_type = (input_type or "memory_prompt").strip()
     source_prompt = (source_prompt or "a mysterious object from a half-remembered room").strip()
     memory_text = (memory_text or "No memory text was provided, so the museum listens to the object itself.").strip()
-    text = f"afterblock={owner_name}|{owner_handle}|{input_type}|{source_prompt}|{memory_text}"
+    image_note = ""
+    image_palette = []
+    if relic_image_path:
+        try:
+            with Image.open(relic_image_path) as uploaded:
+                uploaded = uploaded.convert("RGB").resize((8, 8))
+                pixels = list(uploaded.getdata())
+                avg = tuple(int(sum(pixel[i] for pixel in pixels) / len(pixels)) for i in range(3))
+                image_note = f"uploaded image average color rgb{avg}"
+                image_palette = [avg]
+        except Exception:
+            image_note = "uploaded image could not be fingerprinted"
+    text = f"afterblock={owner_name}|{owner_handle}|{input_type}|{source_prompt}|{memory_text}|{image_note}"
     seed = stable_seed(text)
     vec = embedding(text)
     moods = top_moods(text, vec)
@@ -666,6 +843,7 @@ def build_museum_artifact(
         "title": title,
         "source_prompt": source_prompt,
         "memory_text": memory_text,
+        "image_fingerprint": image_note,
         "object_guess": object_guess,
         "hall": hall,
         "zone": zone,
@@ -673,6 +851,7 @@ def build_museum_artifact(
         "minecraft_coordinates": coordinates,
         "palette": palette_names,
         "minecraft_materials": palette_names,
+        "texture_path": f"assets/afterblock_textures/items/{texture_key_for(object_guess)}_selected.png",
         "plaque_line": plaque_line,
         "lore_short": lore_short,
         "spirit_name": spirit["spirit_name"],
@@ -724,6 +903,7 @@ def museum_packet_for(artifact: dict) -> dict:
             "hall": artifact["hall"],
             "coordinates": artifact["minecraft_coordinates"],
             "materials": artifact["minecraft_materials"],
+            "texture_path": artifact["texture_path"],
             "plaque_text": artifact["plaque_line"],
             "spirit_first_line": artifact["spirit_first_line"],
             "owner_handle": artifact["owner_handle"],
@@ -739,21 +919,21 @@ def curate_afterblock_artifact(
     input_type: str,
     source_prompt: str,
     memory_text: str,
+    relic_image_path: str | None = None,
 ):
-    artifact = build_museum_artifact(owner_name, owner_handle, input_type, source_prompt, memory_text)
+    artifact = build_museum_artifact(owner_name, owner_handle, input_type, source_prompt, memory_text, relic_image_path)
     packet = museum_packet_for(artifact)
+    collection = museum_collection(artifact, 100)
+    preview_path = render_museum_preview(artifact, collection)
     placement = [
         f"# {artifact['title']}",
-        f"Owner: **{artifact['owner_handle']}**",
-        f"Hall: **{artifact['hall']}** / {artifact['zone']}",
-        f"Plot: **({artifact['plot']['x']}, {artifact['plot']['z']})**",
-        f"Minecraft coordinates: **{artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}**",
-        f"Curation score: **{artifact['curation_scores']['curation_score']}**",
+        f"**{artifact['owner_handle']}** · {artifact['hall']} · score {artifact['curation_scores']['curation_score']}",
+        f"Plot **({artifact['plot']['x']}, {artifact['plot']['z']})** · XYZ **{artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}**",
         "",
-        f"Placement reason: {artifact['placement_reason']}",
-        f"Plaque: _{artifact['plaque_line']}_",
+        f"{artifact['placement_reason']}",
+        f"_{artifact['plaque_line']}_",
         "",
-        "Resonance links:",
+        "**Resonance links**",
     ]
     if artifact["resonance_links"]:
         placement.extend(
@@ -773,6 +953,8 @@ def curate_afterblock_artifact(
         spirit_lines.append(f"- **{question}** {response}")
     passport = passport_html(artifact) + floor_map_html(artifact)
     return (
+        preview_path,
+        catalog_rows(collection),
         "\n".join(placement),
         spirit_lines and "\n".join(spirit_lines),
         passport,
@@ -1580,8 +1762,10 @@ body, .gradio-container {
   background: #171916;
   border: 2px solid #6f6a57;
   box-shadow: inset 0 0 18px rgba(242, 193, 95, 0.1);
-  padding: 14px;
+  padding: 10px 14px;
   margin: 10px 0;
+  color: #d8c9a6;
+  font-size: 13px;
 }
 .passport-card {
   background: #221d16;
@@ -1648,6 +1832,11 @@ body, .gradio-container {
 textarea, input {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
 }
+.compact-note {
+  color: #c9b98f;
+  font-size: 13px;
+  margin: 0 0 8px;
+}
 """
 
 
@@ -1672,9 +1861,9 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         </section>
         """
     )
-    gr.HTML("<h2>AfterBlock Museum Terminal</h2><div class='museum-terminal'>chiseling memory into blocks... consulting the museum curator... assigning hall placement... awakening artifact spirit...</div>")
+    gr.HTML("<h2>AfterBlock Museum</h2><div class='museum-terminal'>scan relic -> place in hall -> awaken spirit -> export Minecraft packet</div>")
     with gr.Row():
-        with gr.Column(scale=5):
+        with gr.Column(scale=4):
             demo_choice = gr.Dropdown(
                 label="Seeded demo relic",
                 choices=list(DEMO_ARTIFACTS),
@@ -1689,16 +1878,25 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             )
             relic_prompt = gr.Textbox(
                 label="Scan relic / prompt",
-                lines=3,
+                lines=2,
                 value="white AirPods from my first year of university",
             )
             memory_text = gr.Textbox(
                 label="Memory text",
-                lines=3,
+                lines=2,
                 value="They carried private worlds through public noise during my first year away.",
             )
+            relic_image = gr.Image(label="Optional relic image", type="filepath", height=160)
             museum_button = gr.Button("Curate Artifact", variant="primary")
-        with gr.Column(scale=5):
+        with gr.Column(scale=6):
+            museum_preview = gr.Image(label="Museum preview: 100 labeled demo artifacts", type="filepath", height=520)
+            museum_catalog = gr.Dataframe(
+                headers=["#", "handle", "title", "object", "hall", "score", "xyz"],
+                label="Artifact catalog",
+                row_count=8,
+                col_count=(7, "fixed"),
+                interactive=False,
+            )
             with gr.Tabs():
                 with gr.Tab("Curate Placement"):
                     museum_placement = gr.Markdown()
@@ -1716,14 +1914,14 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     )
     museum_button.click(
         curate_afterblock_artifact,
-        inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text],
-        outputs=[museum_placement, museum_spirit, museum_passport, museum_packet],
+        inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
+        outputs=[museum_preview, museum_catalog, museum_placement, museum_spirit, museum_passport, museum_packet],
         api_name="curate_artifact",
     )
     demo.load(
         curate_afterblock_artifact,
-        inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text],
-        outputs=[museum_placement, museum_spirit, museum_passport, museum_packet],
+        inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
+        outputs=[museum_preview, museum_catalog, museum_placement, museum_spirit, museum_passport, museum_packet],
     )
 
     gr.HTML("<h2>Living Graffiti Wall</h2>")

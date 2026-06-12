@@ -89,6 +89,18 @@ It gives the server:
 
 The Paper plugin V1 only needs to import the packet and place a pedestal/sign/painting marker at the coordinates.
 
+## Texture Assets
+
+The repo includes generated Minecraft-style PNG textures in:
+
+```text
+assets/afterblock_textures/items/
+```
+
+These are 64x64 placeholder item textures for everyday relics such as books, AirPods, monitors, bags, water bottles, lamps, microphones, tissue packets, keyboards, mugs, keys, and notebooks.
+
+V1 server proof can use signs/item frames/pedestals. V2 should package these PNGs into a resource pack or mod so each museum artifact can display as a recognizable Minecraft item.
+
 ## Living Canvas Packet
 
 The secondary canvas packet is `living_canvas.mc.v1`.
