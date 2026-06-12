@@ -723,11 +723,13 @@ def resource_pack_stats() -> dict:
     kinds = {item.get("kind", "unknown") for item in manifest}
     shapes = {item.get("shape", "unknown") for item in manifest}
     profiles = {item.get("model_profile", "legacy") for item in manifest}
+    materials = {item.get("material", "untextured") for item in manifest}
     return {
         "total_items": len(manifest),
         "total_kinds": len(kinds),
         "total_shapes": len(shapes),
         "total_model_profiles": len(profiles),
+        "total_materials": len(materials),
         "page_count": max(1, math.ceil(len(manifest) / 30)),
     }
 
@@ -754,6 +756,34 @@ def texture_kind_choices() -> list[str]:
     return ["all"] + kinds
 
 
+def texture_inspection_html(items: list[dict], total: int, page_index: int, page_count: int) -> str:
+    cards = []
+    for item in items:
+        cards.append(
+            f"""
+            <article class="texture-inspect-card">
+              <img src="/file=assets/afterblock_textures/gallery/previews/{item['id']}.png" alt="{item['label']}">
+              <div>
+                <strong>{item['label']}</strong>
+                <span>{item['kind']} · {item['shape']} · {item.get('element_count', '?')} cuboids</span>
+                <span>{item.get('material', 'materialized')} · {item.get('finish', 'museum finish')}</span>
+                <span>{item.get('model_profile', 'pose')} · {item.get('orientation', 'orientation')}</span>
+                <code>/give @p minecraft:paper[minecraft:custom_model_data={item['custom_model_data']}] 1</code>
+              </div>
+            </article>
+            """
+        )
+    return f"""
+    <section class="texture-inspector">
+      <header>
+        <h3>Resource Pack Inspection Wall</h3>
+        <p>{len(items)} visible on page {page_index}/{page_count}; {total} matching relics. Each card maps to a PNG texture, cuboid item model, material finish, pose profile, and CustomModelData.</p>
+      </header>
+      <div>{''.join(cards)}</div>
+    </section>
+    """
+
+
 def browse_texture_library(kind: str, page: int):
     manifest = resource_manifest()
     if kind and kind != "all":
@@ -777,6 +807,8 @@ def browse_texture_library(kind: str, page: int):
             item["label"],
             item["kind"],
             item["shape"],
+            item.get("material", "untextured"),
+            item.get("finish", ""),
             item.get("model_profile", "legacy"),
             item.get("orientation", "standard"),
             item.get("itemdisplay_transform", "ItemDisplay.Transform.FIXED"),
@@ -791,7 +823,7 @@ def browse_texture_library(kind: str, page: int):
         f" | page {page_index}/{page_count}"
         " | base item: minecraft:paper"
     )
-    return gallery, rows, status
+    return gallery, rows, texture_inspection_html(items, total, page_index, page_count), status
 
 
 def museum_collection(selected: dict, count: int = 100) -> list[dict]:
@@ -2161,6 +2193,80 @@ body, .gradio-container {
   padding: 6px;
   margin-top: 6px;
 }
+.texture-inspector {
+  background: #15140f;
+  border: 2px solid #7d6335;
+  padding: 12px;
+  margin: 10px 0;
+}
+.texture-inspector header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+  border-bottom: 1px solid #5c4d32;
+  padding-bottom: 8px;
+}
+.texture-inspector h3 {
+  margin: 0;
+  color: #ffe4a3;
+}
+.texture-inspector p {
+  margin: 0;
+  max-width: 650px;
+  color: #cdbd9b;
+  font-size: 12px;
+}
+.texture-inspector > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.texture-inspect-card {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  gap: 10px;
+  min-height: 132px;
+  background: #242017;
+  border: 1px solid #5e523d;
+  padding: 9px;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+.texture-inspect-card:hover {
+  transform: translateY(-4px);
+  border-color: #ffe4a3;
+  box-shadow: 0 8px 0 #080705;
+}
+.texture-inspect-card img {
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  background: radial-gradient(circle at 50% 42%, #332d20, #13120f 72%);
+  border: 1px solid #3f382a;
+}
+.texture-inspect-card strong,
+.texture-inspect-card span,
+.texture-inspect-card code {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.texture-inspect-card strong {
+  color: #fff0bd;
+  font-size: 13px;
+}
+.texture-inspect-card span {
+  color: #cdbd9b;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.texture-inspect-card code {
+  color: #11100c !important;
+  background: #ead7a6 !important;
+  margin-top: 7px;
+  padding: 5px;
+  font-size: 10px;
+}
 .passport-card {
   background: #221d16;
   border: 3px solid #b98a46;
@@ -2382,12 +2488,13 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             object_fit="contain",
         )
         texture_table = gr.Dataframe(
-            headers=["cmd", "label", "kind", "shape", "profile", "orientation", "itemdisplay", "elements", "model", "give command"],
+            headers=["cmd", "label", "kind", "shape", "material", "finish", "profile", "orientation", "itemdisplay", "elements", "model", "give command"],
             label="Minecraft model rows",
             row_count=8,
-            col_count=(10, "fixed"),
+            col_count=(12, "fixed"),
             interactive=False,
         )
+        texture_inspector = gr.HTML(label="Model/material inspection wall")
         with gr.Row():
             gr.File(value="resource-pack/AfterBlockMuseum.zip", label="Download resource pack")
             gr.File(value="assets/afterblock_textures/afterblock_manifest.json", label="Download manifest")
@@ -2395,13 +2502,13 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         texture_button.click(
             browse_texture_library,
             inputs=[texture_kind, texture_page],
-            outputs=[texture_gallery, texture_table, texture_status],
+            outputs=[texture_gallery, texture_table, texture_inspector, texture_status],
             api_name="browse_textures",
         )
         demo.load(
             browse_texture_library,
             inputs=[texture_kind, texture_page],
-            outputs=[texture_gallery, texture_table, texture_status],
+            outputs=[texture_gallery, texture_table, texture_inspector, texture_status],
         )
 
     gr.HTML("<h2>Living Wall Tile</h2>")

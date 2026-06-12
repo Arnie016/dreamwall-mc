@@ -1,0 +1,18 @@
+{
+  "stats": {
+    "total_items": 3200,
+    "total_kinds": 70,
+    "total_shapes": 33,
+    "total_model_profiles": 6,
+    "total_materials": 10,
+    "page_count": 107
+  },
+  "browse_gallery_count": 30,
+  "browse_rows_count": 30,
+  "browse_status": "Showing 30 of 3200 items | page 1/107 | base item: minecraft:paper",
+  "inspector_wall_present": true,
+  "inspector_material_present": true,
+  "quick_outputs": 10,
+  "quick_packet_present": true,
+  "quick_inferred_type": "object_photo"
+}

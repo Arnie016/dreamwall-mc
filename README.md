@@ -40,7 +40,7 @@ Most hackathon apps stop at chat or image generation. AfterBlock turns language 
 - **Resonance-based:** curation score replaces market/auction language.
 - **Off-brand:** the Gradio app feels like a Minecraft museum terminal.
 - **Rendered preview:** a floor-map image shows the museum populated with 100 demo artifacts.
-- **Texture path:** 2,400 generated PNG textures plus 2,400 3D item model JSONs are generated for a Minecraft resource pack.
+- **Texture path:** 3,200 generated PNG textures plus 3,200 3D item model JSONs are generated for a Minecraft resource pack, with 70 object families and 10 material finishes.
 - **Texture review links:** see `docs/TEXTURE_LINKS.md` for the searchable gallery, contact sheets, proofs, manifest, and resource-pack URLs.
 - **Animated:** each prompt becomes a 10-frame artifact, not a static image.
 - **Grows:** artifacts unlock stages from seed sketch to server myth based on value and mutation.
@@ -66,7 +66,7 @@ Most hackathon apps stop at chat or image generation. AfterBlock turns language 
 
 - **Off-Brand:** custom Minecraft museum terminal UI styling.
 - **Sharing is Caring:** the app emits open museum and bridge packets for each artifact.
-- **Field Notes:** see `FIELD_NOTES.md`.
+- **Field Notes:** see [`docs/FIELD_NOTES.md`](docs/FIELD_NOTES.md).
 
 ## Minecraft Server Layer
 
@@ -121,6 +121,7 @@ The final output is a plugin-ready museum packet with artifact title, hall, coor
 - [`docs/MINECRAFT_SERVER_BLUEPRINT.md`](docs/MINECRAFT_SERVER_BLUEPRINT.md)
 - [`docs/MUSEUM_CURATION.md`](docs/MUSEUM_CURATION.md)
 - [`docs/TEXTURE_PACK_STRATEGY.md`](docs/TEXTURE_PACK_STRATEGY.md)
+- [`docs/FIELD_NOTES.md`](docs/FIELD_NOTES.md)
 - [`docs/LIVING_GRAFFITI_MVP.md`](docs/LIVING_GRAFFITI_MVP.md)
 - [`docs/NEUROPETS_MVP.md`](docs/NEUROPETS_MVP.md)
 - [`docs/DEMO_RUNBOOK.md`](docs/DEMO_RUNBOOK.md)
@@ -140,7 +141,7 @@ Bonus quests:
 
 - **Off-Brand:** custom UI beyond default Gradio.
 - **Sharing is Caring:** open trace + server packet per generation.
-- **Field Notes:** this repo includes `FIELD_NOTES.md`.
+- **Field Notes:** this repo includes [`docs/FIELD_NOTES.md`](docs/FIELD_NOTES.md).
 
 Next high-impact demo step: use PebbleHost Paper to place one AfterBlock artifact pedestal/sign from the `dreamwall.museum.v1` packet, then record a 45-75 second video.
 

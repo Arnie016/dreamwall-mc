@@ -26,14 +26,46 @@
   "elements": [
     {
       "from": [
+        2.6,
+        2.6,
+        5.36
+      ],
+      "to": [
+        13.4,
+        13.4,
+        7.12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "down": {
+          "texture": "#all"
+        }
+      }
+    },
+    {
+      "from": [
         4.4,
-        3.5,
-        5.52
+        4.4,
+        4.48
       ],
       "to": [
         11.6,
-        13.4,
-        8.16
+        11.6,
+        8.0
       ],
       "faces": {
         "north": {

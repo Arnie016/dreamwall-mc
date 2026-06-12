@@ -99,7 +99,7 @@ assets/afterblock_textures/gallery/index.html
 resource-pack/AfterBlockMuseum/
 ```
 
-The current pack includes 2,400 64x64 item textures, 2,400 3D item model JSON files, 2,400 `minecraft:paper` custom model data overrides, and six display profiles for pedestal, wall, tabletop, showcase, and handheld rendering.
+The current pack includes 3,200 64x64 item textures, 3,200 3D item model JSON files, 3,200 `minecraft:paper` custom model data overrides, 70 object families, 10 material finishes, and six display profiles for pedestal, wall, tabletop, showcase, and handheld rendering.
 
 V1 server proof can use `/dreamwall demo` to place a pedestal and give the player a Paper item with `CustomModelData 730002`. With the resource pack installed, that item renders as an AfterBlock relic.
 

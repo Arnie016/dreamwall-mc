@@ -8,9 +8,10 @@ Fast entry points for reviewing the generated Minecraft item library.
 - Library report: `assets/afterblock_textures/gallery/library_report.json`
 - Manifest: `assets/afterblock_textures/afterblock_manifest.json`
 - Resource pack ZIP: `resource-pack/AfterBlockMuseum.zip`
+- 3,200-pack stress proof: `artifacts/stress/afterblock_resource_pack_3200_stress.json`
+- Gradio resource browser proof: `artifacts/stress/afterblock_gradio_resource_browser_3200_proof.json`
 - Gradio UI proof: `artifacts/stress/afterblock_gradio_ui_screenshot.png`
-- Texture gallery proof: `artifacts/stress/afterblock_texture_gallery_2400.png`
-- Pack stress proof: `artifacts/stress/afterblock_pack_expansion_stress.json`
+- Historical 2,400-pack proofs remain in `artifacts/stress/`; use the 3,200 proof files above for current review.
 
 ## Contact Sheets
 
@@ -38,6 +39,14 @@ Fast entry points for reviewing the generated Minecraft item library.
 - `assets/afterblock_textures/gallery/contact_sheet_22.png`
 - `assets/afterblock_textures/gallery/contact_sheet_23.png`
 - `assets/afterblock_textures/gallery/contact_sheet_24.png`
+- `assets/afterblock_textures/gallery/contact_sheet_25.png`
+- `assets/afterblock_textures/gallery/contact_sheet_26.png`
+- `assets/afterblock_textures/gallery/contact_sheet_27.png`
+- `assets/afterblock_textures/gallery/contact_sheet_28.png`
+- `assets/afterblock_textures/gallery/contact_sheet_29.png`
+- `assets/afterblock_textures/gallery/contact_sheet_30.png`
+- `assets/afterblock_textures/gallery/contact_sheet_31.png`
+- `assets/afterblock_textures/gallery/contact_sheet_32.png`
 
 ## Hugging Face URLs
 

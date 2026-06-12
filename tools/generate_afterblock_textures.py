@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-TARGET_COUNT = 2400
+TARGET_COUNT = 3200
 CUSTOM_MODEL_BASE = 730000
 
 
@@ -50,6 +50,49 @@ OBJECT_LIBRARY = [
     ("memory_card", (58, 74, 64), "card"),
     ("lunch_box", (182, 72, 64), "box"),
     ("umbrella", (84, 91, 160), "umbrella"),
+    ("vinyl_record", (32, 30, 36), "coin"),
+    ("desk_plant", (78, 138, 82), "plush"),
+    ("sneaker_box", (196, 82, 64), "box"),
+    ("metro_card", (234, 188, 70), "card"),
+    ("arcade_token", (220, 174, 82), "coin"),
+    ("travel_adapter", (218, 218, 206), "plug"),
+    ("sketchbook", (218, 205, 174), "thin_rect"),
+    ("sunglasses_case", (52, 48, 58), "wide_flat"),
+    ("desk_fan", (166, 176, 184), "clock"),
+    ("cable_spool", (58, 62, 70), "cassette"),
+    ("protein_bar", (154, 92, 54), "wide_flat"),
+    ("film_canister", (44, 48, 55), "cylinder"),
+    ("mini_tripod", (50, 52, 58), "lamp"),
+    ("name_badge", (232, 230, 214), "card"),
+    ("sticky_notes", (238, 220, 92), "ticket"),
+    ("game_cartridge", (72, 86, 98), "card"),
+    ("tea_tin", (72, 130, 118), "box"),
+    ("pocket_mirror", (202, 210, 216), "coin"),
+    ("luggage_tag", (184, 104, 72), "ticket"),
+    ("fountain_pen", (38, 46, 62), "pencil"),
+    ("voice_recorder", (55, 62, 70), "remote"),
+    ("sd_reader", (68, 72, 78), "plug"),
+    ("desk_calendar", (220, 218, 204), "photo"),
+    ("mini_speaker", (42, 46, 52), "box_lens"),
+    ("wallet_chain", (188, 178, 144), "key"),
+    ("paint_tube", (192, 210, 220), "pencil"),
+    ("badge_pin", (198, 72, 82), "ring"),
+    ("matchbox", (205, 74, 58), "box"),
+    ("ram_stick", (46, 112, 82), "wide_flat"),
+    ("lucky_charm", (220, 170, 74), "plush"),
+]
+
+MATERIALS = [
+    ("paper fiber", (232, 220, 190), "matte archival surface"),
+    ("brushed metal", (172, 180, 182), "cool edge highlights"),
+    ("soft plastic", (204, 210, 214), "rounded satin shell"),
+    ("painted wood", (138, 92, 54), "warm visible grain"),
+    ("canvas cloth", (190, 174, 142), "woven raised pixels"),
+    ("glass glow", (136, 196, 218), "translucent blue glints"),
+    ("rubber grip", (54, 58, 62), "dark tactile edges"),
+    ("enamel badge", (220, 82, 92), "hard glossy color"),
+    ("aged brass", (196, 152, 72), "museum-worn metal"),
+    ("screen phosphor", (82, 190, 140), "lit display lines"),
 ]
 
 
@@ -89,6 +132,42 @@ def add_variant_marks(draw, variant, accent, ink):
             px(draw, (x, y, x, y), accent)
 
 
+def blend(a, b, amount):
+    return tuple(int(a[i] * (1 - amount) + b[i] * amount) for i in range(3))
+
+
+def material_for(kind, shape, variant):
+    index = (len(kind) * 7 + len(shape) * 11 + variant * 3) % len(MATERIALS)
+    name, tint, finish = MATERIALS[index]
+    return {"name": name, "tint": tint, "finish": finish}
+
+
+def apply_material_texture(draw, material, variant):
+    tint = material["tint"]
+    name = material["name"]
+    if "paper" in name or "canvas" in name:
+        for y in range(3, 15, 3):
+            px(draw, (3, y, 13, y), blend(tint, (70, 60, 45), 0.25))
+        for x in range(4, 14, 4):
+            px(draw, (x, 3, x, 13), blend(tint, (255, 246, 210), 0.18))
+    elif "metal" in name or "brass" in name:
+        px(draw, (4, 4, 12, 4), blend(tint, (255, 255, 255), 0.42))
+        px(draw, (12, 5, 13, 12), blend(tint, (40, 38, 34), 0.38))
+        if variant % 2:
+            px(draw, (5, 11, 10, 11), blend(tint, (255, 232, 150), 0.25))
+    elif "glass" in name or "screen" in name:
+        px(draw, (5, 4, 7, 5), blend(tint, (255, 255, 255), 0.55))
+        px(draw, (9, 8, 12, 9), blend(tint, (70, 220, 180), 0.32))
+    elif "rubber" in name:
+        for x in range(4, 13, 2):
+            px(draw, (x, 12, x, 13), blend(tint, (0, 0, 0), 0.35))
+    elif "wood" in name:
+        for y in (5, 8, 12):
+            px(draw, (3, y, 13, y), blend(tint, (84, 45, 22), 0.35))
+    elif "enamel" in name:
+        px(draw, (5, 5, 10, 5), blend(tint, (255, 255, 255), 0.45))
+
+
 def draw_icon(kind, color, shape, variant):
     img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
@@ -97,6 +176,10 @@ def draw_icon(kind, color, shape, variant):
     light = shade(color, 44)
     ink = (30, 27, 24)
     accent = ((variant * 53) % 180 + 55, (variant * 91) % 180 + 55, (variant * 37) % 180 + 55)
+    material = material_for(kind, shape, variant)
+    mid = blend(mid, material["tint"], 0.18)
+    light = shade(mid, 50)
+    dark = shade(mid, -62)
 
     if shape == "thin_rect":
         px(d, (4, 3, 12, 14), mid); px(d, (4, 3, 5, 14), dark); px(d, (7, 5, 11, 6), light)
@@ -177,6 +260,7 @@ def draw_icon(kind, color, shape, variant):
     elif variant % 4 == 3:
         px(d, (13, 13, 14, 14), (185, 120, 215))
     add_variant_marks(d, variant, accent, ink)
+    apply_material_texture(d, material, variant)
     return img
 
 
@@ -359,12 +443,20 @@ def element_model(shape, texture_ref, variant):
 
 def render_isometric_preview(kind, color, shape, variant):
     base = draw_icon(kind, color, shape, variant).resize((96, 96), Image.Resampling.NEAREST)
-    canvas = Image.new("RGBA", (140, 120), (0, 0, 0, 0))
+    canvas = Image.new("RGBA", (164, 136), (0, 0, 0, 0))
     shadow = Image.new("RGBA", (92, 36), (0, 0, 0, 0))
     sd = ImageDraw.Draw(shadow)
     sd.ellipse([8, 8, 84, 28], fill=(0, 0, 0, 70))
-    canvas.alpha_composite(shadow, (24, 78))
-    canvas.alpha_composite(base.rotate(-18, resample=Image.Resampling.NEAREST, expand=True), (24, 8))
+    canvas.alpha_composite(shadow, (36, 90))
+    side = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    side.alpha_composite(base)
+    for offset, alpha in ((10, 70), (6, 92), (3, 110)):
+        extrusion = Image.new("RGBA", side.size, (0, 0, 0, 0))
+        extrusion.alpha_composite(side)
+        r, g, b, a = extrusion.split()
+        dark = Image.merge("RGBA", (r.point(lambda p: p * 0.45), g.point(lambda p: p * 0.45), b.point(lambda p: p * 0.45), a.point(lambda p: min(p, alpha))))
+        canvas.alpha_composite(dark.rotate(-18, resample=Image.Resampling.NEAREST, expand=True), (32 + offset, 8 + offset))
+    canvas.alpha_composite(base.rotate(-18, resample=Image.Resampling.NEAREST, expand=True), (32, 8))
     return canvas
 
 
@@ -393,12 +485,13 @@ def build_gallery(manifest, root):
         )
         cards.append(
             f"<article data-kind='{item['kind']}' data-shape='{item['shape']}' "
-            f"data-profile='{item['model_profile']}' "
-            f"data-text='{item['label'].lower()} {item['kind']} {item['shape']} {item['model_profile']} {item['orientation']} {item['custom_model_data']}'>"
+            f"data-profile='{item['model_profile']}' data-material='{item['material']}' "
+            f"data-text='{item['label'].lower()} {item['kind']} {item['shape']} {item['model_profile']} {item['orientation']} {item['material']} {item['finish']} {item['custom_model_data']}'>"
             f"<img src='previews/{item['id']}.png' alt='{item['label']}'>"
             f"<strong>{item['label']}</strong>"
             f"<span>{item['kind']} | {item['shape']} | CMD {item['custom_model_data']}</span>"
-            f"<span>{item['model_profile']} | {item['orientation']}</span>"
+            f"<span>{item['material']} | {item['finish']}</span>"
+            f"<span>{item['model_profile']} | {item['orientation']} | {item['element_count']} cuboids</span>"
             f"<code>{item['model']}</code>"
             f"<button data-command=\"{give_command}\">Copy /give</button>"
             "</article>"
@@ -421,10 +514,10 @@ def build_gallery(manifest, root):
     button {{ background: #29251b; color: #ffe6a3; border: 1px solid #7d6436; padding: 7px 9px; font: inherit; cursor: pointer; }}
     button.active, article button:hover {{ background: #6f5425; color: #fff7c8; }}
     .stats {{ color: #bdb08f; }}
-    .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; padding: 20px; }}
-    article {{ background: #201d17; border: 2px solid #5e523d; padding: 10px; min-height: 190px; }}
+    .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; padding: 20px; }}
+    article {{ background: #201d17; border: 2px solid #5e523d; padding: 10px; min-height: 245px; box-shadow: inset 0 0 0 1px #2f281d; }}
     article.hidden {{ display: none; }}
-    img {{ width: 140px; height: 120px; object-fit: contain; display: block; margin: 0 auto 8px; background: #161712; }}
+    img {{ width: 164px; height: 136px; object-fit: contain; display: block; margin: 0 auto 8px; background: radial-gradient(circle at 50% 40%, #2d2a20, #161712 68%); }}
     strong, span, code {{ display: block; overflow-wrap: anywhere; }}
     strong {{ color: #fff0b8; }}
     span {{ color: #bdb08f; margin: 4px 0; }}
@@ -488,8 +581,10 @@ def build_gallery(manifest, root):
             "total_kinds": len(kinds),
             "total_shapes": len(shapes),
             "total_model_profiles": len({item["model_profile"] for item in manifest}),
+            "total_materials": len({item["material"] for item in manifest}),
             "kind_counts": kind_counts,
             "shapes": shapes,
+            "materials": sorted({item["material"] for item in manifest}),
             "model_profiles": sorted({item["model_profile"] for item in manifest}),
             "custom_model_data_range": [
                 min(item["custom_model_data"] for item in manifest),
@@ -502,7 +597,7 @@ def build_gallery(manifest, root):
 
     page_size = 100
     for page, start in enumerate(range(0, len(manifest), page_size), 1):
-        sheet = Image.new("RGB", (1600, 1200), (20, 21, 18))
+        sheet = Image.new("RGB", (1800, 1400), (20, 21, 18))
         draw = ImageDraw.Draw(sheet)
         draw.text((20, 14), f"AfterBlock generated textures page {page}", fill=(250, 220, 140))
         for offset, item in enumerate(manifest[start : start + page_size]):
@@ -510,11 +605,11 @@ def build_gallery(manifest, root):
             preview = Image.open(preview_path).convert("RGBA")
             col = offset % 10
             row = offset // 10
-            x = 18 + col * 158
-            y = 48 + row * 112
+            x = 18 + col * 178
+            y = 52 + row * 132
             sheet.paste(preview, (x + 8, y), preview)
-            draw.text((x, y + 86), item["label"][:18], fill=(235, 224, 190))
-            draw.text((x, y + 102), str(item["custom_model_data"]), fill=(159, 210, 176))
+            draw.text((x, y + 98), item["label"][:18], fill=(235, 224, 190))
+            draw.text((x, y + 114), str(item["custom_model_data"]), fill=(159, 210, 176))
         sheet.save(gallery_dir / f"contact_sheet_{page:02d}.png")
 
 
@@ -534,6 +629,7 @@ def main():
     for i in range(TARGET_COUNT):
         kind, color, shape = OBJECT_LIBRARY[i % len(OBJECT_LIBRARY)]
         variant = i // len(OBJECT_LIBRARY)
+        material = material_for(kind, shape, variant)
         item_id = f"afterblock_{i + 1:04d}"
         label = f"{kind.replace('_', ' ').title()} {variant + 1:02d}"
         img = draw_icon(kind, color, shape, i)
@@ -553,6 +649,9 @@ def main():
                 "shape": shape,
                 "variant": variant,
                 "color": list(color),
+                "material": material["name"],
+                "material_tint": list(material["tint"]),
+                "finish": material["finish"],
                 "texture": f"assets/minecraft/textures/item/afterblock/{item_id}.png",
                 "model": f"assets/minecraft/models/item/afterblock/{item_id}.json",
                 "custom_model_data": custom_model_data,
@@ -561,7 +660,7 @@ def main():
                 "orientation": model["afterblock_profile"]["orientation"],
                 "itemdisplay_transform": model["afterblock_profile"]["itemdisplay"],
                 "element_count": len(model["elements"]),
-                "display_strategy": "Per-relic 3D item model with variant display pose, GUI, ground, fixed, first-person, and third-person transforms",
+                "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms",
             }
         )
 
@@ -588,10 +687,10 @@ def main():
     (Path("assets/afterblock_textures/README.md")).write_text(
         "# AfterBlock generated texture set\n\n"
         f"Generated {len(manifest)} Minecraft-style item textures, 3D item model JSON files, "
-        "variant display profiles, a resource-pack skeleton, contact sheets, and a browser gallery.\n\n"
+        "material finishes, variant display profiles, a resource-pack skeleton, contact sheets, and a browser gallery.\n\n"
         "- Gallery: `assets/afterblock_textures/gallery/index.html`\n"
         "- Report: `assets/afterblock_textures/gallery/library_report.json`\n"
-        "- Contact sheets: `assets/afterblock_textures/gallery/contact_sheet_01.png` through `assets/afterblock_textures/gallery/contact_sheet_24.png`\n"
+        f"- Contact sheets: `assets/afterblock_textures/gallery/contact_sheet_01.png` through `assets/afterblock_textures/gallery/contact_sheet_{math.ceil(len(manifest) / 100):02d}.png`\n"
         "- Resource pack: `resource-pack/AfterBlockMuseum/`\n"
         "- Manifest: `assets/afterblock_textures/afterblock_manifest.json`\n",
         encoding="utf-8",

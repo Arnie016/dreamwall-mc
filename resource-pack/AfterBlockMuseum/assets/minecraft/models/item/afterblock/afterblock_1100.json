@@ -26,46 +26,14 @@
   "elements": [
     {
       "from": [
-        5.42,
-        4.11,
-        4.25
+        3.7,
+        4.97,
+        4.09
       ],
       "to": [
-        10.58,
+        12.3,
         10.99,
-        9.25
-      ],
-      "faces": {
-        "north": {
-          "texture": "#all"
-        },
-        "south": {
-          "texture": "#all"
-        },
-        "east": {
-          "texture": "#all"
-        },
-        "west": {
-          "texture": "#all"
-        },
-        "up": {
-          "texture": "#all"
-        },
-        "down": {
-          "texture": "#all"
-        }
-      }
-    },
-    {
-      "from": [
-        4.56,
-        2.39,
-        5.5
-      ],
-      "to": [
-        11.44,
-        4.11,
-        8.0
+        7.84
       ],
       "faces": {
         "north": {

@@ -1,0 +1,108 @@
+{
+  "mode": "resource_pack_3200_material_model_stress",
+  "manifest_items": 3200,
+  "texture_pngs": 3200,
+  "model_jsons": 3200,
+  "loose_review_pngs": 5310,
+  "gallery_previews": 3200,
+  "contact_sheets": 32,
+  "total_kinds": 70,
+  "total_shapes": 33,
+  "total_materials": 10,
+  "total_model_profiles": 6,
+  "custom_model_data_range": [
+    730001,
+    733200
+  ],
+  "sample": [
+    {
+      "id": "afterblock_0001",
+      "label": "Book 01",
+      "kind": "book",
+      "shape": "thin_rect",
+      "variant": 0,
+      "color": [
+        108,
+        46,
+        39
+      ],
+      "material": "enamel badge",
+      "material_tint": [
+        220,
+        82,
+        92
+      ],
+      "finish": "hard glossy color",
+      "texture": "assets/minecraft/textures/item/afterblock/afterblock_0001.png",
+      "model": "assets/minecraft/models/item/afterblock/afterblock_0001.json",
+      "custom_model_data": 730001,
+      "recommended_item": "minecraft:paper",
+      "model_profile": "pedestal_front",
+      "orientation": "upright pedestal",
+      "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
+      "element_count": 1,
+      "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
+    },
+    {
+      "id": "afterblock_0002",
+      "label": "Earbuds 01",
+      "kind": "earbuds",
+      "shape": "paired_dots",
+      "variant": 0,
+      "color": [
+        232,
+        235,
+        232
+      ],
+      "material": "paper fiber",
+      "material_tint": [
+        232,
+        220,
+        190
+      ],
+      "finish": "matte archival surface",
+      "texture": "assets/minecraft/textures/item/afterblock/afterblock_0002.png",
+      "model": "assets/minecraft/models/item/afterblock/afterblock_0002.json",
+      "custom_model_data": 730002,
+      "recommended_item": "minecraft:paper",
+      "model_profile": "pedestal_front",
+      "orientation": "upright pedestal",
+      "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
+      "element_count": 4,
+      "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
+    },
+    {
+      "id": "afterblock_0003",
+      "label": "Monitor 01",
+      "kind": "monitor",
+      "shape": "screen",
+      "variant": 0,
+      "color": [
+        32,
+        36,
+        46
+      ],
+      "material": "glass glow",
+      "material_tint": [
+        136,
+        196,
+        218
+      ],
+      "finish": "translucent blue glints",
+      "texture": "assets/minecraft/textures/item/afterblock/afterblock_0003.png",
+      "model": "assets/minecraft/models/item/afterblock/afterblock_0003.json",
+      "custom_model_data": 730003,
+      "recommended_item": "minecraft:paper",
+      "model_profile": "pedestal_front",
+      "orientation": "upright pedestal",
+      "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
+      "element_count": 3,
+      "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
+    }
+  ],
+  "download_links": {
+    "gallery": "assets/afterblock_textures/gallery/index.html",
+    "manifest": "assets/afterblock_textures/afterblock_manifest.json",
+    "resource_pack": "resource-pack/AfterBlockMuseum.zip"
+  }
+}

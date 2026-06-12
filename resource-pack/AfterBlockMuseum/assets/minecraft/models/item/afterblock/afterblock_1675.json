@@ -27,13 +27,45 @@
     {
       "from": [
         4.4,
-        3.5,
-        5.28
+        8.0,
+        6.32
       ],
       "to": [
-        11.6,
+        7.1,
+        10.7,
+        8.96
+      ],
+      "faces": {
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "down": {
+          "texture": "#all"
+        }
+      }
+    },
+    {
+      "from": [
+        7.1,
+        8.9,
+        7.2
+      ],
+      "to": [
         13.4,
-        7.92
+        9.8,
+        8.08
       ],
       "faces": {
         "north": {

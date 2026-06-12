@@ -26,14 +26,14 @@
   "elements": [
     {
       "from": [
-        4.83,
-        5.43,
-        5.38
+        2.95,
+        6.37,
+        5.46
       ],
       "to": [
-        10.47,
+        12.35,
         11.07,
-        8.66
+        7.1
       ],
       "faces": {
         "north": {
@@ -64,70 +64,6 @@
         "axis": "y",
         "angle": -22.5,
         "rescale": true
-      }
-    },
-    {
-      "from": [
-        6.71,
-        2.61,
-        6.2
-      ],
-      "to": [
-        8.59,
-        5.43,
-        7.84
-      ],
-      "faces": {
-        "north": {
-          "texture": "#all"
-        },
-        "south": {
-          "texture": "#all"
-        },
-        "east": {
-          "texture": "#all"
-        },
-        "west": {
-          "texture": "#all"
-        },
-        "up": {
-          "texture": "#all"
-        },
-        "down": {
-          "texture": "#all"
-        }
-      }
-    },
-    {
-      "from": [
-        6.71,
-        11.07,
-        6.2
-      ],
-      "to": [
-        8.59,
-        13.89,
-        7.84
-      ],
-      "faces": {
-        "north": {
-          "texture": "#all"
-        },
-        "south": {
-          "texture": "#all"
-        },
-        "east": {
-          "texture": "#all"
-        },
-        "west": {
-          "texture": "#all"
-        },
-        "up": {
-          "texture": "#all"
-        },
-        "down": {
-          "texture": "#all"
-        }
       }
     }
   ],
