@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 
 import gradio as gr
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 
 MODEL_ID = "dreamwall-local-semantic-fingerprint-v1"
@@ -180,6 +180,26 @@ OBJECT_LIBRARY = [
     ("Wallet", "object_photo", "old wallet with expired cards", "It held small permissions to be outside.", "wallet"),
     ("USB drive", "object_photo", "silver USB drive with unknown files", "It carries a sealed room of forgotten work.", "usb drive"),
     ("Alarm clock", "object_photo", "small alarm clock from exam mornings", "It was the sound of responsibility arriving.", "clock"),
+    ("Calculator", "object_photo", "scientific calculator with faded buttons", "It made difficult answers feel briefly mechanical.", "calculator"),
+    ("Camera", "object_photo", "compact camera with a scratched lens", "It saved proof that the room once looked different.", "camera"),
+    ("Cassette tape", "object_photo", "old cassette tape with a handwritten label", "It held a voice from before everything became searchable.", "cassette"),
+    ("Lucky coin", "object_photo", "small lucky coin kept in a wallet", "It was not worth much until it became a ritual.", "coin"),
+    ("Game controller", "object_photo", "game controller with worn thumbsticks", "It made imaginary places answer back.", "game controller"),
+    ("Headphones", "object_photo", "black headphones used on long nights", "They made a private room around the head.", "headphones"),
+    ("Lunch box", "object_photo", "steel lunch box from school days", "It carried home into the middle of the day.", "lunch box"),
+    ("Medicine box", "object_photo", "small medicine box in a drawer", "It remembered the days the body needed backup.", "medicine box"),
+    ("Memory card", "object_photo", "tiny memory card with old photos", "It kept a city of images in almost no space.", "memory card"),
+    ("Paint brush", "object_photo", "paint brush stained with blue acrylic", "It turned hesitation into visible color.", "paint brush"),
+    ("Passport", "object_photo", "passport with airport stamps", "It proved the same person could cross many rooms.", "passport"),
+    ("Pencil", "object_photo", "short pencil chewed near the eraser", "It carried ideas before they were confident.", "pencil"),
+    ("Photo frame", "object_photo", "wooden photo frame beside a bed", "It made one memory stand still on purpose.", "photo frame"),
+    ("Plush toy", "object_photo", "soft plush toy from an old shelf", "It was a guardian that never needed batteries.", "plush toy"),
+    ("Polaroid", "object_photo", "faded polaroid from a bright afternoon", "It made a square of time feel touchable.", "polaroid"),
+    ("Remote", "object_photo", "TV remote with one missing button", "It controlled a room more than it should have.", "remote"),
+    ("Ring", "object_photo", "simple ring with a small scratch", "It made a promise small enough to wear.", "ring"),
+    ("Train ticket", "object_photo", "creased train ticket from a late ride", "It marked the distance between two versions of the day.", "train ticket"),
+    ("Umbrella", "object_photo", "black umbrella with bent ribs", "It made bad weather negotiable.", "umbrella"),
+    ("Watch", "object_photo", "old watch that runs a little slow", "It kept time in its own accent.", "watch"),
 ]
 
 
@@ -781,67 +801,138 @@ def hall_color(hall: str) -> tuple[int, int, int]:
 
 
 def render_museum_preview(selected: dict, collection: list[dict]) -> str:
-    width, height = 1400, 980
-    image = Image.new("RGB", (width, height), (18, 19, 17))
+    width, height = 1600, 1040
+    image = Image.new("RGB", (width, height), (13, 14, 12))
     draw = ImageDraw.Draw(image)
-    draw.rectangle([28, 28, width - 28, height - 28], outline=(144, 115, 66), width=4)
-    draw.text((48, 42), "AFTERBLOCK MUSEUM / LIVE FLOOR PREVIEW", fill=(245, 214, 142))
-    draw.text((48, 68), "100 demo artifacts with owner handles, halls, curation, and Minecraft-ready placements", fill=(186, 174, 147))
+
+    def load_font(size: int):
+        candidates = [
+            "/System/Library/Fonts/Supplemental/Arial.ttf",
+            "/Library/Fonts/Arial.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        ]
+        for candidate in candidates:
+            try:
+                return ImageFont.truetype(candidate, size=size)
+            except OSError:
+                continue
+        return ImageFont.load_default()
+
+    font_title = load_font(26)
+    font_hall = load_font(14)
+    font_body = load_font(13)
+    font_tiny = load_font(10)
+
+    def shade(rgb: tuple[int, int, int], factor: float) -> tuple[int, int, int]:
+        return tuple(max(0, min(255, int(channel * factor))) for channel in rgb)
+
+    def iso_box(x: int, y: int, w: int, h: int, depth: int, color: tuple[int, int, int], outline: tuple[int, int, int]):
+        top = [(x, y), (x + w, y), (x + w - depth, y + depth), (x + depth, y + depth)]
+        left = [(x, y), (x + depth, y + depth), (x + depth, y + h + depth), (x, y + h)]
+        right = [(x + w, y), (x + w - depth, y + depth), (x + w - depth, y + h + depth), (x + w, y + h)]
+        face = [(x + depth, y + depth), (x + w - depth, y + depth), (x + w - depth, y + h + depth), (x + depth, y + h + depth)]
+        draw.polygon(left, fill=shade(color, 0.46), outline=outline)
+        draw.polygon(right, fill=shade(color, 0.55), outline=outline)
+        draw.polygon(face, fill=shade(color, 0.34), outline=outline)
+        draw.polygon(top, fill=shade(color, 0.78), outline=outline)
+
+    draw.rectangle([26, 26, width - 26, height - 26], outline=(150, 112, 58), width=4)
+    draw.rectangle([38, 38, width - 38, 106], fill=(29, 25, 19), outline=(94, 74, 48), width=2)
+    draw.text((58, 50), "AFTERBLOCK MUSEUM", fill=(255, 225, 154), font=font_title)
+    draw.text((58, 82), "100 labeled relics - 40 object families - 1,200 Minecraft PNG models - live server packets", fill=(190, 176, 142), font=font_body)
+    draw.text((1180, 66), "minecraft:paper + CustomModelData", fill=(211, 190, 128), font=font_body)
+
+    # Grand floor and central sightline.
+    draw.polygon([(88, 168), (1120, 168), (1040, 900), (150, 900)], fill=(32, 31, 26), outline=(92, 78, 50))
+    for i in range(11):
+        x0 = 120 + i * 92
+        draw.line([(x0, 182), (x0 - 62, 876)], fill=(46, 43, 36), width=1)
+    for j in range(8):
+        y = 210 + j * 82
+        draw.line([(100, y), (1110, y)], fill=(48, 44, 35), width=1)
+    draw.rectangle([486, 146, 694, 910], outline=(121, 94, 55), width=3)
+    draw.rectangle([520, 148, 660, 910], fill=(39, 32, 24), outline=(149, 104, 53), width=2)
 
     hall_positions = {
-        "Hall of Firsts": (60, 120, 380, 330),
-        "Hall of Companions": (410, 120, 730, 330),
-        "Hall of Turning Points": (760, 120, 1080, 330),
-        "Hall of Worlds": (60, 360, 380, 570),
-        "Hall of Soft Things": (410, 360, 730, 570),
-        "Hall of Tools": (760, 360, 1080, 570),
-        "Hall of Lost Signals": (60, 600, 380, 810),
-        "Grand Painting Hall": (410, 600, 730, 810),
-        "Animal Spirit Grove": (760, 600, 1080, 810),
+        "Hall of Firsts": (96, 142, 300, 184),
+        "Hall of Companions": (370, 138, 300, 184),
+        "Hall of Turning Points": (744, 142, 300, 184),
+        "Hall of Worlds": (96, 382, 300, 184),
+        "Hall of Soft Things": (370, 382, 300, 184),
+        "Hall of Tools": (744, 382, 300, 184),
+        "Hall of Lost Signals": (96, 622, 300, 184),
+        "Grand Painting Hall": (370, 622, 300, 184),
+        "Animal Spirit Grove": (744, 622, 300, 184),
     }
-    for hall, box in hall_positions.items():
+
+    for hall, (x, y, w, h) in hall_positions.items():
         color = hall_color(hall)
-        draw.rectangle(box, fill=tuple(max(20, c // 4) for c in color), outline=color, width=3)
-        draw.text((box[0] + 12, box[1] + 10), hall.upper(), fill=(250, 230, 170))
+        iso_box(x, y, w, h, 24, color, shade(color, 0.9))
+        draw.rectangle([x + 20, y + 30, x + w - 20, y + 54], fill=shade(color, 0.28), outline=shade(color, 0.9))
+        draw.text((x + 28, y + 35), hall.upper()[:27], fill=(255, 234, 176), font=font_hall)
+        for lamp in range(3):
+            lx = x + 60 + lamp * 82
+            draw.ellipse([lx, y + h + 16, lx + 10, y + h + 26], fill=(242, 188, 84), outline=(48, 31, 15))
 
     placed_counts = {hall: 0 for hall in hall_positions}
     for artifact in collection:
         hall = artifact["hall"]
         if hall not in hall_positions:
             continue
-        box = hall_positions[hall]
+        x, y, w, h = hall_positions[hall]
         slot = placed_counts[hall]
         placed_counts[hall] += 1
+        if slot >= 15:
+            continue
         col = slot % 5
-        row = (slot // 5) % 5
-        x = box[0] + 28 + col * 56
-        y = box[1] + 44 + row * 31
+        row = slot // 5
+        px = x + 34 + col * 50
+        py = y + 72 + row * 34
         active = artifact["artifact_id"] == selected["artifact_id"]
-        color = (255, 230, 125) if active else hall_color(hall)
-        draw.rectangle([x, y, x + 38, y + 20], fill=color, outline=(25, 22, 18), width=2)
-        label = artifact["owner_handle"][:9]
-        draw.text((x, y + 22), label, fill=(240, 230, 210) if active else (194, 184, 158))
+        hall_rgb = hall_color(hall)
+        artifact_rgb = (255, 232, 126) if active else shade(hall_rgb, 1.1)
+        draw.rectangle([px, py + 13, px + 34, py + 22], fill=shade(artifact_rgb, 0.45), outline=(22, 19, 15))
+        draw.rectangle([px + 4, py, px + 30, py + 16], fill=artifact_rgb, outline=(18, 15, 10))
+        draw.rectangle([px + 8, py + 4, px + 26, py + 13], fill=shade(artifact_rgb, 0.7), outline=shade(artifact_rgb, 0.3))
+        label = artifact["owner_handle"][:7]
+        draw.text((px - 2, py + 24), label, fill=(248, 236, 198) if active else (180, 170, 141), font=font_tiny)
         if active:
-            draw.rectangle([x - 6, y - 6, x + 44, y + 48], outline=(255, 246, 180), width=3)
+            draw.rectangle([px - 8, py - 8, px + 42, py + 46], outline=(255, 246, 180), width=3)
+            draw.line([px + 17, py - 8, 1202, 176], fill=(255, 226, 132), width=2)
 
-    detail_x = 1110
-    draw.rectangle([detail_x, 120, width - 52, 810], fill=(31, 27, 22), outline=(144, 115, 66), width=3)
-    details = [
-        "SELECTED ARTIFACT",
-        selected["title"],
-        selected["owner_handle"],
-        selected["hall"],
-        f"Plot ({selected['plot']['x']}, {selected['plot']['z']})",
-        f"XYZ {selected['minecraft_coordinates']['x']} {selected['minecraft_coordinates']['y']} {selected['minecraft_coordinates']['z']}",
-        f"Curation {selected['curation_scores']['curation_score']}",
-        selected["object_guess"],
-        selected["spirit_first_line"][:34],
+    detail_x = 1160
+    draw.rectangle([detail_x, 140, width - 52, 906], fill=(27, 24, 19), outline=(150, 112, 58), width=3)
+    draw.rectangle([detail_x + 20, 166, width - 74, 420], fill=(36, 32, 25), outline=(96, 76, 48), width=2)
+    draw.text((detail_x + 36, 184), "SELECTED RELIC", fill=(255, 221, 136), font=font_hall)
+    draw.text((detail_x + 36, 220), selected["title"][:38], fill=(244, 233, 202), font=font_body)
+    draw.text((detail_x + 36, 250), selected["owner_handle"], fill=(205, 190, 150), font=font_body)
+    draw.text((detail_x + 36, 286), selected["hall"], fill=(238, 201, 117), font=font_body)
+    draw.text((detail_x + 36, 322), f"Object: {selected['object_guess']}", fill=(228, 218, 188), font=font_body)
+    draw.text((detail_x + 36, 352), f"Score: {selected['curation_scores']['curation_score']}  CMD: {selected.get('resource_pack_item', {}).get('custom_model_data', '')}", fill=(228, 218, 188), font=font_body)
+    draw.text((detail_x + 36, 382), f"XYZ: {selected['minecraft_coordinates']['x']} {selected['minecraft_coordinates']['y']} {selected['minecraft_coordinates']['z']}", fill=(228, 218, 188), font=font_body)
+
+    plaque = selected["spirit_first_line"][:72]
+    draw.rectangle([detail_x + 20, 446, width - 74, 566], fill=(44, 35, 24), outline=(121, 94, 55), width=2)
+    draw.text((detail_x + 36, 466), "PLAQUE", fill=(255, 221, 136), font=font_hall)
+    draw.text((detail_x + 36, 498), plaque[:40], fill=(240, 226, 190), font=font_body)
+    draw.text((detail_x + 36, 528), plaque[40:], fill=(240, 226, 190), font=font_body)
+
+    stats = [
+        ("artifact passports", len(collection)),
+        ("object families", 40),
+        ("resource models", 1200),
+        ("server import", "ready"),
+        ("resource pack", "AfterBlockMuseum.zip"),
     ]
-    yy = 142
-    for idx, line in enumerate(details):
-        fill = (255, 226, 150) if idx == 0 else (230, 217, 188)
-        draw.text((detail_x + 18, yy), line, fill=fill)
-        yy += 38 if idx in {0, 1} else 30
+    sy = 604
+    for label, value in stats:
+        draw.rectangle([detail_x + 24, sy, width - 78, sy + 42], fill=(35, 33, 29), outline=(74, 65, 47))
+        draw.text((detail_x + 38, sy + 10), str(label).upper(), fill=(171, 158, 121), font=font_body)
+        draw.text((detail_x + 230, sy + 10), str(value)[:24], fill=(246, 225, 164), font=font_body)
+        sy += 52
+
+    draw.rectangle([70, 932, width - 70, 986], fill=(27, 24, 19), outline=(88, 70, 46), width=2)
+    draw.text((94, 950), "Museum path: upload relic -> classify object -> choose hall -> assign plot -> render item model -> spawn pedestal in Minecraft", fill=(222, 205, 166), font=font_body)
 
     path = os.path.join(tempfile.gettempdir(), f"afterblock_museum_preview_{selected['artifact_id']}.png")
     image.save(path)
@@ -1615,13 +1706,7 @@ def living_wall_canvas(prompt_block: str, wall_zone: str, tick: int):
     ranked = sorted(tiles, key=lambda item: (item["stage"]["stage"], item["value"], item["mutation_rate"]), reverse=True)
     story = [
         "# Living Moving Canvas",
-        "This is the Minecraft bridge as a social system: every prompt becomes a coordinate, neighbors create fusion pressure, and the wall has visible weather.",
-        "",
-        "Why this is the winning version:",
-        "- It is Minecraft-native: coordinates, plots, wall slots, and server packets.",
-        "- It is social: multiple people shape one shared canvas.",
-        "- It is alive: mutation, growth stages, and attention weather change what the wall becomes.",
-        "- It is demoable: the judge can see the wall, not just read a chatbot answer.",
+        "Every prompt claims a coordinate. Nearby ideas fuse. The wall changes weather.",
         "",
         "Evolution events:",
     ]
@@ -1911,6 +1996,16 @@ body, .gradio-container {
 textarea, input {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
 }
+.prose, .markdown, .gradio-container p, .gradio-container li {
+  color: #e8dcc1 !important;
+}
+.prose h1, .prose h2, .prose h3, .markdown h1, .markdown h2, .markdown h3,
+.prose strong, .markdown strong {
+  color: #ffe4a3 !important;
+}
+.gradio-container code, .gradio-container pre {
+  color: #2b2114 !important;
+}
 .compact-note {
   color: #c9b98f;
   font-size: 13px;
@@ -1925,22 +2020,19 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         <section class="dreamwall-hero">
           <h1>DreamWall: AfterBlock Museum</h1>
           <p>
-            Scan a relic, memory, animal spirit, or prompted painting. The museum assigns
-            a hall, chisels a Minecraft placement, awakens a tiny spirit, and prints an
-            artifact passport for the server.
+            A compact Gradio control room for a Minecraft museum where personal relics become
+            textured items, labeled halls, living wall tiles, and server-ready packets.
           </p>
           <div class="badge-row">
             <span>Adventure in Thousand Token Wood</span>
             <span>OpenAI Codex Track</span>
-            <span>Off-Brand</span>
-            <span>Best Demo</span>
-            <span>Sharing is Caring</span>
-            <span>Field Notes</span>
+            <span>Custom UI</span>
+            <span>Paper Bridge</span>
           </div>
         </section>
         """
     )
-    gr.HTML("<h2>AfterBlock Museum</h2><div class='museum-terminal'>scan relic -> place in hall -> awaken spirit -> export Minecraft packet</div>")
+    gr.HTML("<h2>AfterBlock Museum</h2>")
     with gr.Row():
         with gr.Column(scale=4):
             demo_choice = gr.Dropdown(
@@ -1968,7 +2060,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             relic_image = gr.Image(label="Optional relic image", type="filepath", height=160)
             museum_button = gr.Button("Curate Artifact", variant="primary")
         with gr.Column(scale=6):
-            museum_preview = gr.Image(label="Museum preview: 100 labeled demo artifacts", type="filepath", height=520)
+            museum_preview = gr.Image(label="Museum render: 100 labeled artifacts", type="filepath", height=560)
             museum_catalog = gr.Dataframe(
                 headers=["#", "handle", "title", "object", "hall", "score", "xyz", "cmd"],
                 label="Artifact catalog",
@@ -2004,7 +2096,6 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     )
 
     with gr.Accordion("Resource Pack Browser", open=False):
-        gr.Markdown("Inspect the generated Minecraft item pack without leaving the Space.")
         with gr.Row():
             texture_kind = gr.Dropdown(label="Kind", choices=texture_kind_choices(), value="all")
             texture_page = gr.Slider(label="Page", minimum=1, maximum=40, value=1, step=1)
@@ -2039,7 +2130,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             outputs=[texture_gallery, texture_table, texture_status],
         )
 
-    gr.HTML("<h2>Living Graffiti Wall</h2>")
+    gr.HTML("<h2>Living Wall Tile</h2>")
     with gr.Row():
         with gr.Column(scale=5):
             graffiti_prompt = gr.Textbox(
@@ -2065,13 +2156,8 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         outputs=[graffiti_gif, graffiti_story, graffiti_canvas, graffiti_packet],
         api_name="living_graffiti",
     )
-    demo.load(
-        living_graffiti,
-        inputs=[graffiti_prompt, graffiti_player, graffiti_zone],
-        outputs=[graffiti_gif, graffiti_story, graffiti_canvas, graffiti_packet],
-    )
 
-    gr.HTML("<h2>Living Moving Canvas</h2>")
+    gr.HTML("<h2>Living Canvas</h2>")
     with gr.Row():
         with gr.Column(scale=5):
             wall_prompts = gr.Textbox(
@@ -2093,11 +2179,6 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         inputs=[wall_prompts, wall_zone, wall_tick],
         outputs=[wall_image, wall_story, wall_packet],
         api_name="living_canvas",
-    )
-    demo.load(
-        living_wall_canvas,
-        inputs=[wall_prompts, wall_zone, wall_tick],
-        outputs=[wall_image, wall_story, wall_packet],
     )
 
     gr.HTML("<h2>NeuroPets Hatchery</h2>")
@@ -2127,11 +2208,6 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         inputs=[pet_prompt, pet_player, pet_island],
         outputs=[pet_image, pet_card, pet_leaders, pet_lineage, pet_packet],
         api_name="hatch_pet",
-    )
-    demo.load(
-        hatch_neuropet,
-        inputs=[pet_prompt, pet_player, pet_island],
-        outputs=[pet_image, pet_card, pet_leaders, pet_lineage, pet_packet],
     )
 
     gr.HTML("<h2>DreamWall Canvas</h2>")
@@ -2171,11 +2247,6 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         inputs=[prompt, player, origin, gallery_zone],
         outputs=[art, report, commands, trace, profile, packet, canvas, value_json],
         api_name="generate_art",
-    )
-    demo.load(
-        gradio_generate,
-        inputs=[prompt, player, origin, gallery_zone],
-        outputs=[art, report, commands, trace, profile, packet, canvas, value_json],
     )
 
 

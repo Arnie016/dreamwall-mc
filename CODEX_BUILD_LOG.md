@@ -33,3 +33,4 @@ This file records how Codex was used to build the hackathon entry.
 - Added `/dreamwall pack`, `resource-pack-url`, `resource-pack-sha1`, and optional join-time pack offering so a Paper server can request the Hugging Face-hosted resource pack without separately hosting the ZIP.
 - Upgraded `/dreamwall demo` and `/dreamwall import` to spawn an `ItemDisplay` entity above the pedestal so the generated 3D custom model is visible in-world after the resource pack is accepted.
 - Verified the plugin in a temporary Paper 1.21.4 server on Java 21: DreamWall loaded, `/dreamwall fetch` reached the live Space, `/dreamwall pack` printed the public pack URL/SHA1, and the server stopped cleanly.
+- Polished the Gradio demo for clarity: the museum now renders a detailed 9-hall isometric preview with 100 labeled relic placements, 40 everyday object families, selected-relic metadata, and click-to-run secondary demos instead of cluttered auto-filled sections.
