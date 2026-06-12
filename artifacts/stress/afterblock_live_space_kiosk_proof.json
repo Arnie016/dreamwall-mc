@@ -1,0 +1,12 @@
+{
+  "mode": "live_huggingface_space_kiosk_api",
+  "url": "https://build-small-hackathon-dreamwall-mc.hf.space",
+  "elapsed_seconds": 6.99,
+  "quick_outputs": 10,
+  "preview_path_type": "str",
+  "catalog_rows": 3,
+  "wall_html_present": true,
+  "inspect_present": true,
+  "packet_present": true,
+  "inferred_type": "object_photo"
+}
