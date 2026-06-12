@@ -40,7 +40,7 @@ Most hackathon apps stop at chat or image generation. AfterBlock turns language 
 - **Resonance-based:** curation score replaces market/auction language.
 - **Off-brand:** the Gradio app feels like a Minecraft museum terminal.
 - **Rendered preview:** a floor-map image shows the museum populated with 100 demo artifacts.
-- **Texture path:** repo-local PNG item textures are generated under `assets/afterblock_textures/`.
+- **Texture path:** 1,200 generated PNG textures plus 1,200 3D item model JSONs are generated for a Minecraft resource pack.
 - **Animated:** each prompt becomes a 10-frame artifact, not a static image.
 - **Grows:** artifacts unlock stages from seed sketch to server myth based on value and mutation.
 - **Collective:** many prompts become one shared moving canvas, not isolated images.
@@ -84,6 +84,8 @@ The MVP emits:
 - a named Gradio API endpoint: `living_canvas`
 - a named Gradio API endpoint: `curate_artifact`
 - generated texture PNGs in `assets/afterblock_textures/items/`
+- resource-pack skeleton in `resource-pack/AfterBlockMuseum/`
+- texture gallery in `assets/afterblock_textures/gallery/index.html`
 
 Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
 
@@ -116,6 +118,7 @@ The final output is a plugin-ready museum packet with artifact title, hall, coor
 - [`docs/COMPETITION_GOAL.md`](docs/COMPETITION_GOAL.md)
 - [`docs/MINECRAFT_SERVER_BLUEPRINT.md`](docs/MINECRAFT_SERVER_BLUEPRINT.md)
 - [`docs/MUSEUM_CURATION.md`](docs/MUSEUM_CURATION.md)
+- [`docs/TEXTURE_PACK_STRATEGY.md`](docs/TEXTURE_PACK_STRATEGY.md)
 - [`docs/LIVING_GRAFFITI_MVP.md`](docs/LIVING_GRAFFITI_MVP.md)
 - [`docs/NEUROPETS_MVP.md`](docs/NEUROPETS_MVP.md)
 - [`docs/DEMO_RUNBOOK.md`](docs/DEMO_RUNBOOK.md)

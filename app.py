@@ -671,7 +671,8 @@ def demo_collection_artifact(index: int) -> dict:
     artifact = build_museum_artifact(owner, handle, input_kind, source_prompt, memory_text)
     artifact["catalog_index"] = index + 1
     artifact["object_kind"] = object_kind
-    artifact["texture_path"] = f"assets/afterblock_textures/items/{object_kind.replace(' ', '_')}_{index + 1:03d}.png"
+    artifact["texture_path"] = f"assets/afterblock_textures/items/{object_kind.replace(' ', '_')}_{index + 1:04d}.png"
+    artifact["resource_pack_item"] = resource_pack_item_for(object_kind, index)
     return artifact
 
 
@@ -681,8 +682,37 @@ def texture_key_for(object_guess: str) -> str:
         "prompted_painting": "painting",
         "personal_relic": "notebook",
         "animal_spirit": "toy_car",
+        "school_bag": "school_bag",
+        "water_bottle": "water_bottle",
+        "usb_drive": "usb_drive",
     }
     return aliases.get(key, key)
+
+
+def resource_manifest() -> list[dict]:
+    path = "assets/afterblock_textures/afterblock_manifest.json"
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            return json.load(handle)
+    except OSError:
+        return []
+
+
+def resource_pack_item_for(object_guess: str, seed_hint: int = 0) -> dict:
+    key = texture_key_for(object_guess)
+    manifest = resource_manifest()
+    matches = [item for item in manifest if item.get("kind") == key]
+    if not matches:
+        matches = [item for item in manifest if item.get("kind") == "notebook"] or manifest
+    if not matches:
+        return {
+            "id": "missing",
+            "custom_model_data": 0,
+            "texture": "",
+            "model": "",
+            "recommended_item": "minecraft:paper",
+        }
+    return matches[seed_hint % len(matches)]
 
 
 def museum_collection(selected: dict, count: int = 100) -> list[dict]:
@@ -690,6 +720,7 @@ def museum_collection(selected: dict, count: int = 100) -> list[dict]:
     selected_copy = dict(selected)
     selected_copy["catalog_index"] = 0
     selected_copy["texture_path"] = f"assets/afterblock_textures/items/{texture_key_for(selected['object_guess'])}_selected.png"
+    selected_copy["resource_pack_item"] = resource_pack_item_for(selected["object_guess"], stable_seed(selected["artifact_id"]))
     return [selected_copy] + artifacts
 
 
@@ -788,6 +819,7 @@ def catalog_rows(collection: list[dict]) -> list[list]:
                 artifact["hall"],
                 artifact["curation_scores"]["curation_score"],
                 f"{artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}",
+                artifact.get("resource_pack_item", {}).get("custom_model_data", ""),
             ]
         )
     return rows
@@ -835,6 +867,7 @@ def build_museum_artifact(
     coordinates = {"x": plot["world_x"], "y": 80, "z": plot["world_z"]}
     plaque_line = spirit["spirit_first_line"]
     lore_short = f"{object_guess.title()} placed in {hall.lower()} because {placement_reason}."
+    resource_item = resource_pack_item_for(object_guess, seed)
     artifact = {
         "artifact_id": artifact_id,
         "owner_name": owner_name,
@@ -852,6 +885,7 @@ def build_museum_artifact(
         "palette": palette_names,
         "minecraft_materials": palette_names,
         "texture_path": f"assets/afterblock_textures/items/{texture_key_for(object_guess)}_selected.png",
+        "resource_pack_item": resource_item,
         "plaque_line": plaque_line,
         "lore_short": lore_short,
         "spirit_name": spirit["spirit_name"],
@@ -904,6 +938,10 @@ def museum_packet_for(artifact: dict) -> dict:
             "coordinates": artifact["minecraft_coordinates"],
             "materials": artifact["minecraft_materials"],
             "texture_path": artifact["texture_path"],
+            "resource_pack_item": artifact["resource_pack_item"],
+            "recommended_item": artifact["resource_pack_item"].get("recommended_item", "minecraft:paper"),
+            "custom_model_data": artifact["resource_pack_item"].get("custom_model_data", 0),
+            "model": artifact["resource_pack_item"].get("model", ""),
             "plaque_text": artifact["plaque_line"],
             "spirit_first_line": artifact["spirit_first_line"],
             "owner_handle": artifact["owner_handle"],
@@ -1891,10 +1929,10 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
         with gr.Column(scale=6):
             museum_preview = gr.Image(label="Museum preview: 100 labeled demo artifacts", type="filepath", height=520)
             museum_catalog = gr.Dataframe(
-                headers=["#", "handle", "title", "object", "hall", "score", "xyz"],
+                headers=["#", "handle", "title", "object", "hall", "score", "xyz", "cmd"],
                 label="Artifact catalog",
                 row_count=8,
-                col_count=(7, "fixed"),
+                col_count=(8, "fixed"),
                 interactive=False,
             )
             with gr.Tabs():

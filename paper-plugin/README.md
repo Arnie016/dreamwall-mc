@@ -8,6 +8,7 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 
 - `/dreamwall` shows the configured Space endpoint.
 - `/dreamwall fetch` calls the Space app domain and confirms the bridge can reach Hugging Face.
+- `/dreamwall demo` places a safe local pedestal/sign proof and gives the player a Paper item with `CustomModelData 730002`.
 - A scheduled task can be extended to poll approved museum artifacts.
 - The Space now emits `dreamwall.museum.v1`, the main AfterBlock packet for the hackathon demo.
 - The Space also emits `living_canvas.mc.v1` for the secondary wall/canvas mode.
@@ -119,6 +120,8 @@ The jar will be in `target/dreamwall-paper-bridge-0.1.0.jar`.
 
 1. Stop the PebbleHost Paper server.
 2. Upload the jar to `plugins/`.
-3. Start the server.
-4. Edit `plugins/DreamWall/config.yml` if needed.
-5. Run `/dreamwall fetch` in game or console.
+3. Upload or link the `resource-pack/AfterBlockMuseum/` zip as a server resource pack if you want custom item rendering.
+4. Start the server.
+5. Edit `plugins/DreamWall/config.yml` if needed.
+6. Run `/dreamwall fetch` in game or console.
+7. Run `/dreamwall demo` in game to place a pedestal proof and receive the AirPods demo item.

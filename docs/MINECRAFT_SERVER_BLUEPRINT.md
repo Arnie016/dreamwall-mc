@@ -91,15 +91,17 @@ The Paper plugin V1 only needs to import the packet and place a pedestal/sign/pa
 
 ## Texture Assets
 
-The repo includes generated Minecraft-style PNG textures in:
+The repo includes a generated resource-pack skeleton plus loose gallery textures:
 
 ```text
 assets/afterblock_textures/items/
+assets/afterblock_textures/gallery/index.html
+resource-pack/AfterBlockMuseum/
 ```
 
-These are 64x64 placeholder item textures for everyday relics such as books, AirPods, monitors, bags, water bottles, lamps, microphones, tissue packets, keyboards, mugs, keys, and notebooks.
+The current pack includes 1,200 64x64 item textures, 1,200 3D item model JSON files, and 1,200 `minecraft:paper` custom model data overrides.
 
-V1 server proof can use signs/item frames/pedestals. V2 should package these PNGs into a resource pack or mod so each museum artifact can display as a recognizable Minecraft item.
+V1 server proof can use `/dreamwall demo` to place a pedestal and give the player a Paper item with `CustomModelData 730002`. With the resource pack installed, that item renders as an AfterBlock relic.
 
 ## Living Canvas Packet
 
