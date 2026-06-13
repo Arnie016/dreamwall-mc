@@ -18,7 +18,7 @@ MODEL_ID = "dreamwall-local-semantic-fingerprint-v1"
 GRID = 32
 SCALE = 12
 PUBLIC_SPACE_URL = "https://build-small-hackathon-dreamwall-mc.hf.space"
-TEXTURE_PAGE_SIZE = 48
+TEXTURE_PAGE_SIZE = 96
 
 
 BLOCKS = [
@@ -311,7 +311,7 @@ def top_moods(text: str, vec: np.ndarray) -> list[str]:
 def palette_from_vector(vec: np.ndarray, seed: int, moods: list[str]) -> list[tuple[str, tuple[int, int, int]]]:
     rng = np.random.default_rng(seed)
     block_vecs = np.array([rgb for _, rgb in BLOCKS], dtype=np.float32) / 255.0
-    anchors = np.abs(vec[: len(BLOCKS)])
+    anchors = np.abs(vec[: len(BLOCKS)]) + 1e-4
     weights = anchors / max(float(anchors.sum()), 1e-6)
     chosen = list(rng.choice(len(BLOCKS), size=7, replace=False, p=weights))
 
@@ -532,6 +532,11 @@ def canvas_report(prompt: str, player: str, moods: list[str], palette_names: lis
 def object_guess_for(input_type: str, source_prompt: str, memory_text: str) -> str:
     text = f"{source_prompt} {memory_text}".lower()
     guesses = [
+        ("phone", ["phone", "iphone", "android", "smartphone", "mobile"]),
+        ("water bottle", ["water bottle", "waater", "bottle", "canteen", "thermos"]),
+        ("plush toy", ["teddy", "teddy bear", "bear", "plush", "soft toy", "stuffed"]),
+        ("sticker", ["sticker", "decal", "label", "logo", "openai"]),
+        ("shoes", ["shoe", "shoes", "sneaker", "sneakers", "trainers"]),
         ("book", ["book", "novel", "comic", "star wars", "cover"]),
         ("earbuds", ["airpods", "earpods", "earbuds", "headphones", "music"]),
         ("monitor", ["monitor", "screen", "display", "trade", "bitcoin"]),
@@ -558,7 +563,11 @@ def hall_for_artifact(input_type: str, object_guess: str, source_prompt: str, me
         return "Animal Spirit Grove", "the artifact behaves more like a companion than an object"
     if any(word in text for word in ["first", "university", "bitcoin", "started"]):
         return "Hall of Firsts", "the memory marks a first threshold"
-    if any(word in text for word in ["airpods", "bag", "friend", "carried", "companion"]):
+    if any(word in text for word in ["teddy", "plush", "soft toy", "sleep", "guardian"]):
+        return "Hall of Soft Things", "the memory is quiet, protective, and intimate"
+    if any(word in text for word in ["sticker", "decal", "logo", "signal", "lost", "radio", "noise"]):
+        return "Hall of Lost Signals", "the artifact carries private signal through public static"
+    if any(word in text for word in ["airpods", "bag", "bottle", "water", "phone", "shoe", "friend", "carried", "companion"]):
         return "Hall of Companions", "it stayed close to the owner through ordinary days"
     if any(word in text for word in ["exam", "trade", "turning", "changed", "panic"]):
         return "Hall of Turning Points", "the object sits near a decision or pressure point"
@@ -566,10 +575,8 @@ def hall_for_artifact(input_type: str, object_guess: str, source_prompt: str, me
         return "Hall of Worlds", "it opened a world larger than the room around it"
     if any(word in text for word in ["soft", "noise", "private", "morning"]):
         return "Hall of Soft Things", "the memory is quiet, protective, and intimate"
-    if any(word in text for word in ["monitor", "tool", "screen", "keyboard"]):
+    if any(word in text for word in ["monitor", "tool", "screen", "keyboard", "camera"]):
         return "Hall of Tools", "the artifact helped the owner act on the world"
-    if any(word in text for word in ["signal", "lost", "radio", "noise"]):
-        return "Hall of Lost Signals", "the artifact carries private signal through public static"
     hall = MUSEUM_HALLS[seed % len(MUSEUM_HALLS)]
     return hall, "the museum placed it by symbolic resonance"
 
@@ -639,6 +646,11 @@ def spirit_for_artifact(title: str, object_guess: str, memory_text: str, hall: s
         "earbuds": ["private", "signal-carrying", "soft-spoken"],
         "monitor": ["watchful", "electric", "threshold-bound"],
         "school bag": ["patient", "burdened", "loyal"],
+        "phone": ["signal-lit", "pocket-sized", "watchful"],
+        "water bottle": ["clear", "steady", "everyday"],
+        "plush toy": ["soft", "protective", "sleep-worn"],
+        "sticker": ["signal-marked", "thin", "identity-bound"],
+        "shoes": ["road-worn", "patient", "routine-bound"],
         "painting": ["mythic", "paint-lit", "protective"],
         "animal spirit": ["restless", "companionable", "wild"],
         "personal relic": ["quiet", "symbolic", "half-remembered"],
@@ -655,6 +667,16 @@ def spirit_for_artifact(title: str, object_guess: str, memory_text: str, hall: s
         first_line = "I watched numbers become weather."
     elif object_guess == "school bag":
         first_line = "I carried the mornings you were not ready for."
+    elif object_guess == "phone":
+        first_line = "I kept private signals close enough to answer."
+    elif object_guess == "water bottle":
+        first_line = "I kept ordinary stamina within reach."
+    elif object_guess == "plush toy":
+        first_line = "I guarded sleep without needing to explain why."
+    elif object_guess == "sticker":
+        first_line = "I turned a surface into a signal."
+    elif object_guess == "shoes":
+        first_line = "I carried the route until it became routine."
     elif object_guess == "painting":
         first_line = "I guard the home that imagination returned to."
     questions = [
@@ -707,11 +729,12 @@ def passport_html(artifact: dict) -> str:
     coords = artifact["minecraft_coordinates"]
     item = artifact.get("resource_pack_item", {})
     share_url = artifact.get("share_url") or artifact_share_url(artifact)
-    qr_src = qr_code_data_uri(share_url)
+    qr_payload = artifact.get("qr_payload") or share_url
+    qr_src = qr_code_data_uri(qr_payload)
     qr = (
         f"<img class='passport-qr-image' src='{qr_src}' alt='QR code for this relic'>"
         if qr_src
-        else qr_matrix_html(share_url)
+        else qr_matrix_html(qr_payload)
     )
     preview_url = artifact_preview_url(artifact)
     preview = (
@@ -720,7 +743,7 @@ def passport_html(artifact: dict) -> str:
         else f"<div class='passport-object-mark'>{swatches}</div>"
     )
     return f"""
-    <section class="passport-card">
+    <section class="passport-card" id="afterblock-passport-{html_escape(artifact['artifact_id'])}">
       <header class="passport-header">
         <div>
           <div class="passport-kicker">AfterBlock Passport</div>
@@ -728,8 +751,9 @@ def passport_html(artifact: dict) -> str:
           <p class="passport-owner">{html_escape(owner_display(artifact))} · {html_escape(artifact['object_guess'])}</p>
         </div>
         <div class="passport-share">
+          <a class="passport-share-link" href="{html_escape(share_url)}" target="_blank" rel="noreferrer">Share</a>
           <span class="hf-icon">HF</span>
-          <span>scan relic</span>
+          <span>scan passport</span>
         </div>
       </header>
       <div class="passport-grid">
@@ -755,11 +779,43 @@ def passport_html(artifact: dict) -> str:
           <div class="passport-scan">
             {qr}
             <div>
-              <strong>Share this relic</strong>
+              <strong>Scan result</strong>
+              <p>Opens this relic passport packet with the command and museum coordinates.</p>
               <span>{html_escape(share_url)}</span>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    """
+
+
+def relic_profile_html(artifact: dict) -> str:
+    item = artifact.get("resource_pack_item", {})
+    coords = artifact["minecraft_coordinates"]
+    share_url = artifact.get("share_url") or artifact_share_url(artifact)
+    command = minecraft_give_command(artifact)
+    return f"""
+    <section class="relic-profile-page" id="relic-profile-{html_escape(artifact['artifact_id'])}">
+      <header>
+        <div>
+          <span class="profile-kicker">{html_escape(artifact['hall'])} / {html_escape(artifact['zone'])}</span>
+          <h2>{html_escape(artifact['title'])}</h2>
+          <p>{html_escape(owner_display(artifact))} · CMD {item.get('custom_model_data', 0)} · XYZ {coords['x']} {coords['y']} {coords['z']}</p>
+        </div>
+        <a href="{html_escape(share_url)}" target="_blank" rel="noreferrer" class="profile-share">Share</a>
+      </header>
+      <div class="profile-grid">
+        <article>
+          <h3>History</h3>
+          <p>{html_escape(artifact.get('memory_text', artifact.get('plaque_line', '')))}</p>
+          <p class="profile-lore">{html_escape(artifact.get('spirit_first_line', artifact.get('plaque_line', '')))}</p>
+        </article>
+        <article>
+          <h3>Minecraft Relic</h3>
+          <code>{html_escape(command)}</code>
+          <p>{html_escape(artifact.get('lore_short', artifact.get('placement_reason', '')))}</p>
+        </article>
       </div>
     </section>
     """
@@ -807,7 +863,8 @@ def minecraft_give_command(artifact: dict) -> str:
 def artifact_share_url(artifact: dict) -> str:
     item = artifact.get("resource_pack_item", {})
     custom_model_data = item.get("custom_model_data", 0)
-    return f"{PUBLIC_SPACE_URL}/?artifact={artifact.get('artifact_id', 'unknown')}&item={custom_model_data}"
+    artifact_id = artifact.get("artifact_id", "unknown")
+    return f"{PUBLIC_SPACE_URL}/?artifact={artifact_id}&item={custom_model_data}#afterblock-passport-{artifact_id}"
 
 
 def artifact_preview_url(artifact: dict) -> str:
@@ -891,7 +948,7 @@ def waypointcraft_html(artifact: dict) -> str:
     return f"""
     <section class="waypoint-card">
       <header>
-        <h3>WaypointCraft</h3>
+        <h3>Placement Route</h3>
         <p>{html_escape(artifact['hall'])} / {html_escape(artifact['zone'])}</p>
       </header>
       <div class="waypoint-grid">
@@ -945,6 +1002,10 @@ def texture_key_for(object_guess: str) -> str:
         "school_bag": "school_bag",
         "water_bottle": "water_bottle",
         "usb_drive": "usb_drive",
+        "phone": "phone",
+        "plush_toy": "plush_toy",
+        "sticker": "sticker",
+        "shoes": "shoes",
     }
     return aliases.get(key, key)
 
@@ -1041,6 +1102,7 @@ def artifact_model_html(artifact: dict) -> str:
         "colors": palette,
         "hall_color": hex_color(hall_rgb),
         "story_caption": artifact.get("memory_text", artifact.get("plaque_line", "")),
+        "social_tag": artifact.get("social_tag", owner_display(artifact)),
         "give_command": f"/give @p minecraft:paper[minecraft:custom_model_data={item.get('custom_model_data', 0)}] 1",
     }
     payload_json = json.dumps(payload)
@@ -1210,6 +1272,53 @@ def artifact_model_html(artifact: dict) -> str:
 
   buildMuseumHall();
 
+  function labelTexture(title, caption) {{
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 192;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#1a1209';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#c99b4e';
+    ctx.lineWidth = 10;
+    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+    ctx.fillStyle = '#ffe4a3';
+    ctx.font = 'bold 32px Inter, system-ui, sans-serif';
+    ctx.fillText(String(title || 'Relic').slice(0, 24), 34, 58);
+    ctx.fillStyle = '#e7d5ad';
+    ctx.font = '22px ui-monospace, SFMono-Regular, Menlo, monospace';
+    const words = String(caption || '').split(/\\s+/).slice(0, 18);
+    let line = '';
+    let y = 96;
+    words.forEach((word) => {{
+      const test = line ? `${{line}} ${{word}}` : word;
+      if (ctx.measureText(test).width > 440) {{
+        ctx.fillText(line, 34, y);
+        line = word;
+        y += 30;
+      }} else {{
+        line = test;
+      }}
+    }});
+    if (line) ctx.fillText(line, 34, y);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return texture;
+  }}
+
+  function buildEngravedPlaque() {{
+    const plaqueTexture = labelTexture(artifact.title, artifact.story_caption);
+    const plaque = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.34, .5),
+      new THREE.MeshBasicMaterial({{ map: plaqueTexture, transparent: false }})
+    );
+    plaque.position.set(0, .86, -.955);
+    plaque.rotation.x = 0;
+    hallGroup.add(plaque);
+  }}
+
+  buildEngravedPlaque();
+
   const shapeText = `${{artifact.kind}} ${{artifact.shape}} ${{artifact.object_guess}} ${{artifact.title}}`.toLowerCase();
   const ivory = makeMat('#f5efdc', {{ roughness: .42 }});
   const porcelain = makeMat('#fff9e8', {{ roughness: .35 }});
@@ -1281,6 +1390,65 @@ def artifact_model_html(artifact: dict) -> str:
     cube(.57, .86, .02, .12, .88, .3, strap);
   }}
 
+  function renderPhone() {{
+    const shell = makeMat('#14181d', {{ roughness: .54, metalness: .22 }});
+    const glass = makeMat('#102431', {{ roughness: .18, metalness: .08, emissive: '#2fb6ff', emissiveStrength: .16 }});
+    const bezel = makeMat('#0a0b0d', {{ roughness: .72 }});
+    cube(0, .88, -.02, .76, 1.18, .16, shell);
+    cube(0, .88, -.14, .62, .98, .055, glass);
+    cube(0, 1.4, -.18, .24, .035, .04, porcelain);
+    cube(.22, 1.24, -.19, .08, .08, .04, blueGlow);
+    cube(-.18, .48, -.19, .2, .05, .04, bezel);
+  }}
+
+  function renderWaterBottle() {{
+    const bottleGlass = new THREE.MeshStandardMaterial({{
+      color: '#7fd9f4',
+      roughness: .18,
+      metalness: .02,
+      transparent: true,
+      opacity: .72,
+      emissive: new THREE.Color('#2f91bb').multiplyScalar(.08)
+    }});
+    const label = makeMat('#f4f0de', {{ roughness: .38 }});
+    const cap = makeMat('#2f6f95', {{ roughness: .5, metalness: .04 }});
+    cube(0, .84, 0, .52, 1.04, .42, bottleGlass);
+    cube(0, 1.46, 0, .32, .22, .32, bottleGlass);
+    cube(0, 1.62, 0, .38, .12, .38, cap);
+    cube(0, .88, -.24, .56, .24, .04, label);
+    cube(-.2, .5, -.25, .06, .14, .04, blueGlow);
+  }}
+
+  function renderPlushToy() {{
+    const fur = makeMat('#9a6a43', {{ roughness: .92 }});
+    const belly = makeMat('#d3ad78', {{ roughness: .88 }});
+    const face = makeMat('#f1c98b', {{ roughness: .88 }});
+    cube(0, .72, 0, .68, .7, .42, fur);
+    cube(0, 1.22, -.02, .58, .52, .4, fur);
+    cube(-.34, 1.48, -.02, .22, .22, .18, fur);
+    cube(.34, 1.48, -.02, .22, .22, .18, fur);
+    cube(0, .72, -.24, .34, .38, .04, belly);
+    cube(0, 1.18, -.25, .34, .24, .04, face);
+    cube(-.11, 1.24, -.3, .05, .05, .035, graphite);
+    cube(.11, 1.24, -.3, .05, .05, .035, graphite);
+    cube(0, 1.12, -.3, .07, .05, .035, graphite);
+    cube(-.52, .74, 0, .22, .48, .28, fur);
+    cube(.52, .74, 0, .22, .48, .28, fur);
+    cube(-.22, .28, .02, .22, .28, .26, fur);
+    cube(.22, .28, .02, .22, .28, .26, fur);
+  }}
+
+  function renderSticker() {{
+    const paper = makeMat('#f4efe0', {{ roughness: .36 }});
+    const inkA = makeMat(colors[0] || '#4d78ff', {{ roughness: .42, emissive: colors[0] || '#4d78ff', emissiveStrength: .05 }});
+    const inkB = makeMat(colors[1] || '#77d7a8', {{ roughness: .42, emissive: colors[1] || '#77d7a8', emissiveStrength: .05 }});
+    cube(0, .9, -.02, 1.05, .82, .08, paper);
+    cube(-.22, .92, -.09, .34, .34, .04, inkA);
+    cube(.16, .98, -.1, .42, .16, .04, inkB);
+    cube(.24, .73, -.1, .32, .12, .04, graphite);
+    cube(-.36, .58, -.1, .2, .12, .04, makeMat('#ffdc8a', {{ roughness: .38 }}));
+  }}
+
   function renderGeneric() {{
     const count = Math.max(5, Math.min(14, artifact.element_count || 7));
     for (let i = 0; i < count; i++) {{
@@ -1307,6 +1475,14 @@ def artifact_model_html(artifact: dict) -> str:
     renderShoes();
   }} else if (shapeText.includes('bag') || shapeText.includes('backpack')) {{
     renderBag();
+  }} else if (shapeText.includes('phone') || shapeText.includes('smartphone') || shapeText.includes('mobile')) {{
+    renderPhone();
+  }} else if (shapeText.includes('bottle') || shapeText.includes('water')) {{
+    renderWaterBottle();
+  }} else if (shapeText.includes('plush') || shapeText.includes('teddy') || shapeText.includes('bear')) {{
+    renderPlushToy();
+  }} else if (shapeText.includes('sticker') || shapeText.includes('decal') || shapeText.includes('logo')) {{
+    renderSticker();
   }} else if (shapeText.includes('remote')) {{
     renderRemote();
   }} else {{
@@ -1457,7 +1633,7 @@ def browse_texture_library(kind: str, page: int):
     ]
     status = (
         f"Showing {len(items)} of {total} items"
-        f" | page {page_index}/{page_count}"
+        f" | scroll shelf {page_index}/{page_count}"
         " | base item: minecraft:paper"
     )
     return gallery, rows, texture_inspection_html(items, total, page_index, page_count), status
@@ -1675,20 +1851,31 @@ def artifact_wall_html(collection: list[dict]) -> str:
             item = artifact.get("resource_pack_item", {})
             active = artifact["artifact_id"] == selected["artifact_id"]
             preview_url = texture_preview_url(item.get("id", "missing")) if item.get("id") else ""
+            handle = artifact.get("social_tag") or owner_display(artifact)
+            command = f"/give @p minecraft:paper[minecraft:custom_model_data={item.get('custom_model_data', 0)}] 1"
             relics.append(
                 f"""
-                <div class="portal-relic {'active' if active else ''}">
-                  <img src="{html_escape(preview_url)}" alt="{html_escape(artifact['object_guess'])}">
-                  <strong>{html_escape(compact_text(artifact['object_guess'].title(), 18))}</strong>
-                  <small>Item {html_escape(item.get('custom_model_data', ''))}</small>
-                  <span class="story-caption"><b>HF</b><span>{html_escape(compact_text(artifact.get('memory_text', artifact.get('plaque_line', '')), 96))}</span></span>
-                </div>
+                <details class="portal-relic profile-relic {'active' if active else ''}">
+                  <summary>
+                    <img src="{html_escape(preview_url)}" alt="{html_escape(artifact['object_guess'])}">
+                    <strong>{html_escape(compact_text(artifact['object_guess'].title(), 18))}</strong>
+                    <small>Item {html_escape(item.get('custom_model_data', ''))}</small>
+                    <span class="social-peek"><b>HF</b>{html_escape(compact_text(handle, 18))}</span>
+                  </summary>
+                  <div class="profile-popout">
+                    <b>{html_escape(artifact['title'])}</b>
+                    <p>{html_escape(compact_text(artifact.get('memory_text', artifact.get('plaque_line', '')), 160))}</p>
+                    <em>{html_escape(compact_text(artifact.get('spirit_first_line', artifact.get('plaque_line', '')), 120))}</em>
+                    <code>{html_escape(command)}</code>
+                  </div>
+                </details>
                 """
             )
         more = max(0, len(hall_items) - len(visible))
         portals.append(
             f"""
             <article class="hall-portal {'active' if hall == selected['hall'] else ''}" style="--hall-color:{rgb}">
+              {f"<span class='you-are-here'>You are here</span>" if hall == selected['hall'] else ""}
               <div class="portal-depth">
                 <span class="portal-lamp left"></span>
                 <span class="portal-lamp right"></span>
@@ -1706,11 +1893,18 @@ def artifact_wall_html(collection: list[dict]) -> str:
             """
         )
     selected_preview = artifact_preview_url(selected)
+    selected_command = f"/give @p minecraft:paper[minecraft:custom_model_data={selected_item.get('custom_model_data', 0)}] 1"
+    selected_handle = selected.get("social_tag") or owner_display(selected)
     return f"""
     <section class="museum-wall persistent-museum">
       <div class="wall-heading">
-        <h3>Persistent 3D Museum</h3>
-        <p>Each relic now has a room route: enter the hall, find the pedestal, scan the passport, then use the Minecraft command.</p>
+        <h3>Living Museum Map</h3>
+        <p>The banner follows the selected relic through its hall, plot, item code, and passport route.</p>
+      </div>
+      <div class="living-map-banner">
+        <span>You are here</span>
+        <strong>{html_escape(selected['hall'])} · {html_escape(hall_routes.get(selected['hall'], selected['zone']))}</strong>
+        <p>{html_escape(selected['title'])} is installed at plot {selected['plot']['x']}, {selected['plot']['z']} with CMD {selected_item.get('custom_model_data', 0)}.</p>
       </div>
       <div class="selected-installation" style="--hall-color:rgb({hall_color(selected['hall'])[0]}, {hall_color(selected['hall'])[1]}, {hall_color(selected['hall'])[2]})">
         <div class="installation-frame">
@@ -1721,9 +1915,16 @@ def artifact_wall_html(collection: list[dict]) -> str:
           <strong>{html_escape(selected['title'])}</strong>
           <em>{html_escape(selected['hall'])} · {html_escape(hall_routes.get(selected['hall'], selected['zone']))} · XYZ {selected['minecraft_coordinates']['x']} {selected['minecraft_coordinates']['y']} {selected['minecraft_coordinates']['z']}</em>
           <p>{html_escape(compact_text(selected.get('memory_text', selected.get('plaque_line', '')), 150))}</p>
-          <code>{html_escape(f"/give @p minecraft:paper[minecraft:custom_model_data={selected_item.get('custom_model_data', 0)}] 1")}</code>
+          <code>{html_escape(selected_command)}</code>
+          <details class="selected-profile">
+            <summary>Open relic profile</summary>
+            <div>
+              <b>{html_escape(selected.get('spirit_first_line', selected.get('plaque_line', '')))}</b>
+              <span>{html_escape(selected.get('lore_short', selected.get('placement_reason', '')))}</span>
+            </div>
+          </details>
         </div>
-        <span class="story-caption selected-caption"><b>HF</b><span>{html_escape(selected.get('memory_text', selected.get('plaque_line', '')))}</span></span>
+        <span class="social-peek selected-social"><b>HF</b>{html_escape(compact_text(selected_handle, 22))}</span>
       </div>
       <div class="museum-concourse">{''.join(portals)}</div>
     </section>
@@ -1777,7 +1978,7 @@ def build_museum_artifact(
     hall_profile = HALL_PROFILES.get(hall, {})
     zone = museum_zone_for(hall, seed)
     plot = plot_for_seed(seed)
-    title = artifact_title(source_prompt, seed, moods)
+    title = artifact_title(source_prompt, seed, moods, object_guess)
     artifact_id = hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
     scores = curation_scores(source_prompt, memory_text, input_type, moods, palette_names, plot)
     spirit = spirit_for_artifact(title, object_guess, memory_text, hall, seed)
@@ -1825,8 +2026,27 @@ def build_museum_artifact(
             "plaque_line": plaque_line,
             "preservation_line": "Preserved in AfterBlock Museum",
         },
-        "share_url": f"{PUBLIC_SPACE_URL}/?artifact={artifact_id}&item={resource_item.get('custom_model_data', 0)}",
-        "qr_payload": f"{PUBLIC_SPACE_URL}/?artifact={artifact_id}&item={resource_item.get('custom_model_data', 0)}",
+        "share_url": artifact_share_url(
+            {
+                "artifact_id": artifact_id,
+                "resource_pack_item": resource_item,
+            }
+        ),
+        "qr_payload": json.dumps(
+            {
+                "type": "afterblock.passport.v1",
+                "url": artifact_share_url(
+                    {
+                        "artifact_id": artifact_id,
+                        "resource_pack_item": resource_item,
+                    }
+                ),
+                "title": title,
+                "command": f"/give @p minecraft:paper[minecraft:custom_model_data={resource_item.get('custom_model_data', 0)}] 1",
+                "xyz": coordinates,
+            },
+            separators=(",", ":"),
+        ),
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     artifact.update(spirit)
@@ -1918,15 +2138,7 @@ def curate_afterblock_artifact(
         )
     else:
         placement.append("- No nearby resonance yet. This artifact becomes an anchor for future visitors.")
-    spirit_lines = [
-        f"# {artifact['spirit_name']}",
-        f"Traits: {', '.join(artifact['spirit_traits'])}",
-        f"First line: _{artifact['spirit_first_line']}_",
-        "",
-        "Visitor questions and spirit responses:",
-    ]
-    for question, response in zip(artifact["sample_visitor_questions"], artifact["sample_spirit_responses"]):
-        spirit_lines.append(f"- **{question}** {response}")
+    profile = relic_profile_html(artifact)
     passport = passport_html(artifact)
     command = minecraft_give_command(artifact)
     coordinates = coordinates_html(artifact)
@@ -1940,7 +2152,7 @@ def curate_afterblock_artifact(
         coordinates,
         waypoint,
         "\n".join(placement),
-        spirit_lines and "\n".join(spirit_lines),
+        profile,
         passport,
         json.dumps(packet, indent=2),
     )
@@ -1962,12 +2174,12 @@ def quick_curate_afterblock_artifact(
     return (*outputs, input_type, source_prompt, memory_text)
 
 
-def place_in_museum(source_prompt: str, story_caption: str, relic_image_path: str | None = None):
+def place_in_museum(source_prompt: str, story_caption: str, owner_handle: str = "@Wildstash", relic_image_path: str | None = None):
     preview, catalog, wall, model, command, coordinates, waypoint, placement, spirit, passport, packet, *_ = quick_curate_afterblock_artifact(
         source_prompt,
         story_caption,
         "Arnav",
-        "@Wildstash",
+        social_tag_for(owner_handle) or "@Wildstash",
         relic_image_path,
     )
     return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall
@@ -2217,7 +2429,24 @@ def keywords_for_title(prompt: str) -> list[str]:
     return ranked[:3] or ["wall", "dream"]
 
 
-def artifact_title(prompt: str, seed: int, moods: list[str]) -> str:
+def artifact_title(prompt: str, seed: int, moods: list[str], object_guess: str | None = None) -> str:
+    normalized_guess = (object_guess or "").strip().lower()
+    prompt_text = (prompt or "").lower()
+    object_titles = {
+        "book": "Book",
+        "earbuds": "AirPods" if "airpod" in prompt_text else "Earbuds",
+        "monitor": "Monitor",
+        "school bag": "School Bag",
+        "phone": "Phone",
+        "water bottle": "Water Bottle",
+        "plush toy": "Teddy Bear" if "teddy" in prompt_text or "bear" in prompt_text else "Plush Toy",
+        "sticker": "OpenAI Sticker" if "openai" in prompt_text else "Sticker",
+        "shoes": "Shoe" if "shoe" in prompt_text and "shoes" not in prompt_text else "Shoes",
+        "painting": "Painting",
+        "tool": "Tool",
+    }
+    if normalized_guess in object_titles:
+        return object_titles[normalized_guess]
     keys = keywords_for_title(prompt)
     prefix_bank = {
         "cozy": ["Lantern", "Hearth", "Soft"],
@@ -2903,22 +3132,26 @@ body, .gradio-container {
 }
 .photo-drop-compact .image-container,
 .photo-drop-compact .upload-container {
-  min-height: 60px !important;
-  height: 68px !important;
+  min-height: 92px !important;
+  height: 104px !important;
   border-style: dashed !important;
   display: grid !important;
   align-content: center !important;
+  background:
+    linear-gradient(90deg, rgba(232,197,111,.08), rgba(82,126,148,.08)),
+    #211d16 !important;
 }
 .photo-drop-compact img {
   object-fit: contain !important;
-  max-height: 68px !important;
+  max-height: 104px !important;
 }
 .photo-drop-compact button {
-  min-height: 56px !important;
-  font-size: 12px !important;
+  min-height: 92px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
 }
 .photo-drop-compact .source-selection {
-  min-height: 32px !important;
+  min-height: 28px !important;
   padding: 3px 0 !important;
 }
 .museum-stage {
@@ -2954,6 +3187,41 @@ body, .gradio-container {
   margin: 0;
   max-width: 440px;
   color: #cdbd9b;
+  font-size: 12px;
+}
+.living-map-banner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 12px;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(232,197,111,.16), rgba(86,128,96,.13), rgba(57,90,128,.13)),
+    #14130f;
+  border: 1px solid #8b6a3d;
+  box-shadow: inset 0 0 26px rgba(242,193,95,.08);
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.living-map-banner span,
+.you-are-here {
+  color: #1a1308;
+  background: #ffdc8a;
+  border: 1px solid #fff0bd;
+  box-shadow: 0 2px 0 #070604;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.living-map-banner strong {
+  color: #ffe4a3;
+  font-size: 16px;
+}
+.living-map-banner p {
+  grid-column: 2;
+  margin: -2px 0 0;
+  color: #d8c9a6 !important;
   font-size: 12px;
 }
 .selected-installation {
@@ -3046,6 +3314,12 @@ body, .gradio-container {
   padding: 10px;
   box-shadow: inset 0 -28px 42px rgba(0,0,0,.3);
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.you-are-here {
+  position: absolute;
+  z-index: 4;
+  top: 8px;
+  left: 8px;
 }
 .hall-portal:hover,
 .hall-portal.active {
@@ -3153,6 +3427,23 @@ body, .gradio-container {
   padding: 5px;
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
 }
+.portal-relic > summary {
+  list-style: none;
+  display: grid;
+  grid-template-rows: 44px auto auto;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+.portal-relic > summary::-webkit-details-marker {
+  display: none;
+}
+.portal-relic[open] {
+  grid-column: span 3;
+  min-height: 164px;
+  align-items: start;
+}
 .portal-relic.active {
   border-color: #ffe4a3;
   background: rgba(255,228,163,.12);
@@ -3181,6 +3472,117 @@ body, .gradio-container {
 .portal-relic small {
   color: #a99976;
   font-size: 9px;
+}
+.social-peek {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: calc(100% - 12px);
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  color: #17100a;
+  background: #ffe0a3;
+  border: 1px solid rgba(255,245,210,.72);
+  box-shadow: 0 5px 12px rgba(0,0,0,.34);
+  padding: 3px 6px;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 900;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+.social-peek b {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #fff5cf;
+  color: #1d1309;
+  font-size: 9px;
+}
+.portal-relic:hover .social-peek,
+.selected-installation:hover .social-peek {
+  opacity: 1;
+  transform: translateY(0);
+}
+.selected-social {
+  top: 12px;
+  right: 12px;
+}
+.profile-popout {
+  display: none;
+  margin-top: 8px;
+  padding: 9px;
+  width: 100%;
+  background: rgba(12,10,7,.8);
+  border: 1px solid rgba(255,228,163,.24);
+  color: #e9d9b8;
+}
+.portal-relic[open] .profile-popout {
+  display: block;
+}
+.profile-popout b,
+.profile-popout em,
+.profile-popout code {
+  display: block;
+}
+.profile-popout b {
+  color: #ffe4a3;
+  font-size: 12px;
+}
+.profile-popout p,
+.profile-popout em {
+  margin: 5px 0 0;
+  color: #d8c9a6 !important;
+  font-size: 11px;
+  line-height: 1.35;
+}
+.profile-popout em {
+  font-style: normal;
+  color: #fff0bd !important;
+}
+.profile-popout code {
+  margin-top: 7px;
+  padding: 5px;
+  color: #1b1308 !important;
+  background: #ead7a6 !important;
+  white-space: normal;
+  word-break: break-word;
+  font-size: 10px;
+}
+.selected-profile {
+  margin-top: 9px;
+  max-width: 660px;
+}
+.selected-profile summary {
+  cursor: pointer;
+  width: max-content;
+  color: #1b1308;
+  background: #ffdc8a;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 900;
+}
+.selected-profile div {
+  margin-top: 8px;
+  padding: 9px;
+  background: rgba(12,10,7,.58);
+  border: 1px solid rgba(255,228,163,.24);
+}
+.selected-profile b,
+.selected-profile span {
+  display: block;
+  color: #f1dfb8;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.selected-profile span {
+  color: #d8c9a6;
 }
 .relic-grid {
   display: grid;
@@ -3330,8 +3732,6 @@ body, .gradio-container {
   left: 148px;
 }
 .artifact-chip:hover .story-caption,
-.portal-relic:hover .story-caption,
-.selected-installation:hover .story-caption,
 .selected-strip:hover .story-caption {
   opacity: 1;
   transform: translateY(0);
@@ -3689,6 +4089,21 @@ body, .gradio-container {
   text-transform: uppercase;
   letter-spacing: .08em;
 }
+.passport-share-link,
+.profile-share {
+  display: inline-grid;
+  place-items: center;
+  min-height: 30px;
+  padding: 5px 9px;
+  color: #1b1308 !important;
+  background: #ffe0a3;
+  border: 1px solid #fff0bd;
+  text-decoration: none !important;
+  font-weight: 1000;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 3px 0 #090704;
+}
 .hf-icon {
   display: grid;
   place-items: center;
@@ -3807,6 +4222,12 @@ body, .gradio-container {
   color: #ffe4a3;
   font-size: 18px;
 }
+.passport-scan p {
+  margin: 4px 0 6px;
+  color: #e8dcc1 !important;
+  font-size: 12px;
+  line-height: 1.4;
+}
 .passport-scan span {
   color: #d8c9a6;
   overflow-wrap: anywhere;
@@ -3816,6 +4237,74 @@ body, .gradio-container {
   background: #ead7a6 !important;
   color: #1b1308 !important;
   padding: 5px 7px;
+}
+.relic-profile-page {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(242,193,95,.16), transparent 32%),
+    #171410;
+  border: 2px solid #7d6335;
+  box-shadow: 0 8px 0 #080705, inset 0 0 28px rgba(242,193,95,.08);
+  padding: 18px;
+  color: #f4ecd8;
+}
+.relic-profile-page header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  border-bottom: 1px solid #5c4d32;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+.profile-kicker {
+  display: block;
+  color: #d8b66f;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.relic-profile-page h2 {
+  margin: 5px 0;
+  color: #ffe4a3;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.02;
+}
+.relic-profile-page header p {
+  margin: 0;
+  color: #d8c9a6 !important;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 12px;
+}
+.profile-grid article {
+  background: #211d16;
+  border: 1px solid #5c4d32;
+  padding: 14px;
+}
+.profile-grid h3 {
+  margin: 0 0 8px;
+  color: #ffe4a3;
+}
+.profile-grid p {
+  margin: 0;
+  color: #e8dcc1 !important;
+  line-height: 1.55;
+}
+.profile-lore {
+  margin-top: 10px !important;
+  color: #ffdc8a !important;
+  font-weight: 800;
+}
+.profile-grid code {
+  display: block;
+  color: #1b1308 !important;
+  background: #ead7a6 !important;
+  padding: 8px;
+  white-space: normal;
+  word-break: break-word;
+  margin-bottom: 10px;
 }
 .coordinate-cards {
   display: grid;
@@ -3931,7 +4420,7 @@ textarea, input {
 
 DEFAULT_MUSEUM_PROMPT = "blue school bag from exam week"
 DEFAULT_STORY_CAPTION = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
-INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CAPTION, None)
+INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CAPTION, "@Wildstash", None)
 INITIAL_TEXTURE_OUTPUTS = browse_texture_library("all", 1)
 
 
@@ -3965,15 +4454,22 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
                             value=DEFAULT_MUSEUM_PROMPT,
                         )
                         quick_spirit = gr.Textbox(
-                            label="Spirit story caption",
-                            placeholder="What should visitors know when they hover this relic?",
+                            label="Story caption",
+                            placeholder="What should visitors know when they open this relic?",
                             lines=3,
                             value=DEFAULT_STORY_CAPTION,
                         )
+                        quick_handle = gr.Textbox(
+                            label="Optional social handle",
+                            placeholder="@wildstash",
+                            lines=1,
+                            value="@Wildstash",
+                        )
                         quick_image = gr.Image(
-                            label="Photo",
+                            label="Optional photo reference",
                             type="filepath",
-                            height=92,
+                            sources=["upload", "clipboard"],
+                            height=124,
                             elem_classes=["photo-drop-compact"],
                         )
                         quick_button = gr.Button("Place in Museum", variant="primary")
@@ -4017,14 +4513,14 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
             )
             with gr.Row(elem_classes=["resource-controls"]):
                 texture_kind = gr.Dropdown(label="Kind", choices=texture_kind_choices(), value="all")
-                texture_page = gr.Slider(label="Page", minimum=1, maximum=resource_pack_stats()["page_count"], value=1, step=1)
-                texture_button = gr.Button("Browse Textures")
+                texture_page = gr.Number(label="Shelf", value=1, precision=0)
+                texture_button = gr.Button("Browse Shelf")
             texture_status = gr.Markdown(value=INITIAL_TEXTURE_OUTPUTS[3])
             texture_gallery = gr.Gallery(
                 value=INITIAL_TEXTURE_OUTPUTS[0],
                 label="PNG previews with Minecraft item codes",
                 columns=8,
-                height=720,
+                height=920,
                 object_fit="contain",
                 elem_classes=["resource-gallery"],
             )
@@ -4046,8 +4542,8 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
         with gr.Tab("Passport"):
             museum_passport = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[4], label="Passport")
 
-        with gr.Tab("WaypointCraft"):
-            museum_waypoint = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[3], label="WaypointCraft")
+        with gr.Tab("Placement"):
+            museum_waypoint = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[3], label="Placement")
 
         with gr.Tab("Packet"):
             museum_packet = gr.Textbox(
@@ -4058,12 +4554,12 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
                 show_copy_button=True,
             )
 
-        with gr.Tab("Spirit"):
-            museum_spirit = gr.Markdown(value=INITIAL_MUSEUM_OUTPUTS[8])
+        with gr.Tab("Relic Profile"):
+            museum_spirit = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[8])
 
     quick_button.click(
         place_in_museum,
-        inputs=[quick_prompt, quick_spirit, quick_image],
+        inputs=[quick_prompt, quick_spirit, quick_handle, quick_image],
         outputs=[
             museum_model,
             museum_command,

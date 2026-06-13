@@ -63,14 +63,14 @@ OBJECT_LIBRARY = [
     ("protein_bar", (154, 92, 54), "wide_flat"),
     ("film_canister", (44, 48, 55), "cylinder"),
     ("mini_tripod", (50, 52, 58), "lamp"),
-    ("name_badge", (232, 230, 214), "card"),
+    ("sticker", (232, 230, 214), "sticker"),
     ("sticky_notes", (238, 220, 92), "ticket"),
     ("game_cartridge", (72, 86, 98), "card"),
     ("tea_tin", (72, 130, 118), "box"),
     ("pocket_mirror", (202, 210, 216), "coin"),
     ("luggage_tag", (184, 104, 72), "ticket"),
     ("fountain_pen", (38, 46, 62), "pencil"),
-    ("voice_recorder", (55, 62, 70), "remote"),
+    ("phone", (40, 45, 50), "phone"),
     ("sd_reader", (68, 72, 78), "plug"),
     ("desk_calendar", (220, 218, 204), "photo"),
     ("mini_speaker", (42, 46, 52), "box_lens"),
@@ -181,7 +181,25 @@ def draw_icon(kind, color, shape, variant):
     light = shade(mid, 50)
     dark = shade(mid, -62)
 
-    protected_icon_kinds = {"earbuds", "monitor", "school_bag", "shoes", "clock", "remote"}
+    protected_icon_kinds = {
+        "earbuds",
+        "monitor",
+        "school_bag",
+        "water_bottle",
+        "shoes",
+        "clock",
+        "remote",
+        "passport",
+        "ring",
+        "glasses",
+        "game_controller",
+        "luggage_tag",
+        "plush_toy",
+        "phone",
+        "sticker",
+        "wallet",
+        "key",
+    }
 
     if kind == "earbuds":
         px(d, (5, 7, 6, 13), light)
@@ -210,7 +228,24 @@ def draw_icon(kind, color, shape, variant):
     elif shape == "framed_square":
         px(d, (2, 2, 14, 14), dark); px(d, (4, 4, 12, 12), mid); px(d, (7, 5, 10, 8), accent)
     elif shape == "bottle":
-        px(d, (6, 2, 10, 4), light); px(d, (5, 5, 11, 14), mid); px(d, (6, 7, 10, 8), (210, 238, 245))
+        px(d, (6, 2, 10, 4), light)
+        px(d, (5, 5, 11, 14), mid)
+        px(d, (6, 6, 10, 13), blend(mid, (182, 236, 245), 0.42))
+        px(d, (6, 8, 10, 9), (232, 242, 230))
+        px(d, (7, 3, 9, 4), shade(mid, -20))
+        px(d, (9, 6, 10, 12), blend(light, (255, 255, 255), 0.36))
+    elif shape == "phone":
+        px(d, (4, 2, 12, 15), ink)
+        px(d, (5, 3, 11, 14), blend(mid, (42, 122, 170), 0.38))
+        px(d, (6, 4, 10, 10), blend(mid, (76, 176, 220), 0.45))
+        px(d, (7, 13, 9, 13), dark)
+        px(d, (10, 4, 10, 4), light)
+    elif shape == "sticker":
+        px(d, (3, 4, 13, 12), mid)
+        px(d, (4, 5, 12, 11), blend(mid, (255, 255, 255), 0.5))
+        px(d, (5, 6, 8, 9), accent)
+        px(d, (9, 7, 11, 8), blend(accent, (70, 220, 180), 0.35))
+        px(d, (11, 10, 13, 12), shade(mid, -38))
     elif shape == "lamp":
         px(d, (4, 3, 12, 7), light); px(d, (7, 8, 9, 13), dark); px(d, (5, 14, 11, 14), mid)
     elif shape == "cylinder":
@@ -262,7 +297,14 @@ def draw_icon(kind, color, shape, variant):
     elif shape == "ticket":
         px(d, (3, 6, 13, 11), mid); px(d, (5, 7, 11, 7), light); px(d, (5, 9, 9, 9), dark)
     elif shape == "plush":
-        px(d, (5, 5, 11, 12), mid); px(d, (4, 4, 5, 6), mid); px(d, (11, 4, 12, 6), mid); px(d, (7, 8, 7, 8), ink); px(d, (9, 8, 9, 8), ink)
+        px(d, (5, 6, 11, 13), mid)
+        px(d, (5, 4, 11, 9), light)
+        px(d, (4, 3, 5, 5), mid)
+        px(d, (11, 3, 12, 5), mid)
+        px(d, (6, 9, 10, 12), blend(light, (244, 210, 170), 0.45))
+        px(d, (7, 7, 7, 7), ink)
+        px(d, (9, 7, 9, 7), ink)
+        px(d, (8, 9, 8, 9), ink)
     elif shape == "brush":
         px(d, (3, 10, 10, 12), dark); px(d, (10, 5, 12, 10), mid); px(d, (12, 3, 13, 5), light)
     elif shape == "calculator":
@@ -359,7 +401,7 @@ def model_variant_profile(shape, variant):
         },
     ]
     bulky_shapes = {"bag", "box", "box_lens", "controller", "plush", "lamp", "bottle"}
-    flat_shapes = {"thin_rect", "framed_square", "photo", "ticket", "card", "wide_flat", "screen"}
+    flat_shapes = {"thin_rect", "framed_square", "photo", "ticket", "card", "wide_flat", "screen", "phone", "sticker"}
     profile = dict(profiles[variant % len(profiles)])
     if shape in bulky_shapes and profile["name"].startswith("wall_tilt"):
         profile = dict(profiles[0 if variant % 2 == 0 else 4])
@@ -410,6 +452,8 @@ def element_model(shape, texture_ref, variant):
         "bag": [([4, 3, 4], [12, 12, 10]), ([5, 6, 3], [11, 11, 5]), ([6, 12, 5], [10, 14, 9]), ([3, 5, 5], [4, 12, 9]), ([12, 5, 5], [13, 12, 9]), ([6, 9, 3], [10, 10, 4])],
         "framed_square": [([2, 2, 5], [14, 14, 7]), ([4, 4, 4], [12, 12, 8])],
         "bottle": [([5, 2, 5], [11, 12, 10]), ([6, 12, 6], [10, 15, 9])],
+        "phone": [([4, 2, 6], [12, 15, 8]), ([5, 3, 5], [11, 14, 6]), ([10, 12, 4], [11, 13, 5])],
+        "sticker": [([3, 4, 6], [13, 12, 7]), ([5, 6, 5], [8, 9, 6]), ([9, 7, 5], [12, 9, 6])],
         "lamp": [([4, 9, 5], [12, 14, 10]), ([7, 3, 6], [9, 9, 8]), ([5, 2, 5], [11, 3, 10])],
         "cylinder": [([6, 5, 5], [10, 14, 10]), ([7, 2, 6], [9, 5, 9])],
         "box": [([4, 4, 4], [12, 12, 12])],

@@ -1485,22 +1485,22 @@
   },
   {
     "id": "afterblock_0054",
-    "label": "Name Badge 01",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 01",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 0,
     "color": [
       232,
       230,
       214
     ],
-    "material": "canvas cloth",
+    "material": "rubber grip",
     "material_tint": [
-      190,
-      174,
-      142
+      54,
+      58,
+      62
     ],
-    "finish": "woven raised pixels",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0054.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0054.json",
     "custom_model_data": 730054,
@@ -1508,7 +1508,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -1681,22 +1681,22 @@
   },
   {
     "id": "afterblock_0061",
-    "label": "Voice Recorder 01",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 01",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 0,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "canvas cloth",
+    "material": "paper fiber",
     "material_tint": [
-      190,
-      174,
-      142
+      232,
+      220,
+      190
     ],
-    "finish": "woven raised pixels",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0061.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0061.json",
     "custom_model_data": 730061,
@@ -1704,7 +1704,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -3445,22 +3445,22 @@
   },
   {
     "id": "afterblock_0124",
-    "label": "Name Badge 02",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 02",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 1,
     "color": [
       232,
       230,
       214
     ],
-    "material": "enamel badge",
+    "material": "screen phosphor",
     "material_tint": [
-      220,
       82,
-      92
+      190,
+      140
     ],
-    "finish": "hard glossy color",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0124.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0124.json",
     "custom_model_data": 730124,
@@ -3468,7 +3468,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -3641,22 +3641,22 @@
   },
   {
     "id": "afterblock_0131",
-    "label": "Voice Recorder 02",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 02",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 1,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "enamel badge",
+    "material": "painted wood",
     "material_tint": [
-      220,
-      82,
-      92
+      138,
+      92,
+      54
     ],
-    "finish": "hard glossy color",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0131.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0131.json",
     "custom_model_data": 730131,
@@ -3664,7 +3664,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -5405,22 +5405,22 @@
   },
   {
     "id": "afterblock_0194",
-    "label": "Name Badge 03",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 03",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 2,
     "color": [
       232,
       230,
       214
     ],
-    "material": "paper fiber",
+    "material": "soft plastic",
     "material_tint": [
-      232,
-      220,
-      190
+      204,
+      210,
+      214
     ],
-    "finish": "matte archival surface",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0194.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0194.json",
     "custom_model_data": 730194,
@@ -5428,7 +5428,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -5601,22 +5601,22 @@
   },
   {
     "id": "afterblock_0201",
-    "label": "Voice Recorder 03",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 03",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 2,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "paper fiber",
+    "material": "rubber grip",
     "material_tint": [
-      232,
-      220,
-      190
+      54,
+      58,
+      62
     ],
-    "finish": "matte archival surface",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0201.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0201.json",
     "custom_model_data": 730201,
@@ -5624,7 +5624,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -7365,22 +7365,22 @@
   },
   {
     "id": "afterblock_0264",
-    "label": "Name Badge 04",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 04",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 3,
     "color": [
       232,
       230,
       214
     ],
-    "material": "painted wood",
+    "material": "glass glow",
     "material_tint": [
-      138,
-      92,
-      54
+      136,
+      196,
+      218
     ],
-    "finish": "warm visible grain",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0264.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0264.json",
     "custom_model_data": 730264,
@@ -7388,7 +7388,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -7561,30 +7561,30 @@
   },
   {
     "id": "afterblock_0271",
-    "label": "Voice Recorder 04",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 04",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 3,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "painted wood",
+    "material": "screen phosphor",
     "material_tint": [
-      138,
-      92,
-      54
+      82,
+      190,
+      140
     ],
-    "finish": "warm visible grain",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0271.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0271.json",
     "custom_model_data": 730271,
     "recommended_item": "minecraft:paper",
-    "model_profile": "tabletop_low",
-    "orientation": "low tabletop object",
-    "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 5,
+    "model_profile": "wall_tilt_right",
+    "orientation": "right-tilted wall relic",
+    "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -9325,22 +9325,22 @@
   },
   {
     "id": "afterblock_0334",
-    "label": "Name Badge 05",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 05",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 4,
     "color": [
       232,
       230,
       214
     ],
-    "material": "rubber grip",
+    "material": "aged brass",
     "material_tint": [
-      54,
-      58,
-      62
+      196,
+      152,
+      72
     ],
-    "finish": "dark tactile edges",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0334.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0334.json",
     "custom_model_data": 730334,
@@ -9348,7 +9348,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -9521,22 +9521,22 @@
   },
   {
     "id": "afterblock_0341",
-    "label": "Voice Recorder 05",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 05",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 4,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "rubber grip",
+    "material": "soft plastic",
     "material_tint": [
-      54,
-      58,
-      62
+      204,
+      210,
+      214
     ],
-    "finish": "dark tactile edges",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0341.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0341.json",
     "custom_model_data": 730341,
@@ -9544,7 +9544,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -11285,22 +11285,22 @@
   },
   {
     "id": "afterblock_0404",
-    "label": "Name Badge 06",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 06",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 5,
     "color": [
       232,
       230,
       214
     ],
-    "material": "screen phosphor",
+    "material": "brushed metal",
     "material_tint": [
-      82,
-      190,
-      140
+      172,
+      180,
+      182
     ],
-    "finish": "lit display lines",
+    "finish": "cool edge highlights",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0404.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0404.json",
     "custom_model_data": 730404,
@@ -11308,7 +11308,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -11481,22 +11481,22 @@
   },
   {
     "id": "afterblock_0411",
-    "label": "Voice Recorder 06",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 06",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 5,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "screen phosphor",
+    "material": "glass glow",
     "material_tint": [
-      82,
-      190,
-      140
+      136,
+      196,
+      218
     ],
-    "finish": "lit display lines",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0411.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0411.json",
     "custom_model_data": 730411,
@@ -11504,7 +11504,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -13245,22 +13245,22 @@
   },
   {
     "id": "afterblock_0474",
-    "label": "Name Badge 07",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 07",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 6,
     "color": [
       232,
       230,
       214
     ],
-    "material": "soft plastic",
+    "material": "canvas cloth",
     "material_tint": [
-      204,
-      210,
-      214
+      190,
+      174,
+      142
     ],
-    "finish": "rounded satin shell",
+    "finish": "woven raised pixels",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0474.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0474.json",
     "custom_model_data": 730474,
@@ -13268,7 +13268,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -13441,22 +13441,22 @@
   },
   {
     "id": "afterblock_0481",
-    "label": "Voice Recorder 07",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 07",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 6,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "soft plastic",
+    "material": "aged brass",
     "material_tint": [
-      204,
-      210,
-      214
+      196,
+      152,
+      72
     ],
-    "finish": "rounded satin shell",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0481.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0481.json",
     "custom_model_data": 730481,
@@ -13464,7 +13464,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -15205,22 +15205,22 @@
   },
   {
     "id": "afterblock_0544",
-    "label": "Name Badge 08",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 08",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 7,
     "color": [
       232,
       230,
       214
     ],
-    "material": "glass glow",
+    "material": "enamel badge",
     "material_tint": [
-      136,
-      196,
-      218
+      220,
+      82,
+      92
     ],
-    "finish": "translucent blue glints",
+    "finish": "hard glossy color",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0544.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0544.json",
     "custom_model_data": 730544,
@@ -15228,7 +15228,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -15401,22 +15401,22 @@
   },
   {
     "id": "afterblock_0551",
-    "label": "Voice Recorder 08",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 08",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 7,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "glass glow",
+    "material": "brushed metal",
     "material_tint": [
-      136,
-      196,
-      218
+      172,
+      180,
+      182
     ],
-    "finish": "translucent blue glints",
+    "finish": "cool edge highlights",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0551.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0551.json",
     "custom_model_data": 730551,
@@ -15424,7 +15424,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -17165,22 +17165,22 @@
   },
   {
     "id": "afterblock_0614",
-    "label": "Name Badge 09",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 09",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 8,
     "color": [
       232,
       230,
       214
     ],
-    "material": "aged brass",
+    "material": "paper fiber",
     "material_tint": [
-      196,
-      152,
-      72
+      232,
+      220,
+      190
     ],
-    "finish": "museum-worn metal",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0614.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0614.json",
     "custom_model_data": 730614,
@@ -17188,7 +17188,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -17361,22 +17361,22 @@
   },
   {
     "id": "afterblock_0621",
-    "label": "Voice Recorder 09",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 09",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 8,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "aged brass",
+    "material": "canvas cloth",
     "material_tint": [
-      196,
-      152,
-      72
+      190,
+      174,
+      142
     ],
-    "finish": "museum-worn metal",
+    "finish": "woven raised pixels",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0621.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0621.json",
     "custom_model_data": 730621,
@@ -17384,7 +17384,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -19125,22 +19125,22 @@
   },
   {
     "id": "afterblock_0684",
-    "label": "Name Badge 10",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 10",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 9,
     "color": [
       232,
       230,
       214
     ],
-    "material": "brushed metal",
+    "material": "painted wood",
     "material_tint": [
-      172,
-      180,
-      182
+      138,
+      92,
+      54
     ],
-    "finish": "cool edge highlights",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0684.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0684.json",
     "custom_model_data": 730684,
@@ -19148,7 +19148,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -19321,30 +19321,30 @@
   },
   {
     "id": "afterblock_0691",
-    "label": "Voice Recorder 10",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 10",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 9,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "brushed metal",
+    "material": "enamel badge",
     "material_tint": [
-      172,
-      180,
-      182
+      220,
+      82,
+      92
     ],
-    "finish": "cool edge highlights",
+    "finish": "hard glossy color",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0691.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0691.json",
     "custom_model_data": 730691,
     "recommended_item": "minecraft:paper",
-    "model_profile": "tabletop_low",
-    "orientation": "low tabletop object",
-    "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 5,
+    "model_profile": "wall_tilt_right",
+    "orientation": "right-tilted wall relic",
+    "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -21085,22 +21085,22 @@
   },
   {
     "id": "afterblock_0754",
-    "label": "Name Badge 11",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 11",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 10,
     "color": [
       232,
       230,
       214
     ],
-    "material": "canvas cloth",
+    "material": "rubber grip",
     "material_tint": [
-      190,
-      174,
-      142
+      54,
+      58,
+      62
     ],
-    "finish": "woven raised pixels",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0754.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0754.json",
     "custom_model_data": 730754,
@@ -21108,7 +21108,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -21281,22 +21281,22 @@
   },
   {
     "id": "afterblock_0761",
-    "label": "Voice Recorder 11",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 11",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 10,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "canvas cloth",
+    "material": "paper fiber",
     "material_tint": [
-      190,
-      174,
-      142
+      232,
+      220,
+      190
     ],
-    "finish": "woven raised pixels",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0761.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0761.json",
     "custom_model_data": 730761,
@@ -21304,7 +21304,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -23045,22 +23045,22 @@
   },
   {
     "id": "afterblock_0824",
-    "label": "Name Badge 12",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 12",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 11,
     "color": [
       232,
       230,
       214
     ],
-    "material": "enamel badge",
+    "material": "screen phosphor",
     "material_tint": [
-      220,
       82,
-      92
+      190,
+      140
     ],
-    "finish": "hard glossy color",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0824.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0824.json",
     "custom_model_data": 730824,
@@ -23068,7 +23068,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -23241,22 +23241,22 @@
   },
   {
     "id": "afterblock_0831",
-    "label": "Voice Recorder 12",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 12",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 11,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "enamel badge",
+    "material": "painted wood",
     "material_tint": [
-      220,
-      82,
-      92
+      138,
+      92,
+      54
     ],
-    "finish": "hard glossy color",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0831.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0831.json",
     "custom_model_data": 730831,
@@ -23264,7 +23264,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -25005,22 +25005,22 @@
   },
   {
     "id": "afterblock_0894",
-    "label": "Name Badge 13",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 13",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 12,
     "color": [
       232,
       230,
       214
     ],
-    "material": "paper fiber",
+    "material": "soft plastic",
     "material_tint": [
-      232,
-      220,
-      190
+      204,
+      210,
+      214
     ],
-    "finish": "matte archival surface",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0894.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0894.json",
     "custom_model_data": 730894,
@@ -25028,7 +25028,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -25201,22 +25201,22 @@
   },
   {
     "id": "afterblock_0901",
-    "label": "Voice Recorder 13",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 13",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 12,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "paper fiber",
+    "material": "rubber grip",
     "material_tint": [
-      232,
-      220,
-      190
+      54,
+      58,
+      62
     ],
-    "finish": "matte archival surface",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0901.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0901.json",
     "custom_model_data": 730901,
@@ -25224,7 +25224,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -26965,22 +26965,22 @@
   },
   {
     "id": "afterblock_0964",
-    "label": "Name Badge 14",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 14",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 13,
     "color": [
       232,
       230,
       214
     ],
-    "material": "painted wood",
+    "material": "glass glow",
     "material_tint": [
-      138,
-      92,
-      54
+      136,
+      196,
+      218
     ],
-    "finish": "warm visible grain",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0964.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0964.json",
     "custom_model_data": 730964,
@@ -26988,7 +26988,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -27161,22 +27161,22 @@
   },
   {
     "id": "afterblock_0971",
-    "label": "Voice Recorder 14",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 14",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 13,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "painted wood",
+    "material": "screen phosphor",
     "material_tint": [
-      138,
-      92,
-      54
+      82,
+      190,
+      140
     ],
-    "finish": "warm visible grain",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_0971.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_0971.json",
     "custom_model_data": 730971,
@@ -27184,7 +27184,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -28925,22 +28925,22 @@
   },
   {
     "id": "afterblock_1034",
-    "label": "Name Badge 15",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 15",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 14,
     "color": [
       232,
       230,
       214
     ],
-    "material": "rubber grip",
+    "material": "aged brass",
     "material_tint": [
-      54,
-      58,
-      62
+      196,
+      152,
+      72
     ],
-    "finish": "dark tactile edges",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1034.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1034.json",
     "custom_model_data": 731034,
@@ -28948,7 +28948,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -29121,22 +29121,22 @@
   },
   {
     "id": "afterblock_1041",
-    "label": "Voice Recorder 15",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 15",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 14,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "rubber grip",
+    "material": "soft plastic",
     "material_tint": [
-      54,
-      58,
-      62
+      204,
+      210,
+      214
     ],
-    "finish": "dark tactile edges",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1041.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1041.json",
     "custom_model_data": 731041,
@@ -29144,7 +29144,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -30885,22 +30885,22 @@
   },
   {
     "id": "afterblock_1104",
-    "label": "Name Badge 16",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 16",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 15,
     "color": [
       232,
       230,
       214
     ],
-    "material": "screen phosphor",
+    "material": "brushed metal",
     "material_tint": [
-      82,
-      190,
-      140
+      172,
+      180,
+      182
     ],
-    "finish": "lit display lines",
+    "finish": "cool edge highlights",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1104.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1104.json",
     "custom_model_data": 731104,
@@ -30908,7 +30908,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -31081,30 +31081,30 @@
   },
   {
     "id": "afterblock_1111",
-    "label": "Voice Recorder 16",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 16",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 15,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "screen phosphor",
+    "material": "glass glow",
     "material_tint": [
-      82,
-      190,
-      140
+      136,
+      196,
+      218
     ],
-    "finish": "lit display lines",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1111.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1111.json",
     "custom_model_data": 731111,
     "recommended_item": "minecraft:paper",
-    "model_profile": "tabletop_low",
-    "orientation": "low tabletop object",
-    "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 5,
+    "model_profile": "wall_tilt_right",
+    "orientation": "right-tilted wall relic",
+    "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -32845,22 +32845,22 @@
   },
   {
     "id": "afterblock_1174",
-    "label": "Name Badge 17",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 17",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 16,
     "color": [
       232,
       230,
       214
     ],
-    "material": "soft plastic",
+    "material": "canvas cloth",
     "material_tint": [
-      204,
-      210,
-      214
+      190,
+      174,
+      142
     ],
-    "finish": "rounded satin shell",
+    "finish": "woven raised pixels",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1174.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1174.json",
     "custom_model_data": 731174,
@@ -32868,7 +32868,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -33041,22 +33041,22 @@
   },
   {
     "id": "afterblock_1181",
-    "label": "Voice Recorder 17",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 17",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 16,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "soft plastic",
+    "material": "aged brass",
     "material_tint": [
-      204,
-      210,
-      214
+      196,
+      152,
+      72
     ],
-    "finish": "rounded satin shell",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1181.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1181.json",
     "custom_model_data": 731181,
@@ -33064,7 +33064,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -34805,22 +34805,22 @@
   },
   {
     "id": "afterblock_1244",
-    "label": "Name Badge 18",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 18",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 17,
     "color": [
       232,
       230,
       214
     ],
-    "material": "glass glow",
+    "material": "enamel badge",
     "material_tint": [
-      136,
-      196,
-      218
+      220,
+      82,
+      92
     ],
-    "finish": "translucent blue glints",
+    "finish": "hard glossy color",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1244.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1244.json",
     "custom_model_data": 731244,
@@ -34828,7 +34828,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -35001,22 +35001,22 @@
   },
   {
     "id": "afterblock_1251",
-    "label": "Voice Recorder 18",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 18",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 17,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "glass glow",
+    "material": "brushed metal",
     "material_tint": [
-      136,
-      196,
-      218
+      172,
+      180,
+      182
     ],
-    "finish": "translucent blue glints",
+    "finish": "cool edge highlights",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1251.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1251.json",
     "custom_model_data": 731251,
@@ -35024,7 +35024,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -36765,22 +36765,22 @@
   },
   {
     "id": "afterblock_1314",
-    "label": "Name Badge 19",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 19",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 18,
     "color": [
       232,
       230,
       214
     ],
-    "material": "aged brass",
+    "material": "paper fiber",
     "material_tint": [
-      196,
-      152,
-      72
+      232,
+      220,
+      190
     ],
-    "finish": "museum-worn metal",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1314.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1314.json",
     "custom_model_data": 731314,
@@ -36788,7 +36788,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -36961,22 +36961,22 @@
   },
   {
     "id": "afterblock_1321",
-    "label": "Voice Recorder 19",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 19",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 18,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "aged brass",
+    "material": "canvas cloth",
     "material_tint": [
-      196,
-      152,
-      72
+      190,
+      174,
+      142
     ],
-    "finish": "museum-worn metal",
+    "finish": "woven raised pixels",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1321.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1321.json",
     "custom_model_data": 731321,
@@ -36984,7 +36984,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -38725,22 +38725,22 @@
   },
   {
     "id": "afterblock_1384",
-    "label": "Name Badge 20",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 20",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 19,
     "color": [
       232,
       230,
       214
     ],
-    "material": "brushed metal",
+    "material": "painted wood",
     "material_tint": [
-      172,
-      180,
-      182
+      138,
+      92,
+      54
     ],
-    "finish": "cool edge highlights",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1384.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1384.json",
     "custom_model_data": 731384,
@@ -38748,7 +38748,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -38921,22 +38921,22 @@
   },
   {
     "id": "afterblock_1391",
-    "label": "Voice Recorder 20",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 20",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 19,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "brushed metal",
+    "material": "enamel badge",
     "material_tint": [
-      172,
-      180,
-      182
+      220,
+      82,
+      92
     ],
-    "finish": "cool edge highlights",
+    "finish": "hard glossy color",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1391.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1391.json",
     "custom_model_data": 731391,
@@ -38944,7 +38944,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -40685,22 +40685,22 @@
   },
   {
     "id": "afterblock_1454",
-    "label": "Name Badge 21",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 21",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 20,
     "color": [
       232,
       230,
       214
     ],
-    "material": "canvas cloth",
+    "material": "rubber grip",
     "material_tint": [
-      190,
-      174,
-      142
+      54,
+      58,
+      62
     ],
-    "finish": "woven raised pixels",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1454.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1454.json",
     "custom_model_data": 731454,
@@ -40708,7 +40708,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -40881,22 +40881,22 @@
   },
   {
     "id": "afterblock_1461",
-    "label": "Voice Recorder 21",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 21",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 20,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "canvas cloth",
+    "material": "paper fiber",
     "material_tint": [
-      190,
-      174,
-      142
+      232,
+      220,
+      190
     ],
-    "finish": "woven raised pixels",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1461.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1461.json",
     "custom_model_data": 731461,
@@ -40904,7 +40904,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -42645,22 +42645,22 @@
   },
   {
     "id": "afterblock_1524",
-    "label": "Name Badge 22",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 22",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 21,
     "color": [
       232,
       230,
       214
     ],
-    "material": "enamel badge",
+    "material": "screen phosphor",
     "material_tint": [
-      220,
       82,
-      92
+      190,
+      140
     ],
-    "finish": "hard glossy color",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1524.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1524.json",
     "custom_model_data": 731524,
@@ -42668,7 +42668,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -42841,30 +42841,30 @@
   },
   {
     "id": "afterblock_1531",
-    "label": "Voice Recorder 22",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 22",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 21,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "enamel badge",
+    "material": "painted wood",
     "material_tint": [
-      220,
-      82,
-      92
+      138,
+      92,
+      54
     ],
-    "finish": "hard glossy color",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1531.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1531.json",
     "custom_model_data": 731531,
     "recommended_item": "minecraft:paper",
-    "model_profile": "tabletop_low",
-    "orientation": "low tabletop object",
-    "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 5,
+    "model_profile": "wall_tilt_right",
+    "orientation": "right-tilted wall relic",
+    "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -44605,22 +44605,22 @@
   },
   {
     "id": "afterblock_1594",
-    "label": "Name Badge 23",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 23",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 22,
     "color": [
       232,
       230,
       214
     ],
-    "material": "paper fiber",
+    "material": "soft plastic",
     "material_tint": [
-      232,
-      220,
-      190
+      204,
+      210,
+      214
     ],
-    "finish": "matte archival surface",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1594.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1594.json",
     "custom_model_data": 731594,
@@ -44628,7 +44628,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -44801,22 +44801,22 @@
   },
   {
     "id": "afterblock_1601",
-    "label": "Voice Recorder 23",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 23",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 22,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "paper fiber",
+    "material": "rubber grip",
     "material_tint": [
-      232,
-      220,
-      190
+      54,
+      58,
+      62
     ],
-    "finish": "matte archival surface",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1601.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1601.json",
     "custom_model_data": 731601,
@@ -44824,7 +44824,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -46565,22 +46565,22 @@
   },
   {
     "id": "afterblock_1664",
-    "label": "Name Badge 24",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 24",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 23,
     "color": [
       232,
       230,
       214
     ],
-    "material": "painted wood",
+    "material": "glass glow",
     "material_tint": [
-      138,
-      92,
-      54
+      136,
+      196,
+      218
     ],
-    "finish": "warm visible grain",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1664.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1664.json",
     "custom_model_data": 731664,
@@ -46588,7 +46588,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -46761,22 +46761,22 @@
   },
   {
     "id": "afterblock_1671",
-    "label": "Voice Recorder 24",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 24",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 23,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "painted wood",
+    "material": "screen phosphor",
     "material_tint": [
-      138,
-      92,
-      54
+      82,
+      190,
+      140
     ],
-    "finish": "warm visible grain",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1671.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1671.json",
     "custom_model_data": 731671,
@@ -46784,7 +46784,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -48525,22 +48525,22 @@
   },
   {
     "id": "afterblock_1734",
-    "label": "Name Badge 25",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 25",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 24,
     "color": [
       232,
       230,
       214
     ],
-    "material": "rubber grip",
+    "material": "aged brass",
     "material_tint": [
-      54,
-      58,
-      62
+      196,
+      152,
+      72
     ],
-    "finish": "dark tactile edges",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1734.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1734.json",
     "custom_model_data": 731734,
@@ -48548,7 +48548,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -48721,22 +48721,22 @@
   },
   {
     "id": "afterblock_1741",
-    "label": "Voice Recorder 25",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 25",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 24,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "rubber grip",
+    "material": "soft plastic",
     "material_tint": [
-      54,
-      58,
-      62
+      204,
+      210,
+      214
     ],
-    "finish": "dark tactile edges",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1741.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1741.json",
     "custom_model_data": 731741,
@@ -48744,7 +48744,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -50485,22 +50485,22 @@
   },
   {
     "id": "afterblock_1804",
-    "label": "Name Badge 26",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 26",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 25,
     "color": [
       232,
       230,
       214
     ],
-    "material": "screen phosphor",
+    "material": "brushed metal",
     "material_tint": [
-      82,
-      190,
-      140
+      172,
+      180,
+      182
     ],
-    "finish": "lit display lines",
+    "finish": "cool edge highlights",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1804.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1804.json",
     "custom_model_data": 731804,
@@ -50508,7 +50508,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -50681,22 +50681,22 @@
   },
   {
     "id": "afterblock_1811",
-    "label": "Voice Recorder 26",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 26",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 25,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "screen phosphor",
+    "material": "glass glow",
     "material_tint": [
-      82,
-      190,
-      140
+      136,
+      196,
+      218
     ],
-    "finish": "lit display lines",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1811.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1811.json",
     "custom_model_data": 731811,
@@ -50704,7 +50704,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -52445,22 +52445,22 @@
   },
   {
     "id": "afterblock_1874",
-    "label": "Name Badge 27",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 27",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 26,
     "color": [
       232,
       230,
       214
     ],
-    "material": "soft plastic",
+    "material": "canvas cloth",
     "material_tint": [
-      204,
-      210,
-      214
+      190,
+      174,
+      142
     ],
-    "finish": "rounded satin shell",
+    "finish": "woven raised pixels",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1874.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1874.json",
     "custom_model_data": 731874,
@@ -52468,7 +52468,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -52641,22 +52641,22 @@
   },
   {
     "id": "afterblock_1881",
-    "label": "Voice Recorder 27",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 27",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 26,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "soft plastic",
+    "material": "aged brass",
     "material_tint": [
-      204,
-      210,
-      214
+      196,
+      152,
+      72
     ],
-    "finish": "rounded satin shell",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1881.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1881.json",
     "custom_model_data": 731881,
@@ -52664,7 +52664,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -54405,22 +54405,22 @@
   },
   {
     "id": "afterblock_1944",
-    "label": "Name Badge 28",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 28",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 27,
     "color": [
       232,
       230,
       214
     ],
-    "material": "glass glow",
+    "material": "enamel badge",
     "material_tint": [
-      136,
-      196,
-      218
+      220,
+      82,
+      92
     ],
-    "finish": "translucent blue glints",
+    "finish": "hard glossy color",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1944.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1944.json",
     "custom_model_data": 731944,
@@ -54428,7 +54428,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -54601,30 +54601,30 @@
   },
   {
     "id": "afterblock_1951",
-    "label": "Voice Recorder 28",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 28",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 27,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "glass glow",
+    "material": "brushed metal",
     "material_tint": [
-      136,
-      196,
-      218
+      172,
+      180,
+      182
     ],
-    "finish": "translucent blue glints",
+    "finish": "cool edge highlights",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_1951.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_1951.json",
     "custom_model_data": 731951,
     "recommended_item": "minecraft:paper",
-    "model_profile": "tabletop_low",
-    "orientation": "low tabletop object",
-    "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 5,
+    "model_profile": "wall_tilt_right",
+    "orientation": "right-tilted wall relic",
+    "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -56365,22 +56365,22 @@
   },
   {
     "id": "afterblock_2014",
-    "label": "Name Badge 29",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 29",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 28,
     "color": [
       232,
       230,
       214
     ],
-    "material": "aged brass",
+    "material": "paper fiber",
     "material_tint": [
-      196,
-      152,
-      72
+      232,
+      220,
+      190
     ],
-    "finish": "museum-worn metal",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2014.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2014.json",
     "custom_model_data": 732014,
@@ -56388,7 +56388,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -56561,22 +56561,22 @@
   },
   {
     "id": "afterblock_2021",
-    "label": "Voice Recorder 29",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 29",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 28,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "aged brass",
+    "material": "canvas cloth",
     "material_tint": [
-      196,
-      152,
-      72
+      190,
+      174,
+      142
     ],
-    "finish": "museum-worn metal",
+    "finish": "woven raised pixels",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2021.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2021.json",
     "custom_model_data": 732021,
@@ -56584,7 +56584,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -58325,22 +58325,22 @@
   },
   {
     "id": "afterblock_2084",
-    "label": "Name Badge 30",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 30",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 29,
     "color": [
       232,
       230,
       214
     ],
-    "material": "brushed metal",
+    "material": "painted wood",
     "material_tint": [
-      172,
-      180,
-      182
+      138,
+      92,
+      54
     ],
-    "finish": "cool edge highlights",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2084.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2084.json",
     "custom_model_data": 732084,
@@ -58348,7 +58348,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -58521,22 +58521,22 @@
   },
   {
     "id": "afterblock_2091",
-    "label": "Voice Recorder 30",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 30",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 29,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "brushed metal",
+    "material": "enamel badge",
     "material_tint": [
-      172,
-      180,
-      182
+      220,
+      82,
+      92
     ],
-    "finish": "cool edge highlights",
+    "finish": "hard glossy color",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2091.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2091.json",
     "custom_model_data": 732091,
@@ -58544,7 +58544,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -60285,22 +60285,22 @@
   },
   {
     "id": "afterblock_2154",
-    "label": "Name Badge 31",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 31",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 30,
     "color": [
       232,
       230,
       214
     ],
-    "material": "canvas cloth",
+    "material": "rubber grip",
     "material_tint": [
-      190,
-      174,
-      142
+      54,
+      58,
+      62
     ],
-    "finish": "woven raised pixels",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2154.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2154.json",
     "custom_model_data": 732154,
@@ -60308,7 +60308,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -60481,22 +60481,22 @@
   },
   {
     "id": "afterblock_2161",
-    "label": "Voice Recorder 31",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 31",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 30,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "canvas cloth",
+    "material": "paper fiber",
     "material_tint": [
-      190,
-      174,
-      142
+      232,
+      220,
+      190
     ],
-    "finish": "woven raised pixels",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2161.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2161.json",
     "custom_model_data": 732161,
@@ -60504,7 +60504,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -62245,22 +62245,22 @@
   },
   {
     "id": "afterblock_2224",
-    "label": "Name Badge 32",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 32",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 31,
     "color": [
       232,
       230,
       214
     ],
-    "material": "enamel badge",
+    "material": "screen phosphor",
     "material_tint": [
-      220,
       82,
-      92
+      190,
+      140
     ],
-    "finish": "hard glossy color",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2224.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2224.json",
     "custom_model_data": 732224,
@@ -62268,7 +62268,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -62441,22 +62441,22 @@
   },
   {
     "id": "afterblock_2231",
-    "label": "Voice Recorder 32",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 32",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 31,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "enamel badge",
+    "material": "painted wood",
     "material_tint": [
-      220,
-      82,
-      92
+      138,
+      92,
+      54
     ],
-    "finish": "hard glossy color",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2231.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2231.json",
     "custom_model_data": 732231,
@@ -62464,7 +62464,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -64205,22 +64205,22 @@
   },
   {
     "id": "afterblock_2294",
-    "label": "Name Badge 33",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 33",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 32,
     "color": [
       232,
       230,
       214
     ],
-    "material": "paper fiber",
+    "material": "soft plastic",
     "material_tint": [
-      232,
-      220,
-      190
+      204,
+      210,
+      214
     ],
-    "finish": "matte archival surface",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2294.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2294.json",
     "custom_model_data": 732294,
@@ -64228,7 +64228,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -64401,22 +64401,22 @@
   },
   {
     "id": "afterblock_2301",
-    "label": "Voice Recorder 33",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 33",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 32,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "paper fiber",
+    "material": "rubber grip",
     "material_tint": [
-      232,
-      220,
-      190
+      54,
+      58,
+      62
     ],
-    "finish": "matte archival surface",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2301.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2301.json",
     "custom_model_data": 732301,
@@ -64424,7 +64424,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -66165,22 +66165,22 @@
   },
   {
     "id": "afterblock_2364",
-    "label": "Name Badge 34",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 34",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 33,
     "color": [
       232,
       230,
       214
     ],
-    "material": "painted wood",
+    "material": "glass glow",
     "material_tint": [
-      138,
-      92,
-      54
+      136,
+      196,
+      218
     ],
-    "finish": "warm visible grain",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2364.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2364.json",
     "custom_model_data": 732364,
@@ -66188,7 +66188,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -66361,30 +66361,30 @@
   },
   {
     "id": "afterblock_2371",
-    "label": "Voice Recorder 34",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 34",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 33,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "painted wood",
+    "material": "screen phosphor",
     "material_tint": [
-      138,
-      92,
-      54
+      82,
+      190,
+      140
     ],
-    "finish": "warm visible grain",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2371.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2371.json",
     "custom_model_data": 732371,
     "recommended_item": "minecraft:paper",
-    "model_profile": "tabletop_low",
-    "orientation": "low tabletop object",
-    "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 5,
+    "model_profile": "wall_tilt_right",
+    "orientation": "right-tilted wall relic",
+    "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -68125,22 +68125,22 @@
   },
   {
     "id": "afterblock_2434",
-    "label": "Name Badge 35",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 35",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 34,
     "color": [
       232,
       230,
       214
     ],
-    "material": "rubber grip",
+    "material": "aged brass",
     "material_tint": [
-      54,
-      58,
-      62
+      196,
+      152,
+      72
     ],
-    "finish": "dark tactile edges",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2434.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2434.json",
     "custom_model_data": 732434,
@@ -68148,7 +68148,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -68321,22 +68321,22 @@
   },
   {
     "id": "afterblock_2441",
-    "label": "Voice Recorder 35",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 35",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 34,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "rubber grip",
+    "material": "soft plastic",
     "material_tint": [
-      54,
-      58,
-      62
+      204,
+      210,
+      214
     ],
-    "finish": "dark tactile edges",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2441.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2441.json",
     "custom_model_data": 732441,
@@ -68344,7 +68344,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -70085,22 +70085,22 @@
   },
   {
     "id": "afterblock_2504",
-    "label": "Name Badge 36",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 36",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 35,
     "color": [
       232,
       230,
       214
     ],
-    "material": "screen phosphor",
+    "material": "brushed metal",
     "material_tint": [
-      82,
-      190,
-      140
+      172,
+      180,
+      182
     ],
-    "finish": "lit display lines",
+    "finish": "cool edge highlights",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2504.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2504.json",
     "custom_model_data": 732504,
@@ -70108,7 +70108,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -70281,22 +70281,22 @@
   },
   {
     "id": "afterblock_2511",
-    "label": "Voice Recorder 36",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 36",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 35,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "screen phosphor",
+    "material": "glass glow",
     "material_tint": [
-      82,
-      190,
-      140
+      136,
+      196,
+      218
     ],
-    "finish": "lit display lines",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2511.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2511.json",
     "custom_model_data": 732511,
@@ -70304,7 +70304,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -72045,22 +72045,22 @@
   },
   {
     "id": "afterblock_2574",
-    "label": "Name Badge 37",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 37",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 36,
     "color": [
       232,
       230,
       214
     ],
-    "material": "soft plastic",
+    "material": "canvas cloth",
     "material_tint": [
-      204,
-      210,
-      214
+      190,
+      174,
+      142
     ],
-    "finish": "rounded satin shell",
+    "finish": "woven raised pixels",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2574.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2574.json",
     "custom_model_data": 732574,
@@ -72068,7 +72068,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -72241,22 +72241,22 @@
   },
   {
     "id": "afterblock_2581",
-    "label": "Voice Recorder 37",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 37",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 36,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "soft plastic",
+    "material": "aged brass",
     "material_tint": [
-      204,
-      210,
-      214
+      196,
+      152,
+      72
     ],
-    "finish": "rounded satin shell",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2581.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2581.json",
     "custom_model_data": 732581,
@@ -72264,7 +72264,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -74005,22 +74005,22 @@
   },
   {
     "id": "afterblock_2644",
-    "label": "Name Badge 38",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 38",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 37,
     "color": [
       232,
       230,
       214
     ],
-    "material": "glass glow",
+    "material": "enamel badge",
     "material_tint": [
-      136,
-      196,
-      218
+      220,
+      82,
+      92
     ],
-    "finish": "translucent blue glints",
+    "finish": "hard glossy color",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2644.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2644.json",
     "custom_model_data": 732644,
@@ -74028,7 +74028,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -74201,22 +74201,22 @@
   },
   {
     "id": "afterblock_2651",
-    "label": "Voice Recorder 38",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 38",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 37,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "glass glow",
+    "material": "brushed metal",
     "material_tint": [
-      136,
-      196,
-      218
+      172,
+      180,
+      182
     ],
-    "finish": "translucent blue glints",
+    "finish": "cool edge highlights",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2651.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2651.json",
     "custom_model_data": 732651,
@@ -74224,7 +74224,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -75965,22 +75965,22 @@
   },
   {
     "id": "afterblock_2714",
-    "label": "Name Badge 39",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 39",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 38,
     "color": [
       232,
       230,
       214
     ],
-    "material": "aged brass",
+    "material": "paper fiber",
     "material_tint": [
-      196,
-      152,
-      72
+      232,
+      220,
+      190
     ],
-    "finish": "museum-worn metal",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2714.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2714.json",
     "custom_model_data": 732714,
@@ -75988,7 +75988,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -76161,22 +76161,22 @@
   },
   {
     "id": "afterblock_2721",
-    "label": "Voice Recorder 39",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 39",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 38,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "aged brass",
+    "material": "canvas cloth",
     "material_tint": [
-      196,
-      152,
-      72
+      190,
+      174,
+      142
     ],
-    "finish": "museum-worn metal",
+    "finish": "woven raised pixels",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2721.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2721.json",
     "custom_model_data": 732721,
@@ -76184,7 +76184,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -77925,22 +77925,22 @@
   },
   {
     "id": "afterblock_2784",
-    "label": "Name Badge 40",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 40",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 39,
     "color": [
       232,
       230,
       214
     ],
-    "material": "brushed metal",
+    "material": "painted wood",
     "material_tint": [
-      172,
-      180,
-      182
+      138,
+      92,
+      54
     ],
-    "finish": "cool edge highlights",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2784.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2784.json",
     "custom_model_data": 732784,
@@ -77948,7 +77948,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -78121,30 +78121,30 @@
   },
   {
     "id": "afterblock_2791",
-    "label": "Voice Recorder 40",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 40",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 39,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "brushed metal",
+    "material": "enamel badge",
     "material_tint": [
-      172,
-      180,
-      182
+      220,
+      82,
+      92
     ],
-    "finish": "cool edge highlights",
+    "finish": "hard glossy color",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2791.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2791.json",
     "custom_model_data": 732791,
     "recommended_item": "minecraft:paper",
-    "model_profile": "tabletop_low",
-    "orientation": "low tabletop object",
-    "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 5,
+    "model_profile": "wall_tilt_right",
+    "orientation": "right-tilted wall relic",
+    "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -79885,22 +79885,22 @@
   },
   {
     "id": "afterblock_2854",
-    "label": "Name Badge 41",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 41",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 40,
     "color": [
       232,
       230,
       214
     ],
-    "material": "canvas cloth",
+    "material": "rubber grip",
     "material_tint": [
-      190,
-      174,
-      142
+      54,
+      58,
+      62
     ],
-    "finish": "woven raised pixels",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2854.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2854.json",
     "custom_model_data": 732854,
@@ -79908,7 +79908,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -80081,22 +80081,22 @@
   },
   {
     "id": "afterblock_2861",
-    "label": "Voice Recorder 41",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 41",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 40,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "canvas cloth",
+    "material": "paper fiber",
     "material_tint": [
-      190,
-      174,
-      142
+      232,
+      220,
+      190
     ],
-    "finish": "woven raised pixels",
+    "finish": "matte archival surface",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2861.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2861.json",
     "custom_model_data": 732861,
@@ -80104,7 +80104,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -81845,22 +81845,22 @@
   },
   {
     "id": "afterblock_2924",
-    "label": "Name Badge 42",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 42",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 41,
     "color": [
       232,
       230,
       214
     ],
-    "material": "enamel badge",
+    "material": "screen phosphor",
     "material_tint": [
-      220,
       82,
-      92
+      190,
+      140
     ],
-    "finish": "hard glossy color",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2924.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2924.json",
     "custom_model_data": 732924,
@@ -81868,7 +81868,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -82041,22 +82041,22 @@
   },
   {
     "id": "afterblock_2931",
-    "label": "Voice Recorder 42",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 42",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 41,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "enamel badge",
+    "material": "painted wood",
     "material_tint": [
-      220,
-      82,
-      92
+      138,
+      92,
+      54
     ],
-    "finish": "hard glossy color",
+    "finish": "warm visible grain",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2931.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2931.json",
     "custom_model_data": 732931,
@@ -82064,7 +82064,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -83805,22 +83805,22 @@
   },
   {
     "id": "afterblock_2994",
-    "label": "Name Badge 43",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 43",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 42,
     "color": [
       232,
       230,
       214
     ],
-    "material": "paper fiber",
+    "material": "soft plastic",
     "material_tint": [
-      232,
-      220,
-      190
+      204,
+      210,
+      214
     ],
-    "finish": "matte archival surface",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_2994.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_2994.json",
     "custom_model_data": 732994,
@@ -83828,7 +83828,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -84001,22 +84001,22 @@
   },
   {
     "id": "afterblock_3001",
-    "label": "Voice Recorder 43",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 43",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 42,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "paper fiber",
+    "material": "rubber grip",
     "material_tint": [
-      232,
-      220,
-      190
+      54,
+      58,
+      62
     ],
-    "finish": "matte archival surface",
+    "finish": "dark tactile edges",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_3001.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_3001.json",
     "custom_model_data": 733001,
@@ -84024,7 +84024,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -85765,22 +85765,22 @@
   },
   {
     "id": "afterblock_3064",
-    "label": "Name Badge 44",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 44",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 43,
     "color": [
       232,
       230,
       214
     ],
-    "material": "painted wood",
+    "material": "glass glow",
     "material_tint": [
-      138,
-      92,
-      54
+      136,
+      196,
+      218
     ],
-    "finish": "warm visible grain",
+    "finish": "translucent blue glints",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_3064.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_3064.json",
     "custom_model_data": 733064,
@@ -85788,7 +85788,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -85961,22 +85961,22 @@
   },
   {
     "id": "afterblock_3071",
-    "label": "Voice Recorder 44",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 44",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 43,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "painted wood",
+    "material": "screen phosphor",
     "material_tint": [
-      138,
-      92,
-      54
+      82,
+      190,
+      140
     ],
-    "finish": "warm visible grain",
+    "finish": "lit display lines",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_3071.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_3071.json",
     "custom_model_data": 733071,
@@ -85984,7 +85984,7 @@
     "model_profile": "wall_tilt_left",
     "orientation": "left-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -87725,22 +87725,22 @@
   },
   {
     "id": "afterblock_3134",
-    "label": "Name Badge 45",
-    "kind": "name_badge",
-    "shape": "card",
+    "label": "Sticker 45",
+    "kind": "sticker",
+    "shape": "sticker",
     "variant": 44,
     "color": [
       232,
       230,
       214
     ],
-    "material": "rubber grip",
+    "material": "aged brass",
     "material_tint": [
-      54,
-      58,
-      62
+      196,
+      152,
+      72
     ],
-    "finish": "dark tactile edges",
+    "finish": "museum-worn metal",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_3134.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_3134.json",
     "custom_model_data": 733134,
@@ -87748,7 +87748,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 1,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -87921,22 +87921,22 @@
   },
   {
     "id": "afterblock_3141",
-    "label": "Voice Recorder 45",
-    "kind": "voice_recorder",
-    "shape": "remote",
+    "label": "Phone 45",
+    "kind": "phone",
+    "shape": "phone",
     "variant": 44,
     "color": [
-      55,
-      62,
-      70
+      40,
+      45,
+      50
     ],
-    "material": "rubber grip",
+    "material": "soft plastic",
     "material_tint": [
-      54,
-      58,
-      62
+      204,
+      210,
+      214
     ],
-    "finish": "dark tactile edges",
+    "finish": "rounded satin shell",
     "texture": "assets/minecraft/textures/item/afterblock/afterblock_3141.png",
     "model": "assets/minecraft/models/item/afterblock/afterblock_3141.json",
     "custom_model_data": 733141,
@@ -87944,7 +87944,7 @@
     "model_profile": "wall_tilt_right",
     "orientation": "right-tilted wall relic",
     "itemdisplay_transform": "ItemDisplay.Transform.HEAD",
-    "element_count": 5,
+    "element_count": 3,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
