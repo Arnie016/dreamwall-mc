@@ -181,12 +181,23 @@ def draw_icon(kind, color, shape, variant):
     light = shade(mid, 50)
     dark = shade(mid, -62)
 
-    if shape == "thin_rect":
+    protected_icon_kinds = {"earbuds", "monitor", "shoes", "clock", "remote"}
+
+    if kind == "earbuds":
+        px(d, (5, 7, 6, 13), light)
+        px(d, (10, 7, 11, 13), light)
+        px(d, (3, 4, 7, 7), mid)
+        px(d, (9, 4, 13, 7), mid)
+        px(d, (3, 6, 4, 7), ink)
+        px(d, (12, 6, 13, 7), ink)
+        px(d, (5, 12, 6, 13), (112, 208, 240))
+        px(d, (10, 12, 11, 13), (112, 208, 240))
+    elif shape == "thin_rect":
         px(d, (4, 3, 12, 14), mid); px(d, (4, 3, 5, 14), dark); px(d, (7, 5, 11, 6), light)
     elif shape == "paired_dots":
         px(d, (4, 5, 7, 8), mid); px(d, (10, 5, 13, 8), mid); px(d, (7, 9, 7, 13), light); px(d, (10, 9, 10, 13), light)
     elif shape == "screen":
-        px(d, (2, 3, 14, 11), ink); px(d, (3, 4, 13, 10), mid); px(d, (7, 12, 9, 13), dark); px(d, (5, 14, 11, 14), dark)
+        px(d, (2, 3, 14, 11), ink); px(d, (3, 4, 13, 10), mid); px(d, (4, 5, 12, 8), blend(mid, (70, 180, 230), 0.42)); px(d, (7, 11, 9, 13), dark); px(d, (5, 14, 11, 15), dark)
     elif shape == "bag":
         px(d, (4, 6, 12, 14), mid); px(d, (6, 4, 10, 5), dark); px(d, (5, 8, 11, 9), light); px(d, (4, 10, 5, 13), dark)
     elif shape == "framed_square":
@@ -206,7 +217,10 @@ def draw_icon(kind, color, shape, variant):
     elif shape == "cup":
         px(d, (4, 5, 10, 13), mid); px(d, (10, 7, 13, 10), dark); px(d, (5, 4, 9, 4), light)
     elif shape == "pair":
-        px(d, (3, 9, 8, 12), mid); px(d, (9, 8, 14, 12), dark); px(d, (4, 12, 14, 13), ink)
+        px(d, (2, 10, 8, 12), mid); px(d, (9, 9, 15, 12), dark)
+        px(d, (3, 13, 9, 14), (232, 226, 210)); px(d, (9, 13, 15, 14), (232, 226, 210))
+        px(d, (6, 8, 8, 9), light); px(d, (13, 7, 15, 8), light)
+        px(d, (4, 10, 6, 10), ink); px(d, (11, 9, 13, 9), ink)
     elif shape == "key":
         px(d, (4, 5, 7, 8), mid); px(d, (7, 6, 13, 7), light); px(d, (12, 8, 13, 10), mid)
     elif shape == "vehicle":
@@ -214,7 +228,7 @@ def draw_icon(kind, color, shape, variant):
     elif shape == "glasses":
         px(d, (3, 7, 6, 10), mid); px(d, (10, 7, 13, 10), mid); px(d, (7, 8, 9, 8), mid)
     elif shape == "clock":
-        px(d, (5, 4, 11, 10), mid); px(d, (7, 6, 8, 8), ink); px(d, (4, 12, 12, 13), dark)
+        px(d, (5, 3, 11, 4), dark); px(d, (4, 5, 12, 13), mid); px(d, (5, 6, 11, 12), light); px(d, (8, 7, 8, 10), ink); px(d, (8, 10, 10, 10), ink); px(d, (4, 14, 12, 15), dark)
     elif shape == "box_lens":
         px(d, (3, 6, 13, 12), mid); px(d, (6, 4, 10, 5), light); px(d, (7, 7, 10, 10), ink); px(d, (8, 8, 9, 9), accent)
     elif shape == "pencil":
@@ -226,7 +240,10 @@ def draw_icon(kind, color, shape, variant):
     elif shape == "coin":
         px(d, (5, 4, 11, 12), mid); px(d, (6, 5, 10, 11), light); px(d, (8, 7, 8, 9), dark)
     elif shape == "remote":
-        px(d, (5, 3, 11, 14), mid); px(d, (7, 5, 9, 5), accent); px(d, (7, 8, 9, 11), dark)
+        px(d, (5, 2, 11, 15), mid); px(d, (7, 4, 9, 4), (230, 70, 60))
+        for by in (6, 8, 10, 12):
+            px(d, (7, by, 7, by), light)
+            px(d, (9, by, 9, by), dark)
     elif shape == "cassette":
         px(d, (3, 5, 13, 12), mid); px(d, (5, 7, 7, 9), ink); px(d, (10, 7, 12, 9), ink); px(d, (5, 10, 11, 10), light)
     elif shape == "controller":
@@ -259,8 +276,9 @@ def draw_icon(kind, color, shape, variant):
         px(d, (2, 13, 3, 14), (113, 188, 132))
     elif variant % 4 == 3:
         px(d, (13, 13, 14, 14), (185, 120, 215))
-    add_variant_marks(d, variant, accent, ink)
-    apply_material_texture(d, material, variant)
+    if kind not in protected_icon_kinds:
+        add_variant_marks(d, variant, accent, ink)
+        apply_material_texture(d, material, variant)
     return img
 
 
@@ -380,8 +398,8 @@ def element_model(shape, texture_ref, variant):
     }
     shape_elements = {
         "thin_rect": [([4, 2, 6], [12, 14, 8])],
-        "paired_dots": [([4, 7, 5], [7, 10, 8]), ([9, 7, 5], [12, 10, 8]), ([7, 3, 6], [8, 8, 7]), ([10, 3, 6], [11, 8, 7])],
-        "screen": [([2, 5, 5], [14, 12, 7]), ([7, 3, 6], [9, 5, 8]), ([5, 2, 5], [11, 3, 8])],
+        "paired_dots": [([5, 3, 6], [7, 10, 8]), ([9, 3, 6], [11, 10, 8]), ([3, 10, 5], [7, 13, 9]), ([9, 10, 5], [13, 13, 9]), ([4, 11, 4], [5, 12, 6]), ([11, 11, 4], [12, 12, 6])],
+        "screen": [([2, 5, 5], [14, 12, 7]), ([3, 6, 4], [13, 11, 5]), ([7, 2, 6], [9, 5, 8]), ([5, 1, 5], [11, 2, 9])],
         "bag": [([4, 3, 4], [12, 12, 10]), ([6, 12, 5], [10, 14, 9])],
         "framed_square": [([2, 2, 5], [14, 14, 7]), ([4, 4, 4], [12, 12, 8])],
         "bottle": [([5, 2, 5], [11, 12, 10]), ([6, 12, 6], [10, 15, 9])],
@@ -391,17 +409,17 @@ def element_model(shape, texture_ref, variant):
         "wide_flat": [([2, 5, 5], [14, 10, 8])],
         "plug": [([4, 6, 5], [9, 10, 9]), ([9, 7, 6], [13, 9, 8])],
         "cup": [([4, 4, 4], [10, 12, 10]), ([10, 6, 6], [13, 10, 9])],
-        "pair": [([3, 4, 5], [8, 8, 9]), ([8, 6, 5], [14, 10, 9])],
+        "pair": [([2, 4, 5], [8, 7, 9]), ([8, 5, 5], [14, 8, 9]), ([2, 3, 5], [8, 4, 10]), ([8, 4, 5], [14, 5, 10])],
         "key": [([4, 8, 6], [7, 11, 9]), ([7, 9, 7], [14, 10, 8])],
         "vehicle": [([3, 5, 5], [13, 9, 9]), ([5, 9, 6], [10, 11, 8])],
         "glasses": [([3, 7, 6], [6, 10, 8]), ([10, 7, 6], [13, 10, 8]), ([6, 8, 7], [10, 9, 8])],
-        "clock": [([5, 4, 5], [11, 12, 9]), ([4, 2, 6], [12, 4, 8])],
+        "clock": [([4, 5, 5], [12, 13, 8]), ([5, 6, 4], [11, 12, 5]), ([7, 3, 6], [9, 5, 8]), ([4, 2, 6], [6, 4, 8]), ([10, 2, 6], [12, 4, 8])],
         "box_lens": [([3, 5, 5], [13, 11, 9]), ([7, 6, 4], [11, 10, 10])],
         "pencil": [([3, 7, 6], [13, 9, 8]), ([13, 7, 6], [15, 9, 8])],
         "ring": [([5, 5, 5], [11, 11, 7]), ([7, 7, 4], [9, 9, 8])],
         "watch": [([5, 5, 5], [11, 11, 9]), ([7, 2, 6], [9, 5, 8]), ([7, 11, 6], [9, 14, 8])],
         "coin": [([5, 4, 6], [11, 12, 8])],
-        "remote": [([5, 2, 5], [11, 14, 8])],
+        "remote": [([5, 2, 5], [11, 14, 8]), ([7, 11, 4], [9, 12, 5]), ([7, 8, 4], [8, 9, 5]), ([10, 8, 4], [11, 9, 5]), ([7, 5, 4], [11, 6, 5])],
         "cassette": [([3, 5, 5], [13, 12, 8])],
         "controller": [([3, 6, 5], [13, 10, 9]), ([2, 8, 6], [5, 13, 9]), ([11, 8, 6], [14, 13, 9])],
         "photo": [([4, 2, 5], [12, 14, 7])],

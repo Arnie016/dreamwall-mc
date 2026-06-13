@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-06-13T10:48:00Z",
+  "local_url": "http://127.0.0.1:7860",
+  "summary": "Simplified AfterBlock Museum to one prompt-first placement flow plus a separate Resource Pack tab.",
+  "checks": {
+    "python_compile": ".venv/bin/python -m py_compile app.py tools/generate_afterblock_textures.py",
+    "function_smoke": "place_in_museum returned 7 outputs; browse_texture_library returned 30 first-page gallery items",
+    "default_view": {
+      "model_frame_count": 1,
+      "has_airpods_result": true,
+      "legacy_sections_visible": []
+    },
+    "resource_pack_tab": {
+      "has_browser": true,
+      "has_3200_count": true,
+      "legacy_sections_visible": []
+    },
+    "visual_spot_check": {
+      "screenshot": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-simplified-museum-final.png",
+      "contact_sheet": "assets/afterblock_textures/gallery/contact_sheet_01.png",
+      "improved_items": ["earbuds", "monitor", "shoes", "clock", "remote"]
+    }
+  }
+}

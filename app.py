@@ -864,6 +864,8 @@ def artifact_model_html(artifact: dict) -> str:
         "coordinates": artifact["minecraft_coordinates"],
         "custom_model_data": item.get("custom_model_data", 0),
         "model": item.get("model", "afterblock:item/missing"),
+        "kind": item.get("kind", texture_key_for(artifact["object_guess"])),
+        "object_guess": artifact["object_guess"],
         "shape": item.get("shape", artifact["object_guess"]),
         "material": item.get("material", "museum material"),
         "finish": item.get("finish", "artifact finish"),
@@ -953,6 +955,12 @@ def artifact_model_html(artifact: dict) -> str:
     emissive: artifact.material.includes('glow') || artifact.finish.includes('glow') ? new THREE.Color(colors[i % colors.length]).multiplyScalar(.18) : new THREE.Color('#000000')
   }});
   const dark = new THREE.MeshStandardMaterial({{ color:'#17120b', roughness:.9 }});
+  const makeMat = (color, options = {{}}) => new THREE.MeshStandardMaterial({{
+    color,
+    roughness: options.roughness ?? .68,
+    metalness: options.metalness ?? 0,
+    emissive: options.emissive ? new THREE.Color(options.emissive).multiplyScalar(options.emissiveStrength ?? .16) : new THREE.Color('#000000')
+  }});
 
   function cube(x, y, z, sx, sy, sz, mat) {{
     const mesh = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
@@ -965,18 +973,91 @@ def artifact_model_html(artifact: dict) -> str:
 
   cube(0, .05, 0, 2.9, .1, 2.1, dark);
   cube(0, .23, 0, 2.15, .24, 1.45, new THREE.MeshStandardMaterial({{ color:'#4a371d', roughness:.85 }}));
-  const count = Math.max(5, Math.min(14, artifact.element_count || 7));
-  for (let i = 0; i < count; i++) {{
-    const row = Math.floor(i / 4);
-    const col = i % 4;
-    const sx = .42 + (i % 3) * .08;
-    const sy = .26 + ((i + row) % 4) * .12;
-    const sz = .34 + (row % 3) * .08;
-    const x = (col - 1.5) * .48;
-    const z = (row - 1.0) * .42;
-    const y = .42 + sy / 2 + Math.sin(i * 1.7) * .02;
-    const part = cube(x, y, z, sx, sy, sz, materialFor(i));
-    part.rotation.y = (i % 2 ? .12 : -.18);
+
+  const shapeText = `${{artifact.kind}} ${{artifact.shape}} ${{artifact.object_guess}} ${{artifact.title}}`.toLowerCase();
+  const ivory = makeMat('#f5efdc', {{ roughness: .42 }});
+  const porcelain = makeMat('#fff9e8', {{ roughness: .35 }});
+  const blueGlow = makeMat('#6fd3ff', {{ roughness: .28, emissive: '#6fd3ff', emissiveStrength: .18 }});
+  const graphite = makeMat('#171a1c', {{ roughness: .72 }});
+  const screenBlue = makeMat('#1d8fd1', {{ roughness: .25, emissive: '#1b6fa8', emissiveStrength: .18 }});
+  const rubber = makeMat('#2b2722', {{ roughness: .9 }});
+
+  function renderEarbuds() {{
+    cube(-.36, .72, -.02, .15, .72, .14, ivory);
+    cube(.36, .72, -.02, .15, .72, .14, ivory);
+    cube(-.36, 1.16, -.04, .32, .25, .24, porcelain);
+    cube(.36, 1.16, -.04, .32, .25, .24, porcelain);
+    cube(-.47, 1.18, -.18, .1, .07, .05, graphite);
+    cube(.25, 1.18, -.18, .1, .07, .05, graphite);
+    cube(-.36, .39, .08, .1, .13, .18, blueGlow);
+    cube(.36, .39, .08, .1, .13, .18, blueGlow);
+  }}
+
+  function renderMonitor() {{
+    cube(0, 1.05, -.02, 1.56, .9, .14, graphite);
+    cube(0, 1.05, -.11, 1.38, .72, .08, screenBlue);
+    cube(0, .5, .02, .18, .55, .18, graphite);
+    cube(0, .28, .02, .84, .14, .44, graphite);
+  }}
+
+  function renderClock() {{
+    cube(0, .92, -.02, .96, .96, .16, ivory);
+    cube(0, .92, -.13, .78, .78, .06, porcelain);
+    cube(0, .92, -.18, .07, .36, .05, graphite);
+    cube(.16, .82, -.18, .32, .07, .05, graphite);
+    cube(-.28, 1.46, -.02, .18, .18, .16, blueGlow);
+    cube(.28, 1.46, -.02, .18, .18, .16, blueGlow);
+    cube(0, .34, .02, .82, .16, .28, rubber);
+  }}
+
+  function renderShoes() {{
+    cube(-.38, .45, -.02, .62, .22, .42, rubber);
+    cube(.38, .45, -.02, .62, .22, .42, rubber);
+    cube(-.33, .62, -.04, .48, .28, .32, materialFor(0));
+    cube(.43, .62, -.04, .48, .28, .32, materialFor(1));
+    cube(-.1, .74, -.18, .28, .08, .08, ivory);
+    cube(.66, .74, -.18, .28, .08, .08, ivory);
+  }}
+
+  function renderRemote() {{
+    cube(0, .83, -.02, .48, 1.38, .18, graphite);
+    cube(0, 1.38, -.14, .18, .14, .06, makeMat('#e85b4d', {{ roughness: .48 }}));
+    for (let r = 0; r < 4; r++) {{
+      for (let c = 0; c < 2; c++) {{
+        cube((c - .5) * .18, 1.08 - r * .18, -.14, .1, .08, .06, c === 0 ? blueGlow : ivory);
+      }}
+    }}
+    cube(0, .38, -.14, .28, .16, .06, makeMat('#70685a', {{ roughness: .72 }}));
+  }}
+
+  function renderGeneric() {{
+    const count = Math.max(5, Math.min(14, artifact.element_count || 7));
+    for (let i = 0; i < count; i++) {{
+      const row = Math.floor(i / 4);
+      const col = i % 4;
+      const sx = .42 + (i % 3) * .08;
+      const sy = .26 + ((i + row) % 4) * .12;
+      const sz = .34 + (row % 3) * .08;
+      const x = (col - 1.5) * .48;
+      const z = (row - 1.0) * .42;
+      const y = .42 + sy / 2 + Math.sin(i * 1.7) * .02;
+      const part = cube(x, y, z, sx, sy, sz, materialFor(i));
+      part.rotation.y = (i % 2 ? .12 : -.18);
+    }}
+  }}
+
+  if (shapeText.includes('earbud') || shapeText.includes('airpod')) {{
+    renderEarbuds();
+  }} else if (shapeText.includes('monitor') || shapeText.includes('screen')) {{
+    renderMonitor();
+  }} else if (shapeText.includes('clock')) {{
+    renderClock();
+  }} else if (shapeText.includes('shoe')) {{
+    renderShoes();
+  }} else if (shapeText.includes('remote')) {{
+    renderRemote();
+  }} else {{
+    renderGeneric();
   }}
   cube(0, .92, -.82, 1.15, .08, .2, new THREE.MeshStandardMaterial({{ color:'#e8c56f', roughness:.6 }}));
   cube(0, .82, -.74, .84, .1, .12, dark);
@@ -1551,6 +1632,16 @@ def quick_curate_afterblock_artifact(
     )
     outputs = curate_afterblock_artifact(owner_name, owner_handle, input_type, source_prompt, memory_text, relic_image_path)
     return (*outputs, input_type, source_prompt, memory_text)
+
+
+def place_in_museum(source_prompt: str, relic_image_path: str | None = None):
+    preview, catalog, _wall, model, placement, spirit, passport, packet, *_ = quick_curate_afterblock_artifact(
+        source_prompt,
+        "Arnav",
+        "@Wildstash",
+        relic_image_path,
+    )
+    return model, placement, passport, packet, preview, catalog, spirit
 
 
 def load_demo_artifact(name: str):
@@ -2363,6 +2454,71 @@ body, .gradio-container {
   padding: 14px;
   margin-bottom: 14px;
 }
+.main-museum-layout {
+  align-items: stretch;
+}
+.prompt-panel {
+  min-height: 430px;
+}
+.prompt-panel .styler,
+.prompt-panel .block,
+.prompt-panel .form,
+.prompt-panel .html-container,
+.prompt-panel .prose,
+.prompt-panel .wrap,
+.prompt-panel .input-container {
+  background: transparent !important;
+  color: var(--mc-ink) !important;
+}
+.prompt-panel .block {
+  border-color: #4f432b !important;
+  box-shadow: none !important;
+}
+.prompt-panel h2,
+.resource-hero h2 {
+  margin: 0 0 10px;
+  color: #ffe4a3;
+}
+.prompt-panel label,
+.prompt-panel label span {
+  color: #d8c9a6 !important;
+}
+.prompt-panel label.float {
+  background: #181713 !important;
+  border: 1px solid #5c4d32 !important;
+}
+.prompt-panel label.container {
+  background: #141410 !important;
+  border: 1px solid #5c4d32 !important;
+}
+.prompt-panel textarea {
+  min-height: 136px !important;
+}
+.prompt-panel .image-container,
+.prompt-panel .upload-container {
+  background: #211d16 !important;
+  border-color: #5c4d32 !important;
+  color: #e8dcc1 !important;
+}
+.prompt-panel .upload-container button {
+  background: transparent !important;
+  color: #e8dcc1 !important;
+}
+.prompt-panel .source-selection {
+  background: #141410 !important;
+  border-top: 1px solid #5c4d32 !important;
+}
+.resource-hero {
+  background: #171613;
+  border: 1px solid #5c4d32;
+  padding: 16px 18px;
+  margin: 0 0 12px;
+}
+.resource-hero p {
+  margin: 0;
+  max-width: 760px;
+  color: #d6c6a4 !important;
+}
 .museum-kiosk .form {
   border: 0 !important;
 }
@@ -2826,6 +2982,9 @@ textarea, input {
 }
 """
 
+INITIAL_MUSEUM_OUTPUTS = place_in_museum("white AirPods from my first year of university", None)
+INITIAL_TEXTURE_OUTPUTS = browse_texture_library("all", 1)
+
 
 with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
     gr.HTML(
@@ -2833,273 +2992,114 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
         <section class="dreamwall-hero">
           <h1>AfterBlock Museum</h1>
           <p>
-            Type one relic, memory, object, or creature. The museum asks when it becomes art,
-            renders a 3D Minecraft artifact, and emits the packet that places it in-world.
+            Type one object or memory. The museum turns it into one Minecraft relic with a clear placement,
+            a readable model preview, and a packet ready for the world.
           </p>
           <div class="badge-row">
-            <span>Adventure in Thousand Token Wood</span>
-            <span>OpenAI Codex Track</span>
-            <span>Custom UI</span>
-            <span>Paper Bridge</span>
+            <span>One prompt</span>
+            <span>One museum placement</span>
+            <span>CustomModelData resource pack</span>
           </div>
         </section>
         """
     )
-    gr.HTML("<h2>AfterBlock Museum</h2>")
-    with gr.Group(elem_classes=["museum-kiosk"]):
-        with gr.Row():
-            quick_prompt = gr.Textbox(
-                label="Museum prompt",
-                placeholder="Example: my scratched blue water bottle from school, with a sticker of a moon on it",
-                lines=2,
-                value="white AirPods from my first year of university",
-                scale=7,
-            )
-            quick_image = gr.Image(label="Optional object photo", type="filepath", height=118, scale=2)
-            quick_button = gr.Button("Place in Museum", variant="primary", scale=2)
 
-    with gr.Row():
-        with gr.Column(scale=6):
-            with gr.Group(elem_classes=["museum-stage"]):
-                museum_preview = gr.Image(label="Museum render: 100 labeled artifacts", type="filepath", height=520)
-            museum_wall = gr.HTML(label="Interactive artifact wall")
-        with gr.Column(scale=4):
+    with gr.Tabs():
+        with gr.Tab("Place in Museum"):
+            with gr.Row(elem_classes=["main-museum-layout"]):
+                with gr.Column(scale=4):
+                    with gr.Group(elem_classes=["museum-kiosk", "prompt-panel"]):
+                        gr.HTML("<h2>Place in the museum</h2>")
+                        quick_prompt = gr.Textbox(
+                            label="Museum prompt",
+                            placeholder="Example: white AirPods from my first year of university",
+                            lines=5,
+                            value="white AirPods from my first year of university",
+                        )
+                        quick_image = gr.Image(label="Optional object photo", type="filepath", height=168)
+                        quick_button = gr.Button("Place in Museum", variant="primary")
+                        gr.HTML(
+                            """
+                            <p class="compact-note">
+                              One button creates the relic, assigns the hall, shows the model, and prepares the Minecraft packet.
+                            </p>
+                            """
+                        )
+                with gr.Column(scale=6):
+                    museum_model = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[0], label="Artifact model")
+
             with gr.Tabs():
-                with gr.Tab("Artifact Model"):
-                    museum_model = gr.HTML()
                 with gr.Tab("Placement"):
-                    museum_placement = gr.Markdown()
-                with gr.Tab("Spirit"):
-                    museum_spirit = gr.Markdown()
+                    museum_placement = gr.Markdown(value=INITIAL_MUSEUM_OUTPUTS[1])
                 with gr.Tab("Passport"):
-                    museum_passport = gr.HTML()
+                    museum_passport = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[2])
                 with gr.Tab("Minecraft Packet"):
-                    museum_packet = gr.Textbox(label="dreamwall.museum.v1", lines=14, max_lines=24)
-            with gr.Accordion("Catalog table", open=False):
-                museum_catalog = gr.Dataframe(
-                    headers=["#", "creator", "title", "object", "hall", "score", "xyz", "cmd"],
-                    label="Artifact catalog",
+                    museum_packet = gr.Textbox(value=INITIAL_MUSEUM_OUTPUTS[3], label="dreamwall.museum.v1", lines=16, max_lines=24)
+                with gr.Tab("Spirit"):
+                    museum_spirit = gr.Markdown(value=INITIAL_MUSEUM_OUTPUTS[6])
+
+            with gr.Accordion("Museum map and catalog", open=False):
+                with gr.Row():
+                    with gr.Column(scale=5):
+                        with gr.Group(elem_classes=["museum-stage"]):
+                            museum_preview = gr.Image(value=INITIAL_MUSEUM_OUTPUTS[4], label="Museum map", type="filepath", height=420)
+                    with gr.Column(scale=5):
+                        museum_catalog = gr.Dataframe(
+                            value=INITIAL_MUSEUM_OUTPUTS[5],
+                            headers=["#", "creator", "title", "object", "hall", "score", "xyz", "cmd"],
+                            label="Generated relic catalog",
+                            row_count=8,
+                            col_count=(8, "fixed"),
+                            interactive=False,
+                        )
+
+        with gr.Tab("Resource Pack"):
+            gr.HTML(
+                """
+                <section class="resource-hero">
+                  <h2>Resource Pack Browser</h2>
+                  <p>Inspect the generated Minecraft item textures and CustomModelData commands without crowding the main museum workflow.</p>
+                </section>
+                """
+            )
+            with gr.Row():
+                texture_kind = gr.Dropdown(label="Kind", choices=texture_kind_choices(), value="all")
+                texture_page = gr.Slider(label="Page", minimum=1, maximum=resource_pack_stats()["page_count"], value=1, step=1)
+                texture_button = gr.Button("Browse Textures")
+            texture_status = gr.Markdown(value=INITIAL_TEXTURE_OUTPUTS[3])
+            texture_gallery = gr.Gallery(
+                value=INITIAL_TEXTURE_OUTPUTS[0],
+                label="PNG previews with CustomModelData",
+                columns=6,
+                height=390,
+                object_fit="contain",
+            )
+            with gr.Accordion("Model rows and downloads", open=False):
+                texture_table = gr.Dataframe(
+                    value=INITIAL_TEXTURE_OUTPUTS[1],
+                    headers=["cmd", "label", "kind", "shape", "material", "finish", "profile", "orientation", "itemdisplay", "elements", "model", "give command"],
+                    label="Minecraft model rows",
                     row_count=8,
-                    col_count=(8, "fixed"),
+                    col_count=(12, "fixed"),
                     interactive=False,
                 )
+                texture_inspector = gr.HTML(value=INITIAL_TEXTURE_OUTPUTS[2], label="Model/material inspection wall")
+                with gr.Row():
+                    gr.File(value="resource-pack/AfterBlockMuseum.zip", label="Download resource pack")
+                    gr.File(value="assets/afterblock_textures/afterblock_manifest.json", label="Download manifest")
+                    gr.File(value="assets/afterblock_textures/gallery/index.html", label="Download full texture gallery")
 
-    with gr.Accordion("Advanced curator controls", open=False):
-        with gr.Row():
-            demo_choice = gr.Dropdown(
-                label="Seeded demo relic",
-                choices=list(DEMO_ARTIFACTS),
-                value="AirPods from first year of university",
-            )
-            owner_name = gr.Textbox(label="Owner name", value="Arnav")
-            owner_handle = gr.Textbox(label="Optional social tag", value="@Wildstash")
-        with gr.Row():
-            input_type = gr.Dropdown(
-                label="Input type",
-                choices=["object_photo", "painting_prompt", "memory_prompt", "animal_spirit"],
-                value="object_photo",
-            )
-            relic_prompt = gr.Textbox(
-                label="Scan relic / prompt",
-                lines=2,
-                value="white AirPods from my first year of university",
-            )
-            memory_text = gr.Textbox(
-                label="Memory text",
-                lines=2,
-                value="They carried private worlds through public noise during my first year away.",
-            )
-        relic_image = gr.Image(label="Advanced image override", type="filepath", height=120)
-        museum_button = gr.Button("Curate with Advanced Controls", variant="secondary")
-
-    demo_choice.change(
-        load_demo_artifact,
-        inputs=[demo_choice],
-        outputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text],
-    )
     quick_button.click(
-        quick_curate_afterblock_artifact,
-        inputs=[quick_prompt, owner_name, owner_handle, quick_image],
-        outputs=[
-            museum_preview,
-            museum_catalog,
-            museum_wall,
-            museum_model,
-            museum_placement,
-            museum_spirit,
-            museum_passport,
-            museum_packet,
-            input_type,
-            relic_prompt,
-            memory_text,
-        ],
+        place_in_museum,
+        inputs=[quick_prompt, quick_image],
+        outputs=[museum_model, museum_placement, museum_passport, museum_packet, museum_preview, museum_catalog, museum_spirit],
         api_name="quick_curate",
     )
-    museum_button.click(
-        curate_afterblock_artifact,
-        inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
-        outputs=[museum_preview, museum_catalog, museum_wall, museum_model, museum_placement, museum_spirit, museum_passport, museum_packet],
-        api_name="curate_artifact",
-    )
-    demo.load(
-        curate_afterblock_artifact,
-        inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
-        outputs=[museum_preview, museum_catalog, museum_wall, museum_model, museum_placement, museum_spirit, museum_passport, museum_packet],
-    )
-
-    with gr.Accordion("Resource Pack Browser", open=False):
-        with gr.Row():
-            texture_kind = gr.Dropdown(label="Kind", choices=texture_kind_choices(), value="all")
-            texture_page = gr.Slider(label="Page", minimum=1, maximum=resource_pack_stats()["page_count"], value=1, step=1)
-            texture_button = gr.Button("Browse Textures")
-        texture_status = gr.Markdown()
-        texture_gallery = gr.Gallery(
-            label="PNG previews with CustomModelData",
-            columns=5,
-            height=360,
-            object_fit="contain",
-        )
-        texture_table = gr.Dataframe(
-            headers=["cmd", "label", "kind", "shape", "material", "finish", "profile", "orientation", "itemdisplay", "elements", "model", "give command"],
-            label="Minecraft model rows",
-            row_count=8,
-            col_count=(12, "fixed"),
-            interactive=False,
-        )
-        texture_inspector = gr.HTML(label="Model/material inspection wall")
-        with gr.Row():
-            gr.File(value="resource-pack/AfterBlockMuseum.zip", label="Download resource pack")
-            gr.File(value="assets/afterblock_textures/afterblock_manifest.json", label="Download manifest")
-            gr.File(value="assets/afterblock_textures/gallery/index.html", label="Download full texture gallery")
-        texture_button.click(
-            browse_texture_library,
-            inputs=[texture_kind, texture_page],
-            outputs=[texture_gallery, texture_table, texture_inspector, texture_status],
-            api_name="browse_textures",
-        )
-        demo.load(
-            browse_texture_library,
-            inputs=[texture_kind, texture_page],
-            outputs=[texture_gallery, texture_table, texture_inspector, texture_status],
-        )
-
-    gr.HTML("<h2>Living Wall Tile</h2>")
-    with gr.Row():
-        with gr.Column(scale=5):
-            graffiti_prompt = gr.Textbox(
-                label="Artifact prompt",
-                lines=3,
-                value="a cloud bird carrying a glowing AI sigil through a thunderstorm",
-            )
-            graffiti_player = gr.Textbox(label="Creator signature", value="ArnavS")
-            graffiti_zone = gr.Textbox(label="Wall zone", value="main wall, launch row")
-            graffiti_button = gr.Button("Grow Living Wall Artifact", variant="primary")
-        with gr.Column(scale=4):
-            graffiti_gif = gr.Image(label="10-frame 32x32-block living graffiti loop", type="filepath", height=360)
-    with gr.Row():
-        graffiti_story = gr.Markdown(label="Artifact story")
-        graffiti_canvas = gr.Textbox(label="Fusion/value readout", lines=14, max_lines=20)
-    with gr.Tabs():
-        with gr.Tab("Minecraft Animated Wall Packet"):
-            graffiti_packet = gr.Textbox(label="living_graffiti.mc.v1", lines=20, max_lines=28)
-
-    graffiti_button.click(
-        living_graffiti,
-        inputs=[graffiti_prompt, graffiti_player, graffiti_zone],
-        outputs=[graffiti_gif, graffiti_story, graffiti_canvas, graffiti_packet],
-        api_name="living_graffiti",
-    )
-
-    gr.HTML("<h2>Living Canvas</h2>")
-    with gr.Row():
-        with gr.Column(scale=5):
-            wall_prompts = gr.Textbox(
-                label="People's imagination feed - one prompt per line",
-                lines=8,
-                value="\n".join(LIVING_WALL_PROMPTS),
-            )
-            wall_zone = gr.Textbox(label="Shared Minecraft wall zone", value="main wall, public imagination board")
-            wall_tick = gr.Slider(label="Evolution tick", minimum=0, maximum=24, value=3, step=1)
-            wall_button = gr.Button("Simulate Living Canvas", variant="primary")
-        with gr.Column(scale=4):
-            wall_image = gr.Image(label="Animated shared 12x12 Minecraft wall map", type="filepath", height=460)
-    with gr.Row():
-        wall_story = gr.Markdown(label="Canvas behavior")
-        wall_packet = gr.Textbox(label="living_canvas.mc.v1", lines=18, max_lines=26)
-
-    wall_button.click(
-        living_wall_canvas,
-        inputs=[wall_prompts, wall_zone, wall_tick],
-        outputs=[wall_image, wall_story, wall_packet],
-        api_name="living_canvas",
-    )
-
-    gr.HTML("<h2>NeuroPets Hatchery</h2>")
-    with gr.Row():
-        with gr.Column(scale=5):
-            pet_prompt = gr.Textbox(
-                label="Creature seed prompt",
-                lines=3,
-                value="a shy thunder creature that protects redstone caves",
-            )
-            pet_player = gr.Textbox(label="Creator name", value="ArnavS")
-            pet_island = gr.Textbox(label="Island / server zone", value="founder island")
-            hatch_button = gr.Button("Hatch NeuroPet", variant="primary")
-        with gr.Column(scale=4):
-            pet_image = gr.Image(label="Creature portrait", type="pil", height=360)
-    with gr.Row():
-        pet_card = gr.Markdown(label="Creature card")
-        pet_leaders = gr.Markdown(label="Survival leaderboard")
-    with gr.Tabs():
-        with gr.Tab("Lineage Wall"):
-            pet_lineage = gr.Textbox(label="Descendants and ancestry", lines=8, max_lines=12)
-        with gr.Tab("Minecraft Creature Packet"):
-            pet_packet = gr.Textbox(label="Spawn/simulation packet", lines=18, max_lines=26)
-
-    hatch_button.click(
-        hatch_neuropet,
-        inputs=[pet_prompt, pet_player, pet_island],
-        outputs=[pet_image, pet_card, pet_leaders, pet_lineage, pet_packet],
-        api_name="hatch_pet",
-    )
-
-    gr.HTML("<h2>DreamWall Canvas</h2>")
-    with gr.Row():
-        with gr.Column(scale=5):
-            prompt = gr.Textbox(
-                label="Whisper to the wall",
-                lines=4,
-                value="a tiny fox wizard guarding a ruined ocean temple",
-            )
-            player = gr.Textbox(label="Player signature", value="ArnavS")
-            gallery_zone = gr.Textbox(label="Gallery zone", value="moss wing, west wall")
-            origin = gr.Textbox(label="Minecraft wall origin", value="~ ~ ~")
-            button = gr.Button("Carve this into the DreamWall", variant="primary")
-        with gr.Column(scale=4):
-            art = gr.Image(label="Minecraft painting preview", type="pil", height=420)
-    with gr.Row():
-        report = gr.Markdown(label="Wall reading")
-        profile = gr.Textbox(label="Artist fingerprint", lines=12, max_lines=16)
-    with gr.Tabs():
-        with gr.Tab("Minecraft Bridge Packet"):
-            packet = gr.Textbox(
-                label="Plugin-ready JSON packet",
-                lines=18,
-                max_lines=26,
-            )
-        with gr.Tab("Canvas Value / Fusion"):
-            canvas = gr.Textbox(label="Plot, fusion, and value", lines=18, max_lines=24)
-            value_json = gr.Textbox(label="Voting / auction packet", lines=16, max_lines=22)
-        with gr.Tab("WorldEdit / Plugin Plan"):
-            commands = gr.Textbox(label="Mural instructions", lines=18, max_lines=24)
-        with gr.Tab("Open Trace"):
-            trace = gr.Textbox(label="Trace for Sharing is Caring", lines=16, max_lines=20)
-
-    button.click(
-        gradio_generate,
-        inputs=[prompt, player, origin, gallery_zone],
-        outputs=[art, report, commands, trace, profile, packet, canvas, value_json],
-        api_name="generate_art",
+    texture_button.click(
+        browse_texture_library,
+        inputs=[texture_kind, texture_page],
+        outputs=[texture_gallery, texture_table, texture_inspector, texture_status],
+        api_name="browse_textures",
     )
 
 
