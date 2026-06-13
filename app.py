@@ -1063,7 +1063,7 @@ gallery-facing: "east"
             f"Plot pads: {total_plots}/{total_plots}",
             f"Relic focus blocks: {total_plots}/{total_plots}",
             "YOU ARE HERE beacon: present",
-            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)}.",
+            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)} and a readable passport lectern.",
             "",
             "5) Live Space endpoint used by the Paper bridge",
             f"{PUBLIC_SPACE_URL}/gradio_api/call/quick_curate",
@@ -2207,7 +2207,7 @@ def museum_packet_for(artifact: dict) -> dict:
                 compact_text(artifact["hall"], 30),
                 compact_text(artifact["spirit_first_line"], 30),
             ],
-            "pedestal": "place sign, item frame, 3D resource-pack item, and redstone spirit button at coordinates",
+            "pedestal": "place sign, 3D resource-pack item, lectern passport book, and redstone spirit button at coordinates",
         },
     }
 

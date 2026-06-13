@@ -25,13 +25,15 @@
     "/dreamwall museum check reported Plot pads 144/144, Relic focus blocks 144/144, YOU ARE HERE beacon present",
     "after a clean Paper server restart, /dreamwall museum check still reported Plot pads 144/144, Relic focus blocks 144/144, YOU ARE HERE beacon present",
     "/dreamwall pack reported SHA1 42738bc973abb6a631bd9ba88ed3b2d7e8521800",
-    "Paper bridge import endpoint aligned to the live Space /gradio_api/call/quick_curate endpoint"
+    "Paper bridge import endpoint aligned to the live Space /gradio_api/call/quick_curate endpoint",
+    "Paper bridge import path now compiles with item hover lore plus a written-book passport placed on a lectern",
+    "rebuilt passport-capable jar loaded successfully on a temporary Paper 1.21.11 server"
   ],
   "bundle": {
     "resource_pack_sha1": "42738bc973abb6a631bd9ba88ed3b2d7e8521800",
     "resource_pack_sha256": "e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148",
-    "plugin_jar_sha1": "3a6309514e68ee851a720570d19e024f1b21b640",
-    "plugin_jar_sha256": "7cb0b2c7a70a450f1467a2688998907d061691dba349b69d1cc1b88d44239bdb",
+    "plugin_jar_sha1": "8e30a6272c552eb33f3b870dfe72556be70e193f",
+    "plugin_jar_sha256": "174b26e89c2a709ff789fd81e8603fe554b71ddab3d307f41876e4e058d13f76",
     "prebuilt_world_sha1": "a6fa4e4c7209e4be5ba9ca089190892870fb2f63",
     "prebuilt_world_sha256": "6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e"
   },

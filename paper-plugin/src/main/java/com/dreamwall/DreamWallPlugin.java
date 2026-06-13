@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 
@@ -19,6 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.Lectern;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -29,6 +31,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -88,7 +91,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
                 + " plots, plot size=" + getConfig().getInt("plot-size", 32));
         sender.sendMessage("Use /dreamwall fetch to test Hugging Face reachability.");
         sender.sendMessage("Use /dreamwall pack to load the AfterBlockMuseum resource pack.");
-        sender.sendMessage("Use /dreamwall demo in-game to place a safe AfterBlock pedestal proof.");
+        sender.sendMessage("Use /dreamwall demo in-game to place a safe AfterBlock pedestal and passport proof.");
         sender.sendMessage("Use /dreamwall import or /dreamwall import here to place a live Space artifact packet.");
         sender.sendMessage("Use /dreamwall museum where to inspect the exact plot map.");
         sender.sendMessage("Use /dreamwall museum build to create the 12x12 living museum campus.");
@@ -214,6 +217,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
                 : new Location(world, number(coordinates, "x", player.getLocation().getBlockX()),
                         number(coordinates, "y", player.getLocation().getBlockY()),
                         number(coordinates, "z", player.getLocation().getBlockZ()));
+        world.getChunkAt(base).load(true);
 
         Material pedestalMaterial = materialFromPacket(minecraft);
         base.getBlock().setType(pedestalMaterial);
@@ -225,6 +229,9 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         String owner = text(minecraft, "owner_handle", text(artifact, "owner_handle", "@unknown"));
         String hall = text(minecraft, "hall", text(artifact, "hall", "Museum"));
         String plaque = text(minecraft, "plaque_text", text(artifact, "plaque_line", "Preserved in AfterBlock"));
+        String zone = text(artifact, "zone", "Museum route");
+        String memory = text(artifact, "memory_text", plaque);
+        String spirit = text(minecraft, "spirit_first_line", text(artifact, "spirit_first_line", plaque));
         if (signBlock.getState() instanceof Sign sign) {
             sign.setLine(0, trimLine(title));
             sign.setLine(1, trimLine(owner));
@@ -234,12 +241,16 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         }
 
         int customModelData = integer(minecraft, "custom_model_data", 730001);
-        ItemStack item = artifactItem(trimLine(title) + " Passport", customModelData);
-        player.getInventory().addItem(item);
+        String command = giveCommand(customModelData);
+        ItemStack item = artifactItem(title, customModelData,
+                List.of("Owner: " + owner, "Hall: " + hall, "XYZ: " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ(), compactLore(memory)));
+        ItemStack passport = passportBook(title, owner, hall, zone, memory, spirit, command, base, customModelData);
+        player.getInventory().addItem(item, passport);
         placeDisplayRelic(world, base, item);
+        placePassportLectern(world, base, passport);
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 38, 0.45, 0.65, 0.45, 0.015);
         player.sendMessage("Imported " + title + " by " + owner + " into " + hall + ".");
-        player.sendMessage("Displayed and gave Paper item with CustomModelData " + customModelData + ".");
+        player.sendMessage("Displayed item, placed passport lectern, and gave CustomModelData " + customModelData + ".");
         if (!placeHere) {
             player.sendMessage("Placed at packet coordinates " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ()
                     + ". Use /dreamwall import here for a nearby proof.");
@@ -272,11 +283,23 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             sign.update();
         }
 
-        ItemStack item = artifactItem("AfterBlock Artifact Passport", 730002);
-        player.getInventory().addItem(item);
+        ItemStack item = artifactItem("AfterBlock AirPods Relic", 730002,
+                List.of("Owner: @Wildstash", "Hall: Hall of Companions", "XYZ: " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ(), "Private worlds through public noise."));
+        ItemStack passport = passportBook(
+                "AfterBlock AirPods Relic",
+                "@Wildstash",
+                "Hall of Companions",
+                "Quiet Bench Passage",
+                "A small object that carried private worlds through public noise.",
+                "I am what remained when a pocket object became a place.",
+                giveCommand(730002),
+                base,
+                730002);
+        player.getInventory().addItem(item, passport);
         placeDisplayRelic(world, base, item);
+        placePassportLectern(world, base, passport);
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 28, 0.35, 0.55, 0.35, 0.01);
-        sender.sendMessage("Placed demo AfterBlock pedestal, displayed relic item, and gave Paper item with CustomModelData 730002.");
+        sender.sendMessage("Placed demo pedestal, displayed relic item, lectern passport, and gave Paper item with CustomModelData 730002.");
         sender.sendMessage("Run /dreamwall pack and accept the pack to see the generated item model.");
     }
 
@@ -626,11 +649,18 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
     }
 
     private ItemStack artifactItem(String name, int customModelData) {
+        return artifactItem(name, customModelData, List.of());
+    }
+
+    private ItemStack artifactItem(String name, int customModelData, List<String> lore) {
         ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(name);
+            meta.setDisplayName(compactItemName(name));
             meta.setCustomModelData(customModelData);
+            if (!lore.isEmpty()) {
+                meta.setLore(lore.stream().map(this::compactLore).toList());
+            }
             item.setItemMeta(meta);
         }
         return item;
@@ -644,6 +674,57 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             display.setRotation(0, 0);
             display.setGlowing(true);
         });
+    }
+
+    private ItemStack passportBook(String title, String owner, String hall, String zone, String memory, String spirit,
+            String command, Location base, int customModelData) {
+        ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
+        if (book.getItemMeta() instanceof BookMeta meta) {
+            meta.setTitle(compactBookTitle(title));
+            meta.setAuthor(owner == null || owner.isBlank() ? "AfterBlock Museum" : owner);
+            meta.setDisplayName(compactItemName(title) + " Passport");
+            meta.setPages(
+                    bookPage("AFTERBLOCK PASSPORT", title, owner, hall, zone,
+                            "XYZ " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ(),
+                            "CMD " + customModelData),
+                    bookPage("HISTORY", memory, "", "SPIRIT", spirit),
+                    bookPage("MINECRAFT RELIC", command, "", "Use /dreamwall pack if the item still looks like paper."));
+            book.setItemMeta(meta);
+        }
+        return book;
+    }
+
+    private void placePassportLectern(World world, Location base, ItemStack passport) {
+        Block lecternBlock = base.clone().add(1, 1, 0).getBlock();
+        lecternBlock.setType(Material.LECTERN);
+        if (lecternBlock.getState() instanceof Lectern lectern) {
+            lectern.getInventory().setItem(0, passport.clone());
+            lectern.update();
+        }
+    }
+
+    private String giveCommand(int customModelData) {
+        return "/give @p minecraft:paper[minecraft:custom_model_data=" + customModelData + "] 1";
+    }
+
+    private String compactItemName(String value) {
+        String cleaned = value == null ? "AfterBlock Relic" : value.replaceAll("\\s+", " ").trim();
+        return cleaned.length() <= 48 ? cleaned : cleaned.substring(0, 47).trim();
+    }
+
+    private String compactBookTitle(String value) {
+        String cleaned = compactItemName(value);
+        return cleaned.length() <= 32 ? cleaned : cleaned.substring(0, 31).trim();
+    }
+
+    private String compactLore(String value) {
+        String cleaned = value == null ? "" : value.replaceAll("\\s+", " ").trim();
+        return cleaned.length() <= 72 ? cleaned : cleaned.substring(0, 71).trim();
+    }
+
+    private String bookPage(String... lines) {
+        String page = String.join("\n", lines).replaceAll("\\n{3,}", "\n\n").trim();
+        return page.length() <= 640 ? page : page.substring(0, 637).trim() + "...";
     }
 
     private String spaceUrl() {
