@@ -56,7 +56,7 @@ total canvas: 384 x 384 blocks
 
 - Each submission gets a deterministic hall, zone, plot, and Minecraft coordinate.
 - Curation score replaces market value.
-- Plaques show title, owner handle, spirit first line, and hall.
+- Plaques show title, owner label, optional social tag, spirit first line, and hall.
 - Resonance links connect nearby or emotionally similar artifacts.
 - No real-money ownership, blockchain, or NFT claims.
 
@@ -68,7 +68,7 @@ total canvas: 384 x 384 blocks
 4. Run `/dreamwall fetch`.
 5. Call the `curate_artifact` Space endpoint and copy the `dreamwall.museum.v1` packet.
 6. Manually place one pedestal/sign at `museum.coordinates`.
-7. Add signs for title, owner handle, hall, plaque line, and spirit first line.
+7. Add signs for title, owner label, optional social tag, hall, plaque line, and spirit first line.
 8. Record a 20-second proof clip.
 
 ## Museum Packet
@@ -78,16 +78,17 @@ The main demo packet is `dreamwall.museum.v1`.
 It gives the server:
 
 - artifact title
-- owner handle
+- owner label and optional social tag
 - hall and zone
 - plot and coordinates
 - block palette/materials
+- resource-pack model path and `CustomModelData`
 - plaque text
 - spirit first line
 - passport QR payload
 - curation scores and resonance links
 
-The Paper plugin V1 only needs to import the packet and place a pedestal/sign/painting marker at the coordinates.
+The Paper plugin V1 only needs to import the packet and place a pedestal/sign/item marker at the coordinates. The Gradio `Artifact Model` preview, the resource-pack item JSON, and the server `CustomModelData` are intentionally the same proof chain.
 
 ## Texture Assets
 

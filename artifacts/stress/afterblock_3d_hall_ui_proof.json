@@ -1,0 +1,15 @@
+{
+  "mode": "afterblock_3d_model_and_decluttered_halls",
+  "quick_outputs": 11,
+  "artifact_model_iframe_present": true,
+  "artifact_model_uses_threejs": true,
+  "artifact_model_has_custom_model_data": true,
+  "wall_uses_hall_grid": true,
+  "wall_uses_selected_strip": true,
+  "wall_old_relic_grid_removed": true,
+  "wall_hall_count": 9,
+  "optional_social_tag_blank": true,
+  "packet_has_artifact_when": true,
+  "packet_has_sign_lines": true,
+  "placement_mentions_when": true
+}

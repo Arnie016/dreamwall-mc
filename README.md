@@ -29,7 +29,7 @@ Living Graffiti and Living Moving Canvas remain as secondary modes. They power m
 
 The main cash-prize demo is now simple: relic -> hall -> spirit -> passport -> Minecraft museum placement.
 
-The Gradio demo now opens with a clean museum preview: 100 labeled demo artifacts with social handles, halls, curation scores, coordinates, and generated Minecraft-style item textures.
+The Gradio demo now opens with a clean museum preview: 100 labeled demo artifacts, nine hall wings, curation scores, coordinates, generated Minecraft-style item textures, and a live 3D artifact model tied to the same `CustomModelData` used by the server packet. Social tags are optional; if a visitor leaves the tag blank, the museum uses the owner name or anonymous label.
 
 ## Why This Is Different
 
@@ -40,6 +40,8 @@ Most hackathon apps stop at chat or image generation. AfterBlock turns language 
 - **Resonance-based:** curation score replaces market/auction language.
 - **Off-brand:** the Gradio app feels like a Minecraft museum terminal.
 - **Rendered preview:** a floor-map image shows the museum populated with 100 demo artifacts.
+- **3D artifact preview:** the selected relic renders in a Three.js cuboid scene inside Gradio, using the same model profile, material finish, and `CustomModelData` that the Minecraft bridge receives.
+- **Less clutter:** the wall is organized by hall and by "when this becomes art" rather than dumping every relic as a noisy card grid.
 - **Texture path:** 3,200 generated PNG textures plus 3,200 3D item model JSONs are generated for a Minecraft resource pack, with 70 object families and 10 material finishes.
 - **Texture review links:** see `docs/TEXTURE_LINKS.md` for the searchable gallery, contact sheets, proofs, manifest, and resource-pack URLs.
 - **Animated:** each prompt becomes a 10-frame artifact, not a static image.
@@ -60,11 +62,14 @@ Most hackathon apps stop at chat or image generation. AfterBlock turns language 
 - **Track:** An Adventure in Thousand Token Wood
 - **Small model constraint:** the app uses a local semantic fingerprint engine, far below the 32B limit, with no cloud API dependency.
 - **Built on Gradio:** this Space is the official Gradio submission surface.
-- **Show, don't tell:** the demo is scan relic -> hall placement -> spirit -> passport -> Minecraft pedestal.
+- **Show, don't tell:** the demo is scan relic -> 3D artifact model -> hall placement -> passport -> Minecraft pedestal.
 
 ## Bonus Quests
 
 - **Off-Brand:** custom Minecraft museum terminal UI styling.
+- **Tiny Titan:** local deterministic semantic curator is far below the 32B limit and can be swapped for a <=4B model for the interpretation step.
+- **Best Demo:** real object/prompt -> 3D preview -> passport -> server packet.
+- **Community Choice:** passport cards are shareable and social tags are optional.
 - **Sharing is Caring:** the app emits open museum and bridge packets for each artifact.
 - **Field Notes:** see [`docs/FIELD_NOTES.md`](docs/FIELD_NOTES.md).
 
@@ -113,7 +118,7 @@ Input order:
 ]
 ```
 
-The final output is a plugin-ready museum packet with artifact title, hall, coordinates, palette/materials, plaque text, spirit first line, owner handle, and passport payload.
+The final output is a plugin-ready museum packet with artifact title, hall, coordinates, palette/materials, resource-pack model path, `CustomModelData`, plaque text, spirit first line, optional social tag, owner label, and passport payload.
 
 ## Design Docs
 
@@ -122,6 +127,7 @@ The final output is a plugin-ready museum packet with artifact title, hall, coor
 - [`docs/MUSEUM_CURATION.md`](docs/MUSEUM_CURATION.md)
 - [`docs/TEXTURE_PACK_STRATEGY.md`](docs/TEXTURE_PACK_STRATEGY.md)
 - [`docs/FIELD_NOTES.md`](docs/FIELD_NOTES.md)
+- [`docs/HALL_PRESENTATION.md`](docs/HALL_PRESENTATION.md)
 - [`docs/LIVING_GRAFFITI_MVP.md`](docs/LIVING_GRAFFITI_MVP.md)
 - [`docs/NEUROPETS_MVP.md`](docs/NEUROPETS_MVP.md)
 - [`docs/DEMO_RUNBOOK.md`](docs/DEMO_RUNBOOK.md)
@@ -136,6 +142,8 @@ Judging fit:
 - **AI is load-bearing:** semantic curation chooses halls, spirits, plaques, resonance, and placement.
 - **Originality:** it is a memory museum ritual, not a chatbot wrapper.
 - **Polish:** custom Gradio skin plus Minecraft bridge packet.
+- **Visual worldbuilding:** the UI answers "when is this art?" through nine museum halls, not just "what object is this?"
+- **Server parity:** the Gradio 3D preview, resource-pack item, and `dreamwall.museum.v1` packet point at the same artifact model.
 
 Bonus quests:
 

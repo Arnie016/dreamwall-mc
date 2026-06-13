@@ -4,7 +4,9 @@
 
 Most AI demos make a result and then let it disappear into a chat history or download folder. That felt wrong for personal objects. A book, a charger, a school bag, a pair of AirPods, or a prompted painting can carry real identity, but normal generators flatten those things into one more image.
 
-AfterBlock Museum treats small memories as things worth placing. The output is not just text or art. It is a named artifact with a hall, a plaque, a spirit line, a passport card, and permanent Minecraft coordinates.
+AfterBlock Museum treats small memories as things worth placing. The output is not just text or art. It is a named artifact with a hall, a plaque, a spirit line, a passport card, a 3D Minecraft item preview, and permanent Minecraft coordinates.
+
+The design question became: not "what is art?" but "when is this object art?" A water bottle becomes art when it is the bottle that survived school. AirPods become art when they carried a private room through public noise. A book becomes art when it made a room feel bigger than itself.
 
 ## Why Minecraft
 
@@ -12,8 +14,9 @@ Minecraft makes memory spatial. A judge can understand the loop immediately:
 
 1. Describe or upload a relic.
 2. The museum curates it into a hall.
-3. A passport card appears.
-4. A bridge packet can place the relic in a shared Minecraft world.
+3. A 3D artifact model appears with the same `CustomModelData` used by Minecraft.
+4. A passport card appears.
+5. A bridge packet can place the relic in a shared Minecraft world.
 
 That gives the demo a physical destination. The Hugging Face Space is the museum terminal; the Minecraft server is the place where artifacts live.
 
@@ -44,7 +47,8 @@ AfterBlock tries to defend a different lane: real or imagined objects become pre
 - Keep one simple museum prompt for the main demo.
 - Hide advanced controls behind accordions.
 - Make the UI feel like a Minecraft museum terminal rather than a default AI form.
-- Generate many reviewable Minecraft assets, but expose them through a searchable gallery and Gradio inspection wall.
+- Organize the wall by hall and by "when this becomes art" so the gallery does not become a spammy card dump.
+- Generate many reviewable Minecraft assets, but expose them through a searchable gallery, Gradio inspection wall, and a live 3D artifact preview.
 
 ## What Works Now
 
@@ -52,6 +56,7 @@ AfterBlock tries to defend a different lane: real or imagined objects become pre
 - `dreamwall.mc.v1` bridge fields for title, hall, owner, coordinates, materials, plaque, spirit line, QR payload, and CustomModelData.
 - Five deterministic seeded demos.
 - A 3,200-item resource pack with PNG textures, 3D item model JSON, 70 object families, 10 material finishes, and six display profiles.
+- A Gradio `Artifact Model` tab that renders the selected relic as a blocky 3D scene tied to the packet's model path and `CustomModelData`.
 - Shareable passport-card HTML.
 - A trace dataset at `data/artifact_traces.jsonl`.
 

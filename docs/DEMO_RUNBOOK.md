@@ -9,9 +9,9 @@ AfterBlock Museum preserves ordinary objects as Minecraft artifacts. The Space a
 1. Show the Hugging Face Space.
 2. Type one prompt in **Museum prompt**, for example: "my scratched blue water bottle from school with a moon sticker."
 3. Click **Place in Museum**.
-4. Show the generated museum render and the **Walk the AfterBlock wall** exhibit cards.
-5. Open **Inspect** on a relic card to show owner, hall, score, and `/give` command.
-6. Open **Placement**: hall, plot, coordinates, curation score.
+4. Show the generated museum render and the calmer **Walk the AfterBlock halls** view.
+5. Open **Artifact Model** and show the live 3D relic, `CustomModelData`, and `/give` command.
+6. Open **Placement**: hall, plot, coordinates, curation score, and the "when it becomes art" explanation.
 7. Open **Spirit** or **Passport** briefly.
 8. Open **Minecraft Packet** and show `dreamwall.museum.v1`.
 9. Switch to Minecraft.
@@ -23,7 +23,7 @@ AfterBlock Museum preserves ordinary objects as Minecraft artifacts. The Space a
 - Keep the final demo under 75 seconds.
 - Show both the Space and Minecraft world.
 - Do not explain implementation details in the voiceover.
-- Focus on the magic: a memory becomes a place with a spirit.
+- Focus on the magic: a memory becomes a 3D Minecraft artifact, a place, and a spirit.
 
 ## Submission Checklist
 

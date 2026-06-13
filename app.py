@@ -1,4 +1,5 @@
 import hashlib
+import html
 import json
 import math
 import os
@@ -113,6 +114,54 @@ MUSEUM_HALLS = [
     "Grand Painting Hall",
     "Animal Spirit Grove",
 ]
+
+HALL_PROFILES = {
+    "Hall of Firsts": {
+        "when": "when an object marks a first threshold",
+        "world": "sunlit origin cabinets, first-step lamps, gold plaques",
+        "minecraft": "warm sandstone, gold pressure plates, first-light redstone lamps",
+    },
+    "Hall of Companions": {
+        "when": "when something stayed close through ordinary days",
+        "world": "pocket pedestals, quiet benches, green glass cases",
+        "minecraft": "moss blocks, item frames, low lanterns near visitor paths",
+    },
+    "Hall of Turning Points": {
+        "when": "when a choice, exam, trade, or pressure changed direction",
+        "world": "angled corridors, copper rails, redstone decision marks",
+        "minecraft": "copper blocks, comparator lamps, signs with before/after lines",
+    },
+    "Hall of Worlds": {
+        "when": "when a relic opened a world larger than the room",
+        "world": "portal shelves, blue map floors, miniature skylines",
+        "minecraft": "blue wool, maps, frames, glowstone portal corners",
+    },
+    "Hall of Soft Things": {
+        "when": "when the memory protects, quiets, or shelters",
+        "world": "felt-lit corners, soft rails, low pink glass",
+        "minecraft": "pink wool, beds, candles, carpeted alcoves",
+    },
+    "Hall of Tools": {
+        "when": "when the object helped the owner act on the world",
+        "world": "workbench rows, grey vaults, calibrated stands",
+        "minecraft": "deepslate, anvils, crafting tables, inspection signs",
+    },
+    "Hall of Lost Signals": {
+        "when": "when private signal survives public noise",
+        "world": "dim receivers, violet static, archive slits",
+        "minecraft": "amethyst, note blocks, redstone repeaters, low particles",
+    },
+    "Grand Painting Hall": {
+        "when": "when imagination becomes a place",
+        "world": "large frame walls, myth bays, painted sky panels",
+        "minecraft": "item frames, terracotta walls, banner rails, map-art slots",
+    },
+    "Animal Spirit Grove": {
+        "when": "when the artifact behaves like a living companion",
+        "world": "moss pens, moonlit tracks, creature-name stones",
+        "minecraft": "moss carpets, fences, leaves, particle trails",
+    },
+}
 
 DEMO_ARTIFACTS = {
     "Star Wars childhood book": {
@@ -654,15 +703,16 @@ def passport_html(artifact: dict) -> str:
     return f"""
     <section class="passport-card">
       <div class="passport-kicker">Preserved in AfterBlock Museum</div>
-      <h2>{artifact['title']}</h2>
-      <p class="passport-owner">{artifact['owner_handle']} · {artifact['hall']}</p>
+      <h2>{html_escape(artifact['title'])}</h2>
+      <p class="passport-owner">{html_escape(owner_display(artifact))} · {html_escape(artifact['hall'])}</p>
       <div class="passport-grid">
-        <div class="passport-preview">{swatches}<strong>{artifact['spirit_name']}</strong></div>
+        <div class="passport-preview">{swatches}<strong>{html_escape(artifact['spirit_name'])}</strong></div>
         <div>
           <p><strong>Plot</strong> ({artifact['plot']['x']}, {artifact['plot']['z']})</p>
           <p><strong>Coordinates</strong> {artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}</p>
-          <p><strong>Plaque</strong> {artifact['plaque_line']}</p>
-          <p><strong>QR payload</strong> <code>{artifact['qr_payload']}</code></p>
+          <p><strong>When it becomes art</strong> {html_escape(artifact.get('artifact_when', artifact['placement_reason']))}</p>
+          <p><strong>Plaque</strong> {html_escape(artifact['plaque_line'])}</p>
+          <p><strong>QR payload</strong> <code>{html_escape(artifact['qr_payload'])}</code></p>
         </div>
       </div>
     </section>
@@ -677,6 +727,31 @@ def floor_map_html(artifact: dict) -> str:
             label = "★" if active else ""
             cells.append(f"<span class='floor-cell {'active' if active else ''}'>{label}</span>")
     return f"<div class='floor-map'>{''.join(cells)}</div>"
+
+
+def html_escape(value) -> str:
+    return html.escape(str(value or ""), quote=True)
+
+
+def owner_display(artifact: dict) -> str:
+    handle = (artifact.get("owner_handle") or "").strip()
+    if handle:
+        return handle
+    return (artifact.get("owner_name") or "anonymous visitor").strip()
+
+
+def social_tag_for(owner_handle: str) -> str:
+    handle = (owner_handle or "").strip()
+    if handle and not handle.startswith("@"):
+        return f"@{handle}"
+    return handle
+
+
+def compact_text(value: str, limit: int = 34) -> str:
+    value = " ".join(str(value or "").split())
+    if len(value) <= limit:
+        return value
+    return value[: max(0, limit - 1)].rstrip() + "…"
 
 
 def demo_collection_artifact(index: int) -> dict:
@@ -764,6 +839,178 @@ def texture_preview_url(item_id: str) -> str:
     if base:
         return f"{base}/{item_id}.png"
     return f"assets/afterblock_textures/gallery/previews/{item_id}.png"
+
+
+def block_rgb(block_name: str) -> tuple[int, int, int]:
+    return next((rgb for name, rgb in BLOCKS if name == block_name), (180, 156, 104))
+
+
+def hex_color(rgb: tuple[int, int, int]) -> str:
+    return "#{:02x}{:02x}{:02x}".format(*rgb)
+
+
+def artifact_model_html(artifact: dict) -> str:
+    item = artifact.get("resource_pack_item", {})
+    item_id = item.get("id", "missing")
+    hall_rgb = hall_color(artifact["hall"])
+    palette = [hex_color(block_rgb(name)) for name in artifact.get("palette", [])[:5]]
+    if not palette:
+        palette = [hex_color(hall_rgb), "#e8c56f", "#3b3120"]
+    payload = {
+        "title": artifact["title"],
+        "owner": owner_display(artifact),
+        "hall": artifact["hall"],
+        "when": artifact.get("artifact_when", artifact["placement_reason"]),
+        "coordinates": artifact["minecraft_coordinates"],
+        "custom_model_data": item.get("custom_model_data", 0),
+        "model": item.get("model", "afterblock:item/missing"),
+        "shape": item.get("shape", artifact["object_guess"]),
+        "material": item.get("material", "museum material"),
+        "finish": item.get("finish", "artifact finish"),
+        "profile": item.get("model_profile", "fixed pedestal"),
+        "orientation": item.get("orientation", "front-facing"),
+        "element_count": int(item.get("element_count") or 7),
+        "preview_url": texture_preview_url(item_id) if item_id != "missing" else "",
+        "colors": palette,
+        "hall_color": hex_color(hall_rgb),
+        "give_command": f"/give @p minecraft:paper[minecraft:custom_model_data={item.get('custom_model_data', 0)}] 1",
+    }
+    payload_json = json.dumps(payload)
+    fallback_swatches = "".join(
+        f"<span style='background:{html_escape(color)}'></span>" for color in payload["colors"]
+    )
+    srcdoc = f"""
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body {{ margin:0; height:100%; background:#10110f; color:#f8e5b6; font-family: Inter, ui-sans-serif, system-ui, sans-serif; overflow:hidden; }}
+  #stage {{ position:absolute; inset:0; }}
+  .hud {{ position:absolute; left:18px; right:18px; bottom:16px; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:end; pointer-events:none; }}
+  .label {{ background:rgba(18,15,10,.78); border:1px solid #8c6a38; padding:12px 14px; box-shadow:0 6px 0 rgba(0,0,0,.38); }}
+  h2 {{ margin:0 0 4px; font-size:18px; color:#ffe4a3; letter-spacing:.01em; }}
+  p {{ margin:3px 0; font-size:12px; line-height:1.35; color:#d8c8a4; }}
+  code {{ color:#20160c; background:#e8c56f; padding:4px 6px; display:inline-block; margin-top:4px; font-size:11px; }}
+  .badge {{ border:1px solid #7d6335; color:#ffe4a3; padding:8px 10px; background:rgba(28,24,18,.8); font-weight:800; font-size:12px; }}
+  .fallback {{ position:absolute; inset:0; display:grid; place-items:center; background:radial-gradient(circle at 50% 35%, rgba(220,172,88,.16), transparent 42%), #10110f; }}
+  .fallback-card {{ width:150px; height:150px; transform:rotateX(58deg) rotateZ(-28deg); background:linear-gradient(135deg, {html_escape(payload['hall_color'])}, #ffe3a1); border:8px solid #1d160d; box-shadow:34px 28px 0 rgba(0,0,0,.34); }}
+  .swatches {{ display:flex; gap:4px; margin-top:7px; }}
+  .swatches span {{ width:16px; height:16px; border:1px solid #0e0c09; }}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="fallback" class="fallback"><div><div class="fallback-card"></div><div class="swatches">{fallback_swatches}</div></div></div>
+<div class="hud">
+  <div class="label">
+    <h2 id="title"></h2>
+    <p id="meta"></p>
+    <p id="when"></p>
+    <code id="cmd"></code>
+  </div>
+  <div class="badge" id="badge"></div>
+</div>
+<script type="module">
+  import * as THREE from 'https://esm.sh/three@0.160.0';
+  const artifact = {payload_json};
+  document.getElementById('title').textContent = artifact.title;
+  document.getElementById('meta').textContent = `${{artifact.owner}} · ${{artifact.hall}} · ${{artifact.material}} · ${{artifact.profile}}`;
+  document.getElementById('when').textContent = `When: ${{artifact.when}} · XYZ ${{artifact.coordinates.x}} ${{artifact.coordinates.y}} ${{artifact.coordinates.z}}`;
+  document.getElementById('cmd').textContent = artifact.give_command;
+  document.getElementById('badge').textContent = `CMD ${{artifact.custom_model_data}}`;
+
+  const stage = document.getElementById('stage');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color('#10110f');
+  const camera = new THREE.PerspectiveCamera(38, stage.clientWidth / stage.clientHeight, 0.1, 100);
+  camera.position.set(3.9, 3.1, 5.1);
+  camera.lookAt(0, .7, 0);
+
+  const renderer = new THREE.WebGLRenderer({{ antialias: true, alpha: true }});
+  renderer.setSize(stage.clientWidth, stage.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.shadowMap.enabled = true;
+  stage.appendChild(renderer.domElement);
+  document.getElementById('fallback').style.display = 'none';
+
+  scene.add(new THREE.HemisphereLight('#fff1c8', '#15120d', 2.1));
+  const key = new THREE.DirectionalLight('#ffe0a3', 2.4);
+  key.position.set(3, 5, 4);
+  key.castShadow = true;
+  scene.add(key);
+  const rim = new THREE.PointLight(artifact.hall_color, 12, 7);
+  rim.position.set(-2.2, 2.5, -1.4);
+  scene.add(rim);
+
+  const group = new THREE.Group();
+  scene.add(group);
+  const colors = artifact.colors.length ? artifact.colors : [artifact.hall_color, '#e8c56f'];
+  const materialFor = (i) => new THREE.MeshStandardMaterial({{
+    color: new THREE.Color(colors[i % colors.length]),
+    roughness: .72,
+    metalness: artifact.material.includes('metal') || artifact.material.includes('brass') ? .35 : .05,
+    emissive: artifact.material.includes('glow') || artifact.finish.includes('glow') ? new THREE.Color(colors[i % colors.length]).multiplyScalar(.18) : new THREE.Color('#000000')
+  }});
+  const dark = new THREE.MeshStandardMaterial({{ color:'#17120b', roughness:.9 }});
+
+  function cube(x, y, z, sx, sy, sz, mat) {{
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), mat);
+    mesh.position.set(x, y, z);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    group.add(mesh);
+    return mesh;
+  }}
+
+  cube(0, .05, 0, 2.9, .1, 2.1, dark);
+  cube(0, .23, 0, 2.15, .24, 1.45, new THREE.MeshStandardMaterial({{ color:'#4a371d', roughness:.85 }}));
+  const count = Math.max(5, Math.min(14, artifact.element_count || 7));
+  for (let i = 0; i < count; i++) {{
+    const row = Math.floor(i / 4);
+    const col = i % 4;
+    const sx = .42 + (i % 3) * .08;
+    const sy = .26 + ((i + row) % 4) * .12;
+    const sz = .34 + (row % 3) * .08;
+    const x = (col - 1.5) * .48;
+    const z = (row - 1.0) * .42;
+    const y = .42 + sy / 2 + Math.sin(i * 1.7) * .02;
+    const part = cube(x, y, z, sx, sy, sz, materialFor(i));
+    part.rotation.y = (i % 2 ? .12 : -.18);
+  }}
+  cube(0, .92, -.82, 1.15, .08, .2, new THREE.MeshStandardMaterial({{ color:'#e8c56f', roughness:.6 }}));
+  cube(0, .82, -.74, .84, .1, .12, dark);
+
+  const grid = new THREE.GridHelper(4.2, 12, artifact.hall_color, '#3a3020');
+  grid.position.y = 0;
+  scene.add(grid);
+
+  function tick(t) {{
+    group.rotation.y = Math.sin(t * .00045) * .18 - .4;
+    group.position.y = Math.sin(t * .0012) * .035;
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }}
+  requestAnimationFrame(tick);
+  window.addEventListener('resize', () => {{
+    camera.aspect = stage.clientWidth / stage.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(stage.clientWidth, stage.clientHeight);
+  }});
+</script>
+</body>
+</html>
+"""
+    return f"""
+    <section class="artifact-model-shell">
+      <iframe
+        title="3D Minecraft artifact model preview"
+        class="artifact-model-frame"
+        sandbox="allow-scripts"
+        srcdoc="{html.escape(srcdoc, quote=True)}"
+      ></iframe>
+    </section>
+    """
 
 
 def texture_inspection_html(items: list[dict], total: int, page_index: int, page_count: int) -> str:
@@ -956,7 +1203,7 @@ def render_museum_preview(selected: dict, collection: list[dict]) -> str:
         draw.rectangle([px, py + 13, px + 34, py + 22], fill=shade(artifact_rgb, 0.45), outline=(22, 19, 15))
         draw.rectangle([px + 4, py, px + 30, py + 16], fill=artifact_rgb, outline=(18, 15, 10))
         draw.rectangle([px + 8, py + 4, px + 26, py + 13], fill=shade(artifact_rgb, 0.7), outline=shade(artifact_rgb, 0.3))
-        label = artifact["owner_handle"][:7]
+        label = owner_display(artifact)[:7]
         draw.text((px - 2, py + 24), label, fill=(248, 236, 198) if active else (180, 170, 141), font=font_tiny)
         if active:
             draw.rectangle([px - 8, py - 8, px + 42, py + 46], outline=(255, 246, 180), width=3)
@@ -967,7 +1214,7 @@ def render_museum_preview(selected: dict, collection: list[dict]) -> str:
     draw.rectangle([detail_x + 20, 166, width - 74, 420], fill=(36, 32, 25), outline=(96, 76, 48), width=2)
     draw.text((detail_x + 36, 184), "SELECTED RELIC", fill=(255, 221, 136), font=font_hall)
     draw.text((detail_x + 36, 220), selected["title"][:38], fill=(244, 233, 202), font=font_body)
-    draw.text((detail_x + 36, 250), selected["owner_handle"], fill=(205, 190, 150), font=font_body)
+    draw.text((detail_x + 36, 250), owner_display(selected), fill=(205, 190, 150), font=font_body)
     draw.text((detail_x + 36, 286), selected["hall"], fill=(238, 201, 117), font=font_body)
     draw.text((detail_x + 36, 322), f"Object: {selected['object_guess']}", fill=(228, 218, 188), font=font_body)
     draw.text((detail_x + 36, 352), f"Score: {selected['curation_scores']['curation_score']}  CMD: {selected.get('resource_pack_item', {}).get('custom_model_data', '')}", fill=(228, 218, 188), font=font_body)
@@ -1008,7 +1255,7 @@ def catalog_rows(collection: list[dict]) -> list[list]:
         rows.append(
             [
                 artifact.get("catalog_index", 0),
-                artifact["owner_handle"],
+                owner_display(artifact),
                 artifact["title"],
                 artifact["object_guess"],
                 artifact["hall"],
@@ -1021,39 +1268,63 @@ def catalog_rows(collection: list[dict]) -> list[list]:
 
 
 def artifact_wall_html(collection: list[dict]) -> str:
-    cards = []
-    for artifact in collection[:24]:
-        item = artifact.get("resource_pack_item", {})
-        score = artifact["curation_scores"]["curation_score"]
-        active = artifact.get("catalog_index", 1) == 0
-        color = hall_color(artifact["hall"])
+    by_hall = {hall: [] for hall in MUSEUM_HALLS}
+    for artifact in collection:
+        by_hall.setdefault(artifact["hall"], []).append(artifact)
+    selected = collection[0]
+    selected_item = selected.get("resource_pack_item", {})
+    selected_profile = selected.get("hall_profile") or HALL_PROFILES.get(selected["hall"], {})
+    wings = []
+    for hall in MUSEUM_HALLS:
+        hall_items = by_hall.get(hall, [])
+        color = hall_color(hall)
         rgb = f"rgb({color[0]}, {color[1]}, {color[2]})"
-        cards.append(
+        profile = HALL_PROFILES.get(hall, {})
+        visible = hall_items[:3]
+        chips = []
+        for artifact in visible:
+            item = artifact.get("resource_pack_item", {})
+            active = artifact["artifact_id"] == selected["artifact_id"]
+            chips.append(
+                f"""
+                <div class="artifact-chip {'active' if active else ''}">
+                  <span class="mini-cube"></span>
+                  <div>
+                    <strong>{html_escape(compact_text(artifact['title'], 24))}</strong>
+                    <em>{html_escape(owner_display(artifact))} · {html_escape(compact_text(artifact['object_guess'], 18))}</em>
+                    <small>CMD {html_escape(item.get('custom_model_data', ''))}</small>
+                  </div>
+                </div>
+                """
+            )
+        more = max(0, len(hall_items) - len(visible))
+        wings.append(
             f"""
-            <article class="relic-card {'active' if active else ''}" style="--hall-color:{rgb}">
-              <div class="relic-object">
-                <span></span><span></span><span></span>
-              </div>
-              <div class="relic-copy">
-                <strong>{artifact['title'][:34]}</strong>
-                <em>{artifact['owner_handle']} · {artifact['object_guess']}</em>
-                <small>{artifact['hall']} · score {score} · CMD {item.get('custom_model_data', '')}</small>
-              </div>
-              <details>
-                <summary>Inspect</summary>
-                <p>{artifact['plaque_line'][:130]}</p>
-                <code>/give @p minecraft:paper[minecraft:custom_model_data={item.get('custom_model_data', 0)}] 1</code>
-              </details>
+            <article class="hall-wing {'active' if hall == selected['hall'] else ''}" style="--hall-color:{rgb}">
+              <header>
+                <h4>{html_escape(hall)}</h4>
+                <span>{len(hall_items)} relics</span>
+              </header>
+              <p><strong>When:</strong> {html_escape(profile.get('when', 'when the museum finds resonance'))}</p>
+              <div class="artifact-chip-row">{''.join(chips)}{f"<span class='more-chip'>+{more} more</span>" if more else ""}</div>
             </article>
             """
         )
     return f"""
     <section class="museum-wall">
       <div class="wall-heading">
-        <h3>Walk the AfterBlock wall</h3>
-        <p>Hover a relic to lift it. Open Inspect for the plaque, owner, and Minecraft item command.</p>
+        <h3>Walk the AfterBlock halls</h3>
+        <p>Less wall spam: each wing shows the moment that makes an object art, then a few compact placeable relics.</p>
       </div>
-      <div class="relic-grid">{''.join(cards)}</div>
+      <div class="selected-strip" style="--hall-color:rgb({hall_color(selected['hall'])[0]}, {hall_color(selected['hall'])[1]}, {hall_color(selected['hall'])[2]})">
+        <span class="mini-cube selected"></span>
+        <div>
+          <strong>{html_escape(selected['title'])}</strong>
+          <em>{html_escape(owner_display(selected))} · {html_escape(selected['hall'])} · {html_escape(selected_profile.get('when', selected['placement_reason']))}</em>
+          <code>{html_escape(f"/give @p minecraft:paper[minecraft:custom_model_data={selected_item.get('custom_model_data', 0)}] 1")}</code>
+        </div>
+      </div>
+      <div class="hall-grid">{''.join(wings)}</div>
     </section>
     """
 
@@ -1078,7 +1349,7 @@ def build_museum_artifact(
     relic_image_path: str | None = None,
 ) -> dict:
     owner_name = (owner_name or "Anonymous").strip()
-    owner_handle = (owner_handle or "@unknown").strip()
+    owner_handle = social_tag_for(owner_handle)
     input_type = (input_type or "memory_prompt").strip()
     source_prompt = (source_prompt or "a mysterious object from a half-remembered room").strip()
     memory_text = (memory_text or "No memory text was provided, so the museum listens to the object itself.").strip()
@@ -1102,6 +1373,7 @@ def build_museum_artifact(
     palette_names = [name for name, _ in palette]
     object_guess = object_guess_for(input_type, source_prompt, memory_text)
     hall, placement_reason = hall_for_artifact(input_type, object_guess, source_prompt, memory_text, seed)
+    hall_profile = HALL_PROFILES.get(hall, {})
     zone = museum_zone_for(hall, seed)
     plot = plot_for_seed(seed)
     title = artifact_title(source_prompt, seed, moods)
@@ -1116,6 +1388,8 @@ def build_museum_artifact(
         "artifact_id": artifact_id,
         "owner_name": owner_name,
         "owner_handle": owner_handle,
+        "owner_label": owner_handle or owner_name or "anonymous visitor",
+        "social_tag": owner_handle,
         "input_type": input_type,
         "title": title,
         "source_prompt": source_prompt,
@@ -1123,6 +1397,7 @@ def build_museum_artifact(
         "image_fingerprint": image_note,
         "object_guess": object_guess,
         "hall": hall,
+        "hall_profile": hall_profile,
         "zone": zone,
         "plot": plot,
         "minecraft_coordinates": coordinates,
@@ -1132,6 +1407,7 @@ def build_museum_artifact(
         "resource_pack_item": resource_item,
         "plaque_line": plaque_line,
         "lore_short": lore_short,
+        "artifact_when": hall_profile.get("when", placement_reason),
         "spirit_name": spirit["spirit_name"],
         "spirit_traits": spirit["spirit_traits"],
         "spirit_first_line": spirit["spirit_first_line"],
@@ -1141,6 +1417,7 @@ def build_museum_artifact(
         "passport_card": {
             "title": title,
             "owner_handle": owner_handle,
+            "owner_label": owner_handle or owner_name or "anonymous visitor",
             "hall": hall,
             "plot": plot,
             "minecraft_coordinates": coordinates,
@@ -1189,8 +1466,17 @@ def museum_packet_for(artifact: dict) -> dict:
             "plaque_text": artifact["plaque_line"],
             "spirit_first_line": artifact["spirit_first_line"],
             "owner_handle": artifact["owner_handle"],
+            "owner_label": artifact.get("owner_label", owner_display(artifact)),
+            "social_tag": artifact.get("social_tag", ""),
+            "artifact_when": artifact.get("artifact_when", ""),
             "passport_qr_payload": artifact["qr_payload"],
-            "pedestal": "place sign, item frame, and blocky preview at coordinates",
+            "sign_lines": [
+                compact_text(artifact["title"], 30),
+                compact_text(artifact.get("owner_label", owner_display(artifact)), 30),
+                compact_text(artifact["hall"], 30),
+                compact_text(artifact["spirit_first_line"], 30),
+            ],
+            "pedestal": "place sign, item frame, 3D resource-pack item, and redstone spirit button at coordinates",
         },
     }
 
@@ -1207,10 +1493,16 @@ def curate_afterblock_artifact(
     packet = museum_packet_for(artifact)
     collection = museum_collection(artifact, 100)
     preview_path = render_museum_preview(artifact, collection)
+    model_view = artifact_model_html(artifact)
+    hall_profile = artifact.get("hall_profile") or HALL_PROFILES.get(artifact["hall"], {})
     placement = [
         f"# {artifact['title']}",
-        f"**{artifact['owner_handle']}** · {artifact['hall']} · score {artifact['curation_scores']['curation_score']}",
+        f"**{owner_display(artifact)}** · {artifact['hall']} · score {artifact['curation_scores']['curation_score']}",
         f"Plot **({artifact['plot']['x']}, {artifact['plot']['z']})** · XYZ **{artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}**",
+        "",
+        f"**When it becomes art:** {hall_profile.get('when', artifact['placement_reason'])}",
+        f"**Worldbuilding:** {hall_profile.get('world', 'placed as a quiet museum relic')}",
+        f"**Minecraft placement:** {hall_profile.get('minecraft', 'pedestal, sign, and item frame')}",
         "",
         f"{artifact['placement_reason']}",
         f"_{artifact['plaque_line']}_",
@@ -1238,6 +1530,7 @@ def curate_afterblock_artifact(
         preview_path,
         catalog_rows(collection),
         artifact_wall_html(collection),
+        model_view,
         "\n".join(placement),
         spirit_lines and "\n".join(spirit_lines),
         passport,
@@ -1516,7 +1809,7 @@ def artifact_title(prompt: str, seed: int, moods: list[str]) -> str:
     }
     prefix_options = prefix_bank.get(moods[0], ["Living", "Dream", "Wall"])
     prefix = prefix_options[seed % len(prefix_options)]
-    core = "".join(word.capitalize() for word in keys[:2])
+    core = " ".join(word.capitalize() for word in keys[:2])
     return f"{prefix} {core}"
 
 
@@ -2204,6 +2497,162 @@ body, .gradio-container {
   padding: 6px;
   margin-top: 6px;
 }
+.selected-strip {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 12px;
+  align-items: center;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--hall-color) 22%, #171410), #171410);
+  border: 1px solid color-mix(in srgb, var(--hall-color) 78%, #171410);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.selected-strip strong,
+.selected-strip em,
+.selected-strip code {
+  display: block;
+}
+.selected-strip strong {
+  color: #ffe8ad;
+  font-size: 16px;
+  line-height: 1.2;
+}
+.selected-strip em {
+  color: #d8c9a6;
+  font-style: normal;
+  font-size: 12px;
+  margin-top: 3px;
+}
+.selected-strip code {
+  color: #20160c !important;
+  background: #e8c56f !important;
+  white-space: normal;
+  word-break: break-word;
+  margin-top: 6px;
+  padding: 5px 7px;
+  font-size: 10px;
+}
+.hall-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.hall-wing {
+  min-height: 168px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.16)),
+    color-mix(in srgb, var(--hall-color) 13%, #201a12);
+  border: 1px solid color-mix(in srgb, var(--hall-color) 58%, #171410);
+  padding: 10px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,.28);
+}
+.hall-wing.active {
+  border-color: #ffe4a3;
+  box-shadow: 0 8px 0 #070604, 0 0 24px color-mix(in srgb, var(--hall-color) 36%, transparent);
+}
+.hall-wing header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--hall-color) 44%, #46351d);
+  padding-bottom: 6px;
+}
+.hall-wing h4 {
+  margin: 0;
+  color: #ffe4a3;
+  font-size: 13px;
+  line-height: 1.2;
+}
+.hall-wing header span {
+  color: #1b1308;
+  background: #e8c56f;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.hall-wing p {
+  color: #d8c9a6 !important;
+  font-size: 11px;
+  line-height: 1.35;
+  min-height: 42px;
+  margin: 8px 0;
+}
+.artifact-chip-row {
+  display: grid;
+  gap: 6px;
+}
+.artifact-chip {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 7px;
+  align-items: center;
+  min-height: 42px;
+  background: rgba(15,13,10,.54);
+  border: 1px solid rgba(255,228,163,.12);
+  padding: 5px;
+}
+.artifact-chip.active {
+  border-color: #ffe4a3;
+  background: rgba(255,228,163,.1);
+}
+.artifact-chip strong,
+.artifact-chip em,
+.artifact-chip small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.artifact-chip strong {
+  color: #fff0bd;
+  font-size: 11px;
+}
+.artifact-chip em {
+  color: #cdbd9b;
+  font-style: normal;
+  font-size: 10px;
+}
+.artifact-chip small {
+  color: #a99976;
+  font-size: 9px;
+}
+.mini-cube {
+  width: 25px;
+  height: 18px;
+  display: block;
+  transform: rotateX(58deg) rotateZ(-28deg);
+  background: linear-gradient(135deg, var(--hall-color), #ffe1a1);
+  border: 3px solid #15100a;
+  box-shadow: 8px 7px 0 rgba(0,0,0,.3);
+}
+.mini-cube.selected {
+  width: 42px;
+  height: 32px;
+}
+.more-chip {
+  display: inline-block;
+  width: max-content;
+  color: #1b1308;
+  background: #cfa861;
+  font-weight: 800;
+  font-size: 10px;
+  padding: 3px 7px;
+}
+.artifact-model-shell {
+  background: #11120f;
+  border: 2px solid #7d6335;
+  box-shadow: inset 0 0 28px rgba(242,193,95,.08), 0 8px 0 #070604;
+  padding: 8px;
+}
+.artifact-model-frame {
+  width: 100%;
+  height: 430px;
+  border: 0;
+  display: block;
+  background: #10110f;
+}
 .texture-inspector {
   background: #15140f;
   border: 2px solid #7d6335;
@@ -2362,6 +2811,15 @@ textarea, input {
   .relic-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .hall-grid {
+    grid-template-columns: 1fr;
+  }
+  .selected-strip {
+    grid-template-columns: 42px 1fr;
+  }
+  .artifact-model-frame {
+    height: 340px;
+  }
   .wall-heading {
     display: block;
   }
@@ -2369,14 +2827,14 @@ textarea, input {
 """
 
 
-with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
+with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
     gr.HTML(
         """
         <section class="dreamwall-hero">
-          <h1>DreamWall: AfterBlock Museum</h1>
+          <h1>AfterBlock Museum</h1>
           <p>
-            Type one relic, memory, object, or creature. The museum classifies it, chooses a hall,
-            renders a labeled collection, and emits a Minecraft-ready item packet.
+            Type one relic, memory, object, or creature. The museum asks when it becomes art,
+            renders a 3D Minecraft artifact, and emits the packet that places it in-world.
           </p>
           <div class="badge-row">
             <span>Adventure in Thousand Token Wood</span>
@@ -2407,6 +2865,8 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             museum_wall = gr.HTML(label="Interactive artifact wall")
         with gr.Column(scale=4):
             with gr.Tabs():
+                with gr.Tab("Artifact Model"):
+                    museum_model = gr.HTML()
                 with gr.Tab("Placement"):
                     museum_placement = gr.Markdown()
                 with gr.Tab("Spirit"):
@@ -2417,7 +2877,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
                     museum_packet = gr.Textbox(label="dreamwall.museum.v1", lines=14, max_lines=24)
             with gr.Accordion("Catalog table", open=False):
                 museum_catalog = gr.Dataframe(
-                    headers=["#", "handle", "title", "object", "hall", "score", "xyz", "cmd"],
+                    headers=["#", "creator", "title", "object", "hall", "score", "xyz", "cmd"],
                     label="Artifact catalog",
                     row_count=8,
                     col_count=(8, "fixed"),
@@ -2432,7 +2892,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
                 value="AirPods from first year of university",
             )
             owner_name = gr.Textbox(label="Owner name", value="Arnav")
-            owner_handle = gr.Textbox(label="Owner handle", value="@Wildstash")
+            owner_handle = gr.Textbox(label="Optional social tag", value="@Wildstash")
         with gr.Row():
             input_type = gr.Dropdown(
                 label="Input type",
@@ -2464,6 +2924,7 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
             museum_preview,
             museum_catalog,
             museum_wall,
+            museum_model,
             museum_placement,
             museum_spirit,
             museum_passport,
@@ -2477,13 +2938,13 @@ with gr.Blocks(css=CSS, title="DreamWall MC") as demo:
     museum_button.click(
         curate_afterblock_artifact,
         inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
-        outputs=[museum_preview, museum_catalog, museum_wall, museum_placement, museum_spirit, museum_passport, museum_packet],
+        outputs=[museum_preview, museum_catalog, museum_wall, museum_model, museum_placement, museum_spirit, museum_passport, museum_packet],
         api_name="curate_artifact",
     )
     demo.load(
         curate_afterblock_artifact,
         inputs=[owner_name, owner_handle, input_type, relic_prompt, memory_text, relic_image],
-        outputs=[museum_preview, museum_catalog, museum_wall, museum_placement, museum_spirit, museum_passport, museum_packet],
+        outputs=[museum_preview, museum_catalog, museum_wall, museum_model, museum_placement, museum_spirit, museum_passport, museum_packet],
     )
 
     with gr.Accordion("Resource Pack Browser", open=False):
