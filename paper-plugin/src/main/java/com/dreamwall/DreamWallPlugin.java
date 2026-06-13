@@ -120,7 +120,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             try {
                 String body = get(spaceUrl() + "/config");
                 sender.sendMessage("DreamWall Space reachable. Config bytes=" + body.length());
-                sender.sendMessage("Next step: call /gradio_api/call/curate_artifact and import dreamwall.museum.v1.");
+                sender.sendMessage("Next step: call /gradio_api/call/quick_curate and import dreamwall.museum.v1.");
                 sender.sendMessage("Use /dreamwall demo for a local pedestal proof with custom model data.");
                 sender.sendMessage("Use /dreamwall pack to load the custom item models from Hugging Face.");
             } catch (IOException | InterruptedException e) {
@@ -176,11 +176,11 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
     }
 
     private JsonObject fetchMuseumPacket() throws IOException, InterruptedException {
-        String payload = "{\"data\":[\"Minecraft\",\"@afterblock\",\"object_photo\",\"a white AirPods case from a first year desk\",\"A small object that carried private worlds through public noise.\",null]}";
-        String callBody = post(spaceUrl() + "/gradio_api/call/curate_artifact", payload);
+        String payload = "{\"data\":[\"a white AirPods case from a first year desk\",\"A small object that carried private worlds through public noise.\",\"@afterblock\",null]}";
+        String callBody = post(spaceUrl() + "/gradio_api/call/quick_curate", payload);
         JsonObject call = JsonParser.parseString(callBody).getAsJsonObject();
         String eventId = call.get("event_id").getAsString();
-        String stream = get(spaceUrl() + "/gradio_api/call/curate_artifact/" + eventId);
+        String stream = get(spaceUrl() + "/gradio_api/call/quick_curate/" + eventId);
         for (String line : stream.split("\\R")) {
             if (line.startsWith("data: ")) {
                 JsonArray outputs = JsonParser.parseString(line.substring(6)).getAsJsonArray();

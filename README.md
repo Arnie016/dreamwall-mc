@@ -88,7 +88,7 @@ The MVP emits:
 - a named Gradio API endpoint: `hatch_pet`
 - a named Gradio API endpoint: `living_graffiti`
 - a named Gradio API endpoint: `living_canvas`
-- a named Gradio API endpoint: `curate_artifact`
+- a named Gradio API endpoint: `quick_curate`
 - generated texture PNGs in `assets/afterblock_textures/items/`
 - resource-pack skeleton in `resource-pack/AfterBlockMuseum/`
 - searchable full texture gallery in `assets/afterblock_textures/gallery/index.html`
@@ -103,18 +103,17 @@ The repo also includes a Paper plugin scaffold in [`paper-plugin/`](paper-plugin
 Use the Space API with the named endpoint:
 
 ```text
-POST https://build-small-hackathon-dreamwall-mc.hf.space/gradio_api/call/curate_artifact
+POST https://build-small-hackathon-dreamwall-mc.hf.space/gradio_api/call/quick_curate
 ```
 
 Input order:
 
 ```json
 [
-  "Arnav",
-  "@Wildstash",
-  "object_photo",
   "white AirPods from my first year of university",
-  "They carried private worlds through public noise during my first year away."
+  "They carried private worlds through public noise during my first year away.",
+  "@Wildstash",
+  null
 ]
 ```
 

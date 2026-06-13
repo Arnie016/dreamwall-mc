@@ -10,7 +10,7 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 - `/dreamwall fetch` calls the Space app domain and confirms the bridge can reach Hugging Face.
 - `/dreamwall pack` asks the player client to load the Hugging Face-hosted `AfterBlockMuseum.zip` resource pack.
 - `/dreamwall demo` places a safe local pedestal/sign proof, spawns an `ItemDisplay` relic, and gives the player a Paper item with `CustomModelData 730002`.
-- `/dreamwall import` calls the live `curate_artifact` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, and places a packet-derived pedestal/sign/`ItemDisplay`/item at the artifact coordinates.
+- `/dreamwall import` calls the live `quick_curate` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, and places a packet-derived pedestal/sign/`ItemDisplay`/item at the artifact coordinates.
 - `/dreamwall import here` uses the same live packet but places it two blocks in front of the player for fast video proof.
 - `/dreamwall museum where` prints the coordinate contract used by the Space and server.
 - `/dreamwall museum build` creates the 12 x 12 living museum campus at the configured origin, with plot pads, memory rails, hall gates, banner markers, and a `YOU ARE HERE` entry.
@@ -21,7 +21,7 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 
 ## Planned Placement Behavior
 
-The main Space endpoint is `curate_artifact`, which emits `dreamwall.museum.v1` with:
+The main Space endpoint is `quick_curate`, which emits `dreamwall.museum.v1` with:
 
 - artifact title
 - owner handle

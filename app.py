@@ -18,6 +18,8 @@ MODEL_ID = "dreamwall-local-semantic-fingerprint-v1"
 GRID = 32
 SCALE = 12
 PUBLIC_SPACE_URL = "https://build-small-hackathon-dreamwall-mc.hf.space"
+RESOURCE_PACK_URL = "https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip"
+RESOURCE_PACK_SHA1 = "42738bc973abb6a631bd9ba88ed3b2d7e8521800"
 TEXTURE_PAGE_SIZE = 96
 
 
@@ -59,6 +61,9 @@ MOOD_WORDS = {
 
 CANVAS_SIZE = 12
 PLOT_SCALE = 32
+GALLERY_ORIGIN_X = -(CANVAS_SIZE // 2) * PLOT_SCALE
+GALLERY_ORIGIN_Y = 80
+GALLERY_ORIGIN_Z = -(CANVAS_SIZE // 2) * PLOT_SCALE
 EXISTING_ARTWORKS = [
     {
         "title": "Bird above the broken sky",
@@ -963,7 +968,6 @@ def waypointcraft_html(artifact: dict) -> str:
 
 
 def server_setup_html() -> str:
-    pack_url = "https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip"
     return f"""
     <section class="server-setup">
       <div>
@@ -982,7 +986,7 @@ def server_setup_html() -> str:
           <span>2</span>
           <h3>Load Pack</h3>
           <p><code>/dreamwall pack</code></p>
-          <p>Pack URL: <code>{html_escape(pack_url)}</code></p>
+          <p>Pack URL: <code>{html_escape(RESOURCE_PACK_URL)}</code></p>
         </article>
         <article>
           <span>3</span>
@@ -999,13 +1003,72 @@ def server_setup_html() -> str:
       </div>
       <div class="server-formula">
         <strong>Coordinate contract</strong>
-        <code>world_x = -192 + plot_x * 32</code>
-        <code>world_z = -192 + plot_z * 32</code>
-        <code>world_y = 80</code>
+        <code>world_x = {GALLERY_ORIGIN_X} + plot_x * {PLOT_SCALE}</code>
+        <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
+        <code>world_y = {GALLERY_ORIGIN_Y}</code>
       </div>
       <p class="server-note">For the hackathon demo: create a relic in this Space, show its passport/packet, enter Minecraft, run the museum builder once, then import the same packet so the item appears at the exact map address.</p>
     </section>
     """
+
+
+def server_kit_text(artifact: dict) -> str:
+    coords = artifact["minecraft_coordinates"]
+    item = artifact.get("resource_pack_item", {})
+    command = minecraft_give_command(artifact)
+    config = f"""space-url: "{PUBLIC_SPACE_URL}"
+resource-pack-url: "{RESOURCE_PACK_URL}"
+resource-pack-sha1: "{RESOURCE_PACK_SHA1}"
+offer-resource-pack-on-join: false
+poll-enabled: false
+poll-seconds: 30
+gallery-world: "world"
+canvas-size: {CANVAS_SIZE}
+plot-size: {PLOT_SCALE}
+gallery-origin:
+  x: {GALLERY_ORIGIN_X}
+  y: {GALLERY_ORIGIN_Y}
+  z: {GALLERY_ORIGIN_Z}
+gallery-facing: "east"
+"""
+    total_plots = CANVAS_SIZE * CANVAS_SIZE
+    return "\n".join(
+        [
+            "AFTERBLOCK MINECRAFT SERVER KIT",
+            "",
+            f"Relic: {artifact['title']}",
+            f"Owner: {owner_display(artifact)}",
+            f"Route: {artifact['hall']} / {artifact['zone']}",
+            f"Plot: {artifact['plot']['x']}, {artifact['plot']['z']}",
+            f"XYZ: {coords['x']} {coords['y']} {coords['z']}",
+            f"CustomModelData: {item.get('custom_model_data', 0)}",
+            f"Give command: {command}",
+            "",
+            "1) Upload these files to PebbleHost",
+            "plugins/dreamwall-paper-bridge-0.1.0.jar",
+            "AfterBlockMuseum.zip",
+            "afterblock-demo-world.zip  # optional prebuilt demo world",
+            "",
+            "2) plugins/DreamWall/config.yml",
+            config.rstrip(),
+            "",
+            "3) First-run in-game commands",
+            "/dreamwall pack",
+            "/dreamwall museum build",
+            "/dreamwall museum check",
+            "/dreamwall import",
+            "",
+            "4) Expected proof",
+            "AfterBlock museum check:",
+            f"Plot pads: {total_plots}/{total_plots}",
+            f"Relic focus blocks: {total_plots}/{total_plots}",
+            "YOU ARE HERE beacon: present",
+            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)}.",
+            "",
+            "5) Live Space endpoint used by the Paper bridge",
+            f"{PUBLIC_SPACE_URL}/gradio_api/call/quick_curate",
+        ]
+    )
 
 
 def social_tag_for(owner_handle: str) -> str:
@@ -2189,6 +2252,7 @@ def curate_afterblock_artifact(
     command = minecraft_give_command(artifact)
     coordinates = coordinates_html(artifact)
     waypoint = waypointcraft_html(artifact)
+    server_kit = server_kit_text(artifact)
     return (
         preview_path,
         catalog_rows(collection),
@@ -2201,6 +2265,7 @@ def curate_afterblock_artifact(
         profile,
         passport,
         json.dumps(packet, indent=2),
+        server_kit,
     )
 
 
@@ -2221,14 +2286,14 @@ def quick_curate_afterblock_artifact(
 
 
 def place_in_museum(source_prompt: str, story_caption: str, owner_handle: str = "@Wildstash", relic_image_path: str | None = None):
-    preview, catalog, wall, model, command, coordinates, waypoint, placement, spirit, passport, packet, *_ = quick_curate_afterblock_artifact(
+    preview, catalog, wall, model, command, coordinates, waypoint, placement, spirit, passport, packet, server_kit, *_ = quick_curate_afterblock_artifact(
         source_prompt,
         story_caption,
         "Arnav",
         social_tag_for(owner_handle) or "@Wildstash",
         relic_image_path,
     )
-    return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall
+    return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall, server_kit
 
 
 def load_demo_artifact(name: str):
@@ -4671,6 +4736,13 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
 
         with gr.Tab("Minecraft Server"):
             gr.HTML(value=server_setup_html(), label="Minecraft server setup")
+            museum_server_kit = gr.Textbox(
+                value=INITIAL_MUSEUM_OUTPUTS[10],
+                label="Current relic server kit",
+                lines=28,
+                max_lines=34,
+                show_copy_button=True,
+            )
 
     quick_button.click(
         place_in_museum,
@@ -4686,6 +4758,7 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
             museum_catalog,
             museum_spirit,
             museum_wall,
+            museum_server_kit,
         ],
         api_name="quick_curate",
     )

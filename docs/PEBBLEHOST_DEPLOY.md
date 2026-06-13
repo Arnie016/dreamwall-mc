@@ -23,7 +23,7 @@ Current hashes from the verified local bundle:
 
 ```text
 e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148  AfterBlockMuseum.zip
-e3f0f1ebf34bdf565dfdf4e6575cca96e0aab80b27f67463b5637c85893e18f8  dreamwall-paper-bridge-0.1.0.jar
+7cb0b2c7a70a450f1467a2688998907d061691dba349b69d1cc1b88d44239bdb  dreamwall-paper-bridge-0.1.0.jar
 6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e  afterblock-demo-world.zip
 ```
 
@@ -102,7 +102,7 @@ Expected result:
 - `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, entrance signage, and a `YOU ARE HERE` beacon.
 - `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, and the entry beacon.
 - `/dreamwall demo` places a small pedestal, sign, visible `ItemDisplay`, and gives a Paper item using `CustomModelData 730002`.
-- `/dreamwall import here` calls the live `curate_artifact` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign/`ItemDisplay` beside the player, and gives a Paper item using the packet's `custom_model_data`.
+- `/dreamwall import here` calls the live `quick_curate` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign/`ItemDisplay` beside the player, and gives a Paper item using the packet's `custom_model_data`.
 - `/dreamwall import` places the packet-derived artifact at the generated museum coordinates. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
 
 If the Paper item looks like ordinary paper, the plugin is working but the resource pack is not loaded.
