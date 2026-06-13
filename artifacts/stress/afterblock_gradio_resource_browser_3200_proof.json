@@ -1,4 +1,5 @@
 {
+  "mode": "resource_browser_3200_github_raw_preview_strategy",
   "stats": {
     "total_items": 3200,
     "total_kinds": 70,
@@ -7,12 +8,12 @@
     "total_materials": 10,
     "page_count": 107
   },
-  "browse_gallery_count": 30,
-  "browse_rows_count": 30,
-  "browse_status": "Showing 30 of 3200 items | page 1/107 | base item: minecraft:paper",
+  "browse_gallery_count": 20,
+  "browse_rows_count": 20,
+  "browse_status": "Showing 20 of 3200 items | page 107/107 | base item: minecraft:paper",
+  "first_gallery_preview": "https://raw.githubusercontent.com/Arnie016/dreamwall-mc/main/assets/afterblock_textures/gallery/previews/afterblock_3181.png",
+  "last_page_contains_3200": true,
   "inspector_wall_present": true,
-  "inspector_material_present": true,
-  "quick_outputs": 10,
-  "quick_packet_present": true,
-  "quick_inferred_type": "object_photo"
+  "inspector_uses_raw_github": true,
+  "inspector_material_present": true
 }

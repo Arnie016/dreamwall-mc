@@ -8,6 +8,7 @@ Fast entry points for reviewing the generated Minecraft item library.
 - Library report: `assets/afterblock_textures/gallery/library_report.json`
 - Manifest: `assets/afterblock_textures/afterblock_manifest.json`
 - Resource pack ZIP: `resource-pack/AfterBlockMuseum.zip`
+- GitHub raw previews: `https://raw.githubusercontent.com/Arnie016/dreamwall-mc/main/assets/afterblock_textures/gallery/previews/afterblock_0001.png`
 - 3,200-pack stress proof: `artifacts/stress/afterblock_resource_pack_3200_stress.json`
 - Gradio resource browser proof: `artifacts/stress/afterblock_gradio_resource_browser_3200_proof.json`
 - Gradio UI proof: `artifacts/stress/afterblock_gradio_ui_screenshot.png`
@@ -54,3 +55,7 @@ Fast entry points for reviewing the generated Minecraft item library.
 - Resource pack: `https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip`
 - Gallery HTML: `https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/assets/afterblock_textures/gallery/index.html`
 - Manifest: `https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/assets/afterblock_textures/afterblock_manifest.json`
+
+## Live Preview Strategy
+
+The live Gradio Resource Pack Browser uses `TEXTURE_PREVIEW_BASE_URL`, defaulting to the committed GitHub raw preview folder. This lets the Space show all 3,200 texture previews without requiring 3,200 separate PNG files to be stored in the Space repo. The downloadable Minecraft resource-pack ZIP remains hosted on Hugging Face.

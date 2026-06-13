@@ -756,13 +756,24 @@ def texture_kind_choices() -> list[str]:
     return ["all"] + kinds
 
 
+def texture_preview_url(item_id: str) -> str:
+    base = os.getenv(
+        "TEXTURE_PREVIEW_BASE_URL",
+        "https://raw.githubusercontent.com/Arnie016/dreamwall-mc/main/assets/afterblock_textures/gallery/previews",
+    ).rstrip("/")
+    if base:
+        return f"{base}/{item_id}.png"
+    return f"assets/afterblock_textures/gallery/previews/{item_id}.png"
+
+
 def texture_inspection_html(items: list[dict], total: int, page_index: int, page_count: int) -> str:
     cards = []
     for item in items:
+        preview_url = texture_preview_url(item["id"])
         cards.append(
             f"""
             <article class="texture-inspect-card">
-              <img src="/file=assets/afterblock_textures/gallery/previews/{item['id']}.png" alt="{item['label']}">
+              <img src="{preview_url}" alt="{item['label']}">
               <div>
                 <strong>{item['label']}</strong>
                 <span>{item['kind']} · {item['shape']} · {item.get('element_count', '?')} cuboids</span>
@@ -796,7 +807,7 @@ def browse_texture_library(kind: str, page: int):
     items = manifest[start : start + page_size]
     gallery = [
         (
-            f"assets/afterblock_textures/gallery/previews/{item['id']}.png",
+            texture_preview_url(item["id"]),
             f"{item['label']} | CMD {item['custom_model_data']}",
         )
         for item in items
