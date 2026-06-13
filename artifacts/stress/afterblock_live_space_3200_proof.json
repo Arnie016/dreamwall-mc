@@ -1,0 +1,16 @@
+{
+  "mode": "live_space_3200_resource_browser_and_kiosk",
+  "url": "https://build-small-hackathon-dreamwall-mc.hf.space",
+  "elapsed_seconds": 96.73,
+  "browse_outputs": 4,
+  "browse_gallery_count": 20,
+  "browse_rows_count": 3,
+  "browse_inspector_present": true,
+  "browse_raw_preview_present": true,
+  "browse_last_page_status": "Showing 20 of 3200 items | page 107/107 | base item: minecraft:paper",
+  "browse_mentions_3200": true,
+  "browse_mentions_page_107": true,
+  "quick_outputs": 10,
+  "quick_packet_present": true,
+  "quick_inferred_type": "object_photo"
+}
