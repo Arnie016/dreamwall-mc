@@ -248,12 +248,16 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         player.getInventory().addItem(item, passport);
         placeDisplayRelic(world, base, item);
         placePassportLectern(world, base, passport);
+        if (!placeHere) {
+            placeLivingRoute(world, base, title, owner, hall);
+        }
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 38, 0.45, 0.65, 0.45, 0.015);
         player.sendMessage("Imported " + title + " by " + owner + " into " + hall + ".");
         player.sendMessage("Displayed item, placed passport lectern, and gave CustomModelData " + customModelData + ".");
         if (!placeHere) {
             player.sendMessage("Placed at packet coordinates " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ()
-                    + ". Use /dreamwall import here for a nearby proof.");
+                    + " and updated the lit route from YOU ARE HERE.");
+            player.sendMessage("Use /dreamwall import here for a nearby proof.");
         }
     }
 
@@ -517,6 +521,58 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
                 (canvasSize - 1) + "," + (canvasSize - 1) + " -> "
                         + (originX + (canvasSize - 1) * plotSize) + "," + (originZ + (canvasSize - 1) * plotSize),
                 "size " + plotSize);
+        placeStandingSign(world, centerX, y, entryZ + 7, "Route trail", "import relic", "then follow", "lit floor");
+    }
+
+    private void placeLivingRoute(World world, Location base, String title, String owner, String hall) {
+        int originX = galleryOriginX();
+        int originZ = galleryOriginZ();
+        int canvasSize = canvasSize();
+        int plotSize = plotSize();
+        int span = (canvasSize - 1) * plotSize;
+        int y = base.getBlockY();
+        int centerX = originX + span / 2;
+        int entryZ = originZ - 18;
+        int targetX = base.getBlockX();
+        int targetZ = base.getBlockZ();
+        int plotX = plotIndexForWorld(targetX, originX, plotSize, canvasSize);
+        int plotZ = plotIndexForWorld(targetZ, originZ, plotSize, canvasSize);
+        Material accent = hallAccent(hallIndexForPlot(plotX, plotZ));
+
+        drawRouteLine(world, centerX, entryZ, targetX, entryZ, y - 1, accent);
+        drawRouteLine(world, targetX, entryZ, targetX, targetZ, y - 1, accent);
+        setBlock(world, centerX, y, entryZ, Material.SEA_LANTERN);
+        setBlock(world, targetX, y, entryZ, Material.SEA_LANTERN);
+        setBlock(world, targetX, y, targetZ + 5, Material.GLOWSTONE);
+        placeStandingSign(world, centerX - 5, y, entryZ + 2, "Route alive", "last import", "plot " + plotX + "," + plotZ, "follow lights");
+        placeStandingSign(world, targetX - 6, y, targetZ + 4, "Arrived", title, owner, hall);
+    }
+
+    private void drawRouteLine(World world, int startX, int startZ, int endX, int endZ, int y, Material accent) {
+        int x = startX;
+        int z = startZ;
+        int dx = Integer.compare(endX, startX);
+        int dz = Integer.compare(endZ, startZ);
+        int steps = 0;
+        while (true) {
+            Material marker = steps % 8 == 0 ? Material.SEA_LANTERN : accent;
+            setBlock(world, x, y, z, marker);
+            if (x == endX && z == endZ) {
+                break;
+            }
+            if (x != endX) {
+                x += dx;
+            }
+            if (z != endZ) {
+                z += dz;
+            }
+            steps++;
+        }
+    }
+
+    private int plotIndexForWorld(int coordinate, int origin, int plotSize, int canvasSize) {
+        int plot = Math.round((coordinate - origin) / (float) plotSize);
+        return Math.max(0, Math.min(canvasSize - 1, plot));
     }
 
     private void placePlotSign(World world, int x, int y, int z, int plotX, int plotZ) {

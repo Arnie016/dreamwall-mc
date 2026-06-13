@@ -23,7 +23,7 @@ Current hashes from the verified local bundle:
 
 ```text
 e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148  AfterBlockMuseum.zip
-174b26e89c2a709ff789fd81e8603fe554b71ddab3d307f41876e4e058d13f76  dreamwall-paper-bridge-0.1.0.jar
+4bdbf4679db9599d32ff728dd9d7f28da5fb04cc725b78a2c0134754862b8f8b  dreamwall-paper-bridge-0.1.0.jar
 6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e  afterblock-demo-world.zip
 ```
 
@@ -124,7 +124,7 @@ Expected result:
 - `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, and the entry beacon.
 - `/dreamwall demo` places a small pedestal, sign, visible `ItemDisplay`, lectern passport book, and gives a Paper item using `CustomModelData 730002`.
 - `/dreamwall import here` calls the live `quick_curate` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign/`ItemDisplay`/lectern passport beside the player, and gives a Paper item using the packet's `custom_model_data`.
-- `/dreamwall import` places the packet-derived artifact at the generated museum coordinates. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
+- `/dreamwall import` places the packet-derived artifact at the generated museum coordinates and paints a lit route from the `YOU ARE HERE` entry to that plot. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
 
 If the Paper item looks like ordinary paper, the plugin is working but the resource pack is not loaded.
 
@@ -133,8 +133,8 @@ For the three-minute video, the best proof order is:
 1. Create a relic in the Space and show the passport/packet coordinate.
 2. Join the Paper server and run `/dreamwall museum build`.
 3. Run `/dreamwall museum check` to prove the map exists.
-4. Run `/dreamwall import` so the same relic appears at the exact generated plot.
-5. Walk from the `YOU ARE HERE` beacon to the plot pad and show the resource-pack item.
+4. Run `/dreamwall import` so the same relic appears at the exact generated plot and updates the route trail.
+5. Walk from the `YOU ARE HERE` beacon along the lit floor route to the plot pad and show the resource-pack item.
 
 ## Local Proof
 
