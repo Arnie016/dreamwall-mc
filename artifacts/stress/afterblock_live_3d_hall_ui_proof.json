@@ -1,0 +1,18 @@
+{
+  "mode": "live_space_3d_hall_ui_and_3200_browser",
+  "url": "https://build-small-hackathon-dreamwall-mc.hf.space",
+  "elapsed_seconds": 86.61,
+  "quick_outputs": 11,
+  "model_iframe_present": true,
+  "model_uses_threejs": true,
+  "wall_uses_hall_grid": true,
+  "wall_hall_count": 9,
+  "old_relic_grid_removed": true,
+  "optional_social_tag_blank": true,
+  "packet_has_sign_lines": true,
+  "placement_mentions_when": true,
+  "browse_outputs": 4,
+  "browse_status": "Showing 20 of 3200 items | page 107/107 | base item: minecraft:paper",
+  "browse_mentions_3200": true,
+  "browse_mentions_page_107": true
+}
