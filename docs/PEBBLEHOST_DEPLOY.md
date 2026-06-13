@@ -36,6 +36,27 @@ plugins/dreamwall-paper-bridge-0.1.0.jar
 AfterBlockMuseum.zip
 ```
 
+Credential-safe helper:
+
+```bash
+PEBBLEHOST_SFTP_USER="your-panel-sftp-username" bash scripts/pebblehost_upload.sh
+```
+
+Preview without connecting:
+
+```bash
+PEBBLEHOST_SFTP_USER="your-panel-sftp-username" bash scripts/pebblehost_upload.sh --dry-run
+```
+
+The helper uses the known SFTP host and username, prints local SHA256 hashes, prompts for the PebbleHost panel password through `sftp`, and uploads:
+
+```text
+plugins/dreamwall-paper-bridge-0.1.0.jar
+AfterBlockMuseum.zip
+afterblock-demo-world.zip
+afterblock-SHA256SUMS.txt
+```
+
 Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the server root before restart. It contains the locally verified `world`, `world_nether`, `world_the_end`, and `server.properties` from the smoke test.
 
 The known PebbleHost SFTP endpoint from the account screen was:
