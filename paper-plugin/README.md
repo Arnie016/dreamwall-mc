@@ -12,6 +12,8 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 - `/dreamwall demo` places a safe local pedestal/sign proof, spawns an `ItemDisplay` relic, and gives the player a Paper item with `CustomModelData 730002`.
 - `/dreamwall import` calls the live `curate_artifact` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, and places a packet-derived pedestal/sign/`ItemDisplay`/item at the artifact coordinates.
 - `/dreamwall import here` uses the same live packet but places it two blocks in front of the player for fast video proof.
+- `/dreamwall museum where` prints the coordinate contract used by the Space and server.
+- `/dreamwall museum build` creates the 12 x 12 living museum campus at the configured origin, with plot pads, memory rails, hall gates, banner markers, and a `YOU ARE HERE` entry.
 - A scheduled task can be extended to poll approved museum artifacts.
 - The Space now emits `dreamwall.museum.v1`, the main AfterBlock packet for the hackathon demo.
 - The Space also emits `living_canvas.mc.v1` for the secondary wall/canvas mode.
@@ -128,8 +130,9 @@ The jar will be in `target/dreamwall-paper-bridge-0.1.0.jar`.
 5. Edit `plugins/DreamWall/config.yml` if needed.
 6. Run `/dreamwall fetch` in game or console.
 7. Run `/dreamwall pack` in game and accept the resource pack.
-8. Run `/dreamwall demo` in game to place a pedestal proof, visible `ItemDisplay`, and receive the AirPods demo item.
-9. Run `/dreamwall import here` in game to place a live Hugging Face artifact packet beside you.
+8. Run `/dreamwall museum build` once to create the coordinate-accurate museum campus.
+9. Run `/dreamwall demo` in game to place a pedestal proof, visible `ItemDisplay`, and receive the AirPods demo item.
+10. Run `/dreamwall import` to place a live Hugging Face artifact packet at its generated plot, or `/dreamwall import here` for a nearby proof.
 
 ## Local Server Proof
 

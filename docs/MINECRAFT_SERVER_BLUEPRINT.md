@@ -55,10 +55,32 @@ total canvas: 384 x 384 blocks
 ## Museum Rules
 
 - Each submission gets a deterministic hall, zone, plot, and Minecraft coordinate.
+- The server build must preserve the Space coordinate contract exactly:
+  - `plot (0,0) -> XYZ -192 80 -192`
+  - `plot (11,11) -> XYZ 160 80 160`
+  - `world_x = -192 + plot_x * 32`
+  - `world_z = -192 + plot_z * 32`
 - Curation score replaces market value.
 - Plaques show title, owner label, optional social tag, spirit first line, and hall.
 - Resonance links connect nearby or emotionally similar artifacts.
 - No real-money ownership, blockchain, or NFT claims.
+
+## Built Campus Command
+
+The Paper bridge includes a bounded museum builder:
+
+```text
+/dreamwall museum where
+/dreamwall museum build
+```
+
+`/dreamwall museum build` creates the first live campus proof:
+
+- 12 x 12 marked plot pads matching the Space's generated coordinates.
+- Memory rails between plots so the campus reads as one living map, not isolated pedestals.
+- Nine hall gates with colored banner markers.
+- Entrance signage and a `YOU ARE HERE` beacon.
+- A clear import path: `/dreamwall import` places the generated packet on its exact plot pad, while `/dreamwall import here` remains the quick nearby proof.
 
 ## First Server Milestone
 
@@ -66,10 +88,11 @@ total canvas: 384 x 384 blocks
 2. Install Paper and WorldEdit.
 3. Upload DreamWall bridge jar.
 4. Run `/dreamwall fetch`.
-5. Call the `curate_artifact` Space endpoint and copy the `dreamwall.museum.v1` packet.
-6. Manually place one pedestal/sign at `museum.coordinates`.
-7. Add signs for title, owner label, optional social tag, hall, plaque line, and spirit first line.
-8. Record a 20-second proof clip.
+5. Run `/dreamwall pack` and accept the resource pack.
+6. Run `/dreamwall museum build` once.
+7. Create a relic in the Space and show its generated plot/XYZ.
+8. Run `/dreamwall import` to place the packet at `museum.coordinates`.
+9. Record a 20-second proof clip from the `YOU ARE HERE` beacon to the placed relic.
 
 ## Museum Packet
 

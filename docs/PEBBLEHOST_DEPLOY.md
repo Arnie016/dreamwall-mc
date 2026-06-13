@@ -21,8 +21,8 @@ dist/pebblehost/SHA256SUMS
 Current hashes from the verified local bundle:
 
 ```text
-d76b0d27e2eab35bc6cb19279c71024e30980f8df8c7dca668094c632924e4c3  AfterBlockMuseum.zip
-7521fb229db9aae1ccd00334608abe29309a41e8faa9fa2fdf761930df0b5c8a  dreamwall-paper-bridge-0.1.0.jar
+e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148  AfterBlockMuseum.zip
+061bdb4d23318826b660fb4845125e1713de2040841038019721ebc66e3c509c  dreamwall-paper-bridge-0.1.0.jar
 ```
 
 ## Upload Targets
@@ -56,7 +56,13 @@ The plugin also includes this default Hugging Face-hosted pack URL:
 https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip
 ```
 
-Run `/dreamwall pack` in-game to ask the client to load that pack. Set `offer-resource-pack-on-join: true` in `plugins/DreamWall/config.yml` only if you want the server to offer it automatically when players join.
+Run `/dreamwall pack` in-game to ask the client to load that pack. The current SHA1 for Minecraft's resource-pack hash is:
+
+```text
+42738bc973abb6a631bd9ba88ed3b2d7e8521800
+```
+
+Set `offer-resource-pack-on-join: true` in `plugins/DreamWall/config.yml` only if you want the server to offer it automatically when players join.
 
 The pack contains:
 
@@ -77,6 +83,8 @@ After restarting the server, run these as an op player:
 /dreamwall
 /dreamwall fetch
 /dreamwall pack
+/dreamwall museum where
+/dreamwall museum build
 /dreamwall demo
 /dreamwall import here
 ```
@@ -85,10 +93,20 @@ Expected result:
 
 - `/dreamwall fetch` reports the Hugging Face Space is reachable.
 - `/dreamwall pack` asks the player to load `AfterBlockMuseum.zip`.
+- `/dreamwall museum where` prints the exact Space-to-world coordinate formula.
+- `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, entrance signage, and a `YOU ARE HERE` beacon.
 - `/dreamwall demo` places a small pedestal, sign, visible `ItemDisplay`, and gives a Paper item using `CustomModelData 730002`.
 - `/dreamwall import here` calls the live `curate_artifact` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign/`ItemDisplay` beside the player, and gives a Paper item using the packet's `custom_model_data`.
+- `/dreamwall import` places the packet-derived artifact at the generated museum coordinates. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
 
 If the Paper item looks like ordinary paper, the plugin is working but the resource pack is not loaded.
+
+For the three-minute video, the best proof order is:
+
+1. Create a relic in the Space and show the passport/packet coordinate.
+2. Join the Paper server and run `/dreamwall museum build`.
+3. Run `/dreamwall import` so the same relic appears at the exact generated plot.
+4. Walk from the `YOU ARE HERE` beacon to the plot pad and show the resource-pack item.
 
 ## Local Proof
 

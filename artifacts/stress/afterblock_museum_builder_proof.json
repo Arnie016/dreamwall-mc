@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-06-14T03:00:00+08:00",
+  "scope": "AfterBlock Paper bridge museum campus builder and Space server setup tab",
+  "coordinate_contract": {
+    "plot_0_0": "-192 80 -192",
+    "plot_11_11": "160 80 160",
+    "formula": {
+      "world_x": "-192 + plot_x * 32",
+      "world_y": "80",
+      "world_z": "-192 + plot_z * 32"
+    }
+  },
+  "new_commands": [
+    "/dreamwall museum where",
+    "/dreamwall museum build"
+  ],
+  "local_checks": [
+    ".venv/bin/python -m py_compile app.py tools/generate_afterblock_textures.py",
+    "javac --release 17 with local Paper API, Gson, and transitive Maven cache classpath",
+    "manual shaded jar rebuilt with compiled plugin classes, plugin.yml, config.yml, and Gson 2.11.0"
+  ],
+  "bundle": {
+    "resource_pack_sha1": "42738bc973abb6a631bd9ba88ed3b2d7e8521800",
+    "resource_pack_sha256": "e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148",
+    "plugin_jar_sha1": "13e09311cf017554ec19f5c6d0efd02608eba33b",
+    "plugin_jar_sha256": "061bdb4d23318826b660fb4845125e1713de2040841038019721ebc66e3c509c"
+  },
+  "notes": [
+    "The builder is op-only through the existing dreamwall.use permission.",
+    "The actual target server still needs the PebbleHost panel password for SFTP upload.",
+    "The local dist/pebblehost bundle is ignored by git and prepared for manual upload."
+  ]
+}

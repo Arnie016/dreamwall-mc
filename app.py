@@ -962,6 +962,51 @@ def waypointcraft_html(artifact: dict) -> str:
     """
 
 
+def server_setup_html() -> str:
+    pack_url = "https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip"
+    return f"""
+    <section class="server-setup">
+      <div>
+        <h2>Minecraft Server Setup</h2>
+        <p>The Space is the creation terminal. The Paper server is the persistent museum: one 12x12 campus, 144 exact plot addresses, and every relic packet lands at its generated XYZ.</p>
+      </div>
+      <div class="server-grid">
+        <article>
+          <span>1</span>
+          <h3>Upload</h3>
+          <p><code>plugins/dreamwall-paper-bridge-0.1.0.jar</code></p>
+          <p><code>AfterBlockMuseum.zip</code></p>
+        </article>
+        <article>
+          <span>2</span>
+          <h3>Load Pack</h3>
+          <p><code>/dreamwall pack</code></p>
+          <p>Pack URL: <code>{html_escape(pack_url)}</code></p>
+        </article>
+        <article>
+          <span>3</span>
+          <h3>Build Museum</h3>
+          <p><code>/dreamwall museum build</code></p>
+          <p>Creates the living 12x12 map at plot (0,0) XYZ <code>-192 80 -192</code>.</p>
+        </article>
+        <article>
+          <span>4</span>
+          <h3>Place Relics</h3>
+          <p><code>/dreamwall import</code></p>
+          <p>Imports a Space packet at the generated coordinate. Use <code>/dreamwall import here</code> for fast video proof.</p>
+        </article>
+      </div>
+      <div class="server-formula">
+        <strong>Coordinate contract</strong>
+        <code>world_x = -192 + plot_x * 32</code>
+        <code>world_z = -192 + plot_z * 32</code>
+        <code>world_y = 80</code>
+      </div>
+      <p class="server-note">For the hackathon demo: create a relic in this Space, show its passport/packet, enter Minecraft, run the museum builder once, then import the same packet so the item appears at the exact map address.</p>
+    </section>
+    """
+
+
 def social_tag_for(owner_handle: str) -> str:
     handle = (owner_handle or "").strip()
     if handle and not handle.startswith("@"):
@@ -4045,6 +4090,68 @@ body, .gradio-container {
   border: 1px solid #5c4d32;
   padding: 12px;
 }
+.server-setup {
+  background: #151410;
+  border: 2px solid #75623d;
+  box-shadow: 0 8px 0 #070604;
+  color: #f5ddb0;
+  padding: 20px;
+}
+.server-setup h2 {
+  margin: 0 0 8px;
+  color: #ffe4a3;
+  font-size: 30px;
+}
+.server-setup p {
+  color: #d4c4a0 !important;
+}
+.server-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+.server-grid article {
+  background: #242017;
+  border: 1px solid #5c4d32;
+  padding: 14px;
+  min-height: 166px;
+}
+.server-grid article span {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: #f2c15f;
+  color: #1b1308;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+.server-grid h3 {
+  margin: 0 0 8px;
+  color: #ffe4a3;
+  font-size: 18px;
+}
+.server-setup code {
+  background: #ead7a6 !important;
+  color: #1b1308 !important;
+  padding: 2px 6px;
+  overflow-wrap: anywhere;
+}
+.server-formula {
+  display: grid;
+  grid-template-columns: 180px repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+  background: #0e0f0d;
+  border: 1px solid #5c4d32;
+  padding: 12px;
+}
+.server-note {
+  margin: 16px 0 0;
+  border-left: 4px solid #f25a0b;
+  padding-left: 12px;
+}
 .passport-card {
   background:
     linear-gradient(135deg, rgba(255, 226, 154, .1), transparent 35%),
@@ -4415,6 +4522,10 @@ textarea, input {
   .wall-heading {
     display: block;
   }
+  .server-grid,
+  .server-formula {
+    grid-template-columns: 1fr;
+  }
 }
 """
 
@@ -4556,6 +4667,9 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
 
         with gr.Tab("Relic Profile"):
             museum_spirit = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[8])
+
+        with gr.Tab("Minecraft Server"):
+            gr.HTML(value=server_setup_html(), label="Minecraft server setup")
 
     quick_button.click(
         place_in_museum,

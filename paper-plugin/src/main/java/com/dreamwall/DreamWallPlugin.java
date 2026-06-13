@@ -74,6 +74,10 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             importArtifact(sender, placeHere);
             return true;
         }
+        if (args.length > 0 && args[0].equalsIgnoreCase("museum")) {
+            handleMuseumCommand(sender, args);
+            return true;
+        }
         if (args.length > 0 && args[0].equalsIgnoreCase("pack")) {
             offerResourcePack(sender);
             return true;
@@ -86,6 +90,8 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         sender.sendMessage("Use /dreamwall pack to load the AfterBlockMuseum resource pack.");
         sender.sendMessage("Use /dreamwall demo in-game to place a safe AfterBlock pedestal proof.");
         sender.sendMessage("Use /dreamwall import or /dreamwall import here to place a live Space artifact packet.");
+        sender.sendMessage("Use /dreamwall museum where to inspect the exact plot map.");
+        sender.sendMessage("Use /dreamwall museum build to create the 12x12 living museum campus.");
         return true;
     }
 
@@ -274,6 +280,242 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         sender.sendMessage("Run /dreamwall pack and accept the pack to see the generated item model.");
     }
 
+    private void handleMuseumCommand(CommandSender sender, String[] args) {
+        if (args.length < 2 || args[1].equalsIgnoreCase("where")) {
+            sendMuseumMap(sender);
+            return;
+        }
+        if (args[1].equalsIgnoreCase("build")) {
+            buildMuseumCampus(sender);
+            return;
+        }
+        sender.sendMessage("Use /dreamwall museum where or /dreamwall museum build.");
+    }
+
+    private void sendMuseumMap(CommandSender sender) {
+        int originX = galleryOriginX();
+        int originY = galleryOriginY();
+        int originZ = galleryOriginZ();
+        int canvasSize = canvasSize();
+        int plotSize = plotSize();
+        int lastX = originX + (canvasSize - 1) * plotSize;
+        int lastZ = originZ + (canvasSize - 1) * plotSize;
+        sender.sendMessage("AfterBlock museum coordinate map:");
+        sender.sendMessage("Plot (0,0) -> XYZ " + originX + " " + originY + " " + originZ);
+        sender.sendMessage("Plot (" + (canvasSize - 1) + "," + (canvasSize - 1) + ") -> XYZ " + lastX + " " + originY + " " + lastZ);
+        sender.sendMessage("Formula: x=" + originX + " + plotX*" + plotSize + ", z=" + originZ + " + plotZ*" + plotSize + ".");
+        sender.sendMessage("Run /dreamwall museum build to create pads, hall gates, banners, and a You Are Here entry.");
+        sender.sendMessage("Then run /dreamwall import to place a Space artifact at its packet coordinates.");
+    }
+
+    private void buildMuseumCampus(CommandSender sender) {
+        World world = museumWorld(sender);
+        if (world == null) {
+            sender.sendMessage("DreamWall gallery-world is not loaded: " + getConfig().getString("gallery-world", "world"));
+            return;
+        }
+        int originX = galleryOriginX();
+        int originY = galleryOriginY();
+        int originZ = galleryOriginZ();
+        int canvasSize = canvasSize();
+        int plotSize = plotSize();
+        int span = (canvasSize - 1) * plotSize;
+
+        sender.sendMessage("Building AfterBlock Museum campus at plot (0,0) XYZ "
+                + originX + " " + originY + " " + originZ + " ...");
+
+        buildMemoryRails(world, originX, originY, originZ, canvasSize, plotSize, span);
+        buildPlotPads(world, originX, originY, originZ, canvasSize, plotSize);
+        buildHallGates(world, originX, originY, originZ, plotSize);
+        buildEntrance(world, originX, originY, originZ, canvasSize, plotSize, span);
+
+        if (sender instanceof Player player && player.getWorld().equals(world)) {
+            player.teleport(new Location(world, originX + span / 2.0 + 0.5, originY + 2, originZ - 22.5, 0, 0));
+        }
+        sender.sendMessage("AfterBlock Museum campus built. Every Space packet coordinate now lands on a marked plot pad.");
+        sender.sendMessage("Next: /dreamwall pack, accept the pack, then /dreamwall import or /dreamwall import here.");
+    }
+
+    private World museumWorld(CommandSender sender) {
+        if (sender instanceof Player player) {
+            return player.getWorld();
+        }
+        return getServer().getWorld(getConfig().getString("gallery-world", "world"));
+    }
+
+    private void buildMemoryRails(World world, int originX, int y, int originZ, int canvasSize, int plotSize, int span) {
+        int minX = originX - 8;
+        int maxX = originX + span + 8;
+        int minZ = originZ - 8;
+        int maxZ = originZ + span + 8;
+        for (int plot = 0; plot < canvasSize; plot++) {
+            int lineX = originX + plot * plotSize;
+            int lineZ = originZ + plot * plotSize;
+            for (int z = minZ; z <= maxZ; z++) {
+                setBlock(world, lineX - 1, y - 1, z, Material.POLISHED_BLACKSTONE);
+                setBlock(world, lineX, y - 1, z, Material.DEEPSLATE_TILES);
+                setBlock(world, lineX + 1, y - 1, z, Material.POLISHED_BLACKSTONE);
+            }
+            for (int x = minX; x <= maxX; x++) {
+                setBlock(world, x, y - 1, lineZ - 1, Material.POLISHED_BLACKSTONE);
+                setBlock(world, x, y - 1, lineZ, Material.DEEPSLATE_TILES);
+                setBlock(world, x, y - 1, lineZ + 1, Material.POLISHED_BLACKSTONE);
+            }
+        }
+        for (int x = minX; x <= maxX; x++) {
+            setBlock(world, x, y - 1, minZ, Material.CHISELED_POLISHED_BLACKSTONE);
+            setBlock(world, x, y - 1, maxZ, Material.CHISELED_POLISHED_BLACKSTONE);
+        }
+        for (int z = minZ; z <= maxZ; z++) {
+            setBlock(world, minX, y - 1, z, Material.CHISELED_POLISHED_BLACKSTONE);
+            setBlock(world, maxX, y - 1, z, Material.CHISELED_POLISHED_BLACKSTONE);
+        }
+    }
+
+    private void buildPlotPads(World world, int originX, int y, int originZ, int canvasSize, int plotSize) {
+        for (int plotX = 0; plotX < canvasSize; plotX++) {
+            for (int plotZ = 0; plotZ < canvasSize; plotZ++) {
+                int x = originX + plotX * plotSize;
+                int z = originZ + plotZ * plotSize;
+                int hall = hallIndexForPlot(plotX, plotZ);
+                Material accent = hallAccent(hall);
+                for (int dx = -5; dx <= 5; dx++) {
+                    for (int dz = -5; dz <= 5; dz++) {
+                        boolean edge = Math.abs(dx) == 5 || Math.abs(dz) == 5;
+                        setBlock(world, x + dx, y - 1, z + dz, edge ? accent : Material.SMOOTH_BASALT);
+                    }
+                }
+                setBlock(world, x, y, z, Material.POLISHED_DEEPSLATE);
+                setBlock(world, x, y + 1, z, Material.AMETHYST_BLOCK);
+                setBlock(world, x - 4, y, z - 4, Material.SEA_LANTERN);
+                setBlock(world, x + 4, y, z - 4, Material.SEA_LANTERN);
+                setBlock(world, x - 4, y, z + 4, Material.SEA_LANTERN);
+                setBlock(world, x + 4, y, z + 4, Material.SEA_LANTERN);
+                placePlotSign(world, x, y, z, plotX, plotZ);
+            }
+        }
+    }
+
+    private void buildHallGates(World world, int originX, int y, int originZ, int plotSize) {
+        String[] names = {
+                "Hall of Firsts", "Hall of Companions", "Turning Points",
+                "Hall of Worlds", "Soft Things", "Hall of Tools",
+                "Lost Signals", "Painting Hall", "Spirit Grove"
+        };
+        String[] subtitles = {
+                "Threshold Arcade", "Quiet Bench Passage", "Pressure Door",
+                "Blue Lantern Corridor", "Shelter Nook", "Workshop Walk",
+                "Static Archive", "Frame Gallery", "Living Atrium"
+        };
+        for (int hall = 0; hall < names.length; hall++) {
+            int regionX = hall % 3;
+            int regionZ = hall / 3;
+            int centerX = originX + regionX * plotSize * 4 + plotSize + plotSize / 2;
+            int centerZ = originZ + regionZ * plotSize * 4 + plotSize + plotSize / 2;
+            Material accent = hallAccent(hall);
+            for (int dx = -7; dx <= 7; dx++) {
+                setBlock(world, centerX + dx, y, centerZ, accent);
+                setBlock(world, centerX + dx, y + 5, centerZ, accent);
+            }
+            for (int dy = 1; dy <= 4; dy++) {
+                setBlock(world, centerX - 7, y + dy, centerZ, Material.DARK_OAK_LOG);
+                setBlock(world, centerX + 7, y + dy, centerZ, Material.DARK_OAK_LOG);
+            }
+            setBlock(world, centerX - 9, y + 2, centerZ, bannerForHall(hall));
+            setBlock(world, centerX + 9, y + 2, centerZ, bannerForHall(hall));
+            placeStandingSign(world, centerX, y + 1, centerZ - 2, names[hall], subtitles[hall], "plots "
+                    + (regionX * 4) + "-" + (regionX * 4 + 3), "z "
+                    + (regionZ * 4) + "-" + (regionZ * 4 + 3));
+        }
+    }
+
+    private void buildEntrance(World world, int originX, int y, int originZ, int canvasSize, int plotSize, int span) {
+        int centerX = originX + span / 2;
+        int entryZ = originZ - 22;
+        for (int dx = -14; dx <= 14; dx++) {
+            for (int dz = -5; dz <= 5; dz++) {
+                boolean edge = Math.abs(dx) == 14 || Math.abs(dz) == 5;
+                setBlock(world, centerX + dx, y - 1, entryZ + dz, edge ? Material.GOLD_BLOCK : Material.POLISHED_DEEPSLATE);
+            }
+        }
+        for (int dy = 0; dy <= 8; dy++) {
+            setBlock(world, centerX - 12, y + dy, entryZ, Material.DARK_OAK_LOG);
+            setBlock(world, centerX + 12, y + dy, entryZ, Material.DARK_OAK_LOG);
+        }
+        for (int dx = -12; dx <= 12; dx++) {
+            setBlock(world, centerX + dx, y + 8, entryZ, Material.GOLD_BLOCK);
+        }
+        setBlock(world, centerX, y, entryZ + 2, Material.LODESTONE);
+        setBlock(world, centerX, y + 1, entryZ + 2, Material.BEACON);
+        placeStandingSign(world, centerX - 4, y, entryZ - 2, "YOU ARE HERE", "AfterBlock", "Plot map alive", "Run import");
+        placeStandingSign(world, centerX + 4, y, entryZ - 2, "Packet map", "0,0 -> " + originX + "," + originZ,
+                (canvasSize - 1) + "," + (canvasSize - 1) + " -> "
+                        + (originX + (canvasSize - 1) * plotSize) + "," + (originZ + (canvasSize - 1) * plotSize),
+                "size " + plotSize);
+    }
+
+    private void placePlotSign(World world, int x, int y, int z, int plotX, int plotZ) {
+        placeStandingSign(world, x + 6, y, z + 4, "Plot " + plotX + "," + plotZ, "XYZ " + x + " " + y, "Z " + z, "packet lands here");
+    }
+
+    private void placeStandingSign(World world, int x, int y, int z, String line0, String line1, String line2, String line3) {
+        Block block = world.getBlockAt(x, y, z);
+        block.setType(Material.OAK_SIGN, false);
+        if (block.getState() instanceof Sign sign) {
+            sign.setLine(0, trimLine(line0));
+            sign.setLine(1, trimLine(line1));
+            sign.setLine(2, trimLine(line2));
+            sign.setLine(3, trimLine(line3));
+            sign.update();
+        }
+    }
+
+    private int hallIndexForPlot(int plotX, int plotZ) {
+        return Math.min(2, plotX / 4) + Math.min(2, plotZ / 4) * 3;
+    }
+
+    private Material hallAccent(int hall) {
+        Material[] accents = {
+                Material.YELLOW_TERRACOTTA, Material.LIME_TERRACOTTA, Material.RED_TERRACOTTA,
+                Material.BLUE_TERRACOTTA, Material.PINK_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA,
+                Material.PURPLE_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.GREEN_TERRACOTTA
+        };
+        return accents[Math.floorMod(hall, accents.length)];
+    }
+
+    private Material bannerForHall(int hall) {
+        Material[] banners = {
+                Material.YELLOW_BANNER, Material.LIME_BANNER, Material.RED_BANNER,
+                Material.BLUE_BANNER, Material.PINK_BANNER, Material.LIGHT_GRAY_BANNER,
+                Material.PURPLE_BANNER, Material.ORANGE_BANNER, Material.GREEN_BANNER
+        };
+        return banners[Math.floorMod(hall, banners.length)];
+    }
+
+    private void setBlock(World world, int x, int y, int z, Material material) {
+        world.getBlockAt(x, y, z).setType(material, false);
+    }
+
+    private int canvasSize() {
+        return Math.max(1, getConfig().getInt("canvas-size", 12));
+    }
+
+    private int plotSize() {
+        return Math.max(8, getConfig().getInt("plot-size", 32));
+    }
+
+    private int galleryOriginX() {
+        return getConfig().getInt("gallery-origin.x", -192);
+    }
+
+    private int galleryOriginY() {
+        return getConfig().getInt("gallery-origin.y", 80);
+    }
+
+    private int galleryOriginZ() {
+        return getConfig().getInt("gallery-origin.z", -192);
+    }
+
     private String get(String url) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -371,7 +613,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
     }
 
     private String resourcePackSha1() {
-        return getConfig().getString("resource-pack-sha1", "b82b590be18a659bf4dfb447fa63f36f2f457583");
+        return getConfig().getString("resource-pack-sha1", "42738bc973abb6a631bd9ba88ed3b2d7e8521800");
     }
 
     private byte[] resourcePackSha1Bytes() {
