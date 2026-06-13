@@ -976,6 +976,7 @@ def server_setup_html() -> str:
           <h3>Upload</h3>
           <p><code>plugins/dreamwall-paper-bridge-0.1.0.jar</code></p>
           <p><code>AfterBlockMuseum.zip</code></p>
+          <p><code>afterblock-demo-world.zip</code> optional</p>
         </article>
         <article>
           <span>2</span>
@@ -987,7 +988,7 @@ def server_setup_html() -> str:
           <span>3</span>
           <h3>Build Museum</h3>
           <p><code>/dreamwall museum build</code></p>
-          <p>Creates the living 12x12 map at plot (0,0) XYZ <code>-192 80 -192</code>.</p>
+          <p>Creates the living 12x12 map at plot (0,0) XYZ <code>-192 80 -192</code>. Verify it with <code>/dreamwall museum check</code>.</p>
         </article>
         <article>
           <span>4</span>

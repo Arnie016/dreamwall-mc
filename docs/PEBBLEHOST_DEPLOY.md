@@ -15,6 +15,7 @@ Prepared local bundle:
 ```text
 dist/pebblehost/dreamwall-paper-bridge-0.1.0.jar
 dist/pebblehost/AfterBlockMuseum.zip
+dist/pebblehost/afterblock-demo-world.zip
 dist/pebblehost/SHA256SUMS
 ```
 
@@ -22,7 +23,8 @@ Current hashes from the verified local bundle:
 
 ```text
 e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148  AfterBlockMuseum.zip
-061bdb4d23318826b660fb4845125e1713de2040841038019721ebc66e3c509c  dreamwall-paper-bridge-0.1.0.jar
+e3f0f1ebf34bdf565dfdf4e6575cca96e0aab80b27f67463b5637c85893e18f8  dreamwall-paper-bridge-0.1.0.jar
+6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e  afterblock-demo-world.zip
 ```
 
 ## Upload Targets
@@ -33,6 +35,8 @@ Upload with SFTP or the PebbleHost file manager:
 plugins/dreamwall-paper-bridge-0.1.0.jar
 AfterBlockMuseum.zip
 ```
+
+Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the server root before restart. It contains the locally verified `world`, `world_nether`, `world_the_end`, and `server.properties` from the smoke test.
 
 The known PebbleHost SFTP endpoint from the account screen was:
 
@@ -85,6 +89,7 @@ After restarting the server, run these as an op player:
 /dreamwall pack
 /dreamwall museum where
 /dreamwall museum build
+/dreamwall museum check
 /dreamwall demo
 /dreamwall import here
 ```
@@ -95,6 +100,7 @@ Expected result:
 - `/dreamwall pack` asks the player to load `AfterBlockMuseum.zip`.
 - `/dreamwall museum where` prints the exact Space-to-world coordinate formula.
 - `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, entrance signage, and a `YOU ARE HERE` beacon.
+- `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, and the entry beacon.
 - `/dreamwall demo` places a small pedestal, sign, visible `ItemDisplay`, and gives a Paper item using `CustomModelData 730002`.
 - `/dreamwall import here` calls the live `curate_artifact` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign/`ItemDisplay` beside the player, and gives a Paper item using the packet's `custom_model_data`.
 - `/dreamwall import` places the packet-derived artifact at the generated museum coordinates. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
@@ -105,19 +111,21 @@ For the three-minute video, the best proof order is:
 
 1. Create a relic in the Space and show the passport/packet coordinate.
 2. Join the Paper server and run `/dreamwall museum build`.
-3. Run `/dreamwall import` so the same relic appears at the exact generated plot.
-4. Walk from the `YOU ARE HERE` beacon to the plot pad and show the resource-pack item.
+3. Run `/dreamwall museum check` to prove the map exists.
+4. Run `/dreamwall import` so the same relic appears at the exact generated plot.
+5. Walk from the `YOU ARE HERE` beacon to the plot pad and show the resource-pack item.
 
 ## Local Proof
 
 Codex verified the plugin boots on Paper before PebbleHost install:
 
 ```text
-Paper 1.21.4 build 232
+Paper 1.21.11 build 127
 Java Temurin 21.0.11
 DreamWall enabled
 dreamwall fetch reached the Hugging Face Space
 dreamwall pack printed the public pack URL and SHA1
+dreamwall museum check reported 144/144 pads after a clean restart
 ```
 
 Proof file:

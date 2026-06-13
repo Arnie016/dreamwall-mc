@@ -14,6 +14,7 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 - `/dreamwall import here` uses the same live packet but places it two blocks in front of the player for fast video proof.
 - `/dreamwall museum where` prints the coordinate contract used by the Space and server.
 - `/dreamwall museum build` creates the 12 x 12 living museum campus at the configured origin, with plot pads, memory rails, hall gates, banner markers, and a `YOU ARE HERE` entry.
+- `/dreamwall museum check` verifies that all 144 plot pads, relic focus blocks, and the entry beacon exist in the current world.
 - A scheduled task can be extended to poll approved museum artifacts.
 - The Space now emits `dreamwall.museum.v1`, the main AfterBlock packet for the hackathon demo.
 - The Space also emits `living_canvas.mc.v1` for the secondary wall/canvas mode.
@@ -131,8 +132,9 @@ The jar will be in `target/dreamwall-paper-bridge-0.1.0.jar`.
 6. Run `/dreamwall fetch` in game or console.
 7. Run `/dreamwall pack` in game and accept the resource pack.
 8. Run `/dreamwall museum build` once to create the coordinate-accurate museum campus.
-9. Run `/dreamwall demo` in game to place a pedestal proof, visible `ItemDisplay`, and receive the AirPods demo item.
-10. Run `/dreamwall import` to place a live Hugging Face artifact packet at its generated plot, or `/dreamwall import here` for a nearby proof.
+9. Run `/dreamwall museum check` to confirm the built world matches the Space coordinate map.
+10. Run `/dreamwall demo` in game to place a pedestal proof, visible `ItemDisplay`, and receive the AirPods demo item.
+11. Run `/dreamwall import` to place a live Hugging Face artifact packet at its generated plot, or `/dreamwall import here` for a nearby proof.
 
 ## Local Server Proof
 

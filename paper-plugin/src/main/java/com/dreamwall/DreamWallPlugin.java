@@ -289,7 +289,11 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             buildMuseumCampus(sender);
             return;
         }
-        sender.sendMessage("Use /dreamwall museum where or /dreamwall museum build.");
+        if (args[1].equalsIgnoreCase("check")) {
+            checkMuseumCampus(sender);
+            return;
+        }
+        sender.sendMessage("Use /dreamwall museum where, /dreamwall museum build, or /dreamwall museum check.");
     }
 
     private void sendMuseumMap(CommandSender sender) {
@@ -328,12 +332,50 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         buildPlotPads(world, originX, originY, originZ, canvasSize, plotSize);
         buildHallGates(world, originX, originY, originZ, plotSize);
         buildEntrance(world, originX, originY, originZ, canvasSize, plotSize, span);
+        world.save();
 
         if (sender instanceof Player player && player.getWorld().equals(world)) {
             player.teleport(new Location(world, originX + span / 2.0 + 0.5, originY + 2, originZ - 22.5, 0, 0));
         }
         sender.sendMessage("AfterBlock Museum campus built. Every Space packet coordinate now lands on a marked plot pad.");
+        sender.sendMessage("Built " + (canvasSize * canvasSize) + " plot pads, 9 hall gates, and 1 YOU ARE HERE entry beacon.");
         sender.sendMessage("Next: /dreamwall pack, accept the pack, then /dreamwall import or /dreamwall import here.");
+    }
+
+    private void checkMuseumCampus(CommandSender sender) {
+        World world = museumWorld(sender);
+        if (world == null) {
+            sender.sendMessage("DreamWall gallery-world is not loaded: " + getConfig().getString("gallery-world", "world"));
+            return;
+        }
+        int originX = galleryOriginX();
+        int originY = galleryOriginY();
+        int originZ = galleryOriginZ();
+        int canvasSize = canvasSize();
+        int plotSize = plotSize();
+        int span = (canvasSize - 1) * plotSize;
+        int pads = 0;
+        int relicBlocks = 0;
+        for (int plotX = 0; plotX < canvasSize; plotX++) {
+            for (int plotZ = 0; plotZ < canvasSize; plotZ++) {
+                int x = originX + plotX * plotSize;
+                int z = originZ + plotZ * plotSize;
+                if (world.getBlockAt(x, originY, z).getType() == Material.POLISHED_DEEPSLATE) {
+                    pads++;
+                }
+                if (world.getBlockAt(x, originY + 1, z).getType() == Material.AMETHYST_BLOCK) {
+                    relicBlocks++;
+                }
+            }
+        }
+        int centerX = originX + span / 2;
+        int entryZ = originZ - 22;
+        boolean entryBeacon = world.getBlockAt(centerX, originY + 1, entryZ + 2).getType() == Material.BEACON;
+        sender.sendMessage("AfterBlock museum check:");
+        sender.sendMessage("Plot pads: " + pads + "/" + (canvasSize * canvasSize));
+        sender.sendMessage("Relic focus blocks: " + relicBlocks + "/" + (canvasSize * canvasSize));
+        sender.sendMessage("YOU ARE HERE beacon: " + (entryBeacon ? "present" : "missing"));
+        sender.sendMessage("Expected bounds: -192 80 -192 to 160 80 160 unless config overrides gallery-origin or plot-size.");
     }
 
     private World museumWorld(CommandSender sender) {
@@ -493,6 +535,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
     }
 
     private void setBlock(World world, int x, int y, int z, Material material) {
+        world.getChunkAt(x >> 4, z >> 4).load(true);
         world.getBlockAt(x, y, z).setType(material, false);
     }
 
