@@ -31,6 +31,8 @@ The main cash-prize demo is now simple: relic -> hall -> spirit -> passport -> M
 
 The Gradio demo now opens with a clean museum preview: 100 labeled demo artifacts, nine hall wings, curation scores, coordinates, generated Minecraft-style item textures, and a live 3D artifact model tied to the same `CustomModelData` used by the server packet. Social tags are optional; if a visitor leaves the tag blank, the museum uses the owner name or anonymous label.
 
+The main placement form accepts a visitor signature in the fourth field. A value like `@wildstash` becomes the hover/social tag; a plain value like `Arnav` becomes the owner label without adding a social badge.
+
 ## Why This Is Different
 
 Most hackathon apps stop at chat or image generation. AfterBlock turns language and memory into a place visitors can walk through.

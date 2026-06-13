@@ -1100,6 +1100,17 @@ def social_tag_for(owner_handle: str) -> str:
     return handle
 
 
+def visitor_identity(signature: str) -> tuple[str, str]:
+    raw = " ".join(str(signature or "").split())
+    if not raw:
+        return "Visitor", ""
+    handle = next((part for part in raw.split() if part.startswith("@") and len(part) > 1), "")
+    if handle:
+        owner_name = raw.replace(handle, "").strip() or handle[1:]
+        return owner_name, social_tag_for(handle)
+    return raw, ""
+
+
 def compact_text(value: str, limit: int = 34) -> str:
     value = " ".join(str(value or "").split())
     if len(value) <= limit:
@@ -2289,11 +2300,12 @@ def quick_curate_afterblock_artifact(
 
 
 def place_in_museum(source_prompt: str, story_caption: str, owner_handle: str = "@Wildstash", relic_image_path: str | None = None):
+    owner_name, owner_tag = visitor_identity(owner_handle)
     preview, catalog, wall, model, command, coordinates, waypoint, placement, spirit, passport, packet, server_kit, *_ = quick_curate_afterblock_artifact(
         source_prompt,
         story_caption,
-        "Arnav",
-        social_tag_for(owner_handle) or "@Wildstash",
+        owner_name,
+        owner_tag,
         relic_image_path,
     )
     return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall, server_kit
@@ -4767,8 +4779,8 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                             value=DEFAULT_STORY_CAPTION,
                         )
                         quick_handle = gr.Textbox(
-                            label="Optional social handle",
-                            placeholder="@wildstash",
+                            label="Visitor signature",
+                            placeholder="@handle or display name",
                             lines=1,
                             value="@Wildstash",
                         )
