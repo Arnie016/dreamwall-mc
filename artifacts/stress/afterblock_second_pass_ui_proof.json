@@ -1,0 +1,26 @@
+{
+  "feature": "afterblock-second-pass-ui-polish",
+  "date": "2026-06-13",
+  "concept_image": "/Users/arnav/.codex/generated_images/019e964c-8039-7540-866d-0f9e0a6a10a5/ig_0f42cd4e1e387d3f016a2d68580f0081919342f73fc6df5601.png",
+  "local_url": "http://127.0.0.1:7860",
+  "checks": {
+    "resource_pack_items_per_page": 48,
+    "resource_gallery_dark_surface": true,
+    "passport_has_real_qr_png": true,
+    "passport_has_artifact_picture": true,
+    "passport_floor_grid_removed": true,
+    "three_d_model_has_museum_hall_scene": true,
+    "three_d_model_has_orbit_controls": true,
+    "persistent_museum_uses_hall_portals": true,
+    "hall_portal_count": 9,
+    "legacy_sections_visible": [],
+    "mobile_horizontal_overflow": false
+  },
+  "screenshots": {
+    "main": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-second-pass-main-final.png",
+    "passport": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-second-pass-passport-final.png",
+    "resource_pack": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-second-pass-resource-final.png",
+    "museum_concourse": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-second-pass-museum-concourse-final.png",
+    "mobile": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-second-pass-mobile-final.png"
+  }
+}

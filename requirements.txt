@@ -2,3 +2,4 @@ gradio==5.29.0
 Pillow==10.4.0
 numpy==1.26.4
 requests==2.32.3
+qrcode[pil]==7.4.2
