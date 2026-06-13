@@ -785,7 +785,7 @@ def passport_html(artifact: dict) -> str:
             {qr}
             <div>
               <strong>Scan result</strong>
-              <p>Opens this relic passport packet with the command and museum coordinates.</p>
+              <p>Opens a scanned passport panel with this relic's route, exact XYZ, and Minecraft command.</p>
               <span>{html_escape(share_url)}</span>
             </div>
           </div>
@@ -866,10 +866,32 @@ def minecraft_give_command(artifact: dict) -> str:
 
 
 def artifact_share_url(artifact: dict) -> str:
+    token = artifact_share_token(artifact)
+    return f"{PUBLIC_SPACE_URL}/#passport={token}"
+
+
+def artifact_share_token(artifact: dict) -> str:
     item = artifact.get("resource_pack_item", {})
-    custom_model_data = item.get("custom_model_data", 0)
-    artifact_id = artifact.get("artifact_id", "unknown")
-    return f"{PUBLIC_SPACE_URL}/?artifact={artifact_id}&item={custom_model_data}#afterblock-passport-{artifact_id}"
+    coords = artifact.get("minecraft_coordinates", {})
+    payload = {
+        "type": "afterblock.passport.v1",
+        "artifact_id": artifact.get("artifact_id", "unknown"),
+        "title": compact_text(artifact.get("title", "AfterBlock Relic"), 72),
+        "owner": compact_text(owner_display(artifact), 32),
+        "object": compact_text(artifact.get("object_guess", "relic"), 32),
+        "hall": compact_text(artifact.get("hall", "AfterBlock Museum"), 42),
+        "zone": compact_text(artifact.get("zone", "Museum route"), 38),
+        "caption": compact_text(artifact.get("memory_text", artifact.get("plaque_line", "")), 180),
+        "command": minecraft_give_command(artifact),
+        "xyz": {
+            "x": coords.get("x", ""),
+            "y": coords.get("y", ""),
+            "z": coords.get("z", ""),
+        },
+        "cmd": item.get("custom_model_data", 0),
+    }
+    encoded = base64.urlsafe_b64encode(json.dumps(payload, separators=(",", ":")).encode("utf-8")).decode("ascii")
+    return encoded.rstrip("=")
 
 
 def artifact_preview_url(artifact: dict) -> str:
@@ -2135,30 +2157,11 @@ def build_museum_artifact(
             "plaque_line": plaque_line,
             "preservation_line": "Preserved in AfterBlock Museum",
         },
-        "share_url": artifact_share_url(
-            {
-                "artifact_id": artifact_id,
-                "resource_pack_item": resource_item,
-            }
-        ),
-        "qr_payload": json.dumps(
-            {
-                "type": "afterblock.passport.v1",
-                "url": artifact_share_url(
-                    {
-                        "artifact_id": artifact_id,
-                        "resource_pack_item": resource_item,
-                    }
-                ),
-                "title": title,
-                "command": f"/give @p minecraft:paper[minecraft:custom_model_data={resource_item.get('custom_model_data', 0)}] 1",
-                "xyz": coordinates,
-            },
-            separators=(",", ":"),
-        ),
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     artifact.update(spirit)
+    artifact["share_url"] = artifact_share_url(artifact)
+    artifact["qr_payload"] = artifact["share_url"]
     return artifact
 
 
@@ -4572,6 +4575,67 @@ textarea, input {
   font-size: 13px;
   margin: 0 0 8px;
 }
+.scan-passport-panel {
+  max-width: 980px;
+  margin: 0 auto 18px;
+  border: 2px solid #7eb6ff;
+  background:
+    linear-gradient(90deg, rgba(80, 126, 181, .32), transparent 62%),
+    #121722;
+  box-shadow: 0 8px 0 #05070a, inset 0 0 26px rgba(126, 182, 255, .12);
+  color: #edf6ff;
+  padding: 16px;
+}
+.scan-passport-panel[hidden] {
+  display: none;
+}
+.scan-passport-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+.scan-passport-inner span {
+  display: block;
+  color: #9fd0ff;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.scan-passport-inner h2 {
+  margin: 4px 0 6px;
+  color: #f8e6af;
+  font-size: clamp(24px, 3vw, 38px);
+}
+.scan-passport-inner p,
+.scan-passport-inner em {
+  margin: 0;
+  color: #d8e7f7 !important;
+  font-style: normal;
+}
+.scan-passport-route {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(80px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+.scan-passport-route b,
+.scan-passport-inner code {
+  display: block;
+  border: 1px solid #5f7896;
+  background: rgba(4, 8, 13, .58);
+  color: #f8e6af !important;
+  padding: 8px;
+  overflow-wrap: anywhere;
+}
+.scan-passport-inner button {
+  border: 1px solid #9fd0ff;
+  background: transparent;
+  color: #edf6ff;
+  min-height: 32px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
 @media (max-width: 860px) {
   .relic-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4595,13 +4659,78 @@ textarea, input {
 }
 """
 
+PASSPORT_SCAN_JS = r"""
+() => {
+  const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[char]));
+  const decodeToken = (token) => {
+    const padded = token + "=".repeat((4 - token.length % 4) % 4);
+    const binary = atob(padded.replace(/-/g, "+").replace(/_/g, "/"));
+    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+    return JSON.parse(new TextDecoder().decode(bytes));
+  };
+  const renderScannedPassport = () => {
+    const panel = document.getElementById("afterblock-scan-panel");
+    if (!panel) {
+      window.setTimeout(renderScannedPassport, 250);
+      return;
+    }
+    const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const token = params.get("passport");
+    if (!token) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      return;
+    }
+    try {
+      const data = decodeToken(token);
+      const xyz = data.xyz || {};
+      panel.hidden = false;
+      panel.innerHTML = `
+        <div class="scan-passport-inner">
+          <div>
+            <span>Scanned AfterBlock Passport</span>
+            <h2>${escapeHtml(data.title)}</h2>
+            <p>${escapeHtml(data.owner)} · ${escapeHtml(data.object)} · ${escapeHtml(data.hall)} / ${escapeHtml(data.zone)}</p>
+            <em>${escapeHtml(data.caption)}</em>
+            <div class="scan-passport-route">
+              <b>XYZ ${escapeHtml(xyz.x)} ${escapeHtml(xyz.y)} ${escapeHtml(xyz.z)}</b>
+              <b>CMD ${escapeHtml(data.cmd)}</b>
+              <b>${escapeHtml(data.artifact_id)}</b>
+            </div>
+            <code>${escapeHtml(data.command)}</code>
+          </div>
+          <button type="button" aria-label="Close scanned passport">Close</button>
+        </div>
+      `;
+      const closeButton = panel.querySelector("button");
+      closeButton?.addEventListener("click", () => {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+        panel.hidden = true;
+      });
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (error) {
+      panel.hidden = false;
+      panel.textContent = "This passport QR could not be decoded.";
+    }
+  };
+  window.addEventListener("hashchange", renderScannedPassport);
+  window.setTimeout(renderScannedPassport, 350);
+}
+"""
+
 DEFAULT_MUSEUM_PROMPT = "blue school bag from exam week"
 DEFAULT_STORY_CAPTION = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
 INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CAPTION, "@Wildstash", None)
 INITIAL_TEXTURE_OUTPUTS = browse_texture_library("all", 1)
 
 
-with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
+with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
     gr.HTML(
         """
         <section class="dreamwall-hero">
@@ -4617,6 +4746,7 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
         </section>
         """
     )
+    gr.HTML('<section id="afterblock-scan-panel" class="scan-passport-panel" hidden></section>')
 
     with gr.Tabs():
         with gr.Tab("Place in Museum"):
