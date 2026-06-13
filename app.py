@@ -700,19 +700,38 @@ def passport_html(artifact: dict) -> str:
         f"<span class='museum-swatch' title='{name}' style='background: rgb({rgb[0]}, {rgb[1]}, {rgb[2]})'></span>"
         for name, rgb in [next((block for block in BLOCKS if block[0] == item), ("stone", (120, 120, 120))) for item in palette]
     )
+    coords = artifact["minecraft_coordinates"]
+    qr = qr_matrix_html(artifact["qr_payload"])
     return f"""
     <section class="passport-card">
-      <div class="passport-kicker">Preserved in AfterBlock Museum</div>
-      <h2>{html_escape(artifact['title'])}</h2>
-      <p class="passport-owner">{html_escape(owner_display(artifact))} · {html_escape(artifact['hall'])}</p>
-      <div class="passport-grid">
-        <div class="passport-preview">{swatches}<strong>{html_escape(artifact['spirit_name'])}</strong></div>
+      <header class="passport-header">
         <div>
-          <p><strong>Plot</strong> ({artifact['plot']['x']}, {artifact['plot']['z']})</p>
-          <p><strong>Coordinates</strong> {artifact['minecraft_coordinates']['x']} {artifact['minecraft_coordinates']['y']} {artifact['minecraft_coordinates']['z']}</p>
+          <div class="passport-kicker">Preserved in AfterBlock Museum</div>
+          <h2>{html_escape(artifact['title'])}</h2>
+          <p class="passport-owner">{html_escape(owner_display(artifact))} · {html_escape(artifact['hall'])} · {html_escape(artifact['zone'])}</p>
+        </div>
+        <div class="passport-share">
+          <span class="hf-icon">HF</span>
+          {qr}
+        </div>
+      </header>
+      <div class="passport-grid">
+        <div class="passport-preview">
+          <div class="passport-object-mark">{swatches}</div>
+          <strong>{html_escape(artifact['spirit_name'])}</strong>
+          <em>{html_escape(artifact['object_guess'])}</em>
+        </div>
+        <div class="passport-facts">
+          <div class="coordinate-cards">
+            <span><small>X</small><strong>{coords['x']}</strong></span>
+            <span><small>Y</small><strong>{coords['y']}</strong></span>
+            <span><small>Z</small><strong>{coords['z']}</strong></span>
+            <span><small>Plot</small><strong>{artifact['plot']['x']}, {artifact['plot']['z']}</strong></span>
+          </div>
           <p><strong>When it becomes art</strong> {html_escape(artifact.get('artifact_when', artifact['placement_reason']))}</p>
+          <p><strong>Story caption</strong> {html_escape(artifact['memory_text'])}</p>
           <p><strong>Plaque</strong> {html_escape(artifact['plaque_line'])}</p>
-          <p><strong>QR payload</strong> <code>{html_escape(artifact['qr_payload'])}</code></p>
+          <p><strong>Share payload</strong> <code>{html_escape(artifact['qr_payload'])}</code></p>
         </div>
       </div>
     </section>
@@ -724,9 +743,21 @@ def floor_map_html(artifact: dict) -> str:
     for z in range(CANVAS_SIZE):
         for x in range(CANVAS_SIZE):
             active = x == artifact["plot"]["x"] and z == artifact["plot"]["z"]
-            label = "★" if active else ""
-            cells.append(f"<span class='floor-cell {'active' if active else ''}'>{label}</span>")
-    return f"<div class='floor-map'>{''.join(cells)}</div>"
+            near = abs(x - artifact["plot"]["x"]) + abs(z - artifact["plot"]["z"]) <= 2
+            label = "X" if active else ""
+            cells.append(
+                f"<span class='floor-cell {'active' if active else ''} {'near' if near and not active else ''}' "
+                f"title='Plot {x}, {z}'>{label}</span>"
+            )
+    return f"""
+    <section class="passport-map-card">
+      <header>
+        <h3>Museum floor grid</h3>
+        <p>Hover the grid to preview selection. The active plot pulses at {artifact['plot']['x']}, {artifact['plot']['z']}.</p>
+      </header>
+      <div class='floor-map'>{''.join(cells)}</div>
+    </section>
+    """
 
 
 def html_escape(value) -> str:
@@ -738,6 +769,78 @@ def owner_display(artifact: dict) -> str:
     if handle:
         return handle
     return (artifact.get("owner_name") or "anonymous visitor").strip()
+
+
+def minecraft_give_command(artifact: dict) -> str:
+    item = artifact.get("resource_pack_item", {})
+    custom_model_data = item.get("custom_model_data", 0)
+    return f"/give @p minecraft:paper[minecraft:custom_model_data={custom_model_data}] 1"
+
+
+def qr_matrix_html(payload: str) -> str:
+    seed = stable_seed(payload)
+    cells = []
+    for y in range(11):
+        for x in range(11):
+            finder = (
+                (x < 3 and y < 3)
+                or (x > 7 and y < 3)
+                or (x < 3 and y > 7)
+            )
+            on = finder or ((seed >> ((x * 11 + y) % 61)) & 1)
+            cells.append(f"<span class='{'on' if on else ''}'></span>")
+    return f"<div class='mini-qr' aria-label='Share QR code'>{''.join(cells)}</div>"
+
+
+def coordinates_html(artifact: dict) -> str:
+    coords = artifact["minecraft_coordinates"]
+    plot = artifact["plot"]
+    item = artifact.get("resource_pack_item", {})
+    return f"""
+    <section class="waypoint-strip">
+      <div>
+        <span>X</span>
+        <strong>{coords['x']}</strong>
+      </div>
+      <div>
+        <span>Y</span>
+        <strong>{coords['y']}</strong>
+      </div>
+      <div>
+        <span>Z</span>
+        <strong>{coords['z']}</strong>
+      </div>
+      <div>
+        <span>Plot</span>
+        <strong>{plot['x']}, {plot['z']}</strong>
+      </div>
+      <div>
+        <span>CMD</span>
+        <strong>{item.get('custom_model_data', 0)}</strong>
+      </div>
+    </section>
+    """
+
+
+def waypointcraft_html(artifact: dict) -> str:
+    coords = artifact["minecraft_coordinates"]
+    item = artifact.get("resource_pack_item", {})
+    command = minecraft_give_command(artifact)
+    return f"""
+    <section class="waypoint-card">
+      <header>
+        <h3>WaypointCraft</h3>
+        <p>{html_escape(artifact['hall'])} / {html_escape(artifact['zone'])}</p>
+      </header>
+      <div class="waypoint-grid">
+        <div><span>World XYZ</span><strong>{coords['x']} {coords['y']} {coords['z']}</strong></div>
+        <div><span>CustomModelData</span><strong>{item.get('custom_model_data', 0)}</strong></div>
+        <div><span>Base item</span><strong>{html_escape(item.get('recommended_item', 'minecraft:paper'))}</strong></div>
+        <div><span>Model</span><strong>{html_escape(item.get('model', 'afterblock:item/missing'))}</strong></div>
+      </div>
+      <code>{html_escape(command)}</code>
+    </section>
+    """
 
 
 def social_tag_for(owner_handle: str) -> str:
@@ -875,6 +978,7 @@ def artifact_model_html(artifact: dict) -> str:
         "preview_url": texture_preview_url(item_id) if item_id != "missing" else "",
         "colors": palette,
         "hall_color": hex_color(hall_rgb),
+        "story_caption": artifact.get("memory_text", artifact.get("plaque_line", "")),
         "give_command": f"/give @p minecraft:paper[minecraft:custom_model_data={item.get('custom_model_data', 0)}] 1",
     }
     payload_json = json.dumps(payload)
@@ -888,7 +992,8 @@ def artifact_model_html(artifact: dict) -> str:
 <meta charset="utf-8">
 <style>
   html, body {{ margin:0; height:100%; background:#10110f; color:#f8e5b6; font-family: Inter, ui-sans-serif, system-ui, sans-serif; overflow:hidden; }}
-  #stage {{ position:absolute; inset:0; }}
+  #stage {{ position:absolute; inset:0; cursor:grab; touch-action:none; }}
+  #stage.dragging {{ cursor:grabbing; }}
   .hud {{ position:absolute; left:18px; right:18px; bottom:16px; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:end; pointer-events:none; }}
   .label {{ background:rgba(18,15,10,.78); border:1px solid #8c6a38; padding:12px 14px; box-shadow:0 6px 0 rgba(0,0,0,.38); }}
   h2 {{ margin:0 0 4px; font-size:18px; color:#ffe4a3; letter-spacing:.01em; }}
@@ -928,6 +1033,7 @@ def artifact_model_html(artifact: dict) -> str:
   const camera = new THREE.PerspectiveCamera(38, stage.clientWidth / stage.clientHeight, 0.1, 100);
   camera.position.set(3.9, 3.1, 5.1);
   camera.lookAt(0, .7, 0);
+  let cameraDistance = 5.1;
 
   const renderer = new THREE.WebGLRenderer({{ antialias: true, alpha: true }});
   renderer.setSize(stage.clientWidth, stage.clientHeight);
@@ -1030,6 +1136,21 @@ def artifact_model_html(artifact: dict) -> str:
     cube(0, .38, -.14, .28, .16, .06, makeMat('#70685a', {{ roughness: .72 }}));
   }}
 
+  function renderBag() {{
+    const body = makeMat('#334f86', {{ roughness: .82 }});
+    const panel = makeMat('#5f78b8', {{ roughness: .72 }});
+    const strap = makeMat('#1a2131', {{ roughness: .9 }});
+    const zip = makeMat('#f3d77d', {{ roughness: .45, metalness: .12 }});
+    cube(0, .86, -.02, 1.0, 1.08, .42, body);
+    cube(0, .9, -.26, .74, .74, .1, panel);
+    cube(-.38, 1.42, -.04, .16, .38, .18, strap);
+    cube(.38, 1.42, -.04, .16, .38, .18, strap);
+    cube(0, 1.36, -.29, .56, .08, .06, zip);
+    cube(0, .54, -.31, .5, .14, .08, makeMat('#28375b', {{ roughness: .8 }}));
+    cube(-.57, .86, .02, .12, .88, .3, strap);
+    cube(.57, .86, .02, .12, .88, .3, strap);
+  }}
+
   function renderGeneric() {{
     const count = Math.max(5, Math.min(14, artifact.element_count || 7));
     for (let i = 0; i < count; i++) {{
@@ -1054,6 +1175,8 @@ def artifact_model_html(artifact: dict) -> str:
     renderClock();
   }} else if (shapeText.includes('shoe')) {{
     renderShoes();
+  }} else if (shapeText.includes('bag') || shapeText.includes('backpack')) {{
+    renderBag();
   }} else if (shapeText.includes('remote')) {{
     renderRemote();
   }} else {{
@@ -1066,8 +1189,56 @@ def artifact_model_html(artifact: dict) -> str:
   grid.position.y = 0;
   scene.add(grid);
 
+  let targetYaw = -.4;
+  let targetPitch = .05;
+  let dragging = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  function positionCamera() {{
+    camera.position.set(
+      Math.sin(targetYaw) * cameraDistance,
+      2.7 + Math.sin(targetPitch) * 1.2,
+      Math.cos(targetYaw) * cameraDistance
+    );
+    camera.lookAt(0, .72, 0);
+  }}
+
+  stage.addEventListener('pointerdown', (event) => {{
+    dragging = true;
+    stage.classList.add('dragging');
+    lastX = event.clientX;
+    lastY = event.clientY;
+    stage.setPointerCapture(event.pointerId);
+  }});
+  stage.addEventListener('pointermove', (event) => {{
+    if (!dragging) return;
+    const dx = event.clientX - lastX;
+    const dy = event.clientY - lastY;
+    targetYaw += dx * .008;
+    targetPitch = Math.max(-.8, Math.min(.65, targetPitch + dy * .006));
+    lastX = event.clientX;
+    lastY = event.clientY;
+    positionCamera();
+  }});
+  stage.addEventListener('pointerup', (event) => {{
+    dragging = false;
+    stage.classList.remove('dragging');
+    try {{ stage.releasePointerCapture(event.pointerId); }} catch (error) {{}}
+  }});
+  stage.addEventListener('pointerleave', () => {{
+    dragging = false;
+    stage.classList.remove('dragging');
+  }});
+  stage.addEventListener('wheel', (event) => {{
+    event.preventDefault();
+    cameraDistance = Math.max(3.2, Math.min(7.4, cameraDistance + event.deltaY * .003));
+    positionCamera();
+  }}, {{ passive: false }});
+  positionCamera();
+
   function tick(t) {{
-    group.rotation.y = Math.sin(t * .00045) * .18 - .4;
+    group.rotation.y = dragging ? targetYaw * .08 : Math.sin(t * .00045) * .12 - .2;
     group.position.y = Math.sin(t * .0012) * .035;
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
@@ -1170,7 +1341,6 @@ def museum_collection(selected: dict, count: int = 100) -> list[dict]:
     selected_copy = dict(selected)
     selected_copy["catalog_index"] = 0
     selected_copy["texture_path"] = f"assets/afterblock_textures/items/{texture_key_for(selected['object_guess'])}_selected.png"
-    selected_copy["resource_pack_item"] = resource_pack_item_for(selected["object_guess"], stable_seed(selected["artifact_id"]))
     return [selected_copy] + artifacts
 
 
@@ -1375,6 +1545,7 @@ def artifact_wall_html(collection: list[dict]) -> str:
                     <em>{html_escape(owner_display(artifact))} · {html_escape(compact_text(artifact['object_guess'], 18))}</em>
                     <small>CMD {html_escape(item.get('custom_model_data', ''))}</small>
                   </div>
+                  <span class="story-caption"><b>HF</b><span>{html_escape(compact_text(artifact.get('memory_text', artifact.get('plaque_line', '')), 110))}</span></span>
                 </div>
                 """
             )
@@ -1392,10 +1563,10 @@ def artifact_wall_html(collection: list[dict]) -> str:
             """
         )
     return f"""
-    <section class="museum-wall">
+    <section class="museum-wall persistent-museum">
       <div class="wall-heading">
-        <h3>Walk the AfterBlock halls</h3>
-        <p>Less wall spam: each wing shows the moment that makes an object art, then a few compact placeable relics.</p>
+        <h3>Persistent Museum</h3>
+        <p>The selected relic stays placed in the grid while nearby halls keep their own captioned artifacts.</p>
       </div>
       <div class="selected-strip" style="--hall-color:rgb({hall_color(selected['hall'])[0]}, {hall_color(selected['hall'])[1]}, {hall_color(selected['hall'])[2]})">
         <span class="mini-cube selected"></span>
@@ -1404,6 +1575,7 @@ def artifact_wall_html(collection: list[dict]) -> str:
           <em>{html_escape(owner_display(selected))} · {html_escape(selected['hall'])} · {html_escape(selected_profile.get('when', selected['placement_reason']))}</em>
           <code>{html_escape(f"/give @p minecraft:paper[minecraft:custom_model_data={selected_item.get('custom_model_data', 0)}] 1")}</code>
         </div>
+        <span class="story-caption selected-caption"><b>HF</b><span>{html_escape(selected.get('memory_text', selected.get('plaque_line', '')))}</span></span>
       </div>
       <div class="hall-grid">{''.join(wings)}</div>
     </section>
@@ -1607,11 +1779,17 @@ def curate_afterblock_artifact(
     for question, response in zip(artifact["sample_visitor_questions"], artifact["sample_spirit_responses"]):
         spirit_lines.append(f"- **{question}** {response}")
     passport = passport_html(artifact) + floor_map_html(artifact)
+    command = minecraft_give_command(artifact)
+    coordinates = coordinates_html(artifact)
+    waypoint = waypointcraft_html(artifact)
     return (
         preview_path,
         catalog_rows(collection),
         artifact_wall_html(collection),
         model_view,
+        command,
+        coordinates,
+        waypoint,
         "\n".join(placement),
         spirit_lines and "\n".join(spirit_lines),
         passport,
@@ -1621,27 +1799,29 @@ def curate_afterblock_artifact(
 
 def quick_curate_afterblock_artifact(
     source_prompt: str,
+    memory_text: str,
     owner_name: str,
     owner_handle: str,
     relic_image_path: str | None = None,
 ):
     source_prompt = (source_prompt or "").strip() or "a water bottle beside a laptop monitor"
     input_type = input_type_from_prompt(source_prompt)
-    memory_text = (
-        "One-line museum intake. The curator extracts the object, hall, texture profile, and Minecraft placement from the prompt."
+    memory_text = (memory_text or "").strip() or (
+        "A compact story caption visitors see when they hover the relic in the museum."
     )
     outputs = curate_afterblock_artifact(owner_name, owner_handle, input_type, source_prompt, memory_text, relic_image_path)
     return (*outputs, input_type, source_prompt, memory_text)
 
 
-def place_in_museum(source_prompt: str, relic_image_path: str | None = None):
-    preview, catalog, _wall, model, placement, spirit, passport, packet, *_ = quick_curate_afterblock_artifact(
+def place_in_museum(source_prompt: str, story_caption: str, relic_image_path: str | None = None):
+    preview, catalog, wall, model, command, coordinates, waypoint, placement, spirit, passport, packet, *_ = quick_curate_afterblock_artifact(
         source_prompt,
+        story_caption,
         "Arnav",
         "@Wildstash",
         relic_image_path,
     )
-    return model, placement, passport, packet, preview, catalog, spirit
+    return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall
 
 
 def load_demo_artifact(name: str):
@@ -2405,7 +2585,9 @@ body, .gradio-container {
   color: var(--mc-ink);
 }
 .gradio-container {
-  max-width: 1240px !important;
+  max-width: none !important;
+  width: 100% !important;
+  padding: 10px 22px 32px !important;
 }
 .dreamwall-hero {
   position: relative;
@@ -2414,19 +2596,20 @@ body, .gradio-container {
     linear-gradient(90deg, rgba(14,15,13,0.96) 0%, rgba(24,20,14,0.88) 48%, rgba(12,13,11,0.96) 100%),
     repeating-linear-gradient(90deg, rgba(242,193,95,0.06) 0 1px, transparent 1px 72px);
   border: 2px solid #8b6a3d;
-  box-shadow: 0 10px 0 #060605, inset 0 0 36px rgba(242, 193, 95, 0.13);
-  padding: 24px 28px;
-  margin: 14px 0 14px;
+  box-shadow: 0 6px 0 #060605, inset 0 0 36px rgba(242, 193, 95, 0.13);
+  padding: 14px 18px;
+  margin: 6px 0 10px;
 }
 .dreamwall-hero h1 {
   margin: 0;
-  font-size: 38px;
+  font-size: 30px;
   color: #ffe4a3;
 }
 .dreamwall-hero p {
-  max-width: 820px;
-  font-size: 17px;
-  line-height: 1.45;
+  max-width: 920px;
+  font-size: 14px;
+  line-height: 1.38;
+  margin: 6px 0;
   color: #ead7b0;
 }
 .badge-row span {
@@ -2456,9 +2639,10 @@ body, .gradio-container {
 }
 .main-museum-layout {
   align-items: stretch;
+  min-height: 0;
 }
 .prompt-panel {
-  min-height: 430px;
+  min-height: 100%;
 }
 .prompt-panel .styler,
 .prompt-panel .block,
@@ -2492,7 +2676,7 @@ body, .gradio-container {
   border: 1px solid #5c4d32 !important;
 }
 .prompt-panel textarea {
-  min-height: 136px !important;
+  min-height: 76px !important;
 }
 .prompt-panel .image-container,
 .prompt-panel .upload-container {
@@ -2532,6 +2716,14 @@ body, .gradio-container {
   min-height: 46px;
   font-weight: 800 !important;
 }
+.photo-drop-compact .image-container,
+.photo-drop-compact .upload-container {
+  min-height: 60px !important;
+  height: 68px !important;
+}
+.photo-drop-compact img {
+  object-fit: contain !important;
+}
 .museum-stage {
   background: radial-gradient(circle at 50% 0%, rgba(242,193,95,0.12), transparent 44%), #11120f;
   border: 1px solid #4f432b;
@@ -2542,6 +2734,10 @@ body, .gradio-container {
   border: 2px solid #7d6335;
   box-shadow: inset 0 0 24px rgba(0,0,0,0.5);
   padding: 14px;
+  margin-top: 16px;
+}
+.persistent-museum {
+  min-height: 430px;
 }
 .wall-heading {
   display: flex;
@@ -2654,6 +2850,7 @@ body, .gradio-container {
   margin-top: 6px;
 }
 .selected-strip {
+  position: relative;
   display: grid;
   grid-template-columns: 58px 1fr;
   gap: 12px;
@@ -2662,6 +2859,54 @@ body, .gradio-container {
   border: 1px solid color-mix(in srgb, var(--hall-color) 78%, #171410);
   padding: 12px;
   margin-bottom: 12px;
+}
+.story-caption {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  z-index: 2;
+  display: block;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  color: #16120c;
+  background: linear-gradient(90deg, rgba(255, 200, 85, .92), rgba(98, 165, 255, .84), rgba(255, 134, 180, .88));
+  border: 1px solid rgba(255, 245, 210, .6);
+  box-shadow: 0 8px 18px rgba(0,0,0,.34);
+  padding: 7px 9px;
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 800;
+  transition: opacity 160ms ease, transform 160ms ease;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.story-caption b {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: #fff1bc;
+  color: #1d1309;
+  box-shadow: 0 2px 0 rgba(0,0,0,.25);
+  font-size: 10px;
+}
+.story-caption span {
+  min-width: 0;
+}
+.selected-caption {
+  left: 78px;
+  right: 14px;
+  bottom: 12px;
+}
+.artifact-chip:hover .story-caption,
+.selected-strip:hover .story-caption {
+  opacity: 1;
+  transform: translateY(0);
 }
 .selected-strip strong,
 .selected-strip em,
@@ -2740,6 +2985,7 @@ body, .gradio-container {
   gap: 6px;
 }
 .artifact-chip {
+  position: relative;
   display: grid;
   grid-template-columns: 32px 1fr;
   gap: 7px;
@@ -2748,10 +2994,15 @@ body, .gradio-container {
   background: rgba(15,13,10,.54);
   border: 1px solid rgba(255,228,163,.12);
   padding: 5px;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 .artifact-chip.active {
   border-color: #ffe4a3;
   background: rgba(255,228,163,.1);
+}
+.artifact-chip:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,228,163,.5);
 }
 .artifact-chip strong,
 .artifact-chip em,
@@ -2801,13 +3052,25 @@ body, .gradio-container {
   border: 2px solid #7d6335;
   box-shadow: inset 0 0 28px rgba(242,193,95,.08), 0 8px 0 #070604;
   padding: 8px;
+  height: 100%;
 }
 .artifact-model-frame {
   width: 100%;
-  height: 430px;
+  height: min(44vh, 460px);
+  min-height: 360px;
   border: 0;
   display: block;
   background: #10110f;
+}
+.command-copy textarea {
+  min-height: 46px !important;
+  height: 46px !important;
+  white-space: nowrap !important;
+  overflow-x: auto !important;
+  resize: none !important;
+}
+.command-copy .wrap {
+  min-height: 46px !important;
 }
 .texture-inspector {
   background: #15140f;
@@ -2883,16 +3146,99 @@ body, .gradio-container {
   padding: 5px;
   font-size: 10px;
 }
+.waypoint-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(80px, 1fr));
+  gap: 8px;
+  align-items: stretch;
+  background: #171613;
+  border: 1px solid #75623d;
+  padding: 10px;
+  margin-top: 10px;
+}
+.waypoint-strip div {
+  background: #242017;
+  border: 1px solid #5c4d32;
+  padding: 8px 10px;
+}
+.waypoint-strip span,
+.waypoint-grid span {
+  display: block;
+  color: #bca982;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.waypoint-strip strong,
+.waypoint-grid strong {
+  display: block;
+  color: #ffe4a3;
+  font-size: 18px;
+}
+.waypoint-strip code,
+.waypoint-card code {
+  display: block;
+  align-self: center;
+  background: #ead7a6 !important;
+  color: #1b1308 !important;
+  padding: 10px;
+  overflow-wrap: anywhere;
+}
+.waypoint-card {
+  background: #171613;
+  border: 2px solid #75623d;
+  box-shadow: 0 8px 0 #070604;
+  padding: 16px;
+}
+.waypoint-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #5c4d32;
+  margin-bottom: 12px;
+}
+.waypoint-card h3 {
+  margin: 0 0 8px;
+  color: #ffe4a3;
+  font-size: 24px;
+}
+.waypoint-card p {
+  margin: 0 0 8px;
+  color: #cdbd9b !important;
+}
+.waypoint-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.waypoint-grid div {
+  background: #242017;
+  border: 1px solid #5c4d32;
+  padding: 12px;
+}
 .passport-card {
-  background: #221d16;
+  background:
+    linear-gradient(135deg, rgba(255, 226, 154, .1), transparent 35%),
+    #221d16;
   border: 3px solid #b98a46;
   box-shadow: 0 8px 0 #080705, inset 0 0 24px rgba(242, 193, 95, 0.14);
   color: #f9e4b4;
-  padding: 18px;
+  padding: 20px;
+}
+.passport-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  border-bottom: 1px solid #725a34;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
 }
 .passport-card h2 {
   margin: 4px 0;
-  font-size: 30px;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.02;
   color: #ffe6a6;
 }
 .passport-kicker {
@@ -2904,21 +3250,105 @@ body, .gradio-container {
 .passport-owner {
   color: #cdbd9b;
 }
+.passport-share {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  align-items: center;
+}
+.hf-icon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ffcc4d, #ff8f66);
+  color: #221409;
+  font-weight: 1000;
+  box-shadow: 0 5px 0 #090704;
+}
+.mini-qr {
+  display: grid;
+  grid-template-columns: repeat(11, 6px);
+  gap: 2px;
+  padding: 8px;
+  background: #f9edcf;
+  border: 2px solid #120f0a;
+}
+.mini-qr span {
+  width: 6px;
+  height: 6px;
+  background: transparent;
+}
+.mini-qr span.on {
+  background: #15100a;
+}
 .passport-grid {
   display: grid;
-  grid-template-columns: minmax(160px, 240px) 1fr;
+  grid-template-columns: minmax(220px, 320px) 1fr;
   gap: 16px;
 }
 .passport-preview {
-  min-height: 150px;
+  min-height: 210px;
   border: 2px solid #6f6a57;
-  background: repeating-linear-gradient(45deg, #2b2d29 0, #2b2d29 10px, #242520 10px, #242520 20px);
+  background:
+    radial-gradient(circle at 50% 34%, rgba(242,193,95,.22), transparent 42%),
+    repeating-linear-gradient(45deg, #2b2d29 0, #2b2d29 10px, #242520 10px, #242520 20px);
   display: flex;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
   gap: 8px;
   padding: 12px;
+}
+.passport-preview strong,
+.passport-preview em {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+.passport-preview strong {
+  color: #ffe4a3;
+  font-size: 22px;
+}
+.passport-preview em {
+  color: #d4c39d;
+  font-style: normal;
+}
+.passport-object-mark {
+  width: 100%;
+  text-align: center;
+}
+.passport-facts p {
+  margin: 10px 0;
+  color: #e8dcc1 !important;
+}
+.passport-facts code {
+  background: #ead7a6 !important;
+  color: #1b1308 !important;
+  padding: 5px 7px;
+}
+.coordinate-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.coordinate-cards span {
+  background: #171410;
+  border: 1px solid #6f5832;
+  padding: 10px;
+}
+.coordinate-cards small {
+  display: block;
+  color: #bca982;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.coordinate-cards strong {
+  display: block;
+  color: #ffe4a3;
+  font-size: 20px;
 }
 .museum-swatch {
   width: 30px;
@@ -2940,10 +3370,38 @@ body, .gradio-container {
   color: #1b160e;
   text-align: center;
   line-height: 18px;
+  transition: transform 130ms ease, background 130ms ease, box-shadow 130ms ease;
+}
+.floor-cell.near {
+  background: #414432;
+}
+.floor-cell:hover {
+  transform: scale(1.45);
+  background: #75a9ff;
+  box-shadow: 0 0 12px #75a9ff;
 }
 .floor-cell.active {
   background: #f2c15f;
   box-shadow: 0 0 10px #f2c15f;
+  animation: plotPulse 1.4s ease-in-out infinite;
+}
+.passport-map-card {
+  margin-top: 14px;
+  padding: 14px;
+  border: 2px solid #75623d;
+  background: #171613;
+}
+.passport-map-card h3 {
+  margin: 0;
+  color: #ffe4a3;
+}
+.passport-map-card p {
+  margin: 6px 0 0;
+  color: #cdbd9b !important;
+}
+@keyframes plotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.24); }
 }
 textarea, input {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
@@ -2982,7 +3440,9 @@ textarea, input {
 }
 """
 
-INITIAL_MUSEUM_OUTPUTS = place_in_museum("white AirPods from my first year of university", None)
+DEFAULT_MUSEUM_PROMPT = "blue school bag from exam week"
+DEFAULT_STORY_CAPTION = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
+INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CAPTION, None)
 INITIAL_TEXTURE_OUTPUTS = browse_texture_library("all", 1)
 
 
@@ -2992,12 +3452,11 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
         <section class="dreamwall-hero">
           <h1>AfterBlock Museum</h1>
           <p>
-            Type one object or memory. The museum turns it into one Minecraft relic with a clear placement,
-            a readable model preview, and a packet ready for the world.
+            Type one object, attach the story people should know, then place it as one persistent Minecraft relic.
           </p>
           <div class="badge-row">
             <span>One prompt</span>
-            <span>One museum placement</span>
+            <span>Story caption</span>
             <span>CustomModelData resource pack</span>
           </div>
         </section>
@@ -3012,40 +3471,45 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
                         gr.HTML("<h2>Place in the museum</h2>")
                         quick_prompt = gr.Textbox(
                             label="Museum prompt",
-                            placeholder="Example: white AirPods from my first year of university",
-                            lines=5,
-                            value="white AirPods from my first year of university",
+                            placeholder="Example: blue school bag from exam week",
+                            lines=2,
+                            value=DEFAULT_MUSEUM_PROMPT,
                         )
-                        quick_image = gr.Image(label="Optional object photo", type="filepath", height=168)
+                        quick_spirit = gr.Textbox(
+                            label="Spirit story caption",
+                            placeholder="What should visitors know when they hover this relic?",
+                            lines=3,
+                            value=DEFAULT_STORY_CAPTION,
+                        )
+                        quick_image = gr.Image(
+                            label="Photo",
+                            type="filepath",
+                            height=92,
+                            elem_classes=["photo-drop-compact"],
+                        )
                         quick_button = gr.Button("Place in Museum", variant="primary")
-                        gr.HTML(
-                            """
-                            <p class="compact-note">
-                              One button creates the relic, assigns the hall, shows the model, and prepares the Minecraft packet.
-                            </p>
-                            """
+                        museum_command = gr.Textbox(
+                            value=INITIAL_MUSEUM_OUTPUTS[1],
+                            label="Minecraft command",
+                            lines=2,
+                            max_lines=2,
+                            show_copy_button=True,
+                            elem_classes=["command-copy"],
                         )
                 with gr.Column(scale=6):
                     museum_model = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[0], label="Artifact model")
+                    museum_coordinates = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[2], label="Coordinates")
 
-            with gr.Tabs():
-                with gr.Tab("Placement"):
-                    museum_placement = gr.Markdown(value=INITIAL_MUSEUM_OUTPUTS[1])
-                with gr.Tab("Passport"):
-                    museum_passport = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[2])
-                with gr.Tab("Minecraft Packet"):
-                    museum_packet = gr.Textbox(value=INITIAL_MUSEUM_OUTPUTS[3], label="dreamwall.museum.v1", lines=16, max_lines=24)
-                with gr.Tab("Spirit"):
-                    museum_spirit = gr.Markdown(value=INITIAL_MUSEUM_OUTPUTS[6])
+            museum_wall = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[9], label="Persistent museum")
 
-            with gr.Accordion("Museum map and catalog", open=False):
+            with gr.Accordion("Blueprint and catalog", open=False):
                 with gr.Row():
                     with gr.Column(scale=5):
                         with gr.Group(elem_classes=["museum-stage"]):
-                            museum_preview = gr.Image(value=INITIAL_MUSEUM_OUTPUTS[4], label="Museum map", type="filepath", height=420)
+                            museum_preview = gr.Image(value=INITIAL_MUSEUM_OUTPUTS[6], label="Museum map", type="filepath", height=420)
                     with gr.Column(scale=5):
                         museum_catalog = gr.Dataframe(
-                            value=INITIAL_MUSEUM_OUTPUTS[5],
+                            value=INITIAL_MUSEUM_OUTPUTS[7],
                             headers=["#", "creator", "title", "object", "hall", "score", "xyz", "cmd"],
                             label="Generated relic catalog",
                             row_count=8,
@@ -3089,10 +3553,39 @@ with gr.Blocks(css=CSS, title="AfterBlock Museum") as demo:
                     gr.File(value="assets/afterblock_textures/afterblock_manifest.json", label="Download manifest")
                     gr.File(value="assets/afterblock_textures/gallery/index.html", label="Download full texture gallery")
 
+        with gr.Tab("Passport"):
+            museum_passport = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[4], label="Passport")
+
+        with gr.Tab("WaypointCraft"):
+            museum_waypoint = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[3], label="WaypointCraft")
+
+        with gr.Tab("Packet"):
+            museum_packet = gr.Textbox(
+                value=INITIAL_MUSEUM_OUTPUTS[5],
+                label="dreamwall.museum.v1",
+                lines=22,
+                max_lines=28,
+                show_copy_button=True,
+            )
+
+        with gr.Tab("Spirit"):
+            museum_spirit = gr.Markdown(value=INITIAL_MUSEUM_OUTPUTS[8])
+
     quick_button.click(
         place_in_museum,
-        inputs=[quick_prompt, quick_image],
-        outputs=[museum_model, museum_placement, museum_passport, museum_packet, museum_preview, museum_catalog, museum_spirit],
+        inputs=[quick_prompt, quick_spirit, quick_image],
+        outputs=[
+            museum_model,
+            museum_command,
+            museum_coordinates,
+            museum_waypoint,
+            museum_passport,
+            museum_packet,
+            museum_preview,
+            museum_catalog,
+            museum_spirit,
+            museum_wall,
+        ],
         api_name="quick_curate",
     )
     texture_button.click(

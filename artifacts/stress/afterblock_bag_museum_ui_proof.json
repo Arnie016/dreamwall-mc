@@ -1,0 +1,41 @@
+{
+  "feature": "afterblock-bag-museum-ui",
+  "date": "2026-06-13",
+  "local_url": "http://127.0.0.1:7860",
+  "default_prompt": "blue school bag from exam week",
+  "default_story_caption": "It carried my laptop, exam panic, snacks, and the mornings I kept showing up.",
+  "minecraft_command": "/give @p minecraft:paper[minecraft:custom_model_data=730984] 1",
+  "checks": {
+    "single_place_flow": true,
+    "top_tabs": [
+      "Place in Museum",
+      "Resource Pack",
+      "Passport",
+      "WaypointCraft",
+      "Packet",
+      "Spirit"
+    ],
+    "legacy_sections_removed": [
+      "NeuroPets Hatchery",
+      "Living Canvas",
+      "DreamWall Canvas",
+      "Walk the AfterBlock halls"
+    ],
+    "legacy_sections_visible": [],
+    "persistent_museum_visible": true,
+    "persistent_museum_command_matches_copy_command": true,
+    "story_caption_hover_markup": true,
+    "story_caption_hf_badge": true,
+    "iframe_has_bag_renderer": true,
+    "iframe_has_pointer_drag": true,
+    "iframe_has_wheel_zoom": true,
+    "waypointcraft_has_world_xyz": true,
+    "resource_pack_items_generated": 3200
+  },
+  "screenshots": {
+    "main_view": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-bag-museum-ui-post-cmd-fix.png",
+    "hover_caption": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-bag-museum-hover-caption-post-cmd-fix.png",
+    "previous_main_view": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-bag-museum-ui-final.png",
+    "previous_hover_caption": "/Users/arnav/Documents/Codex/2026-06-05/files-mentioned-by-the-user-screenshot/afterblock-bag-museum-hover-caption.png"
+  }
+}

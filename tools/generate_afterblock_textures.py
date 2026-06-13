@@ -181,7 +181,7 @@ def draw_icon(kind, color, shape, variant):
     light = shade(mid, 50)
     dark = shade(mid, -62)
 
-    protected_icon_kinds = {"earbuds", "monitor", "shoes", "clock", "remote"}
+    protected_icon_kinds = {"earbuds", "monitor", "school_bag", "shoes", "clock", "remote"}
 
     if kind == "earbuds":
         px(d, (5, 7, 6, 13), light)
@@ -199,7 +199,14 @@ def draw_icon(kind, color, shape, variant):
     elif shape == "screen":
         px(d, (2, 3, 14, 11), ink); px(d, (3, 4, 13, 10), mid); px(d, (4, 5, 12, 8), blend(mid, (70, 180, 230), 0.42)); px(d, (7, 11, 9, 13), dark); px(d, (5, 14, 11, 15), dark)
     elif shape == "bag":
-        px(d, (4, 6, 12, 14), mid); px(d, (6, 4, 10, 5), dark); px(d, (5, 8, 11, 9), light); px(d, (4, 10, 5, 13), dark)
+        px(d, (4, 5, 12, 14), mid)
+        px(d, (5, 4, 11, 5), dark)
+        px(d, (6, 3, 10, 4), dark)
+        px(d, (5, 7, 11, 9), light)
+        px(d, (6, 10, 10, 13), shade(mid, 18))
+        px(d, (4, 7, 5, 13), dark)
+        px(d, (11, 7, 12, 13), dark)
+        px(d, (6, 6, 10, 6), (238, 210, 112))
     elif shape == "framed_square":
         px(d, (2, 2, 14, 14), dark); px(d, (4, 4, 12, 12), mid); px(d, (7, 5, 10, 8), accent)
     elif shape == "bottle":
@@ -400,7 +407,7 @@ def element_model(shape, texture_ref, variant):
         "thin_rect": [([4, 2, 6], [12, 14, 8])],
         "paired_dots": [([5, 3, 6], [7, 10, 8]), ([9, 3, 6], [11, 10, 8]), ([3, 10, 5], [7, 13, 9]), ([9, 10, 5], [13, 13, 9]), ([4, 11, 4], [5, 12, 6]), ([11, 11, 4], [12, 12, 6])],
         "screen": [([2, 5, 5], [14, 12, 7]), ([3, 6, 4], [13, 11, 5]), ([7, 2, 6], [9, 5, 8]), ([5, 1, 5], [11, 2, 9])],
-        "bag": [([4, 3, 4], [12, 12, 10]), ([6, 12, 5], [10, 14, 9])],
+        "bag": [([4, 3, 4], [12, 12, 10]), ([5, 6, 3], [11, 11, 5]), ([6, 12, 5], [10, 14, 9]), ([3, 5, 5], [4, 12, 9]), ([12, 5, 5], [13, 12, 9]), ([6, 9, 3], [10, 10, 4])],
         "framed_square": [([2, 2, 5], [14, 14, 7]), ([4, 4, 4], [12, 12, 8])],
         "bottle": [([5, 2, 5], [11, 12, 10]), ([6, 12, 6], [10, 15, 9])],
         "lamp": [([4, 9, 5], [12, 14, 10]), ([7, 3, 6], [9, 9, 8]), ([5, 2, 5], [11, 3, 10])],

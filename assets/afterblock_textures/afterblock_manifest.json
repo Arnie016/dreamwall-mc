@@ -108,7 +108,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -2068,7 +2068,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -4028,7 +4028,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -5988,7 +5988,7 @@
     "model_profile": "tabletop_low",
     "orientation": "low tabletop object",
     "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -7948,7 +7948,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -9908,7 +9908,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -11868,7 +11868,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -13828,7 +13828,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -15788,7 +15788,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -17748,7 +17748,7 @@
     "model_profile": "tabletop_low",
     "orientation": "low tabletop object",
     "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -19708,7 +19708,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -21668,7 +21668,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -23628,7 +23628,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -25588,7 +25588,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -27548,7 +27548,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -29508,7 +29508,7 @@
     "model_profile": "tabletop_low",
     "orientation": "low tabletop object",
     "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -31468,7 +31468,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -33428,7 +33428,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -35388,7 +35388,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -37348,7 +37348,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -39308,7 +39308,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -41268,7 +41268,7 @@
     "model_profile": "tabletop_low",
     "orientation": "low tabletop object",
     "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -43228,7 +43228,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -45188,7 +45188,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -47148,7 +47148,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -49108,7 +49108,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -51068,7 +51068,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -53028,7 +53028,7 @@
     "model_profile": "tabletop_low",
     "orientation": "low tabletop object",
     "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -54988,7 +54988,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -56948,7 +56948,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -58908,7 +58908,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -60868,7 +60868,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -62828,7 +62828,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -64788,7 +64788,7 @@
     "model_profile": "tabletop_low",
     "orientation": "low tabletop object",
     "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -66748,7 +66748,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -68708,7 +68708,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -70668,7 +70668,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -72628,7 +72628,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -74588,7 +74588,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -76548,7 +76548,7 @@
     "model_profile": "tabletop_low",
     "orientation": "low tabletop object",
     "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -78508,7 +78508,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -80468,7 +80468,7 @@
     "model_profile": "handheld_diagonal",
     "orientation": "diagonal handheld relic",
     "itemdisplay_transform": "ItemDisplay.Transform.THIRDPERSON_RIGHTHAND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -82428,7 +82428,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -84388,7 +84388,7 @@
     "model_profile": "tall_showcase",
     "orientation": "tall glass-case object",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -86348,7 +86348,7 @@
     "model_profile": "pedestal_front",
     "orientation": "upright pedestal",
     "itemdisplay_transform": "ItemDisplay.Transform.FIXED",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
@@ -88308,7 +88308,7 @@
     "model_profile": "tabletop_low",
     "orientation": "low tabletop object",
     "itemdisplay_transform": "ItemDisplay.Transform.GROUND",
-    "element_count": 2,
+    "element_count": 6,
     "display_strategy": "Per-relic 3D item model with materialized PNG surface, cuboid silhouette, variant display pose, GUI, ground, fixed, first-person, and third-person transforms"
   },
   {
