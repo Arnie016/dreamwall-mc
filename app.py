@@ -1034,6 +1034,56 @@ def server_setup_html() -> str:
     """
 
 
+def demo_path_html() -> str:
+    return f"""
+    <section class="demo-path">
+      <header>
+        <h2>Best Hackathon Demo Path</h2>
+        <p>Keep the story simple: the Space is the museum terminal, Minecraft is the persistent place where the memory lives.</p>
+      </header>
+      <div class="demo-path-grid">
+        <article>
+          <span>What works</span>
+          <ul>
+            <li>One ordinary object becomes a hall, profile, passport, item model, and exact Minecraft coordinate.</li>
+            <li>The same `CustomModelData` appears in the 3D preview, passport, packet, resource pack, and Paper bridge.</li>
+            <li>The server proof is physical: a visitor can walk from `YOU ARE HERE` to the generated plot.</li>
+          </ul>
+        </article>
+        <article>
+          <span>What to avoid</span>
+          <ul>
+            <li>Do not lead with generic AI generation, blockchain, auctions, or a huge feature list.</li>
+            <li>Do not spend the video browsing texture shelves unless a judge asks.</li>
+            <li>Do not describe the spirit as a chatbot; it is the relic profile and museum lore.</li>
+          </ul>
+        </article>
+      </div>
+      <ol class="demo-script">
+        <li><b>0:00</b> Type one relic and story caption in Place in Museum.</li>
+        <li><b>0:25</b> Show the generated Minecraft-style model, hall, plot, and command.</li>
+        <li><b>0:50</b> Open Passport, scan/share link, and show the exact XYZ.</li>
+        <li><b>1:15</b> Open Packet briefly so judges see `dreamwall.museum.v1`.</li>
+        <li><b>1:35</b> Switch to Minecraft and run the proof commands.</li>
+        <li><b>2:20</b> Walk from the `YOU ARE HERE` beacon to the relic and open the lectern passport.</li>
+      </ol>
+      <div class="demo-command-strip">
+        <code>/dreamwall pack</code>
+        <code>/dreamwall museum build</code>
+        <code>/dreamwall museum check</code>
+        <code>/dreamwall import</code>
+      </div>
+      <p class="demo-closing-line">Closing line: AfterBlock turns the things people would throw away into places they can visit.</p>
+      <div class="demo-proof-note">
+        <span>Coordinate proof</span>
+        <code>world_x = {GALLERY_ORIGIN_X} + plot_x * {PLOT_SCALE}</code>
+        <code>world_y = {GALLERY_ORIGIN_Y}</code>
+        <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
+      </div>
+    </section>
+    """
+
+
 def server_kit_text(artifact: dict) -> str:
     coords = artifact["minecraft_coordinates"]
     item = artifact.get("resource_pack_item", {})
@@ -4233,6 +4283,89 @@ body, .gradio-container {
   border-left: 4px solid #f25a0b;
   padding-left: 12px;
 }
+.demo-path {
+  border: 2px solid #8d6d37;
+  background:
+    linear-gradient(135deg, rgba(242, 193, 95, .12), transparent 42%),
+    #15130f;
+  box-shadow: 0 8px 0 #080705;
+  padding: 20px;
+}
+.demo-path header {
+  border-bottom: 1px solid #5c4d32;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+}
+.demo-path h2 {
+  margin: 0 0 6px;
+  color: #ffe4a3;
+}
+.demo-path p,
+.demo-path li {
+  color: #e8dcc1 !important;
+}
+.demo-path-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.demo-path article {
+  border: 1px solid #5c4d32;
+  background: #211d16;
+  padding: 14px;
+}
+.demo-path article span {
+  display: block;
+  color: #f2c15f;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.demo-path ul,
+.demo-script {
+  margin: 0;
+  padding-left: 18px;
+}
+.demo-script {
+  border: 1px solid #6f5832;
+  margin-top: 14px;
+  padding: 14px 14px 14px 34px;
+  background: #171410;
+}
+.demo-script b {
+  color: #f2c15f;
+}
+.demo-command-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+.demo-command-strip code,
+.demo-proof-note code {
+  display: block;
+  background: #ead7a6 !important;
+  color: #1b1308 !important;
+  padding: 8px;
+  overflow-wrap: anywhere;
+}
+.demo-closing-line {
+  border-left: 4px solid #f25a0b;
+  margin: 14px 0 8px;
+  padding-left: 12px;
+  font-weight: 900;
+}
+.demo-proof-note {
+  display: grid;
+  grid-template-columns: 140px repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  color: #cdbd9b !important;
+}
+.demo-proof-note span {
+  color: #f2c15f;
+  font-weight: 900;
+}
 .passport-card {
   background:
     linear-gradient(135deg, rgba(255, 226, 154, .1), transparent 35%),
@@ -4665,7 +4798,10 @@ textarea, input {
     display: block;
   }
   .server-grid,
-  .server-formula {
+  .server-formula,
+  .demo-path-grid,
+  .demo-command-strip,
+  .demo-proof-note {
     grid-template-columns: 1fr;
   }
 }
@@ -4875,6 +5011,9 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
 
         with gr.Tab("Relic Profile"):
             museum_spirit = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[8])
+
+        with gr.Tab("Demo Path"):
+            gr.HTML(value=demo_path_html(), label="Hackathon demo path")
 
         with gr.Tab("Minecraft Server"):
             gr.HTML(value=server_setup_html(), label="Minecraft server setup")

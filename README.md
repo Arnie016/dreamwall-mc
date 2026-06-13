@@ -33,6 +33,8 @@ The Gradio demo now opens with a clean museum preview: 100 labeled demo artifact
 
 The main placement form accepts a visitor signature in the fourth field. A value like `@wildstash` becomes the hover/social tag; a plain value like `Arnav` becomes the owner label without adding a social badge.
 
+The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video.
+
 ## Why This Is Different
 
 Most hackathon apps stop at chat or image generation. AfterBlock turns language and memory into a place visitors can walk through.
