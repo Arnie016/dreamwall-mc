@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-06-14T03:16:25+08:00",
+  "checked_at": "2026-06-14T20:18:43+08:00",
   "scope": "AfterBlock Paper bridge museum campus builder and Space server setup tab",
   "coordinate_contract": {
     "plot_0_0": "-192 80 -192",
@@ -28,21 +28,22 @@
     "Paper bridge import endpoint aligned to the live Space /gradio_api/call/quick_curate endpoint",
     "Paper bridge import path now compiles with item hover lore plus a written-book passport placed on a lectern",
     "Paper bridge exact-coordinate import now paints a lit route from YOU ARE HERE to the generated plot and gives a route compass",
-    "rebuilt plugin class contains WARPED_BUTTON, Spirit button, profile + lore, AfterBlock spirit, spirit-buttons markers, buildMemorySpine, and the living memory spine build message",
+    "rebuilt plugin class contains WARPED_BUTTON, Spirit button, profile + lore, AfterBlock spirit, spirit-buttons markers, buildMemorySpine, configurable default-import-prompt/default-import-story/default-import-owner, and the living memory spine build message",
+    "generated server kit ZIP contains the configured default import prompt, story, owner, config.yml, and a plugin jar matching the app.py SHA1/SHA256 constants",
     "rebuilt passport-and-spirit-button-capable jar compiled successfully with Java 21 targeting Java 17 bytecode"
   ],
   "bundle": {
     "resource_pack_sha1": "03487f018e2062e254b5ea443396f29d099f8b67",
     "resource_pack_sha256": "4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5",
-    "plugin_jar_sha1": "bcd2e57c115a0bc5a767d7e34f2c78454da56a77",
-    "plugin_jar_sha256": "75803cb99172bfd88f4ee1e458bcc4585b32c2e2fe2ad8d334102f2970dd727a",
+    "plugin_jar_sha1": "e6fb5eda3ebd84c15bb5ca9e0b2a2233942213c0",
+    "plugin_jar_sha256": "15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83",
     "prebuilt_world_sha1": "a6fa4e4c7209e4be5ba9ca089190892870fb2f63",
     "prebuilt_world_sha256": "6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e"
   },
   "notes": [
     "The builder is op-only through the existing dreamwall.use permission.",
     "The actual target server still needs the PebbleHost panel password for SFTP upload.",
-    "The memory spine update was verified by Java 21 compilation and jar bytecode inspection; the Paper server smoke was not rerun after this specific update.",
+    "The memory spine and configurable import updates were verified by Java 21 compilation, app.py compilation, generated ZIP inspection, and jar bytecode/config inspection; the Paper server smoke was not rerun after these specific updates.",
     "The local dist/pebblehost bundle is ignored by git and prepared for manual upload."
   ]
 }

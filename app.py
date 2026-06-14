@@ -23,9 +23,12 @@ RESOURCE_PACK_URL = "https://huggingface.co/spaces/build-small-hackathon/dreamwa
 RESOURCE_PACK_SHA1 = "03487f018e2062e254b5ea443396f29d099f8b67"
 RESOURCE_PACK_PATH = "resource-pack/AfterBlockMuseum.zip"
 PAPER_PLUGIN_JAR_PATH = "server-kit/dreamwall-paper-bridge-0.1.0.jar"
-PAPER_PLUGIN_SHA1 = "bcd2e57c115a0bc5a767d7e34f2c78454da56a77"
-PAPER_PLUGIN_SHA256 = "75803cb99172bfd88f4ee1e458bcc4585b32c2e2fe2ad8d334102f2970dd727a"
+PAPER_PLUGIN_SHA1 = "e6fb5eda3ebd84c15bb5ca9e0b2a2233942213c0"
+PAPER_PLUGIN_SHA256 = "15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83"
 TEXTURE_PAGE_SIZE = 96
+DEFAULT_IMPORT_PROMPT = "blue school bag from exam week"
+DEFAULT_IMPORT_STORY = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
+DEFAULT_IMPORT_OWNER = "@Wildstash"
 
 
 BLOCKS = [
@@ -1254,6 +1257,15 @@ def demo_path_html() -> str:
     """
 
 
+def clean_text(value: str, fallback: str) -> str:
+    cleaned = " ".join(str(value or "").split())
+    return cleaned or fallback
+
+
+def yaml_value(value: str) -> str:
+    return json.dumps(" ".join(str(value or "").split()))
+
+
 def server_kit_text(artifact: dict) -> str:
     coords = artifact["minecraft_coordinates"]
     item = artifact.get("resource_pack_item", {})
@@ -1264,6 +1276,9 @@ resource-pack-sha1: "{RESOURCE_PACK_SHA1}"
 offer-resource-pack-on-join: false
 poll-enabled: false
 poll-seconds: 30
+default-import-prompt: {yaml_value(artifact.get("source_prompt", DEFAULT_IMPORT_PROMPT))}
+default-import-story: {yaml_value(artifact.get("memory_text", DEFAULT_IMPORT_STORY))}
+default-import-owner: {yaml_value(artifact.get("owner_handle") or artifact.get("owner_name") or DEFAULT_IMPORT_OWNER)}
 gallery-world: "world"
 canvas-size: {CANVAS_SIZE}
 plot-size: {PLOT_SCALE}
@@ -1322,6 +1337,9 @@ def server_config_kit_text(
     resource_pack_sha1: str = RESOURCE_PACK_SHA1,
     gallery_world: str = "world",
     offer_pack_on_join: bool = False,
+    import_prompt: str = DEFAULT_IMPORT_PROMPT,
+    import_story: str = DEFAULT_IMPORT_STORY,
+    import_owner: str = DEFAULT_IMPORT_OWNER,
 ) -> str:
     config, clean_space_url, _, _, _ = server_config_yaml(
         space_url,
@@ -1329,6 +1347,9 @@ def server_config_kit_text(
         resource_pack_sha1,
         gallery_world,
         offer_pack_on_join,
+        import_prompt,
+        import_story,
+        import_owner,
     )
     return "\n".join(
         [
@@ -1343,6 +1364,11 @@ def server_config_kit_text(
             "/dreamwall museum build",
             "/dreamwall museum check",
             "/dreamwall import",
+            "",
+            "Default relic imported by /dreamwall import",
+            f"Prompt: {clean_text(import_prompt, DEFAULT_IMPORT_PROMPT)}",
+            f"Story: {clean_text(import_story, DEFAULT_IMPORT_STORY)}",
+            f"Owner: {clean_text(import_owner, DEFAULT_IMPORT_OWNER)}",
             "",
             "Coordinate contract kept fixed for judge proof",
             f"world_x = {GALLERY_ORIGIN_X} + plot_x * {PLOT_SCALE}",
@@ -1365,11 +1391,17 @@ def server_config_yaml(
     resource_pack_sha1: str = RESOURCE_PACK_SHA1,
     gallery_world: str = "world",
     offer_pack_on_join: bool = False,
+    import_prompt: str = DEFAULT_IMPORT_PROMPT,
+    import_story: str = DEFAULT_IMPORT_STORY,
+    import_owner: str = DEFAULT_IMPORT_OWNER,
 ) -> tuple[str, str, str, str, str]:
     clean_space_url = (space_url or PUBLIC_SPACE_URL).strip().rstrip("/")
     clean_pack_url = (resource_pack_url or RESOURCE_PACK_URL).strip()
     clean_pack_sha1 = (resource_pack_sha1 or RESOURCE_PACK_SHA1).strip()
     clean_gallery_world = " ".join(str(gallery_world or "world").split()) or "world"
+    clean_import_prompt = clean_text(import_prompt, DEFAULT_IMPORT_PROMPT)
+    clean_import_story = clean_text(import_story, DEFAULT_IMPORT_STORY)
+    clean_import_owner = clean_text(import_owner, DEFAULT_IMPORT_OWNER)
     offer_pack = "true" if bool(offer_pack_on_join) else "false"
     config = f"""space-url: "{clean_space_url}"
 resource-pack-url: "{clean_pack_url}"
@@ -1377,6 +1409,9 @@ resource-pack-sha1: "{clean_pack_sha1}"
 offer-resource-pack-on-join: {offer_pack}
 poll-enabled: false
 poll-seconds: 30
+default-import-prompt: {yaml_value(clean_import_prompt)}
+default-import-story: {yaml_value(clean_import_story)}
+default-import-owner: {yaml_value(clean_import_owner)}
 gallery-world: "{clean_gallery_world}"
 canvas-size: {CANVAS_SIZE}
 plot-size: {PLOT_SCALE}
@@ -1395,6 +1430,9 @@ def server_config_zip(
     resource_pack_sha1: str = RESOURCE_PACK_SHA1,
     gallery_world: str = "world",
     offer_pack_on_join: bool = False,
+    import_prompt: str = DEFAULT_IMPORT_PROMPT,
+    import_story: str = DEFAULT_IMPORT_STORY,
+    import_owner: str = DEFAULT_IMPORT_OWNER,
 ) -> str:
     config, clean_space_url, clean_pack_url, clean_pack_sha1, clean_gallery_world = server_config_yaml(
         space_url,
@@ -1402,6 +1440,9 @@ def server_config_zip(
         resource_pack_sha1,
         gallery_world,
         offer_pack_on_join,
+        import_prompt,
+        import_story,
+        import_owner,
     )
     kit_dir = tempfile.mkdtemp(prefix="afterblock-server-kit-")
     zip_path = os.path.join(kit_dir, "afterblock-paper-server-kit.zip")
@@ -1430,6 +1471,14 @@ This ZIP is self-contained for the server side:
 ```
 
 Use `/dreamwall import here` for a fast nearby proof during recording.
+
+`/dreamwall import` uses the configured default relic:
+
+```text
+prompt={clean_text(import_prompt, DEFAULT_IMPORT_PROMPT)}
+story={clean_text(import_story, DEFAULT_IMPORT_STORY)}
+owner={clean_text(import_owner, DEFAULT_IMPORT_OWNER)}
+```
 
 ## Coordinate Contract
 
@@ -1486,6 +1535,9 @@ def server_config_bundle(
     resource_pack_sha1: str = RESOURCE_PACK_SHA1,
     gallery_world: str = "world",
     offer_pack_on_join: bool = False,
+    import_prompt: str = DEFAULT_IMPORT_PROMPT,
+    import_story: str = DEFAULT_IMPORT_STORY,
+    import_owner: str = DEFAULT_IMPORT_OWNER,
 ) -> tuple[str, str]:
     return (
         server_config_kit_text(
@@ -1494,6 +1546,9 @@ def server_config_bundle(
             resource_pack_sha1,
             gallery_world,
             offer_pack_on_join,
+            import_prompt,
+            import_story,
+            import_owner,
         ),
         server_config_zip(
             space_url,
@@ -1501,6 +1556,9 @@ def server_config_bundle(
             resource_pack_sha1,
             gallery_world,
             offer_pack_on_join,
+            import_prompt,
+            import_story,
+            import_owner,
         ),
     )
 
@@ -5662,9 +5720,9 @@ PASSPORT_SCAN_JS = r"""
 }
 """
 
-DEFAULT_MUSEUM_PROMPT = "blue school bag from exam week"
-DEFAULT_STORY_CAPTION = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
-INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CAPTION, "@Wildstash", None)
+DEFAULT_MUSEUM_PROMPT = DEFAULT_IMPORT_PROMPT
+DEFAULT_STORY_CAPTION = DEFAULT_IMPORT_STORY
+INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CAPTION, DEFAULT_IMPORT_OWNER, None)
 INITIAL_TEXTURE_OUTPUTS = browse_texture_library("all", 1)
 INITIAL_SERVER_CONFIG_KIT = server_config_kit_text()
 INITIAL_SERVER_CONFIG_ZIP = server_config_zip()
@@ -5814,7 +5872,7 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                     """
                     <section class="server-config-heading">
                       <h3>Configure your Paper museum</h3>
-                      <p>Keep the coordinate contract fixed, then change only the public Space, pack, and world values for your own server.</p>
+                      <p>Keep the coordinate contract fixed, then set the Space, pack, world, and default relic that /dreamwall import should place.</p>
                     </section>
                     """
                 )
@@ -5844,6 +5902,24 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                         label="Offer resource pack on join",
                         value=False,
                     )
+                server_import_prompt = gr.Textbox(
+                    label="Default /dreamwall import prompt",
+                    value=DEFAULT_IMPORT_PROMPT,
+                    lines=2,
+                    placeholder="Example: blue school bag from exam week",
+                )
+                server_import_story = gr.Textbox(
+                    label="Default /dreamwall import story",
+                    value=DEFAULT_IMPORT_STORY,
+                    lines=3,
+                    placeholder="The caption that becomes the passport/history text",
+                )
+                server_import_owner = gr.Textbox(
+                    label="Default visitor signature",
+                    value=DEFAULT_IMPORT_OWNER,
+                    lines=1,
+                    placeholder="@handle or display name",
+                )
                 server_config_button = gr.Button("Build Server Config")
                 server_config_kit = gr.Textbox(
                     value=INITIAL_SERVER_CONFIG_KIT,
@@ -5899,6 +5975,9 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
             server_resource_pack_sha1,
             server_gallery_world,
             server_offer_pack,
+            server_import_prompt,
+            server_import_story,
+            server_import_owner,
         ],
         outputs=[server_config_kit, server_config_download],
         api_name="server_config_kit",

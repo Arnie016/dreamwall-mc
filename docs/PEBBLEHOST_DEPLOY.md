@@ -29,11 +29,13 @@ server.properties.append
 README.md
 ```
 
+In that tab, set the default import prompt, story, and visitor signature before downloading the ZIP if `/dreamwall import` should place a specific demo relic.
+
 Current hashes from the verified local bundle:
 
 ```text
 4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5  AfterBlockMuseum.zip
-75803cb99172bfd88f4ee1e458bcc4585b32c2e2fe2ad8d334102f2970dd727a  dreamwall-paper-bridge-0.1.0.jar
+15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83  dreamwall-paper-bridge-0.1.0.jar
 6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e  afterblock-demo-world.zip
 ```
 

@@ -12,6 +12,7 @@ import java.util.logging.Level;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -196,7 +197,8 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             sender.sendMessage("/dreamwall import must be run by an in-game player.");
             return;
         }
-        sender.sendMessage("Importing one live AfterBlock artifact from " + spaceUrl() + " ...");
+        sender.sendMessage("Importing one live AfterBlock artifact from " + spaceUrl()
+                + " using prompt: " + compactLore(defaultImportPrompt()) + " ...");
         getServer().getScheduler().runTaskAsynchronously(this, () -> {
             try {
                 JsonObject packet = fetchMuseumPacket();
@@ -211,7 +213,14 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
     }
 
     private JsonObject fetchMuseumPacket() throws IOException, InterruptedException {
-        String payload = "{\"data\":[\"a white AirPods case from a first year desk\",\"A small object that carried private worlds through public noise.\",\"@afterblock\",null]}";
+        JsonObject payloadJson = new JsonObject();
+        JsonArray data = new JsonArray();
+        data.add(defaultImportPrompt());
+        data.add(defaultImportStory());
+        data.add(defaultImportOwner());
+        data.add(JsonNull.INSTANCE);
+        payloadJson.add("data", data);
+        String payload = payloadJson.toString();
         String callBody = post(spaceUrl() + "/gradio_api/call/quick_curate", payload);
         JsonObject call = JsonParser.parseString(callBody).getAsJsonObject();
         String eventId = call.get("event_id").getAsString();
@@ -937,6 +946,19 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
 
     private String resourcePackSha1() {
         return getConfig().getString("resource-pack-sha1", "03487f018e2062e254b5ea443396f29d099f8b67");
+    }
+
+    private String defaultImportPrompt() {
+        return getConfig().getString("default-import-prompt", "blue school bag from exam week");
+    }
+
+    private String defaultImportStory() {
+        return getConfig().getString("default-import-story",
+                "It carried my laptop, exam panic, snacks, and the mornings I kept showing up.");
+    }
+
+    private String defaultImportOwner() {
+        return getConfig().getString("default-import-owner", "@Wildstash");
     }
 
     private byte[] resourcePackSha1Bytes() {

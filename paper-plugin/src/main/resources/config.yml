@@ -4,6 +4,9 @@ resource-pack-sha1: "03487f018e2062e254b5ea443396f29d099f8b67"
 offer-resource-pack-on-join: false
 poll-enabled: false
 poll-seconds: 30
+default-import-prompt: "blue school bag from exam week"
+default-import-story: "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
+default-import-owner: "@Wildstash"
 gallery-world: "world"
 canvas-size: 12
 plot-size: 32
