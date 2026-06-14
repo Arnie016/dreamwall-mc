@@ -10,7 +10,7 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 - `/dreamwall fetch` calls the Space app domain and confirms the bridge can reach Hugging Face.
 - `/dreamwall pack` asks the player client to load the Hugging Face-hosted `AfterBlockMuseum.zip` resource pack.
 - `/dreamwall demo` places a safe local pedestal/sign proof, spawns an `ItemDisplay` relic, adds a lectern passport book, and gives the player a Paper item with `CustomModelData 730002`.
-- `/dreamwall import` calls the live `quick_curate` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, places a packet-derived pedestal/sign/`ItemDisplay`/lectern passport/item at the artifact coordinates, and paints a lit route from `YOU ARE HERE` to that plot.
+- `/dreamwall import` calls the live `quick_curate` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, places a packet-derived pedestal/sign/`ItemDisplay`/lectern passport/item at the artifact coordinates, paints a lit route from `YOU ARE HERE` to that plot, and gives the player a route compass.
 - `/dreamwall import here` uses the same live packet but places it two blocks in front of the player for fast video proof.
 - `/dreamwall museum where` prints the coordinate contract used by the Space and server.
 - `/dreamwall museum build` creates the 12 x 12 living museum campus at the configured origin, with plot pads, memory rails, hall gates, banner markers, and a `YOU ARE HERE` entry.
@@ -41,7 +41,8 @@ Implemented `/dreamwall import` V1 behavior:
 3. Display plaque line and owner handle.
 4. Place a written-book passport on a lectern so visitors can open the relic profile/history in Minecraft.
 5. Paint a lit route from the entry beacon to the generated plot.
-6. Optionally create particles or a simple animation based on artifact type.
+6. Set the player's compass target and give a named route compass for the relic.
+7. Optionally create particles or a simple animation based on artifact type.
 
 The legacy `generate_art` endpoint emits a `dreamwall.mc.v1` JSON packet with:
 
@@ -136,7 +137,7 @@ The jar will be in `target/dreamwall-paper-bridge-0.1.0.jar`.
 8. Run `/dreamwall museum build` once to create the coordinate-accurate museum campus.
 9. Run `/dreamwall museum check` to confirm the built world matches the Space coordinate map.
 10. Run `/dreamwall demo` in game to place a pedestal proof, visible `ItemDisplay`, lectern passport, and receive the AirPods demo item.
-11. Run `/dreamwall import` to place a live Hugging Face artifact packet at its generated plot and update the route trail, or `/dreamwall import here` for a nearby proof.
+11. Run `/dreamwall import` to place a live Hugging Face artifact packet at its generated plot, update the route trail, and receive the route compass, or `/dreamwall import here` for a nearby proof.
 
 ## Local Server Proof
 

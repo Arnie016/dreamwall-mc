@@ -250,6 +250,9 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         placePassportLectern(world, base, passport);
         if (!placeHere) {
             placeLivingRoute(world, base, title, owner, hall);
+            player.setCompassTarget(base);
+            player.getInventory().addItem(routeCompass(title, owner, hall, base));
+            player.sendTitle("YOU ARE HERE", "Follow lights to " + compactItemName(title), 10, 70, 20);
         }
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 38, 0.45, 0.65, 0.45, 0.015);
         player.sendMessage("Imported " + title + " by " + owner + " into " + hall + ".");
@@ -257,6 +260,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         if (!placeHere) {
             player.sendMessage("Placed at packet coordinates " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ()
                     + " and updated the lit route from YOU ARE HERE.");
+            player.sendMessage("Your compass now points to the relic plot.");
             player.sendMessage("Use /dreamwall import here for a nearby proof.");
         }
     }
@@ -720,6 +724,21 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             item.setItemMeta(meta);
         }
         return item;
+    }
+
+    private ItemStack routeCompass(String title, String owner, String hall, Location base) {
+        ItemStack compass = new ItemStack(Material.COMPASS);
+        ItemMeta meta = compass.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName("Route to " + compactItemName(title));
+            meta.setLore(List.of(
+                    compactLore("Owner: " + owner),
+                    compactLore("Hall: " + hall),
+                    compactLore("XYZ: " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ()),
+                    "Follow the lit floor from YOU ARE HERE."));
+            compass.setItemMeta(meta);
+        }
+        return compass;
     }
 
     private void placeDisplayRelic(World world, Location base, ItemStack item) {

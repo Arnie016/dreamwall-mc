@@ -27,14 +27,14 @@
     "/dreamwall pack reported SHA1 42738bc973abb6a631bd9ba88ed3b2d7e8521800",
     "Paper bridge import endpoint aligned to the live Space /gradio_api/call/quick_curate endpoint",
     "Paper bridge import path now compiles with item hover lore plus a written-book passport placed on a lectern",
-    "Paper bridge exact-coordinate import now paints a lit route from YOU ARE HERE to the generated plot",
+    "Paper bridge exact-coordinate import now paints a lit route from YOU ARE HERE to the generated plot and gives a route compass",
     "rebuilt passport-capable jar loaded successfully on a temporary Paper 1.21.11 server"
   ],
   "bundle": {
     "resource_pack_sha1": "42738bc973abb6a631bd9ba88ed3b2d7e8521800",
     "resource_pack_sha256": "e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148",
-    "plugin_jar_sha1": "e6cf4d767809a900c17ef6c98bfe8f2487efca53",
-    "plugin_jar_sha256": "4bdbf4679db9599d32ff728dd9d7f28da5fb04cc725b78a2c0134754862b8f8b",
+    "plugin_jar_sha1": "203c1dd3be8a4a7d183e28bc2a9f52d2804ff56d",
+    "plugin_jar_sha256": "ab8e91785e2e487d5267906a1a825bf3472a7abc3e19c71d20cb7fd3c0f666b2",
     "prebuilt_world_sha1": "a6fa4e4c7209e4be5ba9ca089190892870fb2f63",
     "prebuilt_world_sha256": "6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e"
   },

@@ -121,7 +121,7 @@ Input order:
 ]
 ```
 
-The final output is a plugin-ready museum packet with artifact title, hall, coordinates, palette/materials, resource-pack model path, `CustomModelData`, plaque text, spirit first line, optional social tag, owner label, and passport payload. The Paper bridge turns that packet into a placed relic, item hover lore, a readable lectern passport, and a lit route from `YOU ARE HERE` to the generated plot in Minecraft.
+The final output is a plugin-ready museum packet with artifact title, hall, coordinates, palette/materials, resource-pack model path, `CustomModelData`, plaque text, spirit first line, optional social tag, owner label, and passport payload. The Paper bridge turns that packet into a placed relic, item hover lore, a readable lectern passport, a route compass, and a lit route from `YOU ARE HERE` to the generated plot in Minecraft.
 
 ## Design Docs
 
