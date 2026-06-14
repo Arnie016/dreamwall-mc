@@ -5,6 +5,7 @@ import json
 import math
 import os
 import tempfile
+import zipfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from io import BytesIO
@@ -1151,26 +1152,13 @@ def server_config_kit_text(
     gallery_world: str = "world",
     offer_pack_on_join: bool = False,
 ) -> str:
-    clean_space_url = (space_url or PUBLIC_SPACE_URL).strip().rstrip("/")
-    clean_pack_url = (resource_pack_url or RESOURCE_PACK_URL).strip()
-    clean_pack_sha1 = (resource_pack_sha1 or RESOURCE_PACK_SHA1).strip()
-    clean_gallery_world = " ".join(str(gallery_world or "world").split()) or "world"
-    offer_pack = "true" if bool(offer_pack_on_join) else "false"
-    config = f"""space-url: "{clean_space_url}"
-resource-pack-url: "{clean_pack_url}"
-resource-pack-sha1: "{clean_pack_sha1}"
-offer-resource-pack-on-join: {offer_pack}
-poll-enabled: false
-poll-seconds: 30
-gallery-world: "{clean_gallery_world}"
-canvas-size: {CANVAS_SIZE}
-plot-size: {PLOT_SCALE}
-gallery-origin:
-  x: {GALLERY_ORIGIN_X}
-  y: {GALLERY_ORIGIN_Y}
-  z: {GALLERY_ORIGIN_Z}
-gallery-facing: "east"
-"""
+    config, clean_space_url, _, _, _ = server_config_yaml(
+        space_url,
+        resource_pack_url,
+        resource_pack_sha1,
+        gallery_world,
+        offer_pack_on_join,
+    )
     return "\n".join(
         [
             "AFTERBLOCK PAPER SERVER CONFIG",
@@ -1193,6 +1181,128 @@ gallery-facing: "east"
             "Live endpoint used by /dreamwall import",
             f"{clean_space_url}/gradio_api/call/quick_curate",
         ]
+    )
+
+
+def server_config_yaml(
+    space_url: str = PUBLIC_SPACE_URL,
+    resource_pack_url: str = RESOURCE_PACK_URL,
+    resource_pack_sha1: str = RESOURCE_PACK_SHA1,
+    gallery_world: str = "world",
+    offer_pack_on_join: bool = False,
+) -> tuple[str, str, str, str, str]:
+    clean_space_url = (space_url or PUBLIC_SPACE_URL).strip().rstrip("/")
+    clean_pack_url = (resource_pack_url or RESOURCE_PACK_URL).strip()
+    clean_pack_sha1 = (resource_pack_sha1 or RESOURCE_PACK_SHA1).strip()
+    clean_gallery_world = " ".join(str(gallery_world or "world").split()) or "world"
+    offer_pack = "true" if bool(offer_pack_on_join) else "false"
+    config = f"""space-url: "{clean_space_url}"
+resource-pack-url: "{clean_pack_url}"
+resource-pack-sha1: "{clean_pack_sha1}"
+offer-resource-pack-on-join: {offer_pack}
+poll-enabled: false
+poll-seconds: 30
+gallery-world: "{clean_gallery_world}"
+canvas-size: {CANVAS_SIZE}
+plot-size: {PLOT_SCALE}
+gallery-origin:
+  x: {GALLERY_ORIGIN_X}
+  y: {GALLERY_ORIGIN_Y}
+  z: {GALLERY_ORIGIN_Z}
+gallery-facing: "east"
+"""
+    return config, clean_space_url, clean_pack_url, clean_pack_sha1, clean_gallery_world
+
+
+def server_config_zip(
+    space_url: str = PUBLIC_SPACE_URL,
+    resource_pack_url: str = RESOURCE_PACK_URL,
+    resource_pack_sha1: str = RESOURCE_PACK_SHA1,
+    gallery_world: str = "world",
+    offer_pack_on_join: bool = False,
+) -> str:
+    config, clean_space_url, clean_pack_url, clean_pack_sha1, clean_gallery_world = server_config_yaml(
+        space_url,
+        resource_pack_url,
+        resource_pack_sha1,
+        gallery_world,
+        offer_pack_on_join,
+    )
+    kit_dir = tempfile.mkdtemp(prefix="afterblock-server-kit-")
+    zip_path = os.path.join(kit_dir, "afterblock-paper-server-kit.zip")
+    readme = f"""# AfterBlock Paper Server Kit
+
+This kit configures a Paper server as a persistent AfterBlock Museum for:
+
+{clean_space_url}
+
+## Upload
+
+1. Upload `dreamwall-paper-bridge-0.1.0.jar` to `plugins/`.
+2. Upload `AfterBlockMuseum.zip` or use the hosted pack URL below.
+3. Copy `plugins/DreamWall/config.yml` from this ZIP into the same path on the server.
+4. Restart Paper.
+
+## First Run
+
+```text
+/dreamwall pack
+/dreamwall museum build
+/dreamwall museum check
+/dreamwall import
+```
+
+Use `/dreamwall import here` for a fast nearby proof during recording.
+
+## Coordinate Contract
+
+```text
+world_x = {GALLERY_ORIGIN_X} + plot_x * {PLOT_SCALE}
+world_y = {GALLERY_ORIGIN_Y}
+world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}
+world = {clean_gallery_world}
+```
+
+## Resource Pack
+
+```text
+{clean_pack_url}
+sha1={clean_pack_sha1}
+```
+"""
+    server_properties = f"""# Optional server.properties lines
+resource-pack={clean_pack_url}
+resource-pack-sha1={clean_pack_sha1}
+"""
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr("plugins/DreamWall/config.yml", config)
+        zf.writestr("README.md", readme)
+        zf.writestr("server.properties.append", server_properties)
+    return zip_path
+
+
+def server_config_bundle(
+    space_url: str = PUBLIC_SPACE_URL,
+    resource_pack_url: str = RESOURCE_PACK_URL,
+    resource_pack_sha1: str = RESOURCE_PACK_SHA1,
+    gallery_world: str = "world",
+    offer_pack_on_join: bool = False,
+) -> tuple[str, str]:
+    return (
+        server_config_kit_text(
+            space_url,
+            resource_pack_url,
+            resource_pack_sha1,
+            gallery_world,
+            offer_pack_on_join,
+        ),
+        server_config_zip(
+            space_url,
+            resource_pack_url,
+            resource_pack_sha1,
+            gallery_world,
+            offer_pack_on_join,
+        ),
     )
 
 
@@ -4996,6 +5106,7 @@ DEFAULT_STORY_CAPTION = "It carried my laptop, exam panic, snacks, and the morni
 INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CAPTION, "@Wildstash", None)
 INITIAL_TEXTURE_OUTPUTS = browse_texture_library("all", 1)
 INITIAL_SERVER_CONFIG_KIT = server_config_kit_text()
+INITIAL_SERVER_CONFIG_ZIP = server_config_zip()
 
 
 with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
@@ -5180,6 +5291,10 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                     max_lines=30,
                     show_copy_button=True,
                 )
+                server_config_download = gr.File(
+                    value=INITIAL_SERVER_CONFIG_ZIP,
+                    label="Download Paper server kit ZIP",
+                )
             museum_server_kit = gr.Textbox(
                 value=INITIAL_MUSEUM_OUTPUTS[10],
                 label="Current relic server kit",
@@ -5207,7 +5322,7 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
         api_name="quick_curate",
     )
     server_config_button.click(
-        server_config_kit_text,
+        server_config_bundle,
         inputs=[
             server_space_url,
             server_resource_pack_url,
@@ -5215,7 +5330,7 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
             server_gallery_world,
             server_offer_pack,
         ],
-        outputs=[server_config_kit],
+        outputs=[server_config_kit, server_config_download],
         api_name="server_config_kit",
     )
     texture_button.click(
