@@ -1051,11 +1051,94 @@ def living_route_map_html(artifact: dict) -> str:
     """
 
 
+def minecraft_campus_view_html(artifact: dict) -> str:
+    coords = artifact["minecraft_coordinates"]
+    plot = artifact["plot"]
+    plot_x = int(plot["x"])
+    plot_z = int(plot["z"])
+    entry_col = CANVAS_SIZE // 2
+    entry_x = GALLERY_ORIGIN_X + ((CANVAS_SIZE - 1) * PLOT_SCALE) // 2
+    entry_z = GALLERY_ORIGIN_Z - 18
+    tile_w = 30
+    tile_h = 16
+    origin_left = 250
+    origin_top = 28
+
+    def iso_position(x: float, z: float) -> tuple[float, float]:
+        return (
+            origin_left + (x - z) * (tile_w / 2),
+            origin_top + (x + z) * (tile_h / 2),
+        )
+
+    route_min = min(entry_col, plot_x)
+    route_max = max(entry_col, plot_x)
+    tiles = []
+    for z in range(CANVAS_SIZE):
+        for x in range(CANVAS_SIZE):
+            hall = hall_for_plot_cell(x, z)
+            classes = ["campus-tile"]
+            if z == 0 and route_min <= x <= route_max:
+                classes.append("route")
+            if x == plot_x and 0 <= z <= plot_z:
+                classes.append("route")
+            if x == plot_x and z == plot_z:
+                classes.append("target")
+            if x == entry_col and z == 0:
+                classes.append("entry-proxy")
+            left, top = iso_position(x, z)
+            label = f"{x},{z}"
+            title = f"{hall} plot {label}"
+            if x == plot_x and z == plot_z:
+                title = f"{artifact['title']} at plot {label}"
+            tiles.append(
+                f"<span class='{' '.join(classes)}' style='left:{left:.1f}px;top:{top:.1f}px;--hall-color:{hex_color(hall_color(hall))}' title='{html_escape(title)}'>"
+                f"<b>{html_escape(label)}</b></span>"
+            )
+
+    gates = []
+    for index, hall in enumerate(MUSEUM_HALLS):
+        region_x = index % 3
+        region_z = index // 3
+        gate_x = region_x * 4 + 1.5
+        gate_z = region_z * 4 + 1.5
+        left, top = iso_position(gate_x, gate_z)
+        gates.append(
+            f"<span class='campus-gate' style='left:{left:.1f}px;top:{top - 20:.1f}px;--hall-color:{hex_color(hall_color(hall))}' title='{html_escape(hall)}'>"
+            f"<b>{html_escape(hall.replace('Hall of ', '').replace('Grand ', ''))}</b></span>"
+        )
+
+    entry_left, entry_top = iso_position(entry_col, -1.2)
+    target_left, target_top = iso_position(plot_x, plot_z)
+    return f"""
+    <section class="minecraft-campus-view">
+      <div class="campus-heading">
+        <span>In-world view</span>
+        <h4>Entry beacon to relic plot</h4>
+        <p>The diamonds, hall gates, route lights, and target pad use the same plot grid and XYZ formula as the Paper museum builder.</p>
+      </div>
+      <div class="campus-stage" aria-label="Isometric Minecraft-style AfterBlock campus">
+        <div class="campus-stage-inner">
+          {''.join(tiles)}
+          {''.join(gates)}
+          <span class="campus-entry-beacon" style="left:{entry_left:.1f}px;top:{entry_top:.1f}px" title="YOU ARE HERE at X {entry_x} Y {GALLERY_ORIGIN_Y} Z {entry_z}"><b>YOU<br>ARE<br>HERE</b></span>
+          <span class="campus-relic-pin" style="left:{target_left:.1f}px;top:{target_top - 42:.1f}px" title="{html_escape(artifact['title'])}"><b>{html_escape(compact_text(artifact['title'], 18))}</b></span>
+        </div>
+      </div>
+      <div class="campus-proof-strip">
+        <span>Entry X {entry_x} Y {GALLERY_ORIGIN_Y} Z {entry_z}</span>
+        <span>Plot {plot_x},{plot_z}</span>
+        <span>Relic X {coords['x']} Y {coords['y']} Z {coords['z']}</span>
+      </div>
+    </section>
+    """
+
+
 def waypointcraft_html(artifact: dict) -> str:
     coords = artifact["minecraft_coordinates"]
     item = artifact.get("resource_pack_item", {})
     command = minecraft_give_command(artifact)
     living_map = living_route_map_html(artifact)
+    campus_view = minecraft_campus_view_html(artifact)
     return f"""
     <section class="waypoint-card">
       <header>
@@ -1068,6 +1151,7 @@ def waypointcraft_html(artifact: dict) -> str:
         <div><span>Base item</span><strong>{html_escape(item.get('recommended_item', 'minecraft:paper'))}</strong></div>
         <div><span>Model</span><strong>{html_escape(item.get('model', 'afterblock:item/missing'))}</strong></div>
       </div>
+      {campus_view}
       {living_map}
       <code>{html_escape(command)}</code>
     </section>
@@ -4538,6 +4622,182 @@ body, .gradio-container {
   border: 1px solid #5c4d32;
   padding: 12px;
 }
+.minecraft-campus-view {
+  margin: 14px 0;
+  background:
+    linear-gradient(180deg, rgba(58,82,61,.2), transparent 34%),
+    #11100c;
+  border: 1px solid #6b5733;
+  overflow: hidden;
+}
+.campus-heading {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #4e422d;
+}
+.campus-heading span {
+  grid-row: span 2;
+  align-self: start;
+  color: #161006;
+  background: #ffdc8a;
+  border: 1px solid #fff0bd;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.campus-heading h4 {
+  margin: 0;
+  color: #ffe4a3;
+  font-size: 18px;
+  line-height: 1.15;
+}
+.campus-heading p {
+  margin: 0;
+  color: #d8c9a6 !important;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.campus-stage {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 14%, rgba(255,219,132,.14), transparent 30%),
+    linear-gradient(180deg, #171309, #080806 68%);
+}
+.campus-stage::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 28px;
+  height: 62px;
+  background: radial-gradient(ellipse, rgba(0,0,0,.72), transparent 68%);
+}
+.campus-stage-inner {
+  position: absolute;
+  inset: 18px 0 0;
+}
+.campus-tile,
+.campus-gate,
+.campus-entry-beacon,
+.campus-relic-pin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+}
+.campus-tile {
+  width: 28px;
+  height: 28px;
+  transform: rotate(45deg) skew(-10deg, -10deg);
+  transform-origin: center;
+  background: color-mix(in srgb, var(--hall-color) 24%, #242017);
+  border: 1px solid color-mix(in srgb, var(--hall-color) 54%, #66512e);
+  box-shadow: 4px 4px 0 rgba(0,0,0,.45), inset -5px -5px 0 rgba(0,0,0,.18);
+}
+.campus-tile b {
+  transform: rotate(-45deg) skew(10deg, 10deg);
+  color: rgba(255,241,199,.44);
+  font-size: 7px;
+  line-height: 1;
+}
+.campus-tile.entry-proxy {
+  border-color: #9ce5ff;
+}
+.campus-tile.route {
+  background: color-mix(in srgb, #e2bc5e 68%, #262014);
+  border-color: #ffe4a3;
+  box-shadow: 0 0 14px rgba(255,219,132,.38), 4px 4px 0 rgba(0,0,0,.5);
+}
+.campus-tile.target {
+  background: color-mix(in srgb, var(--hall-color) 60%, #ffe4a3);
+  border-color: #fff4c8;
+  z-index: 8;
+  box-shadow: 0 0 24px color-mix(in srgb, var(--hall-color) 70%, transparent), 5px 5px 0 rgba(0,0,0,.48);
+}
+.campus-gate {
+  width: 78px;
+  min-height: 54px;
+  translate: -24px 0;
+  color: #ffe4a3;
+  background:
+    linear-gradient(90deg, #7b5426 0 12px, transparent 12px calc(100% - 12px), #7b5426 calc(100% - 12px)),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--hall-color) 24%, #090806), #050403 68%);
+  border: 1px solid color-mix(in srgb, var(--hall-color) 48%, #6b5733);
+  box-shadow: 0 10px 0 rgba(0,0,0,.42);
+  z-index: 4;
+}
+.campus-gate b {
+  max-width: 68px;
+  color: #ffe4a3;
+  font-size: 10px;
+  line-height: 1.05;
+  text-align: center;
+}
+.campus-entry-beacon {
+  width: 54px;
+  min-height: 64px;
+  translate: -14px -12px;
+  color: #101018;
+  background:
+    linear-gradient(180deg, #b9f2ff, #6aa8ff 68%, #1e4d68);
+  border: 2px solid #e8fbff;
+  box-shadow: 0 0 24px rgba(135,222,255,.7), 0 12px 0 rgba(0,0,0,.45);
+  z-index: 12;
+}
+.campus-entry-beacon b {
+  font-size: 9px;
+  line-height: 1.04;
+  text-align: center;
+}
+.campus-relic-pin {
+  min-width: 86px;
+  max-width: 132px;
+  min-height: 36px;
+  translate: -28px 0;
+  color: #1b1308;
+  background: #ffe4a3;
+  border: 2px solid #fff4c8;
+  box-shadow: 0 10px 0 rgba(0,0,0,.48), 0 0 18px rgba(255,219,132,.4);
+  padding: 6px 8px;
+  z-index: 14;
+}
+.campus-relic-pin::after {
+  content: "";
+  position: absolute;
+  left: 30px;
+  bottom: -12px;
+  width: 10px;
+  height: 10px;
+  background: #ffe4a3;
+  transform: rotate(45deg);
+}
+.campus-relic-pin b {
+  font-size: 11px;
+  line-height: 1.08;
+  text-align: center;
+}
+.campus-proof-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid #4e422d;
+}
+.campus-proof-strip span {
+  min-width: 0;
+  color: #ffe4a3;
+  background: #242017;
+  border: 1px solid #5c4d32;
+  padding: 8px;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
 .living-route-map {
   display: grid;
   grid-template-columns: minmax(180px, .86fr) minmax(280px, 1.35fr);
@@ -5298,7 +5558,27 @@ textarea, input {
   .server-formula,
   .demo-path-grid,
   .demo-command-strip,
-  .demo-proof-note {
+  .demo-proof-note,
+  .campus-proof-strip,
+  .route-map-proof {
+    grid-template-columns: 1fr;
+  }
+  .campus-heading {
+    grid-template-columns: 1fr;
+  }
+  .campus-heading span {
+    grid-row: auto;
+    justify-self: start;
+  }
+  .campus-stage {
+    height: 330px;
+    overflow-x: auto;
+  }
+  .campus-stage-inner {
+    width: 560px;
+    min-width: 560px;
+  }
+  .living-route-map {
     grid-template-columns: 1fr;
   }
 }
