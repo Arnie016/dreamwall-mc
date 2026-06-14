@@ -72,12 +72,14 @@ def server_zip_checks(path: Path) -> dict:
         "AfterBlockMuseum.zip",
         "afterblock-demo-world.zip",
         "afterblock-demo-proof.json",
+        "afterblock-server-profile.json",
         "server.properties.append",
         "README.md",
     ]
     with zipfile.ZipFile(path) as zf:
         config = zf.read("plugins/DreamWall/config.yml").decode("utf-8")
         demo_proof = json.loads(zf.read("afterblock-demo-proof.json").decode("utf-8"))
+        server_profile = json.loads(zf.read("afterblock-server-profile.json").decode("utf-8"))
     return {
         "file": path.name,
         "required_files_present": {name: name in names for name in required},
@@ -95,6 +97,18 @@ def server_zip_checks(path: Path) -> dict:
             "paper_overrides": demo_proof.get("resource_pack", {}).get("paper_overrides") == 3200,
             "import_command": "/dreamwall import" in demo_proof.get("expected_commands", []),
             "pebblehost_blocker": "PebbleHost" in demo_proof.get("blocked_external_step", ""),
+        },
+        "server_profile_contract": {
+            "type": server_profile.get("type") == "afterblock.server-profile.v1",
+            "space_url": bool(server_profile.get("space", {}).get("url")),
+            "resource_pack_sha1": bool(server_profile.get("server", {}).get("resource_pack_sha1")),
+            "default_import": all(
+                server_profile.get("default_import", {}).get(key)
+                for key in ["prompt", "story", "owner"]
+            ),
+            "upload_map": len(server_profile.get("upload_map", [])) >= 4,
+            "museum_check": "/dreamwall museum check" in server_profile.get("verification_commands", []),
+            "no_password": "password" not in json.dumps(server_profile).lower().replace("no password", ""),
         },
     }
 
@@ -196,6 +210,7 @@ def main() -> int:
             all(proof["per_relic_server_zip"]["required_files_present"].values()),
             all(proof["per_relic_server_zip"]["config_contains"].values()),
             all(proof["per_relic_server_zip"]["demo_proof_contract"].values()),
+            all(proof["per_relic_server_zip"]["server_profile_contract"].values()),
         ]
     )
 

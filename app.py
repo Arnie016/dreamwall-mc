@@ -1403,6 +1403,8 @@ def server_config_kit_text(
             "Included downloads",
             "Paper plugin: server-kit/dreamwall-paper-bridge-0.1.0.jar",
             "Resource pack: resource-pack/AfterBlockMuseum.zip",
+            "Prebuilt world: server-kit/afterblock-demo-world.zip",
+            "ZIP metadata: afterblock-server-profile.json and afterblock-demo-proof.json",
         ]
     )
 
@@ -1505,6 +1507,75 @@ def server_demo_proof_manifest(
     }
 
 
+def server_owner_profile_manifest(
+    clean_space_url: str,
+    clean_pack_url: str,
+    clean_pack_sha1: str,
+    clean_gallery_world: str,
+    clean_import_prompt: str,
+    clean_import_story: str,
+    clean_import_owner: str,
+) -> dict:
+    return {
+        "type": "afterblock.server-profile.v1",
+        "purpose": "Share this profile with a Paper server owner so they can install the same persistent AfterBlock museum configured in the Space.",
+        "space": {
+            "url": clean_space_url,
+            "quick_curate_endpoint": f"{clean_space_url}/gradio_api/call/quick_curate",
+        },
+        "server": {
+            "minecraft_world": clean_gallery_world,
+            "resource_pack_url": clean_pack_url,
+            "resource_pack_sha1": clean_pack_sha1,
+            "requires_secret": "Only the server panel or SFTP secret is external. No secret is stored in this kit.",
+        },
+        "default_import": {
+            "prompt": clean_import_prompt,
+            "story": clean_import_story,
+            "owner": clean_import_owner,
+        },
+        "upload_map": [
+            {
+                "kit_path": "plugins/dreamwall-paper-bridge-0.1.0.jar",
+                "server_path": "plugins/dreamwall-paper-bridge-0.1.0.jar",
+                "reason": "Paper command bridge for /dreamwall pack, museum build, museum check, and import.",
+            },
+            {
+                "kit_path": "plugins/DreamWall/config.yml",
+                "server_path": "plugins/DreamWall/config.yml",
+                "reason": "Connects the server to this Space, resource pack, fixed coordinate contract, and default relic.",
+            },
+            {
+                "kit_path": "AfterBlockMuseum.zip",
+                "server_path": "AfterBlockMuseum.zip",
+                "reason": "Minecraft resource pack with 3200 item textures/models and paper overrides.",
+            },
+            {
+                "kit_path": "afterblock-demo-world.zip",
+                "server_path": "afterblock-demo-world.zip",
+                "reason": "Optional prebuilt memory-spine world for a fast hackathon demo.",
+            },
+        ],
+        "first_run_commands": [
+            "/dreamwall pack",
+            "/dreamwall museum build",
+            "/dreamwall museum check",
+            "/dreamwall import",
+        ],
+        "verification_commands": [
+            "/dreamwall museum check",
+            "/dreamwall import here",
+        ],
+        "coordinate_contract": {
+            "world": clean_gallery_world,
+            "origin": {"x": GALLERY_ORIGIN_X, "y": GALLERY_ORIGIN_Y, "z": GALLERY_ORIGIN_Z},
+            "plot_scale": PLOT_SCALE,
+            "canvas_size": CANVAS_SIZE,
+            "formula": "world_x = -192 + plot_x * 32; world_y = 80; world_z = -192 + plot_z * 32",
+        },
+    }
+
+
 def server_config_zip(
     space_url: str = PUBLIC_SPACE_URL,
     resource_pack_url: str = RESOURCE_PACK_URL,
@@ -1529,6 +1600,15 @@ def server_config_zip(
     clean_import_story = clean_text(import_story, DEFAULT_IMPORT_STORY)
     clean_import_owner = clean_text(import_owner, DEFAULT_IMPORT_OWNER)
     proof_manifest = server_demo_proof_manifest(
+        clean_space_url,
+        clean_pack_url,
+        clean_pack_sha1,
+        clean_gallery_world,
+        clean_import_prompt,
+        clean_import_story,
+        clean_import_owner,
+    )
+    owner_profile = server_owner_profile_manifest(
         clean_space_url,
         clean_pack_url,
         clean_pack_sha1,
@@ -1598,9 +1678,14 @@ plugins/DreamWall/config.yml
 AfterBlockMuseum.zip
 afterblock-demo-world.zip
 afterblock-demo-proof.json
+afterblock-server-profile.json
 server.properties.append
 README.md
 ```
+
+## Server Owner Profile
+
+`afterblock-server-profile.json` is the shareable install card for a server owner. It includes the configured Space URL, world, resource pack, default relic, upload map, first-run commands, and verification commands without storing any panel or SFTP password.
 
 ## Demo Proof File
 
@@ -1625,6 +1710,7 @@ resource-pack-sha1={clean_pack_sha1}
         zf.writestr("README.md", readme)
         zf.writestr("server.properties.append", server_properties)
         zf.writestr("afterblock-demo-proof.json", json.dumps(proof_manifest, indent=2) + "\n")
+        zf.writestr("afterblock-server-profile.json", json.dumps(owner_profile, indent=2) + "\n")
         if os.path.exists(PAPER_PLUGIN_JAR_PATH):
             zf.write(PAPER_PLUGIN_JAR_PATH, "plugins/dreamwall-paper-bridge-0.1.0.jar")
         if os.path.exists(RESOURCE_PACK_PATH):

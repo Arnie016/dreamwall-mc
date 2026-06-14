@@ -27,11 +27,13 @@ plugins/DreamWall/config.yml
 AfterBlockMuseum.zip
 afterblock-demo-world.zip
 afterblock-demo-proof.json
+afterblock-server-profile.json
 server.properties.append
 README.md
 ```
 
 In that tab, set the default import prompt, story, and visitor signature before downloading the ZIP if `/dreamwall import` should place a specific demo relic.
+The `afterblock-server-profile.json` file is the non-secret install card for a server owner: configured Space URL, world, pack, default relic, upload map, first-run commands, and verification commands.
 
 Current hashes from the verified local bundle:
 
