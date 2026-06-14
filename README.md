@@ -33,7 +33,7 @@ The Gradio demo now opens with a clean museum preview: 100 labeled demo artifact
 
 The main placement form accepts a visitor signature in the fourth field. A value like `@wildstash` becomes the hover/social tag; a plain value like `Arnav` becomes the owner label without adding a social badge.
 
-The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video.
+The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video, plus a **Minecraft Server** tab that generates copy-ready Paper `config.yml` values for another person's own museum server.
 
 ## Why This Is Different
 

@@ -1143,6 +1143,58 @@ gallery-facing: "east"
     )
 
 
+def server_config_kit_text(
+    space_url: str = PUBLIC_SPACE_URL,
+    resource_pack_url: str = RESOURCE_PACK_URL,
+    resource_pack_sha1: str = RESOURCE_PACK_SHA1,
+    gallery_world: str = "world",
+    offer_pack_on_join: bool = False,
+) -> str:
+    clean_space_url = (space_url or PUBLIC_SPACE_URL).strip().rstrip("/")
+    clean_pack_url = (resource_pack_url or RESOURCE_PACK_URL).strip()
+    clean_pack_sha1 = (resource_pack_sha1 or RESOURCE_PACK_SHA1).strip()
+    clean_gallery_world = " ".join(str(gallery_world or "world").split()) or "world"
+    offer_pack = "true" if bool(offer_pack_on_join) else "false"
+    config = f"""space-url: "{clean_space_url}"
+resource-pack-url: "{clean_pack_url}"
+resource-pack-sha1: "{clean_pack_sha1}"
+offer-resource-pack-on-join: {offer_pack}
+poll-enabled: false
+poll-seconds: 30
+gallery-world: "{clean_gallery_world}"
+canvas-size: {CANVAS_SIZE}
+plot-size: {PLOT_SCALE}
+gallery-origin:
+  x: {GALLERY_ORIGIN_X}
+  y: {GALLERY_ORIGIN_Y}
+  z: {GALLERY_ORIGIN_Z}
+gallery-facing: "east"
+"""
+    return "\n".join(
+        [
+            "AFTERBLOCK PAPER SERVER CONFIG",
+            "",
+            "Paste this into plugins/DreamWall/config.yml after uploading dreamwall-paper-bridge-0.1.0.jar.",
+            "",
+            config.rstrip(),
+            "",
+            "First-run commands",
+            "/dreamwall pack",
+            "/dreamwall museum build",
+            "/dreamwall museum check",
+            "/dreamwall import",
+            "",
+            "Coordinate contract kept fixed for judge proof",
+            f"world_x = {GALLERY_ORIGIN_X} + plot_x * {PLOT_SCALE}",
+            f"world_y = {GALLERY_ORIGIN_Y}",
+            f"world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}",
+            "",
+            "Live endpoint used by /dreamwall import",
+            f"{clean_space_url}/gradio_api/call/quick_curate",
+        ]
+    )
+
+
 def social_tag_for(owner_handle: str) -> str:
     handle = (owner_handle or "").strip()
     if handle and not handle.startswith("@"):
@@ -4283,6 +4335,33 @@ body, .gradio-container {
   border-left: 4px solid #f25a0b;
   padding-left: 12px;
 }
+.server-config-panel {
+  margin-top: 18px;
+  padding: 16px;
+  border: 2px solid #75623d;
+  background: #171613;
+}
+.server-config-heading h3 {
+  margin: 0 0 6px;
+  color: #ffe4a3;
+  font-size: 22px;
+}
+.server-config-heading p {
+  margin: 0 0 12px;
+  color: #d4c4a0 !important;
+}
+.server-config-panel textarea,
+.server-config-panel input {
+  background: #ead7a6 !important;
+  color: #1b1308 !important;
+  border: 1px solid #8d6d37 !important;
+}
+.server-config-panel button {
+  background: #f25a0b !important;
+  color: #fff8e6 !important;
+  border: 0 !important;
+  font-weight: 900 !important;
+}
 .demo-path {
   border: 2px solid #8d6d37;
   background:
@@ -4876,6 +4955,7 @@ DEFAULT_MUSEUM_PROMPT = "blue school bag from exam week"
 DEFAULT_STORY_CAPTION = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
 INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CAPTION, "@Wildstash", None)
 INITIAL_TEXTURE_OUTPUTS = browse_texture_library("all", 1)
+INITIAL_SERVER_CONFIG_KIT = server_config_kit_text()
 
 
 with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
@@ -5017,6 +5097,49 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
 
         with gr.Tab("Minecraft Server"):
             gr.HTML(value=server_setup_html(), label="Minecraft server setup")
+            with gr.Group(elem_classes=["server-config-panel"]):
+                gr.HTML(
+                    """
+                    <section class="server-config-heading">
+                      <h3>Configure your Paper museum</h3>
+                      <p>Keep the coordinate contract fixed, then change only the public Space, pack, and world values for your own server.</p>
+                    </section>
+                    """
+                )
+                with gr.Row():
+                    server_space_url = gr.Textbox(
+                        label="Public Space URL",
+                        value=PUBLIC_SPACE_URL,
+                        lines=1,
+                    )
+                    server_gallery_world = gr.Textbox(
+                        label="Minecraft world",
+                        value="world",
+                        lines=1,
+                    )
+                server_resource_pack_url = gr.Textbox(
+                    label="Resource pack URL",
+                    value=RESOURCE_PACK_URL,
+                    lines=1,
+                )
+                with gr.Row():
+                    server_resource_pack_sha1 = gr.Textbox(
+                        label="Resource pack SHA1",
+                        value=RESOURCE_PACK_SHA1,
+                        lines=1,
+                    )
+                    server_offer_pack = gr.Checkbox(
+                        label="Offer resource pack on join",
+                        value=False,
+                    )
+                server_config_button = gr.Button("Build Server Config")
+                server_config_kit = gr.Textbox(
+                    value=INITIAL_SERVER_CONFIG_KIT,
+                    label="plugins/DreamWall/config.yml and first-run commands",
+                    lines=24,
+                    max_lines=30,
+                    show_copy_button=True,
+                )
             museum_server_kit = gr.Textbox(
                 value=INITIAL_MUSEUM_OUTPUTS[10],
                 label="Current relic server kit",
@@ -5042,6 +5165,18 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
             museum_server_kit,
         ],
         api_name="quick_curate",
+    )
+    server_config_button.click(
+        server_config_kit_text,
+        inputs=[
+            server_space_url,
+            server_resource_pack_url,
+            server_resource_pack_sha1,
+            server_gallery_world,
+            server_offer_pack,
+        ],
+        outputs=[server_config_kit],
+        api_name="server_config_kit",
     )
     texture_button.click(
         browse_texture_library,
