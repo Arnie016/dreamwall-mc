@@ -20,8 +20,10 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Lectern;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.Switch;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Display.Billboard;
@@ -29,7 +31,9 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -103,6 +107,34 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         if (getConfig().getBoolean("offer-resource-pack-on-join", false)) {
             getServer().getScheduler().runTaskLater(this, () -> sendResourcePack(event.getPlayer()), 40L);
         }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getClickedBlock() == null) {
+            return;
+        }
+        Block block = event.getClickedBlock();
+        if (block.getType() != Material.WARPED_BUTTON) {
+            return;
+        }
+        String key = spiritButtonKey(block.getLocation());
+        if (!getConfig().contains(key + ".title")) {
+            return;
+        }
+        event.setCancelled(true);
+        Player player = event.getPlayer();
+        String title = getConfig().getString(key + ".title", "AfterBlock Relic");
+        String owner = getConfig().getString(key + ".owner", "@unknown");
+        String hall = getConfig().getString(key + ".hall", "Museum");
+        String memory = getConfig().getString(key + ".memory", "This relic has no written history yet.");
+        String spirit = getConfig().getString(key + ".spirit", "I am what remained when a memory became a place.");
+        String xyz = getConfig().getString(key + ".xyz", "unknown");
+
+        player.sendTitle(compactItemName(title), compactLore(spirit), 5, 70, 15);
+        player.sendMessage("AfterBlock spirit: " + compactLore(spirit));
+        player.sendMessage("History: " + compactLore(memory));
+        player.sendMessage("Hall: " + hall + " | Owner: " + owner + " | XYZ " + xyz);
     }
 
     private void startPolling() {
@@ -248,6 +280,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         player.getInventory().addItem(item, passport);
         placeDisplayRelic(world, base, item);
         placePassportLectern(world, base, passport);
+        placeSpiritButton(world, base, title, owner, hall, memory, spirit);
         if (!placeHere) {
             placeLivingRoute(world, base, title, owner, hall);
             player.setCompassTarget(base);
@@ -306,8 +339,11 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         player.getInventory().addItem(item, passport);
         placeDisplayRelic(world, base, item);
         placePassportLectern(world, base, passport);
+        placeSpiritButton(world, base, "AfterBlock AirPods Relic", "@Wildstash", "Hall of Companions",
+                "A small object that carried private worlds through public noise.",
+                "I am what remained when a pocket object became a place.");
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 28, 0.35, 0.55, 0.35, 0.01);
-        sender.sendMessage("Placed demo pedestal, displayed relic item, lectern passport, and gave Paper item with CustomModelData 730002.");
+        sender.sendMessage("Placed demo pedestal, displayed relic item, lectern passport, spirit button, and gave Paper item with CustomModelData 730002.");
         sender.sendMessage("Run /dreamwall pack and accept the pack to see the generated item model.");
     }
 
@@ -776,6 +812,36 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             lectern.getInventory().setItem(0, passport.clone());
             lectern.update();
         }
+    }
+
+    private void placeSpiritButton(World world, Location base, String title, String owner, String hall, String memory, String spirit) {
+        Location anchor = base.clone().add(-1, 0, 0);
+        setBlock(world, anchor.getBlockX(), anchor.getBlockY(), anchor.getBlockZ(), Material.GILDED_BLACKSTONE);
+        Block buttonBlock = anchor.clone().add(0, 1, 0).getBlock();
+        buttonBlock.setType(Material.WARPED_BUTTON, false);
+        if (buttonBlock.getBlockData() instanceof Switch button) {
+            button.setFace(Switch.Face.FLOOR);
+            button.setFacing(BlockFace.NORTH);
+            buttonBlock.setBlockData(button, false);
+        }
+
+        Location buttonLocation = buttonBlock.getLocation();
+        String key = spiritButtonKey(buttonLocation);
+        getConfig().set(key + ".title", title);
+        getConfig().set(key + ".owner", owner);
+        getConfig().set(key + ".hall", hall);
+        getConfig().set(key + ".memory", memory);
+        getConfig().set(key + ".spirit", spirit);
+        getConfig().set(key + ".xyz", base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ());
+        saveConfig();
+        placeStandingSign(world, base.getBlockX() - 4, base.getBlockY(), base.getBlockZ() - 2,
+                "Spirit button", "right-click", "profile + lore", compactItemName(title));
+    }
+
+    private String spiritButtonKey(Location location) {
+        String worldName = location.getWorld() == null ? "world" : location.getWorld().getName();
+        String safeWorld = worldName.replaceAll("[^A-Za-z0-9_-]", "_");
+        return "spirit-buttons." + safeWorld + "_" + location.getBlockX() + "_" + location.getBlockY() + "_" + location.getBlockZ();
     }
 
     private String giveCommand(int customModelData) {

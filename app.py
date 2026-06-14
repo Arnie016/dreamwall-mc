@@ -1098,7 +1098,7 @@ def server_setup_html() -> str:
         <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
         <code>world_y = {GALLERY_ORIGIN_Y}</code>
       </div>
-      <p class="server-note">For the hackathon demo: create a relic in this Space, show its passport/packet, enter Minecraft, run the museum builder once, then import the same packet so the item appears at the exact map address with a route compass and lectern passport.</p>
+      <p class="server-note">For the hackathon demo: create a relic in this Space, show its passport/packet, enter Minecraft, run the museum builder once, then import the same packet so the item appears at the exact map address with a route compass, lectern passport, and right-click spirit button.</p>
     </section>
     """
 
@@ -1135,7 +1135,7 @@ def demo_path_html() -> str:
         <li><b>1:15</b> Open Packet briefly so judges see `dreamwall.museum.v1`.</li>
         <li><b>1:35</b> Switch to Minecraft and run the proof commands.</li>
         <li><b>2:05</b> Hold the route compass and follow the lit floor from `YOU ARE HERE` to the relic.</li>
-        <li><b>2:30</b> Show the resource-pack item, then open the lectern passport at the plot.</li>
+        <li><b>2:30</b> Show the resource-pack item, open the lectern passport, then right-click the spirit button for the relic profile.</li>
       </ol>
       <div class="demo-command-strip">
         <code>/dreamwall pack</code>
@@ -1205,7 +1205,7 @@ gallery-facing: "east"
             f"Plot pads: {total_plots}/{total_plots}",
             f"Relic focus blocks: {total_plots}/{total_plots}",
             "YOU ARE HERE beacon: present",
-            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)}, a route compass, and a readable passport lectern.",
+            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)}, a route compass, a readable passport lectern, and a right-click spirit button.",
             "",
             "5) Live Space endpoint used by the Paper bridge",
             f"{PUBLIC_SPACE_URL}/gradio_api/call/quick_curate",

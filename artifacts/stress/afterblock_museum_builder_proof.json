@@ -28,13 +28,14 @@
     "Paper bridge import endpoint aligned to the live Space /gradio_api/call/quick_curate endpoint",
     "Paper bridge import path now compiles with item hover lore plus a written-book passport placed on a lectern",
     "Paper bridge exact-coordinate import now paints a lit route from YOU ARE HERE to the generated plot and gives a route compass",
-    "rebuilt passport-capable jar loaded successfully on a temporary Paper 1.21.11 server"
+    "rebuilt plugin class contains WARPED_BUTTON, Spirit button, profile + lore, AfterBlock spirit, and spirit-buttons markers",
+    "rebuilt passport-and-spirit-button-capable jar compiled successfully with Java 21 targeting Java 17 bytecode"
   ],
   "bundle": {
     "resource_pack_sha1": "42738bc973abb6a631bd9ba88ed3b2d7e8521800",
     "resource_pack_sha256": "e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148",
-    "plugin_jar_sha1": "203c1dd3be8a4a7d183e28bc2a9f52d2804ff56d",
-    "plugin_jar_sha256": "ab8e91785e2e487d5267906a1a825bf3472a7abc3e19c71d20cb7fd3c0f666b2",
+    "plugin_jar_sha1": "e152373fbe705428e68e735c34552449151c3dbb",
+    "plugin_jar_sha256": "99065bc652f3f218675127d63949d3795cfb8471e2e1a55148b95d90e10ddd29",
     "prebuilt_world_sha1": "a6fa4e4c7209e4be5ba9ca089190892870fb2f63",
     "prebuilt_world_sha256": "6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e"
   },
