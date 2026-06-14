@@ -14,6 +14,6 @@ Use it with the Space-generated `plugins/DreamWall/config.yml`, then run:
 Current plugin jar checksums:
 
 ```text
-sha1   4dee5c0248f1100e99d52c0c00bf37832de9bfc0
-sha256 ffe728663a6b4e9c5a5707cee692d07056150350453bbbedc562fda075a57485
+sha1   bcd2e57c115a0bc5a767d7e34f2c78454da56a77
+sha256 75803cb99172bfd88f4ee1e458bcc4585b32c2e2fe2ad8d334102f2970dd727a
 ```

@@ -375,7 +375,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         sender.sendMessage("Plot (0,0) -> XYZ " + originX + " " + originY + " " + originZ);
         sender.sendMessage("Plot (" + (canvasSize - 1) + "," + (canvasSize - 1) + ") -> XYZ " + lastX + " " + originY + " " + lastZ);
         sender.sendMessage("Formula: x=" + originX + " + plotX*" + plotSize + ", z=" + originZ + " + plotZ*" + plotSize + ".");
-        sender.sendMessage("Run /dreamwall museum build to create pads, hall gates, banners, and a You Are Here entry.");
+        sender.sendMessage("Run /dreamwall museum build to create pads, hall gates, banners, a memory spine, and a You Are Here entry.");
         sender.sendMessage("Then run /dreamwall import to place a Space artifact at its packet coordinates.");
     }
 
@@ -399,13 +399,15 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         buildPlotPads(world, originX, originY, originZ, canvasSize, plotSize);
         buildHallGates(world, originX, originY, originZ, plotSize);
         buildEntrance(world, originX, originY, originZ, canvasSize, plotSize, span);
+        buildMemorySpine(world, originX, originY, originZ, canvasSize, plotSize, span);
         world.save();
 
         if (sender instanceof Player player && player.getWorld().equals(world)) {
             player.teleport(new Location(world, originX + span / 2.0 + 0.5, originY + 2, originZ - 22.5, 0, 0));
         }
         sender.sendMessage("AfterBlock Museum campus built. Every Space packet coordinate now lands on a marked plot pad.");
-        sender.sendMessage("Built " + (canvasSize * canvasSize) + " plot pads, 9 hall gates, and 1 YOU ARE HERE entry beacon.");
+        sender.sendMessage("Built " + (canvasSize * canvasSize)
+                + " plot pads, 9 hall gates, 1 YOU ARE HERE entry beacon, and a living memory spine.");
         sender.sendMessage("Next: /dreamwall pack, accept the pack, then /dreamwall import or /dreamwall import here.");
     }
 
@@ -562,6 +564,62 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
                         + (originX + (canvasSize - 1) * plotSize) + "," + (originZ + (canvasSize - 1) * plotSize),
                 "size " + plotSize);
         placeStandingSign(world, centerX, y, entryZ + 7, "Route trail", "import relic", "then follow", "lit floor");
+    }
+
+    private void buildMemorySpine(World world, int originX, int y, int originZ, int canvasSize, int plotSize, int span) {
+        int centerX = originX + span / 2;
+        int startZ = originZ - 14;
+        int endZ = originZ + span + 18;
+        for (int z = startZ; z <= endZ; z++) {
+            for (int dx = -3; dx <= 3; dx++) {
+                boolean edge = Math.abs(dx) == 3;
+                Material floor = edge ? Material.GILDED_BLACKSTONE : Material.POLISHED_DEEPSLATE;
+                setBlock(world, centerX + dx, y - 1, z, floor);
+            }
+            if ((z - startZ) % 8 == 0) {
+                setBlock(world, centerX, y - 1, z, Material.SEA_LANTERN);
+            }
+        }
+        for (int row = 0; row < canvasSize; row++) {
+            int z = originZ + row * plotSize + plotSize / 2;
+            Material accent = hallAccent(hallIndexForPlot(canvasSize / 2, row));
+            buildMemoryCase(world, centerX - 11, y, z, accent);
+            buildMemoryCase(world, centerX + 11, y, z, accent);
+            if (row % 2 == 0) {
+                placeStandingSign(world, centerX - 2, y, z - 5, "Memory aisle", "row " + row, "follow lights", "to plot pads");
+            }
+        }
+        for (int hall = 0; hall < 9; hall++) {
+            int regionX = hall % 3;
+            int regionZ = hall / 3;
+            int z = originZ + regionZ * plotSize * 4 + plotSize * 2;
+            int x = centerX + (regionX - 1) * 18;
+            Material accent = hallAccent(hall);
+            for (int dx = -4; dx <= 4; dx++) {
+                setBlock(world, x + dx, y + 5, z, accent);
+            }
+            setBlock(world, x - 5, y + 2, z, Material.CHAIN);
+            setBlock(world, x + 5, y + 2, z, Material.CHAIN);
+            setBlock(world, x - 5, y + 1, z, Material.SEA_LANTERN);
+            setBlock(world, x + 5, y + 1, z, Material.SEA_LANTERN);
+        }
+    }
+
+    private void buildMemoryCase(World world, int x, int y, int z, Material accent) {
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                boolean edge = Math.abs(dx) == 2 || Math.abs(dz) == 2;
+                setBlock(world, x + dx, y - 1, z + dz, edge ? accent : Material.SMOOTH_BASALT);
+            }
+        }
+        setBlock(world, x, y, z, Material.BOOKSHELF);
+        setBlock(world, x, y + 1, z, Material.CHISELED_BOOKSHELF);
+        setBlock(world, x, y + 2, z, Material.LIGHT_BLUE_STAINED_GLASS);
+        setBlock(world, x - 1, y, z - 1, Material.GLASS);
+        setBlock(world, x + 1, y, z - 1, Material.GLASS);
+        setBlock(world, x - 1, y, z + 1, Material.GLASS);
+        setBlock(world, x + 1, y, z + 1, Material.GLASS);
+        setBlock(world, x, y + 3, z, Material.LANTERN);
     }
 
     private void placeLivingRoute(World world, Location base, String title, String owner, String hall) {

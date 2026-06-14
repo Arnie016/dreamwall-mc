@@ -23,8 +23,8 @@ RESOURCE_PACK_URL = "https://huggingface.co/spaces/build-small-hackathon/dreamwa
 RESOURCE_PACK_SHA1 = "03487f018e2062e254b5ea443396f29d099f8b67"
 RESOURCE_PACK_PATH = "resource-pack/AfterBlockMuseum.zip"
 PAPER_PLUGIN_JAR_PATH = "server-kit/dreamwall-paper-bridge-0.1.0.jar"
-PAPER_PLUGIN_SHA1 = "4dee5c0248f1100e99d52c0c00bf37832de9bfc0"
-PAPER_PLUGIN_SHA256 = "ffe728663a6b4e9c5a5707cee692d07056150350453bbbedc562fda075a57485"
+PAPER_PLUGIN_SHA1 = "bcd2e57c115a0bc5a767d7e34f2c78454da56a77"
+PAPER_PLUGIN_SHA256 = "75803cb99172bfd88f4ee1e458bcc4585b32c2e2fe2ad8d334102f2970dd727a"
 TEXTURE_PAGE_SIZE = 96
 
 
@@ -1183,7 +1183,7 @@ def server_setup_html() -> str:
           <span>3</span>
           <h3>Build Museum</h3>
           <p><code>/dreamwall museum build</code></p>
-          <p>Creates the living 12x12 map at plot (0,0) XYZ <code>-192 80 -192</code>. Verify it with <code>/dreamwall museum check</code>.</p>
+          <p>Creates the living 12x12 map, hall gates, memory spine, and entry beacon at plot (0,0) XYZ <code>-192 80 -192</code>. Verify it with <code>/dreamwall museum check</code>.</p>
         </article>
         <article>
           <span>4</span>

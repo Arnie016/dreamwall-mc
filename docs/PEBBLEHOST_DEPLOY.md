@@ -4,10 +4,10 @@ This is the shortest path to make the AfterBlock Museum demo visible in a live M
 
 ## Local Build Artifacts
 
-Build the Paper plugin:
+The Space and `server-kit/` include a prebuilt Paper plugin. To rebuild it locally on a machine with Maven:
 
 ```bash
-/tmp/apache-maven-3.9.9/bin/mvn -q -f paper-plugin/pom.xml package
+mvn -q -f paper-plugin/pom.xml package
 ```
 
 Prepared local bundle:
@@ -33,7 +33,7 @@ Current hashes from the verified local bundle:
 
 ```text
 4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5  AfterBlockMuseum.zip
-ffe728663a6b4e9c5a5707cee692d07056150350453bbbedc562fda075a57485  dreamwall-paper-bridge-0.1.0.jar
+75803cb99172bfd88f4ee1e458bcc4585b32c2e2fe2ad8d334102f2970dd727a  dreamwall-paper-bridge-0.1.0.jar
 6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e  afterblock-demo-world.zip
 ```
 
@@ -130,7 +130,7 @@ Expected result:
 - `/dreamwall fetch` reports the Hugging Face Space is reachable.
 - `/dreamwall pack` asks the player to load `AfterBlockMuseum.zip`.
 - `/dreamwall museum where` prints the exact Space-to-world coordinate formula.
-- `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, entrance signage, and a `YOU ARE HERE` beacon.
+- `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, a central memory spine, entrance signage, and a `YOU ARE HERE` beacon.
 - `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, and the entry beacon.
 - `/dreamwall demo` places a small pedestal, sign, visible `ItemDisplay`, lectern passport book, right-click spirit button, and gives a Paper item using `CustomModelData 730002`.
 - `/dreamwall import here` calls the live `quick_curate` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign/`ItemDisplay`/lectern passport/spirit button beside the player, and gives a Paper item using the packet's `custom_model_data`.
