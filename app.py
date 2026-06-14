@@ -969,10 +969,77 @@ def coordinates_html(artifact: dict) -> str:
     """
 
 
+def hall_for_plot_cell(plot_x: int, plot_z: int) -> str:
+    region_x = min(2, max(0, plot_x // 4))
+    region_z = min(2, max(0, plot_z // 4))
+    return MUSEUM_HALLS[region_z * 3 + region_x]
+
+
+def living_route_map_html(artifact: dict) -> str:
+    coords = artifact["minecraft_coordinates"]
+    plot = artifact["plot"]
+    plot_x = int(plot["x"])
+    plot_z = int(plot["z"])
+    entry_col = CANVAS_SIZE // 2
+    entry_x = GALLERY_ORIGIN_X + ((CANVAS_SIZE - 1) * PLOT_SCALE) // 2
+    entry_z = GALLERY_ORIGIN_Z - 18
+    elbow_x = coords["x"]
+    elbow_z = entry_z
+    cells = []
+    route_min = min(entry_col, plot_x)
+    route_max = max(entry_col, plot_x)
+    for z in range(CANVAS_SIZE):
+        for x in range(CANVAS_SIZE):
+            hall = hall_for_plot_cell(x, z)
+            cell_classes = ["map-cell"]
+            if z == 0 and route_min <= x <= route_max:
+                cell_classes.append("route")
+            if x == plot_x and 0 <= z <= plot_z:
+                cell_classes.append("route")
+            if x == entry_col and z == 0:
+                cell_classes.append("entry")
+            if x == plot_x and z == plot_z:
+                cell_classes.append("target")
+            hall_rgb = hall_color(hall)
+            hall_hex = hex_color(hall_rgb)
+            label = f"{x},{z}"
+            title = "YOU ARE HERE" if "entry" in cell_classes else label
+            if "target" in cell_classes:
+                title = f"{artifact['title']} plot {label}"
+            cells.append(
+                f"<span class='{' '.join(cell_classes)}' style='--hall-color:{hall_hex}' title='{html_escape(title)}'>"
+                f"<b>{html_escape(label)}</b></span>"
+            )
+    return f"""
+    <section class="living-route-map">
+      <div class="route-map-copy">
+        <span>Live route</span>
+        <h4>YOU ARE HERE to {html_escape(artifact['title'])}</h4>
+        <p>The Space preview uses the same 12x12 grid, origin, plot size, and L-shaped route that the Paper bridge builds in Minecraft.</p>
+      </div>
+      <div class="route-map-grid" aria-label="12 by 12 AfterBlock Minecraft plot map">
+        {''.join(cells)}
+      </div>
+      <div class="route-map-proof">
+        <div><span>Entry beacon</span><strong>X {entry_x} Y {GALLERY_ORIGIN_Y} Z {entry_z}</strong></div>
+        <div><span>Route elbow</span><strong>X {elbow_x} Y {GALLERY_ORIGIN_Y} Z {elbow_z}</strong></div>
+        <div><span>Relic pad</span><strong>X {coords['x']} Y {coords['y']} Z {coords['z']}</strong></div>
+        <div><span>Formula</span><strong>{GALLERY_ORIGIN_X} + plot * {PLOT_SCALE}</strong></div>
+      </div>
+      <div class="route-map-legend">
+        <span><b class="legend-entry"></b> YOU ARE HERE</span>
+        <span><b class="legend-route"></b> lit route</span>
+        <span><b class="legend-target"></b> relic plot</span>
+      </div>
+    </section>
+    """
+
+
 def waypointcraft_html(artifact: dict) -> str:
     coords = artifact["minecraft_coordinates"]
     item = artifact.get("resource_pack_item", {})
     command = minecraft_give_command(artifact)
+    living_map = living_route_map_html(artifact)
     return f"""
     <section class="waypoint-card">
       <header>
@@ -985,6 +1052,7 @@ def waypointcraft_html(artifact: dict) -> str:
         <div><span>Base item</span><strong>{html_escape(item.get('recommended_item', 'minecraft:paper'))}</strong></div>
         <div><span>Model</span><strong>{html_escape(item.get('model', 'afterblock:item/missing'))}</strong></div>
       </div>
+      {living_map}
       <code>{html_escape(command)}</code>
     </section>
     """
@@ -4423,6 +4491,135 @@ body, .gradio-container {
   border: 1px solid #5c4d32;
   padding: 12px;
 }
+.living-route-map {
+  display: grid;
+  grid-template-columns: minmax(180px, .86fr) minmax(280px, 1.35fr);
+  gap: 12px;
+  align-items: start;
+  margin: 14px 0;
+}
+.route-map-copy {
+  min-height: 100%;
+  background: linear-gradient(180deg, rgba(255,228,163,.08), #17130e);
+  border: 1px solid #5c4d32;
+  padding: 12px;
+}
+.route-map-copy span,
+.route-map-proof span,
+.route-map-legend span {
+  color: #baa985;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.route-map-copy h4 {
+  margin: 6px 0;
+  color: #ffe4a3;
+  font-size: 18px;
+  line-height: 1.12;
+}
+.route-map-copy p {
+  margin: 0;
+  color: #d8c9a6 !important;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.route-map-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(22px, 1fr));
+  gap: 3px;
+  background:
+    linear-gradient(180deg, rgba(255,228,163,.08), transparent),
+    #0f0e0b;
+  border: 1px solid #6b5733;
+  padding: 8px;
+}
+.map-cell {
+  position: relative;
+  aspect-ratio: 1;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--hall-color) 18%, #201b13);
+  border: 1px solid color-mix(in srgb, var(--hall-color) 42%, #2a241a);
+  box-shadow: inset 0 -5px 0 rgba(0,0,0,.18);
+}
+.map-cell b {
+  color: rgba(255,241,199,.62);
+  font-size: 8px;
+  line-height: 1;
+}
+.map-cell.route {
+  background: color-mix(in srgb, #d6a642 58%, #201b13);
+  border-color: #f5ce78;
+  box-shadow: 0 0 10px rgba(245,206,120,.42), inset 0 -5px 0 rgba(0,0,0,.2);
+}
+.map-cell.entry {
+  background: #3b6a88;
+  border-color: #9ce5ff;
+}
+.map-cell.entry::after,
+.map-cell.target::after {
+  position: absolute;
+  inset: 3px;
+  display: grid;
+  place-items: center;
+  color: #120d08;
+  background: #ffe4a3;
+  font-size: 8px;
+  font-weight: 900;
+}
+.map-cell.entry::after {
+  content: "YOU";
+}
+.map-cell.target {
+  background: color-mix(in srgb, var(--hall-color) 62%, #ffe4a3);
+  border-color: #fff0bd;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--hall-color) 62%, transparent);
+}
+.map-cell.target::after {
+  content: "RELIC";
+}
+.route-map-proof {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.route-map-proof div {
+  background: #242017;
+  border: 1px solid #5c4d32;
+  padding: 9px;
+}
+.route-map-proof strong {
+  display: block;
+  margin-top: 3px;
+  color: #ffe4a3;
+  font-size: 13px;
+  line-height: 1.2;
+}
+.route-map-legend {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.route-map-legend span {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: #d9caa7;
+}
+.route-map-legend b {
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  border: 1px solid #6b5733;
+}
+.legend-entry { background: #3b6a88; }
+.legend-route { background: #d6a642; }
+.legend-target { background: #ffe4a3; }
 .server-setup {
   background: #151410;
   border: 2px solid #75623d;
