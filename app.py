@@ -735,6 +735,7 @@ def passport_html(artifact: dict) -> str:
     coords = artifact["minecraft_coordinates"]
     item = artifact.get("resource_pack_item", {})
     share_url = artifact.get("share_url") or artifact_share_url(artifact)
+    share_fragment = artifact_passport_fragment(artifact)
     qr_payload = artifact.get("qr_payload") or share_url
     qr_src = qr_code_data_uri(qr_payload)
     qr = (
@@ -757,7 +758,10 @@ def passport_html(artifact: dict) -> str:
           <p class="passport-owner">{html_escape(owner_display(artifact))} · {html_escape(artifact['object_guess'])}</p>
         </div>
         <div class="passport-share">
-          <a class="passport-share-link" href="{html_escape(share_url)}" target="_blank" rel="noreferrer">Share</a>
+          <div class="passport-share-actions">
+            <a class="passport-share-link" href="{html_escape(share_fragment)}">Open scan</a>
+            <a class="passport-share-icon" href="{html_escape(share_url)}" target="_blank" rel="noreferrer" aria-label="Open share link" title="Open share link"><span aria-hidden="true">&#8599;</span></a>
+          </div>
           <span class="hf-icon">HF</span>
           <span>scan passport</span>
         </div>
@@ -800,6 +804,7 @@ def relic_profile_html(artifact: dict) -> str:
     item = artifact.get("resource_pack_item", {})
     coords = artifact["minecraft_coordinates"]
     share_url = artifact.get("share_url") or artifact_share_url(artifact)
+    share_fragment = artifact_passport_fragment(artifact)
     command = minecraft_give_command(artifact)
     return f"""
     <section class="relic-profile-page" id="relic-profile-{html_escape(artifact['artifact_id'])}">
@@ -809,7 +814,10 @@ def relic_profile_html(artifact: dict) -> str:
           <h2>{html_escape(artifact['title'])}</h2>
           <p>{html_escape(owner_display(artifact))} · CMD {item.get('custom_model_data', 0)} · XYZ {coords['x']} {coords['y']} {coords['z']}</p>
         </div>
-        <a href="{html_escape(share_url)}" target="_blank" rel="noreferrer" class="profile-share">Share</a>
+        <div class="profile-share-actions">
+          <a href="{html_escape(share_fragment)}" class="profile-share">Open scan</a>
+          <a href="{html_escape(share_url)}" target="_blank" rel="noreferrer" class="profile-share-icon" aria-label="Open share link" title="Open share link"><span aria-hidden="true">&#8599;</span></a>
+        </div>
       </header>
       <div class="profile-grid">
         <article>
@@ -867,8 +875,12 @@ def minecraft_give_command(artifact: dict) -> str:
 
 
 def artifact_share_url(artifact: dict) -> str:
+    return f"{PUBLIC_SPACE_URL}/{artifact_passport_fragment(artifact)}"
+
+
+def artifact_passport_fragment(artifact: dict) -> str:
     token = artifact_share_token(artifact)
-    return f"{PUBLIC_SPACE_URL}/#passport={token}"
+    return f"#passport={token}"
 
 
 def artifact_share_token(artifact: dict) -> str:
@@ -4836,8 +4848,16 @@ body, .gradio-container {
   text-transform: uppercase;
   letter-spacing: .08em;
 }
+.passport-share-actions,
+.profile-share-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 .passport-share-link,
-.profile-share {
+.profile-share,
+.passport-share-icon,
+.profile-share-icon {
   display: inline-grid;
   place-items: center;
   min-height: 30px;
@@ -4850,6 +4870,12 @@ body, .gradio-container {
   letter-spacing: 0;
   text-transform: none;
   box-shadow: 0 3px 0 #090704;
+}
+.passport-share-icon,
+.profile-share-icon {
+  width: 32px;
+  padding: 5px;
+  font-size: 16px;
 }
 .hf-icon {
   display: grid;
@@ -5199,13 +5225,23 @@ textarea, input {
   padding: 8px;
   overflow-wrap: anywhere;
 }
-.scan-passport-inner button {
+.scan-passport-actions {
+  display: grid;
+  gap: 8px;
+  min-width: 120px;
+}
+.scan-passport-actions button {
   border: 1px solid #9fd0ff;
   background: transparent;
   color: #edf6ff;
   min-height: 32px;
   padding: 6px 10px;
   cursor: pointer;
+}
+.scan-passport-actions button:first-child {
+  background: #9fd0ff;
+  color: #07111d;
+  font-weight: 900;
 }
 @media (max-width: 860px) {
   .relic-grid {
@@ -5264,6 +5300,7 @@ PASSPORT_SCAN_JS = r"""
     try {
       const data = decodeToken(token);
       const xyz = data.xyz || {};
+      const shareUrl = `${window.location.origin}${window.location.pathname}${window.location.search}#passport=${encodeURIComponent(token)}`;
       panel.hidden = false;
       panel.innerHTML = `
         <div class="scan-passport-inner">
@@ -5279,10 +5316,22 @@ PASSPORT_SCAN_JS = r"""
             </div>
             <code>${escapeHtml(data.command)}</code>
           </div>
-          <button type="button" aria-label="Close scanned passport">Close</button>
+          <div class="scan-passport-actions">
+            <button type="button" data-copy-share>Copy link</button>
+            <button type="button" data-close-scan aria-label="Close scanned passport">Close</button>
+          </div>
         </div>
       `;
-      const closeButton = panel.querySelector("button");
+      const copyButton = panel.querySelector("[data-copy-share]");
+      copyButton?.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          copyButton.textContent = "Copied";
+        } catch (error) {
+          window.prompt("Copy passport link", shareUrl);
+        }
+      });
+      const closeButton = panel.querySelector("[data-close-scan]");
       closeButton?.addEventListener("click", () => {
         history.replaceState(null, "", window.location.pathname + window.location.search);
         panel.hidden = true;
