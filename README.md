@@ -27,13 +27,13 @@ Visitors scan a relic, memory, animal spirit, or prompted painting. The app assi
 
 Living Graffiti and Living Moving Canvas remain as secondary modes. They power museum placement, resonance, and Minecraft wall mechanics.
 
-The main cash-prize demo is now simple: relic -> hall -> spirit -> passport -> Minecraft museum placement.
+The main cash-prize demo is now simple: relic -> hall -> passport/profile -> live Paper handoff -> exact-coordinate Minecraft museum placement.
 
-The Gradio demo now opens with a clean museum preview: 100 labeled demo artifacts, nine hall wings, curation scores, coordinates, generated Minecraft-style item textures, and a live 3D artifact model tied to the same `CustomModelData` used by the server packet. Social tags are optional; if a visitor leaves the tag blank, the museum uses the owner name or anonymous label.
+The Gradio demo now opens with a clean museum preview: 100 labeled demo artifacts, nine hall wings, curation scores, coordinates, generated Minecraft-style item textures, a live 3D artifact model tied to the same `CustomModelData` used by the server packet, and a visible **Live Paper handoff** card for `/dreamwall import`. Social tags are optional; if a visitor leaves the tag blank, the museum uses the owner name or anonymous label.
 
 The main placement form accepts a visitor signature in the fourth field. A value like `@wildstash` becomes the hover/social tag; a plain value like `Arnav` becomes the owner label without adding a social badge.
 
-The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video, plus a **Minecraft Server** tab that generates copy-ready Paper `config.yml` values for another person's own museum server.
+The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video, plus a **Minecraft Server** tab and per-relic download that generate copy-ready Paper `config.yml` values for another person's own museum server.
 
 ## Why This Is Different
 
@@ -59,7 +59,7 @@ Most hackathon apps stop at chat or image generation. AfterBlock turns language 
 - **Creative fusion:** nearby concepts combine into more valuable artifacts.
 - **Value without compliance risk:** auction/voting uses demo points, not real money or blockchain.
 - **Small by design:** no giant remote model API is required for the core experience.
-- **Demo-first:** the video can show prompt -> Space preview -> Minecraft wall/gallery.
+- **Demo-first:** the video can show prompt -> Space preview -> live Paper handoff -> exact Minecraft plot.
 
 ## Hackathon Fit
 
@@ -72,7 +72,7 @@ Most hackathon apps stop at chat or image generation. AfterBlock turns language 
 
 - **Off-Brand:** custom Minecraft museum terminal UI styling.
 - **Tiny Titan:** local deterministic semantic curator is far below the 32B limit and can be swapped for a <=4B model for the interpretation step.
-- **Best Demo:** real object/prompt -> 3D preview -> passport -> server packet.
+- **Best Demo:** real object/prompt -> 3D preview -> passport/profile -> Paper handoff -> in-world relic.
 - **Community Choice:** passport cards are shareable and social tags are optional.
 - **Sharing is Caring:** the app emits open museum and bridge packets for each artifact.
 - **Field Notes:** see [`docs/FIELD_NOTES.md`](docs/FIELD_NOTES.md).
@@ -100,7 +100,17 @@ The MVP emits:
 
 Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
 
-The repo also includes a Paper plugin scaffold in [`paper-plugin/`](paper-plugin/) that can reach the live Space and is ready to extend into block placement.
+The repo also includes a Paper plugin in [`paper-plugin/`](paper-plugin/) and a prebuilt jar in [`server-kit/`](server-kit/). `/dreamwall museum build` creates the 12 x 12 / 144-plot museum, `/dreamwall museum check` verifies the pads and `YOU ARE HERE` beacon, and `/dreamwall import` places the live Space packet at its generated XYZ with a route compass, lit floor path, engraved nameplate, lectern passport, and profile button.
+
+### Demo Proof
+
+Run the packaged-demo verifier before recording:
+
+```bash
+.venv/bin/python tools/verify_afterblock_demo.py
+```
+
+It writes [`artifacts/stress/afterblock_demo_proof_manifest.json`](artifacts/stress/afterblock_demo_proof_manifest.json), which verifies the 13-output Space flow, live Paper handoff, per-relic server kit ZIP, 3,200 resource-pack textures/models/overrides, plugin/world checksums, and 12 x 12 coordinate contract.
 
 ### API Shape
 
@@ -154,7 +164,7 @@ Bonus quests:
 - **Sharing is Caring:** open trace + server packet per generation.
 - **Field Notes:** this repo includes [`docs/FIELD_NOTES.md`](docs/FIELD_NOTES.md).
 
-Next high-impact demo step: use PebbleHost Paper to place one AfterBlock artifact pedestal/sign from the `dreamwall.museum.v1` packet, then record a 45-75 second video.
+Next high-impact demo step: use PebbleHost Paper to place one AfterBlock artifact from the `dreamwall.museum.v1` packet, then record the three-minute Space-to-Minecraft proof. If PebbleHost access is not available, record the locally verified Paper world and call out that the live upload is password-gated.
 
 ## Codex Track
 
