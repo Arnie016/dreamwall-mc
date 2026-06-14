@@ -1020,7 +1020,7 @@ def server_setup_html() -> str:
           <span>4</span>
           <h3>Place Relics</h3>
           <p><code>/dreamwall import</code></p>
-          <p>Imports a Space packet at the generated coordinate. Use <code>/dreamwall import here</code> for fast video proof.</p>
+          <p>Imports a Space packet at the generated coordinate, lights the route, sets the compass target, and gives the route compass. Use <code>/dreamwall import here</code> for fast nearby proof.</p>
         </article>
       </div>
       <div class="server-formula">
@@ -1029,7 +1029,7 @@ def server_setup_html() -> str:
         <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
         <code>world_y = {GALLERY_ORIGIN_Y}</code>
       </div>
-      <p class="server-note">For the hackathon demo: create a relic in this Space, show its passport/packet, enter Minecraft, run the museum builder once, then import the same packet so the item appears at the exact map address.</p>
+      <p class="server-note">For the hackathon demo: create a relic in this Space, show its passport/packet, enter Minecraft, run the museum builder once, then import the same packet so the item appears at the exact map address with a route compass and lectern passport.</p>
     </section>
     """
 
@@ -1047,7 +1047,7 @@ def demo_path_html() -> str:
           <ul>
             <li>One ordinary object becomes a hall, profile, passport, item model, and exact Minecraft coordinate.</li>
             <li>The same `CustomModelData` appears in the 3D preview, passport, packet, resource pack, and Paper bridge.</li>
-            <li>The server proof is physical: a visitor can walk from `YOU ARE HERE` to the generated plot.</li>
+            <li>The server proof is physical: a visitor gets a route compass and walks from `YOU ARE HERE` to the generated plot.</li>
           </ul>
         </article>
         <article>
@@ -1065,7 +1065,8 @@ def demo_path_html() -> str:
         <li><b>0:50</b> Open Passport, scan/share link, and show the exact XYZ.</li>
         <li><b>1:15</b> Open Packet briefly so judges see `dreamwall.museum.v1`.</li>
         <li><b>1:35</b> Switch to Minecraft and run the proof commands.</li>
-        <li><b>2:20</b> Walk from the `YOU ARE HERE` beacon to the relic and open the lectern passport.</li>
+        <li><b>2:05</b> Hold the route compass and follow the lit floor from `YOU ARE HERE` to the relic.</li>
+        <li><b>2:30</b> Show the resource-pack item, then open the lectern passport at the plot.</li>
       </ol>
       <div class="demo-command-strip">
         <code>/dreamwall pack</code>
@@ -1135,7 +1136,7 @@ gallery-facing: "east"
             f"Plot pads: {total_plots}/{total_plots}",
             f"Relic focus blocks: {total_plots}/{total_plots}",
             "YOU ARE HERE beacon: present",
-            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)} and a readable passport lectern.",
+            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)}, a route compass, and a readable passport lectern.",
             "",
             "5) Live Space endpoint used by the Paper bridge",
             f"{PUBLIC_SPACE_URL}/gradio_api/call/quick_curate",

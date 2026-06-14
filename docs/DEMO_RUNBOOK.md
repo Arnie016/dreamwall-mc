@@ -14,8 +14,8 @@ AfterBlock Museum preserves ordinary objects as Minecraft artifacts. The Space a
 6. Open **Passport** and show the QR/share link plus exact Minecraft coordinates.
 7. Open **Relic Profile** briefly as the artifact's history/lore page.
 8. Open **Packet** and show `dreamwall.museum.v1`.
-9. Switch to Minecraft.
-10. Show a pedestal/sign/ItemDisplay/lectern passport marker at the packet coordinates.
+9. Switch to Minecraft and run `/dreamwall import`.
+10. Hold the route compass, follow the lit floor from `YOU ARE HERE`, and show the resource-pack item plus lectern passport at the packet coordinates.
 11. End with: "AfterBlock turns the things people would throw away into places they can visit."
 
 ## Video Requirements
