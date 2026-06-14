@@ -1446,6 +1446,65 @@ gallery-facing: "east"
     return config, clean_space_url, clean_pack_url, clean_pack_sha1, clean_gallery_world
 
 
+def server_demo_proof_manifest(
+    clean_space_url: str,
+    clean_pack_url: str,
+    clean_pack_sha1: str,
+    clean_gallery_world: str,
+    clean_import_prompt: str,
+    clean_import_story: str,
+    clean_import_owner: str,
+) -> dict:
+    return {
+        "type": "afterblock.paper-demo-proof.v1",
+        "space_url": clean_space_url,
+        "live_endpoint": f"{clean_space_url}/gradio_api/call/quick_curate",
+        "default_import": {
+            "prompt": clean_import_prompt,
+            "story": clean_import_story,
+            "owner": clean_import_owner,
+        },
+        "coordinate_contract": {
+            "world": clean_gallery_world,
+            "canvas_size": CANVAS_SIZE,
+            "plot_scale": PLOT_SCALE,
+            "total_plots": CANVAS_SIZE * CANVAS_SIZE,
+            "origin": {
+                "x": GALLERY_ORIGIN_X,
+                "y": GALLERY_ORIGIN_Y,
+                "z": GALLERY_ORIGIN_Z,
+            },
+            "formula": "world_x = -192 + plot_x * 32; world_y = 80; world_z = -192 + plot_z * 32",
+        },
+        "resource_pack": {
+            "url": clean_pack_url,
+            "sha1": clean_pack_sha1,
+            "textures": 3200,
+            "models": 3200,
+            "paper_overrides": 3200,
+        },
+        "bundle": {
+            "plugin_sha1": PAPER_PLUGIN_SHA1,
+            "plugin_sha256": PAPER_PLUGIN_SHA256,
+            "prebuilt_world_sha1": PREBUILT_WORLD_SHA1,
+            "prebuilt_world_sha256": PREBUILT_WORLD_SHA256,
+        },
+        "expected_commands": [
+            "/dreamwall pack",
+            "/dreamwall museum build",
+            "/dreamwall museum check",
+            "/dreamwall import",
+        ],
+        "expected_proof": [
+            "museum check reports 144/144 plot pads",
+            "YOU ARE HERE beacon is present",
+            "route compass points from entry to the generated plot",
+            "relic appears with an engraved nameplate, lectern passport, and profile button",
+        ],
+        "blocked_external_step": "PebbleHost upload requires the panel/SFTP password outside this ZIP.",
+    }
+
+
 def server_config_zip(
     space_url: str = PUBLIC_SPACE_URL,
     resource_pack_url: str = RESOURCE_PACK_URL,
@@ -1465,6 +1524,18 @@ def server_config_zip(
         import_prompt,
         import_story,
         import_owner,
+    )
+    clean_import_prompt = clean_text(import_prompt, DEFAULT_IMPORT_PROMPT)
+    clean_import_story = clean_text(import_story, DEFAULT_IMPORT_STORY)
+    clean_import_owner = clean_text(import_owner, DEFAULT_IMPORT_OWNER)
+    proof_manifest = server_demo_proof_manifest(
+        clean_space_url,
+        clean_pack_url,
+        clean_pack_sha1,
+        clean_gallery_world,
+        clean_import_prompt,
+        clean_import_story,
+        clean_import_owner,
     )
     kit_dir = tempfile.mkdtemp(prefix="afterblock-server-kit-")
     zip_path = os.path.join(kit_dir, "afterblock-paper-server-kit.zip")
@@ -1498,9 +1569,9 @@ Use `/dreamwall import here` for a fast nearby proof during recording.
 `/dreamwall import` uses the configured default relic:
 
 ```text
-prompt={clean_text(import_prompt, DEFAULT_IMPORT_PROMPT)}
-story={clean_text(import_story, DEFAULT_IMPORT_STORY)}
-owner={clean_text(import_owner, DEFAULT_IMPORT_OWNER)}
+prompt={clean_import_prompt}
+story={clean_import_story}
+owner={clean_import_owner}
 ```
 
 ## Coordinate Contract
@@ -1526,9 +1597,14 @@ plugins/dreamwall-paper-bridge-0.1.0.jar
 plugins/DreamWall/config.yml
 AfterBlockMuseum.zip
 afterblock-demo-world.zip
+afterblock-demo-proof.json
 server.properties.append
 README.md
 ```
+
+## Demo Proof File
+
+`afterblock-demo-proof.json` is included for judges and future installers. It records the Space endpoint, default relic, coordinate contract, expected `/dreamwall museum check` proof, resource-pack counts, checksums, and the one external blocker: PebbleHost upload still needs the panel/SFTP password.
 
 ## Checksums
 
@@ -1548,6 +1624,7 @@ resource-pack-sha1={clean_pack_sha1}
         zf.writestr("plugins/DreamWall/config.yml", config)
         zf.writestr("README.md", readme)
         zf.writestr("server.properties.append", server_properties)
+        zf.writestr("afterblock-demo-proof.json", json.dumps(proof_manifest, indent=2) + "\n")
         if os.path.exists(PAPER_PLUGIN_JAR_PATH):
             zf.write(PAPER_PLUGIN_JAR_PATH, "plugins/dreamwall-paper-bridge-0.1.0.jar")
         if os.path.exists(RESOURCE_PACK_PATH):

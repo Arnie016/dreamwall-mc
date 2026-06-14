@@ -25,6 +25,8 @@ The Hugging Face Space also serves a complete Paper server kit from the `Minecra
 plugins/dreamwall-paper-bridge-0.1.0.jar
 plugins/DreamWall/config.yml
 AfterBlockMuseum.zip
+afterblock-demo-world.zip
+afterblock-demo-proof.json
 server.properties.append
 README.md
 ```

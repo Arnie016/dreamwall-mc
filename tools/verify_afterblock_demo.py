@@ -71,11 +71,13 @@ def server_zip_checks(path: Path) -> dict:
         "plugins/dreamwall-paper-bridge-0.1.0.jar",
         "AfterBlockMuseum.zip",
         "afterblock-demo-world.zip",
+        "afterblock-demo-proof.json",
         "server.properties.append",
         "README.md",
     ]
     with zipfile.ZipFile(path) as zf:
         config = zf.read("plugins/DreamWall/config.yml").decode("utf-8")
+        demo_proof = json.loads(zf.read("afterblock-demo-proof.json").decode("utf-8"))
     return {
         "file": path.name,
         "required_files_present": {name: name in names for name in required},
@@ -85,6 +87,14 @@ def server_zip_checks(path: Path) -> dict:
             "default_import_prompt": "default-import-prompt:" in config,
             "gallery_origin": "gallery-origin:" in config,
             "plot_size": "plot-size: 32" in config,
+        },
+        "demo_proof_contract": {
+            "type": demo_proof.get("type") == "afterblock.paper-demo-proof.v1",
+            "total_plots": demo_proof.get("coordinate_contract", {}).get("total_plots") == 144,
+            "plot_scale": demo_proof.get("coordinate_contract", {}).get("plot_scale") == 32,
+            "paper_overrides": demo_proof.get("resource_pack", {}).get("paper_overrides") == 3200,
+            "import_command": "/dreamwall import" in demo_proof.get("expected_commands", []),
+            "pebblehost_blocker": "PebbleHost" in demo_proof.get("blocked_external_step", ""),
         },
     }
 
@@ -185,6 +195,7 @@ def main() -> int:
             all(proof["prebuilt_world"]["zip_entries"].values()),
             all(proof["per_relic_server_zip"]["required_files_present"].values()),
             all(proof["per_relic_server_zip"]["config_contains"].values()),
+            all(proof["per_relic_server_zip"]["demo_proof_contract"].values()),
         ]
     )
 
