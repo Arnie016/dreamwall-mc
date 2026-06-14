@@ -119,6 +119,38 @@
           "texture": "#all"
         }
       }
+    },
+    {
+      "from": [
+        11.0,
+        10.0,
+        5.16
+      ],
+      "to": [
+        13.0,
+        12.0,
+        8.16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "down": {
+          "texture": "#all"
+        }
+      }
     }
   ],
   "display": {

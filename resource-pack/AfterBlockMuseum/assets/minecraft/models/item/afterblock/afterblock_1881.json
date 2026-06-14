@@ -100,14 +100,78 @@
     },
     {
       "from": [
-        10.23,
-        12.01,
+        6.47,
+        7.31,
         4.64
       ],
       "to": [
-        11.17,
-        12.95,
+        7.41,
+        8.25,
         5.46
+      ],
+      "faces": {
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "down": {
+          "texture": "#all"
+        }
+      }
+    },
+    {
+      "from": [
+        9.29,
+        7.31,
+        4.64
+      ],
+      "to": [
+        10.23,
+        8.25,
+        5.46
+      ],
+      "faces": {
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "down": {
+          "texture": "#all"
+        }
+      }
+    },
+    {
+      "from": [
+        10.23,
+        2.61,
+        4.64
+      ],
+      "to": [
+        12.11,
+        4.49,
+        6.28
       ],
       "faces": {
         "north": {

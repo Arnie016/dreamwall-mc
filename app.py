@@ -20,7 +20,7 @@ GRID = 32
 SCALE = 12
 PUBLIC_SPACE_URL = "https://build-small-hackathon-dreamwall-mc.hf.space"
 RESOURCE_PACK_URL = "https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip"
-RESOURCE_PACK_SHA1 = "42738bc973abb6a631bd9ba88ed3b2d7e8521800"
+RESOURCE_PACK_SHA1 = "03487f018e2062e254b5ea443396f29d099f8b67"
 TEXTURE_PAGE_SIZE = 96
 
 

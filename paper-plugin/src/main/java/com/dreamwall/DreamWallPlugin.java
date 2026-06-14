@@ -878,7 +878,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
     }
 
     private String resourcePackSha1() {
-        return getConfig().getString("resource-pack-sha1", "42738bc973abb6a631bd9ba88ed3b2d7e8521800");
+        return getConfig().getString("resource-pack-sha1", "03487f018e2062e254b5ea443396f29d099f8b67");
     }
 
     private byte[] resourcePackSha1Bytes() {

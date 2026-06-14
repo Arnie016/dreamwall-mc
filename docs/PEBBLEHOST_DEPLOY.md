@@ -22,8 +22,8 @@ dist/pebblehost/SHA256SUMS
 Current hashes from the verified local bundle:
 
 ```text
-e6b53404d28a26732f0d28398d81b47e465045e7e4286039c6346c2d302a4148  AfterBlockMuseum.zip
-99065bc652f3f218675127d63949d3795cfb8471e2e1a55148b95d90e10ddd29  dreamwall-paper-bridge-0.1.0.jar
+4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5  AfterBlockMuseum.zip
+ffe728663a6b4e9c5a5707cee692d07056150350453bbbedc562fda075a57485  dreamwall-paper-bridge-0.1.0.jar
 6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e  afterblock-demo-world.zip
 ```
 
@@ -84,7 +84,7 @@ https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/re
 Run `/dreamwall pack` in-game to ask the client to load that pack. The current SHA1 for Minecraft's resource-pack hash is:
 
 ```text
-42738bc973abb6a631bd9ba88ed3b2d7e8521800
+03487f018e2062e254b5ea443396f29d099f8b67
 ```
 
 Set `offer-resource-pack-on-join: true` in `plugins/DreamWall/config.yml` only if you want the server to offer it automatically when players join.
