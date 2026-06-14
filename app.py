@@ -1209,6 +1209,25 @@ def server_setup_html() -> str:
     """
 
 
+def server_handoff_html(artifact: dict) -> str:
+    coords = artifact["minecraft_coordinates"]
+    item = artifact.get("resource_pack_item", {})
+    cmd = item.get("custom_model_data", 0)
+    return f"""
+    <section class="relic-server-handoff">
+      <div>
+        <span>Live Paper handoff</span>
+        <strong>{html_escape(artifact['title'])}</strong>
+        <p>/dreamwall import places this exact relic at plot {artifact['plot']['x']}, {artifact['plot']['z']} with an engraved nameplate, lectern passport, route compass, and profile button.</p>
+      </div>
+      <div class="handoff-proof">
+        <b>XYZ {coords['x']} {coords['y']} {coords['z']}</b>
+        <b>CMD {cmd}</b>
+      </div>
+    </section>
+    """
+
+
 def demo_path_html() -> str:
     return f"""
     <section class="demo-path">
@@ -2785,6 +2804,7 @@ def curate_afterblock_artifact(
     coordinates = coordinates_html(artifact)
     waypoint = waypointcraft_html(artifact)
     server_kit = server_kit_text(artifact)
+    server_handoff = server_handoff_html(artifact)
     return (
         preview_path,
         catalog_rows(collection),
@@ -2798,6 +2818,7 @@ def curate_afterblock_artifact(
         passport,
         json.dumps(packet, indent=2),
         server_kit,
+        server_handoff,
     )
 
 
@@ -2819,7 +2840,7 @@ def quick_curate_afterblock_artifact(
 
 def place_in_museum(source_prompt: str, story_caption: str, owner_handle: str = "@Wildstash", relic_image_path: str | None = None):
     owner_name, owner_tag = visitor_identity(owner_handle)
-    preview, catalog, wall, model, command, coordinates, waypoint, placement, spirit, passport, packet, server_kit, *_ = quick_curate_afterblock_artifact(
+    preview, catalog, wall, model, command, coordinates, waypoint, placement, spirit, passport, packet, server_kit, server_handoff, *_ = quick_curate_afterblock_artifact(
         source_prompt,
         story_caption,
         owner_name,
@@ -2831,7 +2852,7 @@ def place_in_museum(source_prompt: str, story_caption: str, owner_handle: str = 
         import_story=clean_text(story_caption, DEFAULT_IMPORT_STORY),
         import_owner=clean_text(owner_handle, DEFAULT_IMPORT_OWNER),
     )
-    return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall, server_kit, server_download
+    return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall, server_kit, server_download, server_handoff
 
 
 def load_demo_artifact(name: str):
@@ -3778,6 +3799,56 @@ body, .gradio-container {
 .museum-kiosk button.primary, .museum-kiosk .primary {
   min-height: 46px;
   font-weight: 800 !important;
+}
+.relic-server-handoff {
+  display: grid;
+  gap: 8px;
+  background:
+    linear-gradient(90deg, rgba(232,197,111,.16), rgba(69,110,92,.12)),
+    #14130f;
+  border: 1px solid #8b6a3d;
+  box-shadow: inset 0 0 22px rgba(242,193,95,.08);
+  padding: 10px;
+  margin: 8px 0 0;
+}
+.relic-server-handoff span {
+  display: inline-block;
+  width: max-content;
+  color: #1b1308;
+  background: #ffdc8a;
+  border: 1px solid #fff0bd;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.relic-server-handoff strong {
+  display: block;
+  color: #ffe4a3;
+  font-size: 15px;
+  line-height: 1.15;
+  margin-top: 6px;
+}
+.relic-server-handoff p {
+  margin: 4px 0 0;
+  color: #d8c9a6 !important;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.handoff-proof {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+.handoff-proof b {
+  min-width: 0;
+  color: #20160c !important;
+  background: #ead7a6 !important;
+  border: 1px solid #9d7c46;
+  padding: 6px 7px;
+  font-size: 11px;
+  overflow-wrap: anywhere;
 }
 .photo-drop-compact .image-container,
 .photo-drop-compact .upload-container {
@@ -5784,14 +5855,15 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                             lines=1,
                             value="@Wildstash",
                         )
-                        quick_image = gr.Image(
-                            label="Optional photo reference",
-                            type="filepath",
-                            sources=["upload", "clipboard"],
-                            height=124,
-                            elem_classes=["photo-drop-compact"],
-                        )
                         quick_button = gr.Button("Place in Museum", variant="primary")
+                        museum_server_handoff = gr.HTML(
+                            value=INITIAL_MUSEUM_OUTPUTS[12],
+                            label="Live Paper handoff",
+                        )
+                        museum_relic_server_download = gr.File(
+                            value=INITIAL_MUSEUM_OUTPUTS[11],
+                            label="Download Paper server kit for this relic",
+                        )
                         museum_command = gr.Textbox(
                             value=INITIAL_MUSEUM_OUTPUTS[1],
                             label="Minecraft command",
@@ -5800,9 +5872,12 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                             show_copy_button=True,
                             elem_classes=["command-copy"],
                         )
-                        museum_relic_server_download = gr.File(
-                            value=INITIAL_MUSEUM_OUTPUTS[11],
-                            label="Download Paper server kit for this relic",
+                        quick_image = gr.Image(
+                            label="Optional image reference",
+                            type="filepath",
+                            sources=["upload", "clipboard"],
+                            height=96,
+                            elem_classes=["photo-drop-compact"],
                         )
                 with gr.Column(scale=6):
                     museum_model = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[0], label="Artifact model")
@@ -5987,6 +6062,7 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
             museum_wall,
             museum_server_kit,
             museum_relic_server_download,
+            museum_server_handoff,
         ],
         api_name="quick_curate",
     )
