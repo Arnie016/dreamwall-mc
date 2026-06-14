@@ -16,6 +16,7 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -30,6 +31,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -133,7 +135,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         String xyz = getConfig().getString(key + ".xyz", "unknown");
 
         player.sendTitle(compactItemName(title), compactLore(spirit), 5, 70, 15);
-        player.sendMessage("AfterBlock spirit: " + compactLore(spirit));
+        player.sendMessage("Relic profile: " + compactLore(spirit));
         player.sendMessage("History: " + compactLore(memory));
         player.sendMessage("Hall: " + hall + " | Owner: " + owner + " | XYZ " + xyz);
     }
@@ -284,10 +286,12 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         int customModelData = integer(minecraft, "custom_model_data", 730001);
         String command = giveCommand(customModelData);
         ItemStack item = artifactItem(title, customModelData,
-                List.of("Owner: " + owner, "Hall: " + hall, "XYZ: " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ(), compactLore(memory)));
+                List.of("Owner: " + owner, "Hall: " + hall, "XYZ: " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ(),
+                        "Caption: " + compactLore(memory), "Click profile button for full history."));
         ItemStack passport = passportBook(title, owner, hall, zone, memory, spirit, command, base, customModelData);
         player.getInventory().addItem(item, passport);
         placeDisplayRelic(world, base, item);
+        placeEngravedRelicText(world, base, title, owner, hall, memory, customModelData);
         placePassportLectern(world, base, passport);
         placeSpiritButton(world, base, title, owner, hall, memory, spirit);
         if (!placeHere) {
@@ -298,7 +302,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         }
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 38, 0.45, 0.65, 0.45, 0.015);
         player.sendMessage("Imported " + title + " by " + owner + " into " + hall + ".");
-        player.sendMessage("Displayed item, placed passport lectern, and gave CustomModelData " + customModelData + ".");
+        player.sendMessage("Displayed item, engraved name/caption, placed passport lectern, and gave CustomModelData " + customModelData + ".");
         if (!placeHere) {
             player.sendMessage("Placed at packet coordinates " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ()
                     + " and updated the lit route from YOU ARE HERE.");
@@ -334,7 +338,8 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         }
 
         ItemStack item = artifactItem("AfterBlock AirPods Relic", 730002,
-                List.of("Owner: @Wildstash", "Hall: Hall of Companions", "XYZ: " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ(), "Private worlds through public noise."));
+                List.of("Owner: @Wildstash", "Hall: Hall of Companions", "XYZ: " + base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ(),
+                        "Caption: Private worlds through public noise.", "Click profile button for full history."));
         ItemStack passport = passportBook(
                 "AfterBlock AirPods Relic",
                 "@Wildstash",
@@ -347,12 +352,14 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
                 730002);
         player.getInventory().addItem(item, passport);
         placeDisplayRelic(world, base, item);
+        placeEngravedRelicText(world, base, "AfterBlock AirPods Relic", "@Wildstash", "Hall of Companions",
+                "A small object that carried private worlds through public noise.", 730002);
         placePassportLectern(world, base, passport);
         placeSpiritButton(world, base, "AfterBlock AirPods Relic", "@Wildstash", "Hall of Companions",
                 "A small object that carried private worlds through public noise.",
                 "I am what remained when a pocket object became a place.");
         world.spawnParticle(Particle.ENCHANT, base.clone().add(0.5, 1.4, 0.5), 28, 0.35, 0.55, 0.35, 0.01);
-        sender.sendMessage("Placed demo pedestal, displayed relic item, lectern passport, spirit button, and gave Paper item with CustomModelData 730002.");
+        sender.sendMessage("Placed demo pedestal, displayed relic item, engraved name/caption, lectern passport, profile button, and gave Paper item with CustomModelData 730002.");
         sender.sendMessage("Run /dreamwall pack and accept the pack to see the generated item model.");
     }
 
@@ -854,6 +861,35 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         });
     }
 
+    private void placeEngravedRelicText(World world, Location base, String title, String owner, String hall, String memory,
+            int customModelData) {
+        String nameLine = compactItemName(title);
+        String captionLine = compactLore(memory);
+        String ownerLine = compactLore(owner + " | " + hall + " | CMD " + customModelData);
+
+        Location nameplate = base.clone().add(0.5, 2.55, 0.5);
+        world.spawn(nameplate, TextDisplay.class, display -> {
+            display.setText(nameLine + "\n" + captionLine + "\n" + ownerLine);
+            display.setBillboard(Billboard.CENTER);
+            display.setAlignment(TextDisplay.TextAlignment.CENTER);
+            display.setLineWidth(220);
+            display.setShadowed(true);
+            display.setDefaultBackground(false);
+            display.setBackgroundColor(Color.fromARGB(150, 18, 13, 8));
+            display.setTextOpacity((byte) 255);
+            display.setViewRange(72.0f);
+            display.setDisplayWidth(4.0f);
+            display.setDisplayHeight(1.2f);
+            display.setGlowColorOverride(Color.fromRGB(238, 210, 136));
+            display.setGlowing(true);
+        });
+
+        placeStandingSign(world, base.getBlockX(), base.getBlockY(), base.getBlockZ() + 2,
+                "Engraved", nameLine, compactLore(owner), "CMD " + customModelData);
+        placeStandingSign(world, base.getBlockX() + 1, base.getBlockY(), base.getBlockZ() + 2,
+                "Caption", captionLine, "Profile button", "for history");
+    }
+
     private ItemStack passportBook(String title, String owner, String hall, String zone, String memory, String spirit,
             String command, Location base, int customModelData) {
         ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
@@ -902,7 +938,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         getConfig().set(key + ".xyz", base.getBlockX() + " " + base.getBlockY() + " " + base.getBlockZ());
         saveConfig();
         placeStandingSign(world, base.getBlockX() - 4, base.getBlockY(), base.getBlockZ() - 2,
-                "Spirit button", "right-click", "profile + lore", compactItemName(title));
+                "Profile button", "right-click", "history + lore", compactItemName(title));
     }
 
     private String spiritButtonKey(Location location) {

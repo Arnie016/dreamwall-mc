@@ -17,8 +17,8 @@ The generated config controls the default prompt, story, and visitor signature u
 Current plugin jar checksums:
 
 ```text
-sha1   e6fb5eda3ebd84c15bb5ca9e0b2a2233942213c0
-sha256 15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83
+sha1   6e005510f429cfb77aeffa00bee9d458dd0b0568
+sha256 35aeae59268cef96c50f7757451455db5cce30804aa1bd4738532d4d5601762a
 ```
 
 Current prebuilt world checksums:

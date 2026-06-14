@@ -35,7 +35,7 @@ Current hashes from the verified local bundle:
 
 ```text
 4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5  AfterBlockMuseum.zip
-15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83  dreamwall-paper-bridge-0.1.0.jar
+35aeae59268cef96c50f7757451455db5cce30804aa1bd4738532d4d5601762a  dreamwall-paper-bridge-0.1.0.jar
 33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3  afterblock-demo-world.zip
 ```
 
@@ -134,9 +134,9 @@ Expected result:
 - `/dreamwall museum where` prints the exact Space-to-world coordinate formula.
 - `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, a central memory spine, entrance signage, and a `YOU ARE HERE` beacon.
 - `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, and the entry beacon.
-- `/dreamwall demo` places a small pedestal, sign, visible `ItemDisplay`, lectern passport book, right-click spirit button, and gives a Paper item using `CustomModelData 730002`.
-- `/dreamwall import here` calls the live `quick_curate` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/sign/`ItemDisplay`/lectern passport/spirit button beside the player, and gives a Paper item using the packet's `custom_model_data`.
-- `/dreamwall import` places the packet-derived artifact at the generated museum coordinates, paints a lit route from the `YOU ARE HERE` entry to that plot, persists a right-click spirit button for the relic profile, sets the player's compass target, and gives a named route compass. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
+- `/dreamwall demo` places a small pedestal, visible `ItemDisplay`, glowing engraved name/caption, lectern passport book, right-click profile button, and gives a Paper item using `CustomModelData 730002`.
+- `/dreamwall import here` calls the live `quick_curate` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/`ItemDisplay`/engraved nameplate/lectern passport/profile button beside the player, and gives a Paper item using the packet's `custom_model_data`.
+- `/dreamwall import` places the packet-derived artifact at the generated museum coordinates, paints a lit route from the `YOU ARE HERE` entry to that plot, persists a right-click profile button for the relic history, sets the player's compass target, and gives a named route compass. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
 
 If the Paper item looks like ordinary paper, the plugin is working but the resource pack is not loaded.
 
@@ -146,19 +146,20 @@ For the three-minute video, the best proof order is:
 2. Join the Paper server and run `/dreamwall museum build`.
 3. Run `/dreamwall museum check` to prove the map exists.
 4. Run `/dreamwall import` so the same relic appears at the exact generated plot and updates the route trail.
-5. Hold the route compass, walk from the `YOU ARE HERE` beacon along the lit floor route to the plot pad, show the resource-pack item, then right-click the spirit button for the relic profile.
+5. Hold the route compass, walk from the `YOU ARE HERE` beacon along the lit floor route to the plot pad, show the resource-pack item and engraved nameplate, then right-click the profile button for the relic history.
 
 ## Local Proof
 
 Codex verified the plugin boots on Paper before PebbleHost install:
 
 ```text
-Paper 1.21.11 build 127
+Paper 1.21.4 build 232
 Java Temurin 21.0.11
 DreamWall enabled
 dreamwall fetch reached the Hugging Face Space
 dreamwall pack printed the public pack URL and SHA1
 dreamwall museum check reported 144/144 pads after a clean restart
+post-engraving jar loaded and dreamwall museum check still reported 144/144 pads
 ```
 
 Proof file:

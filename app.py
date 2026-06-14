@@ -23,8 +23,8 @@ RESOURCE_PACK_URL = "https://huggingface.co/spaces/build-small-hackathon/dreamwa
 RESOURCE_PACK_SHA1 = "03487f018e2062e254b5ea443396f29d099f8b67"
 RESOURCE_PACK_PATH = "resource-pack/AfterBlockMuseum.zip"
 PAPER_PLUGIN_JAR_PATH = "server-kit/dreamwall-paper-bridge-0.1.0.jar"
-PAPER_PLUGIN_SHA1 = "e6fb5eda3ebd84c15bb5ca9e0b2a2233942213c0"
-PAPER_PLUGIN_SHA256 = "15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83"
+PAPER_PLUGIN_SHA1 = "6e005510f429cfb77aeffa00bee9d458dd0b0568"
+PAPER_PLUGIN_SHA256 = "35aeae59268cef96c50f7757451455db5cce30804aa1bd4738532d4d5601762a"
 PREBUILT_WORLD_PATH = "server-kit/afterblock-demo-world.zip"
 PREBUILT_WORLD_SHA1 = "d5c5d80daf53f5e72bd8860aea884e221a1b9f84"
 PREBUILT_WORLD_SHA256 = "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3"
@@ -1204,7 +1204,7 @@ def server_setup_html() -> str:
         <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
         <code>world_y = {GALLERY_ORIGIN_Y}</code>
       </div>
-      <p class="server-note">For the hackathon demo: use the included prebuilt world for a ready memory-spine campus, or run the museum builder once. Then import the configured relic so the item appears at the exact map address with a route compass, lectern passport, and right-click spirit button.</p>
+      <p class="server-note">For the hackathon demo: use the included prebuilt world for a ready memory-spine campus, or run the museum builder once. Then import the configured relic so the item appears at the exact map address with a route compass, engraved nameplate, lectern passport, and right-click profile button.</p>
     </section>
     """
 
@@ -1241,7 +1241,7 @@ def demo_path_html() -> str:
         <li><b>1:15</b> Open Packet briefly so judges see `dreamwall.museum.v1`.</li>
         <li><b>1:35</b> Switch to Minecraft and run the proof commands.</li>
         <li><b>2:05</b> Hold the route compass and follow the lit floor from `YOU ARE HERE` to the relic.</li>
-        <li><b>2:30</b> Show the resource-pack item, open the lectern passport, then right-click the spirit button for the relic profile.</li>
+        <li><b>2:30</b> Show the resource-pack item, read the engraved nameplate, open the lectern passport, then right-click the profile button for the relic history.</li>
       </ol>
       <div class="demo-command-strip">
         <code>/dreamwall pack</code>
@@ -1322,7 +1322,7 @@ gallery-facing: "east"
             f"Plot pads: {total_plots}/{total_plots}",
             f"Relic focus blocks: {total_plots}/{total_plots}",
             "YOU ARE HERE beacon: present",
-            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)}, a route compass, a readable passport lectern, and a right-click spirit button.",
+            f"Imported relic lands at XYZ {coords['x']} {coords['y']} {coords['z']} with CMD {item.get('custom_model_data', 0)}, a route compass, an engraved nameplate, a readable passport lectern, and a right-click profile button.",
             "",
             "5) Live Space endpoint used by the Paper bridge",
             f"{PUBLIC_SPACE_URL}/gradio_api/call/quick_curate",
@@ -2739,7 +2739,7 @@ def museum_packet_for(artifact: dict) -> dict:
                 compact_text(artifact["hall"], 30),
                 compact_text(artifact["spirit_first_line"], 30),
             ],
-            "pedestal": "place sign, 3D resource-pack item, lectern passport book, and redstone spirit button at coordinates",
+            "pedestal": "place engraved nameplate, 3D resource-pack item, lectern passport book, and redstone profile button at coordinates",
         },
     }
 

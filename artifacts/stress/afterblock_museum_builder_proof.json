@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-06-14T21:35:35+08:00",
+  "checked_at": "2026-06-14T22:07:39+08:00",
   "scope": "AfterBlock Paper bridge museum campus builder and Space server setup tab",
   "coordinate_contract": {
     "plot_0_0": "-192 80 -192",
@@ -19,31 +19,32 @@
     ".venv/bin/python -m py_compile app.py tools/generate_afterblock_textures.py",
     "javac --release 17 with local Paper API, Gson, and transitive Maven cache classpath",
     "manual shaded jar rebuilt with compiled plugin classes, plugin.yml, config.yml, and Gson 2.11.0",
-    "Paper 1.21.11 temporary server loaded DreamWall v0.1.0",
+    "Paper 1.21.4 build 232 temporary server loaded DreamWall v0.1.0",
     "/dreamwall museum where reported plot (0,0) -> -192 80 -192 and plot (11,11) -> 160 80 160",
     "/dreamwall museum build reported 144 plot pads, 9 hall gates, 1 YOU ARE HERE entry beacon, and a living memory spine",
     "/dreamwall museum check reported Plot pads 144/144, Relic focus blocks 144/144, YOU ARE HERE beacon present",
     "after a clean Paper 1.21.4 restart, /dreamwall museum check still reported Plot pads 144/144, Relic focus blocks 144/144, YOU ARE HERE beacon present",
     "/dreamwall pack reported SHA1 03487f018e2062e254b5ea443396f29d099f8b67",
     "Paper bridge import endpoint aligned to the live Space /gradio_api/call/quick_curate endpoint",
-    "Paper bridge import path now compiles with item hover lore plus a written-book passport placed on a lectern",
+    "Paper bridge import path now compiles with item hover lore, a glowing TextDisplay engraved name/caption, and a written-book passport placed on a lectern",
     "Paper bridge exact-coordinate import now paints a lit route from YOU ARE HERE to the generated plot and gives a route compass",
-    "rebuilt plugin class contains WARPED_BUTTON, Spirit button, profile + lore, AfterBlock spirit, spirit-buttons markers, buildMemorySpine, configurable default-import-prompt/default-import-story/default-import-owner, and the living memory spine build message",
+    "rebuilt plugin class contains TextDisplay engraving, Profile button, profile + lore, spirit-buttons markers, buildMemorySpine, configurable default-import-prompt/default-import-story/default-import-owner, and the living memory spine build message",
+    "after the TextDisplay engraving update, Paper 1.21.4 build 232 on Temurin Java 21 loaded DreamWall v0.1.0 and /dreamwall museum check still reported Plot pads 144/144, Relic focus blocks 144/144, YOU ARE HERE beacon present",
     "generated server kit ZIP contains the configured default import prompt, story, owner, config.yml, and a plugin jar matching the app.py SHA1/SHA256 constants",
     "rebuilt passport-and-spirit-button-capable jar compiled successfully with Java 21 targeting Java 17 bytecode"
   ],
   "bundle": {
     "resource_pack_sha1": "03487f018e2062e254b5ea443396f29d099f8b67",
     "resource_pack_sha256": "4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5",
-    "plugin_jar_sha1": "e6fb5eda3ebd84c15bb5ca9e0b2a2233942213c0",
-    "plugin_jar_sha256": "15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83",
+    "plugin_jar_sha1": "6e005510f429cfb77aeffa00bee9d458dd0b0568",
+    "plugin_jar_sha256": "35aeae59268cef96c50f7757451455db5cce30804aa1bd4738532d4d5601762a",
     "prebuilt_world_sha1": "d5c5d80daf53f5e72bd8860aea884e221a1b9f84",
     "prebuilt_world_sha256": "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3"
   },
   "notes": [
     "The builder is op-only through the existing dreamwall.use permission.",
     "The actual target server still needs the PebbleHost panel password for SFTP upload.",
-    "The memory spine and configurable import updates were verified by Java 21 compilation, app.py compilation, generated ZIP inspection, jar bytecode/config inspection, and a Paper 1.21.4 build/check/restart/check cycle.",
+    "The memory spine, configurable import, and engraved relic profile updates were verified by Java 21 compilation, app.py compilation, generated ZIP inspection, jar bytecode/config inspection, and Paper 1.21.4 build/check/restart/check plus post-engraving Java 21 load/check cycles.",
     "The local dist/pebblehost bundle is ignored by git and prepared for manual upload."
   ]
 }
