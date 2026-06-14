@@ -21,6 +21,10 @@ SCALE = 12
 PUBLIC_SPACE_URL = "https://build-small-hackathon-dreamwall-mc.hf.space"
 RESOURCE_PACK_URL = "https://huggingface.co/spaces/build-small-hackathon/dreamwall-mc/resolve/main/resource-pack/AfterBlockMuseum.zip"
 RESOURCE_PACK_SHA1 = "03487f018e2062e254b5ea443396f29d099f8b67"
+RESOURCE_PACK_PATH = "resource-pack/AfterBlockMuseum.zip"
+PAPER_PLUGIN_JAR_PATH = "server-kit/dreamwall-paper-bridge-0.1.0.jar"
+PAPER_PLUGIN_SHA1 = "4dee5c0248f1100e99d52c0c00bf37832de9bfc0"
+PAPER_PLUGIN_SHA256 = "ffe728663a6b4e9c5a5707cee692d07056150350453bbbedc562fda075a57485"
 TEXTURE_PAGE_SIZE = 96
 
 
@@ -1081,9 +1085,9 @@ def server_setup_html() -> str:
         <article>
           <span>1</span>
           <h3>Upload</h3>
+          <p>Download the Paper server kit below, then upload the included plugin jar and resource pack.</p>
           <p><code>plugins/dreamwall-paper-bridge-0.1.0.jar</code></p>
           <p><code>AfterBlockMuseum.zip</code></p>
-          <p><code>afterblock-demo-world.zip</code> optional</p>
         </article>
         <article>
           <span>2</span>
@@ -1201,7 +1205,6 @@ gallery-facing: "east"
             "1) Upload these files to PebbleHost",
             "plugins/dreamwall-paper-bridge-0.1.0.jar",
             "AfterBlockMuseum.zip",
-            "afterblock-demo-world.zip  # optional prebuilt demo world",
             "",
             "2) plugins/DreamWall/config.yml",
             config.rstrip(),
@@ -1221,6 +1224,10 @@ gallery-facing: "east"
             "",
             "5) Live Space endpoint used by the Paper bridge",
             f"{PUBLIC_SPACE_URL}/gradio_api/call/quick_curate",
+            "",
+            "6) Bundle checksums",
+            f"dreamwall-paper-bridge-0.1.0.jar sha1={PAPER_PLUGIN_SHA1}",
+            f"AfterBlockMuseum.zip sha1={RESOURCE_PACK_SHA1}",
         ]
     )
 
@@ -1260,6 +1267,10 @@ def server_config_kit_text(
             "",
             "Live endpoint used by /dreamwall import",
             f"{clean_space_url}/gradio_api/call/quick_curate",
+            "",
+            "Included downloads",
+            "Paper plugin: server-kit/dreamwall-paper-bridge-0.1.0.jar",
+            "Resource pack: resource-pack/AfterBlockMuseum.zip",
         ]
     )
 
@@ -1318,9 +1329,11 @@ This kit configures a Paper server as a persistent AfterBlock Museum for:
 
 ## Upload
 
-1. Upload `dreamwall-paper-bridge-0.1.0.jar` to `plugins/`.
-2. Upload `AfterBlockMuseum.zip` or use the hosted pack URL below.
-3. Copy `plugins/DreamWall/config.yml` from this ZIP into the same path on the server.
+This ZIP is self-contained for the server side:
+
+1. Upload `plugins/dreamwall-paper-bridge-0.1.0.jar` to the server's `plugins/` folder.
+2. Upload `AfterBlockMuseum.zip` to the server root, or use the hosted pack URL below.
+3. Upload `plugins/DreamWall/config.yml` to the same path on the server.
 4. Restart Paper.
 
 ## First Run
@@ -1349,6 +1362,24 @@ world = {clean_gallery_world}
 {clean_pack_url}
 sha1={clean_pack_sha1}
 ```
+
+## Included Files
+
+```text
+plugins/dreamwall-paper-bridge-0.1.0.jar
+plugins/DreamWall/config.yml
+AfterBlockMuseum.zip
+server.properties.append
+README.md
+```
+
+## Checksums
+
+```text
+dreamwall-paper-bridge-0.1.0.jar sha1={PAPER_PLUGIN_SHA1}
+dreamwall-paper-bridge-0.1.0.jar sha256={PAPER_PLUGIN_SHA256}
+AfterBlockMuseum.zip sha1={clean_pack_sha1}
+```
 """
     server_properties = f"""# Optional server.properties lines
 resource-pack={clean_pack_url}
@@ -1358,6 +1389,10 @@ resource-pack-sha1={clean_pack_sha1}
         zf.writestr("plugins/DreamWall/config.yml", config)
         zf.writestr("README.md", readme)
         zf.writestr("server.properties.append", server_properties)
+        if os.path.exists(PAPER_PLUGIN_JAR_PATH):
+            zf.write(PAPER_PLUGIN_JAR_PATH, "plugins/dreamwall-paper-bridge-0.1.0.jar")
+        if os.path.exists(RESOURCE_PACK_PATH):
+            zf.write(RESOURCE_PACK_PATH, "AfterBlockMuseum.zip")
     return zip_path
 
 
@@ -5467,7 +5502,7 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                 )
                 texture_inspector = gr.HTML(value=INITIAL_TEXTURE_OUTPUTS[2], label="Model/material inspection wall")
                 with gr.Row():
-                    gr.File(value="resource-pack/AfterBlockMuseum.zip", label="Download resource pack")
+                    gr.File(value=RESOURCE_PACK_PATH, label="Download resource pack")
                     gr.File(value="assets/afterblock_textures/afterblock_manifest.json", label="Download manifest")
                     gr.File(value="assets/afterblock_textures/gallery/index.html", label="Download full texture gallery")
 
@@ -5539,8 +5574,17 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                 )
                 server_config_download = gr.File(
                     value=INITIAL_SERVER_CONFIG_ZIP,
-                    label="Download Paper server kit ZIP",
+                    label="Download complete Paper server kit ZIP",
                 )
+                with gr.Row():
+                    gr.File(
+                        value=PAPER_PLUGIN_JAR_PATH,
+                        label="Download Paper bridge plugin",
+                    )
+                    gr.File(
+                        value=RESOURCE_PACK_PATH,
+                        label="Download resource pack",
+                    )
             museum_server_kit = gr.Textbox(
                 value=INITIAL_MUSEUM_OUTPUTS[10],
                 label="Current relic server kit",
