@@ -36,7 +36,7 @@ Current hashes from the verified local bundle:
 ```text
 4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5  AfterBlockMuseum.zip
 15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83  dreamwall-paper-bridge-0.1.0.jar
-6c789a5ec618c76860a8a8450a351b29280958f863945e3df571498a423f7c3e  afterblock-demo-world.zip
+33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3  afterblock-demo-world.zip
 ```
 
 ## Upload Targets
@@ -69,7 +69,7 @@ afterblock-demo-world.zip
 afterblock-SHA256SUMS.txt
 ```
 
-Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the server root before restart. It contains the locally verified `world`, `world_nether`, `world_the_end`, and `server.properties` from the smoke test.
+Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the server root before restart. It contains the locally verified `world`, `world_nether`, and `world_the_end` folders with the memory-spine museum already built; it intentionally does not overwrite `server.properties`.
 
 The known PebbleHost SFTP endpoint from the account screen was:
 

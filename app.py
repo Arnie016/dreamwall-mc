@@ -25,6 +25,9 @@ RESOURCE_PACK_PATH = "resource-pack/AfterBlockMuseum.zip"
 PAPER_PLUGIN_JAR_PATH = "server-kit/dreamwall-paper-bridge-0.1.0.jar"
 PAPER_PLUGIN_SHA1 = "e6fb5eda3ebd84c15bb5ca9e0b2a2233942213c0"
 PAPER_PLUGIN_SHA256 = "15869a7e7b4c1139b4340a9f90ffe77f079a6c69bd53176910030b79f9f15a83"
+PREBUILT_WORLD_PATH = "server-kit/afterblock-demo-world.zip"
+PREBUILT_WORLD_SHA1 = "d5c5d80daf53f5e72bd8860aea884e221a1b9f84"
+PREBUILT_WORLD_SHA256 = "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3"
 TEXTURE_PAGE_SIZE = 96
 DEFAULT_IMPORT_PROMPT = "blue school bag from exam week"
 DEFAULT_IMPORT_STORY = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
@@ -1201,7 +1204,7 @@ def server_setup_html() -> str:
         <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
         <code>world_y = {GALLERY_ORIGIN_Y}</code>
       </div>
-      <p class="server-note">For the hackathon demo: create a relic in this Space, show its passport/packet, enter Minecraft, run the museum builder once, then import the same packet so the item appears at the exact map address with a route compass, lectern passport, and right-click spirit button.</p>
+      <p class="server-note">For the hackathon demo: use the included prebuilt world for a ready memory-spine campus, or run the museum builder once. Then import the configured relic so the item appears at the exact map address with a route compass, lectern passport, and right-click spirit button.</p>
     </section>
     """
 
@@ -1459,7 +1462,8 @@ This ZIP is self-contained for the server side:
 1. Upload `plugins/dreamwall-paper-bridge-0.1.0.jar` to the server's `plugins/` folder.
 2. Upload `AfterBlockMuseum.zip` to the server root, or use the hosted pack URL below.
 3. Upload `plugins/DreamWall/config.yml` to the same path on the server.
-4. Restart Paper.
+4. Optional: unzip `afterblock-demo-world.zip` into the server root before restart for a prebuilt memory-spine campus.
+5. Restart Paper.
 
 ## First Run
 
@@ -1502,6 +1506,7 @@ sha1={clean_pack_sha1}
 plugins/dreamwall-paper-bridge-0.1.0.jar
 plugins/DreamWall/config.yml
 AfterBlockMuseum.zip
+afterblock-demo-world.zip
 server.properties.append
 README.md
 ```
@@ -1512,6 +1517,8 @@ README.md
 dreamwall-paper-bridge-0.1.0.jar sha1={PAPER_PLUGIN_SHA1}
 dreamwall-paper-bridge-0.1.0.jar sha256={PAPER_PLUGIN_SHA256}
 AfterBlockMuseum.zip sha1={clean_pack_sha1}
+afterblock-demo-world.zip sha1={PREBUILT_WORLD_SHA1}
+afterblock-demo-world.zip sha256={PREBUILT_WORLD_SHA256}
 ```
 """
     server_properties = f"""# Optional server.properties lines
@@ -1526,6 +1533,8 @@ resource-pack-sha1={clean_pack_sha1}
             zf.write(PAPER_PLUGIN_JAR_PATH, "plugins/dreamwall-paper-bridge-0.1.0.jar")
         if os.path.exists(RESOURCE_PACK_PATH):
             zf.write(RESOURCE_PACK_PATH, "AfterBlockMuseum.zip")
+        if os.path.exists(PREBUILT_WORLD_PATH):
+            zf.write(PREBUILT_WORLD_PATH, "afterblock-demo-world.zip")
     return zip_path
 
 
@@ -5940,6 +5949,10 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                     gr.File(
                         value=RESOURCE_PACK_PATH,
                         label="Download resource pack",
+                    )
+                    gr.File(
+                        value=PREBUILT_WORLD_PATH,
+                        label="Download prebuilt demo world",
                     )
             museum_server_kit = gr.Textbox(
                 value=INITIAL_MUSEUM_OUTPUTS[10],
