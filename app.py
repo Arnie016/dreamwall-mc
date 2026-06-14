@@ -1639,11 +1639,28 @@ def artifact_model_html(artifact: dict) -> str:
     const shell = makeMat('#14181d', {{ roughness: .54, metalness: .22 }});
     const glass = makeMat('#102431', {{ roughness: .18, metalness: .08, emissive: '#2fb6ff', emissiveStrength: .16 }});
     const bezel = makeMat('#0a0b0d', {{ roughness: .72 }});
-    cube(0, .88, -.02, .76, 1.18, .16, shell);
-    cube(0, .88, -.14, .62, .98, .055, glass);
-    cube(0, 1.4, -.18, .24, .035, .04, porcelain);
-    cube(.22, 1.24, -.19, .08, .08, .04, blueGlow);
-    cube(-.18, .48, -.19, .2, .05, .04, bezel);
+    const appA = makeMat('#6fd3ff', {{ roughness: .3, emissive: '#40b9ff', emissiveStrength: .2 }});
+    const appB = makeMat('#f4d76f', {{ roughness: .36, emissive: '#f4c44a', emissiveStrength: .09 }});
+    const appC = makeMat('#7fe0a3', {{ roughness: .36, emissive: '#42c36f', emissiveStrength: .1 }});
+    const appD = makeMat('#f06f6f', {{ roughness: .36, emissive: '#cf4a4a', emissiveStrength: .08 }});
+    const frame = cube(0, .94, -.02, .82, 1.42, .16, shell);
+    const screen = cube(0, .94, -.135, .68, 1.2, .055, glass);
+    frame.rotation.z = -.03;
+    screen.rotation.z = -.03;
+    cube(0, 1.58, -.18, .22, .035, .04, porcelain).rotation.z = -.03;
+    cube(.28, 1.43, -.19, .06, .06, .04, blueGlow).rotation.z = -.03;
+    cube(-.26, .37, -.19, .22, .045, .04, bezel).rotation.z = -.03;
+    cube(-.44, 1.05, -.02, .035, .34, .06, shell).rotation.z = -.03;
+    cube(.44, .92, -.02, .035, .24, .06, shell).rotation.z = -.03;
+    const apps = [appA, appB, appC, appD, appC, appA];
+    apps.forEach((mat, i) => {{
+      const col = i % 2;
+      const row = Math.floor(i / 2);
+      const icon = cube((col - .5) * .28, 1.18 - row * .24, -.19, .16, .13, .038, mat);
+      icon.rotation.z = -.03;
+    }});
+    const shine = cube(-.2, 1.1, -.205, .055, .76, .03, makeMat('#d8f4ff', {{ roughness: .16, emissive: '#d8f4ff', emissiveStrength: .08 }}));
+    shine.rotation.z = -.22;
   }}
 
   function renderWaterBottle() {{
@@ -1657,30 +1674,52 @@ def artifact_model_html(artifact: dict) -> str:
     }});
     const label = makeMat('#f4f0de', {{ roughness: .38 }});
     const cap = makeMat('#2f6f95', {{ roughness: .5, metalness: .04 }});
-    cube(0, .84, 0, .52, 1.04, .42, bottleGlass);
-    cube(0, 1.46, 0, .32, .22, .32, bottleGlass);
-    cube(0, 1.62, 0, .38, .12, .38, cap);
-    cube(0, .88, -.24, .56, .24, .04, label);
-    cube(-.2, .5, -.25, .06, .14, .04, blueGlow);
+    const water = makeMat('#2da8d8', {{ roughness: .22, emissive: '#0b83b4', emissiveStrength: .12 }});
+    const seam = makeMat('#d9fbff', {{ roughness: .18, emissive: '#bdf3ff', emissiveStrength: .08 }});
+    cube(0, .62, 0, .5, .44, .38, bottleGlass);
+    cube(0, .96, 0, .58, .48, .44, bottleGlass);
+    cube(0, 1.3, 0, .46, .3, .36, bottleGlass);
+    cube(0, .74, -.24, .48, .28, .04, water);
+    cube(0, 1.0, -.27, .62, .25, .05, label);
+    cube(-.19, 1.01, -.305, .06, .16, .035, cap);
+    cube(.19, 1.01, -.305, .06, .16, .035, cap);
+    cube(0, 1.53, 0, .28, .24, .28, bottleGlass);
+    cube(0, 1.72, 0, .38, .16, .38, cap);
+    cube(-.31, 1.0, -.02, .045, 1.02, .05, seam);
+    cube(.31, 1.0, -.02, .045, 1.02, .05, seam);
+    cube(.16, .42, -.23, .08, .1, .04, blueGlow);
   }}
 
   function renderPlushToy() {{
     const fur = makeMat('#9a6a43', {{ roughness: .92 }});
     const belly = makeMat('#d3ad78', {{ roughness: .88 }});
     const face = makeMat('#f1c98b', {{ roughness: .88 }});
-    cube(0, .72, 0, .68, .7, .42, fur);
-    cube(0, 1.22, -.02, .58, .52, .4, fur);
-    cube(-.34, 1.48, -.02, .22, .22, .18, fur);
-    cube(.34, 1.48, -.02, .22, .22, .18, fur);
-    cube(0, .72, -.24, .34, .38, .04, belly);
-    cube(0, 1.18, -.25, .34, .24, .04, face);
-    cube(-.11, 1.24, -.3, .05, .05, .035, graphite);
-    cube(.11, 1.24, -.3, .05, .05, .035, graphite);
-    cube(0, 1.12, -.3, .07, .05, .035, graphite);
-    cube(-.52, .74, 0, .22, .48, .28, fur);
-    cube(.52, .74, 0, .22, .48, .28, fur);
-    cube(-.22, .28, .02, .22, .28, .26, fur);
-    cube(.22, .28, .02, .22, .28, .26, fur);
+    const innerEar = makeMat('#e8bd82', {{ roughness: .86 }});
+    const bow = makeMat('#b83a31', {{ roughness: .55, emissive: '#7d1712', emissiveStrength: .05 }});
+    cube(0, .7, 0, .74, .76, .5, fur);
+    cube(0, .68, -.29, .42, .42, .05, belly);
+    cube(0, 1.23, -.02, .62, .55, .44, fur);
+    cube(-.38, 1.52, -.02, .26, .25, .2, fur);
+    cube(.38, 1.52, -.02, .26, .25, .2, fur);
+    cube(-.38, 1.52, -.15, .13, .12, .05, innerEar);
+    cube(.38, 1.52, -.15, .13, .12, .05, innerEar);
+    cube(0, 1.14, -.28, .36, .25, .07, face);
+    cube(-.12, 1.27, -.33, .055, .055, .04, graphite);
+    cube(.12, 1.27, -.33, .055, .055, .04, graphite);
+    cube(0, 1.15, -.34, .07, .055, .04, graphite);
+    cube(-.05, 1.06, -.34, .13, .035, .04, graphite);
+    cube(.05, 1.06, -.34, .13, .035, .04, graphite);
+    const leftArm = cube(-.56, .76, -.02, .24, .5, .3, fur);
+    const rightArm = cube(.56, .76, -.02, .24, .5, .3, fur);
+    leftArm.rotation.z = .18;
+    rightArm.rotation.z = -.18;
+    const leftLeg = cube(-.24, .25, .04, .26, .34, .3, fur);
+    const rightLeg = cube(.24, .25, .04, .26, .34, .3, fur);
+    leftLeg.rotation.x = -.08;
+    rightLeg.rotation.x = -.08;
+    cube(-.09, .99, -.32, .18, .11, .055, bow);
+    cube(.09, .99, -.32, .18, .11, .055, bow);
+    cube(0, .99, -.34, .07, .13, .06, makeMat('#f3d77d', {{ roughness: .5, metalness: .08 }}));
   }}
 
   function renderSticker() {{
