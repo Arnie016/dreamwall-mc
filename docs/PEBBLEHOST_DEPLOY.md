@@ -150,6 +150,20 @@ For the three-minute video, the best proof order is:
 
 ## Local Proof
 
+Run the current packaged-demo verifier before recording or uploading:
+
+```bash
+.venv/bin/python tools/verify_afterblock_demo.py
+```
+
+It emits:
+
+```text
+artifacts/stress/afterblock_demo_proof_manifest.json
+```
+
+That manifest verifies the current Space-to-Paper contract: 13-output `Place in Museum` flow, visible live Paper handoff, per-relic server kit ZIP contents, 3,200 textures, 3,200 item models, 3,200 `minecraft:paper` overrides, plugin/world checksums, the 12 x 12 / 144-plot coordinate contract, and the password-gated PebbleHost upload step.
+
 Codex verified the plugin boots on Paper before PebbleHost install:
 
 ```text
@@ -165,5 +179,6 @@ post-engraving jar loaded and dreamwall museum check still reported 144/144 pads
 Proof file:
 
 ```text
+artifacts/stress/afterblock_demo_proof_manifest.json
 artifacts/stress/paper_plugin_local_load_test.json
 ```

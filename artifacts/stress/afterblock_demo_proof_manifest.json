@@ -1,0 +1,95 @@
+{
+  "generated_at": "2026-06-14T22:29:10.773550+00:00",
+  "goal": "AfterBlock Hugging Face Space configures a Paper server handoff for an exact-coordinate Minecraft memory museum.",
+  "space_url": "https://build-small-hackathon-dreamwall-mc.hf.space",
+  "coordinate_contract": {
+    "canvas_size": 12,
+    "plot_scale": 32,
+    "origin": {
+      "x": -192,
+      "y": 80,
+      "z": -192
+    },
+    "formula": "world_x = -192 + plot_x * 32; world_y = 80; world_z = -192 + plot_z * 32",
+    "total_plots": 144
+  },
+  "main_flow_contract": {
+    "place_in_museum_outputs": 13,
+    "has_live_paper_handoff": true,
+    "has_import_command_copy": true,
+    "has_xyz_and_cmd": true,
+    "server_zip_output_index": 11,
+    "handoff_output_index": 12
+  },
+  "resource_pack": {
+    "path": "resource-pack/AfterBlockMuseum.zip",
+    "sha1": "03487f018e2062e254b5ea443396f29d099f8b67",
+    "sha256": "4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5",
+    "expected_sha1_constant": "03487f018e2062e254b5ea443396f29d099f8b67",
+    "assets": {
+      "textures": 3200,
+      "models": 3200,
+      "paper_overrides": 3200
+    },
+    "valid": true
+  },
+  "paper_plugin": {
+    "path": "server-kit/dreamwall-paper-bridge-0.1.0.jar",
+    "sha1": "6e005510f429cfb77aeffa00bee9d458dd0b0568",
+    "sha256": "35aeae59268cef96c50f7757451455db5cce30804aa1bd4738532d4d5601762a",
+    "expected_sha1_constant": "6e005510f429cfb77aeffa00bee9d458dd0b0568",
+    "expected_sha256_constant": "35aeae59268cef96c50f7757451455db5cce30804aa1bd4738532d4d5601762a",
+    "plugin_yml": {
+      "name": "DreamWall",
+      "version": "0.1.0",
+      "main": "com.dreamwall.DreamWallPlugin",
+      "api-version": "'1.21'",
+      "author": "Codex",
+      "description": "Show or test the DreamWall Space bridge.",
+      "commands": "",
+      "dreamwall": "",
+      "usage": "/dreamwall [fetch|pack|demo|import|museum]",
+      "permission": "dreamwall.use",
+      "permissions": "",
+      "dreamwall.use": "",
+      "default": "op"
+    }
+  },
+  "prebuilt_world": {
+    "path": "server-kit/afterblock-demo-world.zip",
+    "sha1": "d5c5d80daf53f5e72bd8860aea884e221a1b9f84",
+    "sha256": "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3",
+    "expected_sha1_constant": "d5c5d80daf53f5e72bd8860aea884e221a1b9f84",
+    "expected_sha256_constant": "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3",
+    "zip_entries": {
+      "world_folder": true,
+      "world_nether_folder": true,
+      "world_the_end_folder": true,
+      "server_properties_absent": true,
+      "session_lock_absent": true
+    }
+  },
+  "per_relic_server_zip": {
+    "file": "afterblock-paper-server-kit.zip",
+    "required_files_present": {
+      "plugins/DreamWall/config.yml": true,
+      "plugins/dreamwall-paper-bridge-0.1.0.jar": true,
+      "AfterBlockMuseum.zip": true,
+      "afterblock-demo-world.zip": true,
+      "server.properties.append": true,
+      "README.md": true
+    },
+    "config_contains": {
+      "space_url": true,
+      "resource_pack_sha1": true,
+      "default_import_prompt": true,
+      "gallery_origin": true,
+      "plot_size": true
+    }
+  },
+  "blocked_external_step": {
+    "pebblehost_upload": "requires PebbleHost panel/SFTP password entered outside the repo",
+    "sftp_endpoint_known": "sftp://uk144.pebblehost.net:2222"
+  },
+  "passed": true
+}
