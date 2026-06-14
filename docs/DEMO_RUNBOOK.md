@@ -13,10 +13,11 @@ AfterBlock Museum preserves ordinary objects as Minecraft artifacts. The Space a
 5. Show the living museum map and the "You are here" banner.
 6. Open **Passport** and show the QR/share link plus exact Minecraft coordinates.
 7. Open **Relic Profile** briefly as the artifact's history/lore page.
-8. Open **Packet** and show `dreamwall.museum.v1`.
-9. Switch to Minecraft and run `/dreamwall import`.
-10. Hold the route compass, follow the lit floor from `YOU ARE HERE`, and show the resource-pack item plus lectern passport at the packet coordinates.
-11. End with: "AfterBlock turns the things people would throw away into places they can visit."
+8. Show **Download Paper server kit for this relic** so judges see the Space can configure the server handoff.
+9. Open **Packet** and show `dreamwall.museum.v1`.
+10. Switch to Minecraft and run `/dreamwall import`.
+11. Hold the route compass, follow the lit floor from `YOU ARE HERE`, and show the resource-pack item, engraved nameplate, profile button, and lectern passport at the packet coordinates.
+12. End with: "AfterBlock turns the things people would throw away into places they can visit."
 
 ## Video Requirements
 

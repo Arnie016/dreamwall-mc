@@ -2826,7 +2826,12 @@ def place_in_museum(source_prompt: str, story_caption: str, owner_handle: str = 
         owner_tag,
         relic_image_path,
     )
-    return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall, server_kit
+    server_download = server_config_zip(
+        import_prompt=clean_text(source_prompt, DEFAULT_IMPORT_PROMPT),
+        import_story=clean_text(story_caption, DEFAULT_IMPORT_STORY),
+        import_owner=clean_text(owner_handle, DEFAULT_IMPORT_OWNER),
+    )
+    return model, command, coordinates, waypoint, passport, packet, preview, catalog, spirit, wall, server_kit, server_download
 
 
 def load_demo_artifact(name: str):
@@ -5795,6 +5800,10 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                             show_copy_button=True,
                             elem_classes=["command-copy"],
                         )
+                        museum_relic_server_download = gr.File(
+                            value=INITIAL_MUSEUM_OUTPUTS[11],
+                            label="Download Paper server kit for this relic",
+                        )
                 with gr.Column(scale=6):
                     museum_model = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[0], label="Artifact model")
                     museum_coordinates = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[2], label="Coordinates")
@@ -5977,6 +5986,7 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
             museum_spirit,
             museum_wall,
             museum_server_kit,
+            museum_relic_server_download,
         ],
         api_name="quick_curate",
     )
