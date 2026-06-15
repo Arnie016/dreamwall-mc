@@ -58,4 +58,4 @@ Fast entry points for reviewing the generated Minecraft item library.
 
 ## Live Preview Strategy
 
-The live Gradio Resource Pack Browser uses `TEXTURE_PREVIEW_BASE_URL`, defaulting to the committed GitHub raw preview folder. This lets the Space show all 3,200 texture previews without requiring 3,200 separate PNG files to be stored in the Space repo. The downloadable Minecraft resource-pack ZIP remains hosted on Hugging Face.
+The live Gradio Object Atlas uses `TEXTURE_PREVIEW_BASE_URL`, defaulting to the committed GitHub raw preview folder. This lets the Space show all 3,200 texture previews without requiring 3,200 separate PNG files to be stored in the Space repo. The downloadable Minecraft resource-pack ZIP remains hosted on Hugging Face.

@@ -11,7 +11,7 @@
 - 32 contact-sheet screenshots
 - browser gallery for all 3,200 materialized isometric previews
 - searchable/filterable full-library HTML with copyable `/give` commands
-- Gradio Resource Pack Browser for paging through the pack inside the live Space
+- Gradio Object Atlas for paging through the pack inside the live Space
 
 Open locally:
 
@@ -84,7 +84,7 @@ The repo now exposes the pack in three ways:
 
 1. `assets/afterblock_textures/gallery/index.html` shows every item with search, kind filters, model path, and copyable `/give` commands.
 2. `assets/afterblock_textures/gallery/contact_sheet_01.png` through `contact_sheet_32.png` provide screenshot-friendly proof pages.
-3. The Gradio app includes a collapsed Resource Pack Browser and inspection wall so judges can inspect PNG previews, materials, model paths, shapes, pose profiles, and `CustomModelData` values without leaving the Space.
+3. The Gradio app includes an Object Atlas and collapsed inspection appendix so judges can inspect PNG previews, materials, model paths, shapes, pose profiles, and `CustomModelData` values without leaving the Space.
 
 ## Next Upgrade
 

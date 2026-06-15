@@ -19,7 +19,7 @@ dist/pebblehost/afterblock-demo-world.zip
 dist/pebblehost/SHA256SUMS
 ```
 
-The Hugging Face Space serves a concise `Minecraft Handoff` tab for the demo and keeps install files in an appendix. The appendix ZIP includes:
+The Hugging Face Space serves a concise **Join Minecraft** tab for the demo and keeps install files in an appendix. The appendix ZIP includes:
 
 ```text
 plugins/dreamwall-paper-bridge-0.1.0.jar

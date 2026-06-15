@@ -31,11 +31,10 @@ One continuous three-minute video:
 1. Open the Hugging Face Space.
 2. Type one ordinary object and one story caption, then click **Place in Museum**.
 3. Show the main 3D relic; keep commands collapsed unless needed.
-4. Open **Placement** and show the living museum map, **You are here** banner, lit route, and exact XYZ.
+4. Open **Living Map** and show the living museum map, **You are here** banner, lit route, and exact XYZ.
 5. Open **Passport + Profile** for the QR/share link and artifact history.
-6. Open **Join Minecraft** so judges see the server address and three player commands without turning the video into a ZIP-install walkthrough.
-7. Open **Packet** only briefly if you need to show `dreamwall.museum.v1`.
-9. Switch to Minecraft, run `/dreamwall pack`, `/dreamwall museum check`, then `/dreamwall import`.
+6. Open **Join Minecraft** so judges see the already-built world card, server address, and three player commands without turning the video into a ZIP-install walkthrough.
+7. Switch to Minecraft, run `/dreamwall pack`, `/dreamwall museum check`, then `/dreamwall import`.
 10. Show the atlas target, hold the route compass, follow the lit floor from `YOU ARE HERE`, and show the placed item, engraved nameplate, lectern passport, and profile button at the generated plot.
 11. End with: "AfterBlock turns the things people would throw away into places they can visit."
 

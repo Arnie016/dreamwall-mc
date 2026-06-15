@@ -1192,7 +1192,12 @@ def server_setup_html() -> str:
     <section class="server-setup join-minecraft">
       <div>
         <h2>Join Minecraft</h2>
-        <p>Create a relic in the Space, join the museum world, then place the same relic at its lit plot.</p>
+        <p>No downloads are needed to visit the demo world. Create a relic in the Space, join the server, then place the same relic at its lit plot.</p>
+      </div>
+      <div class="museum-built-card">
+        <span>World already built</span>
+        <strong>9 halls · 144 relic plots · living entry atlas</strong>
+        <p>The Space map and Paper world share one coordinate contract: plot <code>x,z</code> becomes Minecraft XYZ using the same origin and 32-block plot size.</p>
       </div>
       <div class="join-card">
         <span>Server address</span>
@@ -1202,8 +1207,8 @@ def server_setup_html() -> str:
       <div class="server-grid">
         <article>
           <span>1</span>
-          <h3>Stand at the map</h3>
-          <p>Confirms the museum world, atlas, and entry beacon are live.</p>
+          <h3>Verify the world</h3>
+          <p>Confirms the museum, living atlas, entry beacon, and plot grid are present.</p>
           <p><code>/dreamwall museum check</code></p>
         </article>
         <article>
@@ -1303,9 +1308,9 @@ def demo_path_html() -> str:
       <ol class="demo-script">
         <li><b>0:00</b> Type one relic and story caption in Place in Museum.</li>
         <li><b>0:25</b> Show the generated Minecraft-style model, hall, plot, and command.</li>
-        <li><b>0:50</b> Open Passport, scan/share link, and show the exact XYZ.</li>
-        <li><b>1:15</b> Open Packet briefly so judges see `dreamwall.museum.v1`.</li>
-        <li><b>1:35</b> Switch to Minecraft and run the proof commands; call out the verified living entry atlas.</li>
+        <li><b>0:50</b> Open Living Map, show `YOU ARE HERE`, the glowing route, and the exact plot.</li>
+        <li><b>1:15</b> Open Passport + Profile for the share link, QR scan, relic history, and visitor signature.</li>
+        <li><b>1:35</b> Open Join Minecraft, show that the world is already built, then switch to Minecraft and run the proof commands.</li>
         <li><b>2:05</b> Show the atlas target, then hold the route compass and follow the lit floor from `YOU ARE HERE` to the relic.</li>
         <li><b>2:30</b> Show the resource-pack item, read the engraved nameplate, open the lectern passport, then right-click the profile button for the relic history.</li>
       </ol>
@@ -5722,6 +5727,31 @@ body, .gradio-container {
 .server-setup p {
   color: #d4c4a0 !important;
 }
+.museum-built-card {
+  display: grid;
+  gap: 6px;
+  background:
+    linear-gradient(135deg, rgba(75, 124, 92, .24), rgba(126,182,255,.10)),
+    #101611;
+  border: 1px solid #6e7b46;
+  padding: 14px;
+  margin-top: 14px;
+}
+.museum-built-card span {
+  color: #f2c15f;
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.museum-built-card strong {
+  color: #eaffd4;
+  font-size: clamp(18px, 2.2vw, 28px);
+}
+.museum-built-card p {
+  margin: 0;
+  max-width: 820px;
+}
 .join-card {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -6496,7 +6526,8 @@ textarea, input {
     grid-template-columns: 1fr;
   }
   .placement-hero-strip,
-  .join-card {
+  .join-card,
+  .museum-built-card {
     grid-template-columns: 1fr;
   }
   .placement-hero-strip em {
@@ -6693,6 +6724,13 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                                 show_copy_button=True,
                                 elem_classes=["command-copy"],
                             )
+                            museum_packet = gr.Textbox(
+                                value=INITIAL_MUSEUM_OUTPUTS[5],
+                                label="Technical appendix: dreamwall.museum.v1",
+                                lines=12,
+                                max_lines=18,
+                                show_copy_button=True,
+                            )
                             museum_relic_server_download = gr.File(
                                 value=INITIAL_MUSEUM_OUTPUTS[11],
                                 label="Owner appendix for this relic",
@@ -6761,17 +6799,8 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
             museum_passport = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[4], label="Passport")
             museum_spirit = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[8])
 
-        with gr.Tab("Placement"):
+        with gr.Tab("Living Map"):
             museum_waypoint = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[3], label="Placement")
-
-        with gr.Tab("Packet"):
-            museum_packet = gr.Textbox(
-                value=INITIAL_MUSEUM_OUTPUTS[5],
-                label="dreamwall.museum.v1",
-                lines=22,
-                max_lines=28,
-                show_copy_button=True,
-            )
 
         with gr.Tab("Demo Path"):
             gr.HTML(value=demo_path_html(), label="Hackathon demo path")

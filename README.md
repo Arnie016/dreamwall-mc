@@ -45,7 +45,7 @@ The Gradio demo now opens with a clean museum preview: 100 labeled demo artifact
 
 The main placement form accepts a visitor signature in the fourth field. A value like `@wildstash` becomes the hover/social tag; a plain value like `Arnav` becomes the owner label without adding a social badge.
 
-The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video, plus a **Join Minecraft** tab that leads with the server address and keeps owner setup files in a collapsed appendix. Server ZIPs, SFTP details, and install files stay out of the main story.
+The Space also includes a **Living Map** tab for the `YOU ARE HERE` route, a **Demo Path** tab with the critique and shot order for the three-minute hackathon video, plus a **Join Minecraft** tab that leads with the server address and already-built world proof. Server ZIPs, raw packets, SFTP details, and install files stay in collapsed appendices instead of the main story.
 
 ## Why This Is Different
 
