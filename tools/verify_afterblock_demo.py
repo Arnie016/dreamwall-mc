@@ -126,6 +126,7 @@ def main() -> int:
         app.DEFAULT_IMPORT_OWNER,
         None,
     )
+    server_bundle = app.server_config_bundle()
     server_zip = Path(outputs[11])
     handoff = outputs[12]
 
@@ -152,6 +153,14 @@ def main() -> int:
             "has_xyz_and_cmd": "XYZ" in handoff and "CMD" in handoff,
             "server_zip_output_index": 11,
             "handoff_output_index": 12,
+        },
+        "server_config_ui_contract": {
+            "bundle_outputs": len(server_bundle),
+            "has_install_card": "Server owner install card" in server_bundle[2],
+            "has_upload_map": "Upload map" in server_bundle[2],
+            "has_verify_commands": "/dreamwall museum check" in server_bundle[2]
+            and "/dreamwall import here" in server_bundle[2],
+            "mentions_profile_json": "afterblock-server-profile.json" in server_bundle[2],
         },
         "resource_pack": {
             "path": app.RESOURCE_PACK_PATH,
@@ -200,6 +209,11 @@ def main() -> int:
             proof["main_flow_contract"]["has_live_paper_handoff"],
             proof["main_flow_contract"]["has_import_command_copy"],
             proof["main_flow_contract"]["has_xyz_and_cmd"],
+            proof["server_config_ui_contract"]["bundle_outputs"] == 3,
+            proof["server_config_ui_contract"]["has_install_card"],
+            proof["server_config_ui_contract"]["has_upload_map"],
+            proof["server_config_ui_contract"]["has_verify_commands"],
+            proof["server_config_ui_contract"]["mentions_profile_json"],
             proof["resource_pack"]["valid"],
             proof["resource_pack"]["sha1"] == proof["resource_pack"]["expected_sha1_constant"],
             proof["paper_plugin"]["sha1"] == proof["paper_plugin"]["expected_sha1_constant"],

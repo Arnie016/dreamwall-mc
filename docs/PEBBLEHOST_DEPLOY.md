@@ -32,7 +32,7 @@ server.properties.append
 README.md
 ```
 
-In that tab, set the default import prompt, story, and visitor signature before downloading the ZIP if `/dreamwall import` should place a specific demo relic.
+In that tab, set the default import prompt, story, and visitor signature before downloading the ZIP if `/dreamwall import` should place a specific demo relic. The Space renders a server-owner install card from those values before the download.
 The `afterblock-server-profile.json` file is the non-secret install card for a server owner: configured Space URL, world, pack, default relic, upload map, first-run commands, and verification commands.
 
 Current hashes from the verified local bundle:

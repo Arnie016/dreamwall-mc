@@ -1576,6 +1576,91 @@ def server_owner_profile_manifest(
     }
 
 
+def server_owner_install_card_html(
+    space_url: str = PUBLIC_SPACE_URL,
+    resource_pack_url: str = RESOURCE_PACK_URL,
+    resource_pack_sha1: str = RESOURCE_PACK_SHA1,
+    gallery_world: str = "world",
+    offer_pack_on_join: bool = False,
+    import_prompt: str = DEFAULT_IMPORT_PROMPT,
+    import_story: str = DEFAULT_IMPORT_STORY,
+    import_owner: str = DEFAULT_IMPORT_OWNER,
+) -> str:
+    _, clean_space_url, clean_pack_url, clean_pack_sha1, clean_gallery_world = server_config_yaml(
+        space_url,
+        resource_pack_url,
+        resource_pack_sha1,
+        gallery_world,
+        offer_pack_on_join,
+        import_prompt,
+        import_story,
+        import_owner,
+    )
+    clean_import_prompt = clean_text(import_prompt, DEFAULT_IMPORT_PROMPT)
+    clean_import_story = clean_text(import_story, DEFAULT_IMPORT_STORY)
+    clean_import_owner = clean_text(import_owner, DEFAULT_IMPORT_OWNER)
+    profile = server_owner_profile_manifest(
+        clean_space_url,
+        clean_pack_url,
+        clean_pack_sha1,
+        clean_gallery_world,
+        clean_import_prompt,
+        clean_import_story,
+        clean_import_owner,
+    )
+    upload_rows = "\n".join(
+        f"""
+        <li>
+          <code>{html_escape(row['kit_path'])}</code>
+          <span>{html_escape(row['server_path'])}</span>
+        </li>
+        """
+        for row in profile["upload_map"]
+    )
+    commands = "".join(f"<code>{html_escape(command)}</code>" for command in profile["first_run_commands"])
+    verify = "".join(f"<code>{html_escape(command)}</code>" for command in profile["verification_commands"])
+    return f"""
+    <section class="server-owner-card">
+      <header>
+        <div>
+          <span>Server owner install card</span>
+          <h3>{html_escape(clean_gallery_world)} / AfterBlock Museum</h3>
+        </div>
+        <b>{CANVAS_SIZE * CANVAS_SIZE} plots</b>
+      </header>
+      <div class="server-owner-grid">
+        <article>
+          <span>Space endpoint</span>
+          <code>{html_escape(profile['space']['quick_curate_endpoint'])}</code>
+        </article>
+        <article>
+          <span>Resource pack SHA1</span>
+          <code>{html_escape(clean_pack_sha1)}</code>
+        </article>
+        <article>
+          <span>Default relic</span>
+          <strong>{html_escape(clean_import_prompt)}</strong>
+          <p>{html_escape(clean_import_story)}</p>
+          <em>{html_escape(clean_import_owner)}</em>
+        </article>
+      </div>
+      <div class="server-owner-columns">
+        <div>
+          <h4>Upload map</h4>
+          <ol>{upload_rows}</ol>
+        </div>
+        <div>
+          <h4>Run in Minecraft</h4>
+          <div class="server-owner-command-strip">{commands}</div>
+          <h4>Verify</h4>
+          <div class="server-owner-command-strip">{verify}</div>
+        </div>
+      </div>
+      <p class="server-owner-note">Download the complete Paper server kit ZIP below. It includes this card as <code>afterblock-server-profile.json</code>; it does not contain any server panel or SFTP secret.</p>
+    </section>
+    """
+
+
 def server_config_zip(
     space_url: str = PUBLIC_SPACE_URL,
     resource_pack_url: str = RESOURCE_PACK_URL,
@@ -1729,7 +1814,7 @@ def server_config_bundle(
     import_prompt: str = DEFAULT_IMPORT_PROMPT,
     import_story: str = DEFAULT_IMPORT_STORY,
     import_owner: str = DEFAULT_IMPORT_OWNER,
-) -> tuple[str, str]:
+) -> tuple[str, str, str]:
     return (
         server_config_kit_text(
             space_url,
@@ -1742,6 +1827,16 @@ def server_config_bundle(
             import_owner,
         ),
         server_config_zip(
+            space_url,
+            resource_pack_url,
+            resource_pack_sha1,
+            gallery_world,
+            offer_pack_on_join,
+            import_prompt,
+            import_story,
+            import_owner,
+        ),
+        server_owner_install_card_html(
             space_url,
             resource_pack_url,
             resource_pack_sha1,
@@ -5322,6 +5417,93 @@ body, .gradio-container {
   border: 0 !important;
   font-weight: 900 !important;
 }
+.server-owner-card {
+  margin: 16px 0;
+  border: 2px solid #8d6d37;
+  background:
+    linear-gradient(135deg, rgba(74, 112, 83, .18), transparent 46%),
+    #12130f;
+  box-shadow: 0 8px 0 #070604;
+  padding: 16px;
+  color: #f5ddb0;
+}
+.server-owner-card header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+}
+.server-owner-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+.server-owner-card header {
+  border-bottom: 1px solid #5c4d32;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+.server-owner-card header span,
+.server-owner-grid article span {
+  display: block;
+  color: #c9a85a;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.server-owner-card h3,
+.server-owner-card h4 {
+  margin: 4px 0 8px;
+  color: #ffe4a3;
+}
+.server-owner-card header b {
+  background: #f2c15f;
+  color: #1b1308;
+  padding: 8px 10px;
+  font-weight: 900;
+}
+.server-owner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.server-owner-grid article,
+.server-owner-columns > div {
+  background: #201c14;
+  border: 1px solid #5c4d32;
+  padding: 12px;
+}
+.server-owner-card code {
+  background: #ead7a6 !important;
+  color: #1b1308 !important;
+  padding: 2px 6px;
+  overflow-wrap: anywhere;
+}
+.server-owner-card ol {
+  margin: 0;
+  padding-left: 20px;
+}
+.server-owner-card li {
+  margin: 0 0 8px;
+}
+.server-owner-card li span {
+  display: block;
+  margin-top: 4px;
+  color: #d4c4a0;
+  overflow-wrap: anywhere;
+}
+.server-owner-command-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.server-owner-note {
+  margin: 12px 0 0;
+  color: #d4c4a0 !important;
+}
 .demo-path {
   border: 2px solid #8d6d37;
   background:
@@ -5862,6 +6044,9 @@ textarea, input {
   }
   .server-grid,
   .server-formula,
+  .server-owner-card header,
+  .server-owner-grid,
+  .server-owner-columns,
   .demo-path-grid,
   .demo-command-strip,
   .demo-proof-note,
@@ -5974,6 +6159,7 @@ INITIAL_MUSEUM_OUTPUTS = place_in_museum(DEFAULT_MUSEUM_PROMPT, DEFAULT_STORY_CA
 INITIAL_TEXTURE_OUTPUTS = browse_texture_library("all", 1)
 INITIAL_SERVER_CONFIG_KIT = server_config_kit_text()
 INITIAL_SERVER_CONFIG_ZIP = server_config_zip()
+INITIAL_SERVER_OWNER_CARD = server_owner_install_card_html()
 
 
 with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
@@ -6177,6 +6363,10 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                     placeholder="@handle or display name",
                 )
                 server_config_button = gr.Button("Build Server Config")
+                server_owner_card = gr.HTML(
+                    value=INITIAL_SERVER_OWNER_CARD,
+                    label="Server owner install card",
+                )
                 server_config_kit = gr.Textbox(
                     value=INITIAL_SERVER_CONFIG_KIT,
                     label="plugins/DreamWall/config.yml and first-run commands",
@@ -6241,7 +6431,7 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
             server_import_story,
             server_import_owner,
         ],
-        outputs=[server_config_kit, server_config_download],
+        outputs=[server_config_kit, server_config_download, server_owner_card],
         api_name="server_config_kit",
     )
     texture_button.click(
