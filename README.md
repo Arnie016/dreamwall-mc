@@ -100,7 +100,7 @@ The MVP emits:
 
 Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
 
-The repo also includes a Paper plugin in [`paper-plugin/`](paper-plugin/) and a prebuilt jar in [`server-kit/`](server-kit/). `/dreamwall museum build` creates the 12 x 12 / 144-plot museum, `/dreamwall museum check` verifies the pads and `YOU ARE HERE` beacon, and `/dreamwall import` places the live Space packet at its generated XYZ with a route compass, lit floor path, engraved nameplate, lectern passport, and profile button.
+The repo also includes a Paper plugin in [`paper-plugin/`](paper-plugin/) and a prebuilt jar in [`server-kit/`](server-kit/). `/dreamwall museum build` creates the 12 x 12 / 144-plot museum plus a physical entry atlas, `/dreamwall museum check` verifies the pads, `YOU ARE HERE` beacon, and atlas, and `/dreamwall import` places the live Space packet at its generated XYZ with an atlas marker, route compass, lit floor path, engraved nameplate, lectern passport, and profile button.
 
 ### Demo Proof
 
@@ -110,7 +110,7 @@ Run the packaged-demo verifier before recording:
 .venv/bin/python tools/verify_afterblock_demo.py
 ```
 
-It writes [`artifacts/stress/afterblock_demo_proof_manifest.json`](artifacts/stress/afterblock_demo_proof_manifest.json), which verifies the 13-output Space flow, live Paper handoff, per-relic server kit ZIP, 3,200 resource-pack textures/models/overrides, plugin/world checksums, and 12 x 12 coordinate contract.
+It writes [`artifacts/stress/afterblock_demo_proof_manifest.json`](artifacts/stress/afterblock_demo_proof_manifest.json), which verifies the 13-output Space flow, live Paper handoff, per-relic server kit ZIP, 3,200 resource-pack textures/models/overrides, plugin/world checksums, entry-atlas source contract, and 12 x 12 coordinate contract.
 
 ### API Shape
 

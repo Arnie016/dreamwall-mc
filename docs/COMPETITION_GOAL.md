@@ -37,7 +37,7 @@ One continuous three-minute video:
 7. Open **Relic Profile** briefly as the artifact's history/lore page.
 8. Open **Packet** and show `dreamwall.museum.v1`.
 9. Switch to Minecraft, run `/dreamwall museum check`, then `/dreamwall import`.
-10. Hold the route compass, follow the lit floor from `YOU ARE HERE`, and show the placed item, engraved nameplate, lectern passport, and profile button at the generated plot.
+10. Show the atlas target, hold the route compass, follow the lit floor from `YOU ARE HERE`, and show the placed item, engraved nameplate, lectern passport, and profile button at the generated plot.
 11. End with: "AfterBlock turns the things people would throw away into places they can visit."
 
 ## Critique

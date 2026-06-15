@@ -23,8 +23,8 @@ RESOURCE_PACK_URL = "https://huggingface.co/spaces/build-small-hackathon/dreamwa
 RESOURCE_PACK_SHA1 = "03487f018e2062e254b5ea443396f29d099f8b67"
 RESOURCE_PACK_PATH = "resource-pack/AfterBlockMuseum.zip"
 PAPER_PLUGIN_JAR_PATH = "server-kit/dreamwall-paper-bridge-0.1.0.jar"
-PAPER_PLUGIN_SHA1 = "6e005510f429cfb77aeffa00bee9d458dd0b0568"
-PAPER_PLUGIN_SHA256 = "35aeae59268cef96c50f7757451455db5cce30804aa1bd4738532d4d5601762a"
+PAPER_PLUGIN_SHA1 = "93c09d2182737b5f7998ebca259e82dbfa2b71c1"
+PAPER_PLUGIN_SHA256 = "8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1149f0dc"
 PREBUILT_WORLD_PATH = "server-kit/afterblock-demo-world.zip"
 PREBUILT_WORLD_SHA1 = "d5c5d80daf53f5e72bd8860aea884e221a1b9f84"
 PREBUILT_WORLD_SHA256 = "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3"
@@ -1189,7 +1189,7 @@ def server_setup_html() -> str:
           <span>3</span>
           <h3>Build Museum</h3>
           <p><code>/dreamwall museum build</code></p>
-          <p>Creates the living 12x12 map, hall gates, memory spine, and entry beacon at plot (0,0) XYZ <code>-192 80 -192</code>. Verify it with <code>/dreamwall museum check</code>.</p>
+          <p>Creates the living 12x12 entry atlas, hall gates, memory spine, and entry beacon at plot (0,0) XYZ <code>-192 80 -192</code>. Verify it with <code>/dreamwall museum check</code>.</p>
         </article>
         <article>
           <span>4</span>
@@ -1204,7 +1204,7 @@ def server_setup_html() -> str:
         <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
         <code>world_y = {GALLERY_ORIGIN_Y}</code>
       </div>
-      <p class="server-note">For the hackathon demo: use the included prebuilt world for a ready memory-spine campus, or run the museum builder once. Then import the configured relic so the item appears at the exact map address with a route compass, engraved nameplate, lectern passport, and right-click profile button.</p>
+      <p class="server-note">For the hackathon demo: use the included prebuilt world as a fast base, then run the museum builder once to refresh the entry atlas. Import the configured relic so the item appears at the exact map address, marks the entry atlas, and gets a route compass, engraved nameplate, lectern passport, and right-click profile button.</p>
     </section>
     """
 
@@ -1280,8 +1280,8 @@ def demo_path_html() -> str:
         <li><b>0:25</b> Show the generated Minecraft-style model, hall, plot, and command.</li>
         <li><b>0:50</b> Open Passport, scan/share link, and show the exact XYZ.</li>
         <li><b>1:15</b> Open Packet briefly so judges see `dreamwall.museum.v1`.</li>
-        <li><b>1:35</b> Switch to Minecraft and run the proof commands.</li>
-        <li><b>2:05</b> Hold the route compass and follow the lit floor from `YOU ARE HERE` to the relic.</li>
+        <li><b>1:35</b> Switch to Minecraft and run the proof commands; call out the verified living entry atlas.</li>
+        <li><b>2:05</b> Show the atlas target, then hold the route compass and follow the lit floor from `YOU ARE HERE` to the relic.</li>
         <li><b>2:30</b> Show the resource-pack item, read the engraved nameplate, open the lectern passport, then right-click the profile button for the relic history.</li>
       </ol>
       <div class="demo-command-strip">
@@ -1523,7 +1523,9 @@ def server_demo_proof_manifest(
         "expected_proof": [
             "museum check reports 144/144 plot pads",
             "YOU ARE HERE beacon is present",
+            "living entry atlas is present",
             "route compass points from entry to the generated plot",
+            "entry atlas marks the imported relic plot",
             "relic appears with an engraved nameplate, lectern passport, and profile button",
         ],
         "blocked_external_step": "PebbleHost upload requires the panel/SFTP password outside this ZIP.",
@@ -1576,7 +1578,7 @@ def server_owner_profile_manifest(
             {
                 "kit_path": "afterblock-demo-world.zip",
                 "server_path": "afterblock-demo-world.zip",
-                "reason": "Optional prebuilt memory-spine world for a fast hackathon demo.",
+                "reason": "Optional prebuilt memory-spine world for a fast hackathon base. Run /dreamwall museum build once after install to refresh the latest entry atlas.",
             },
         ],
         "first_run_commands": [
@@ -1904,7 +1906,7 @@ This ZIP is self-contained for the server side:
 1. Upload `plugins/dreamwall-paper-bridge-0.1.0.jar` to the server's `plugins/` folder.
 2. Upload `AfterBlockMuseum.zip` to the server root, or use the hosted pack URL below.
 3. Upload `plugins/DreamWall/config.yml` to the same path on the server.
-4. Optional: unzip `afterblock-demo-world.zip` into the server root before restart for a prebuilt memory-spine campus.
+4. Optional: unzip `afterblock-demo-world.zip` into the server root before restart for a prebuilt memory-spine base. Run `/dreamwall museum build` once after restart to refresh the latest entry atlas.
 5. Restart Paper.
 
 ## First Run

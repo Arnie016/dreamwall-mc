@@ -80,9 +80,9 @@ The Paper bridge includes a bounded museum builder:
 - 12 x 12 marked plot pads matching the Space's generated coordinates.
 - Memory rails between plots so the campus reads as one living map, not isolated pedestals.
 - Nine hall gates with colored banner markers.
-- Entrance signage and a `YOU ARE HERE` beacon.
-- A verifier command that reports plot pads, relic focus blocks, and entry beacon presence from the actual world state.
-- A clear import path: `/dreamwall import` places the generated packet on its exact plot pad, while `/dreamwall import here` remains the quick nearby proof.
+- Entrance signage, a physical 12 x 12 entry atlas, and a `YOU ARE HERE` beacon.
+- A verifier command that reports plot pads, relic focus blocks, entry beacon, and entry atlas presence from the actual world state.
+- A clear import path: `/dreamwall import` places the generated packet on its exact plot pad and marks the atlas target, while `/dreamwall import here` remains the quick nearby proof.
 
 ## First Server Milestone
 
@@ -92,7 +92,7 @@ The Paper bridge includes a bounded museum builder:
 4. Run `/dreamwall fetch`.
 5. Run `/dreamwall pack` and accept the resource pack.
 6. Run `/dreamwall museum build` once.
-7. Run `/dreamwall museum check` and capture the `144/144` result.
+7. Run `/dreamwall museum check` and capture the `144/144` result plus the living entry atlas line.
 8. Create a relic in the Space and show its generated plot/XYZ.
 9. Run `/dreamwall import` to place the packet at `museum.coordinates`.
 10. Record a 20-second proof clip from the `YOU ARE HERE` beacon to the placed relic.

@@ -42,7 +42,7 @@ Current hashes from the verified local bundle:
 
 ```text
 4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5  AfterBlockMuseum.zip
-35aeae59268cef96c50f7757451455db5cce30804aa1bd4738532d4d5601762a  dreamwall-paper-bridge-0.1.0.jar
+8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1149f0dc  dreamwall-paper-bridge-0.1.0.jar
 33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3  afterblock-demo-world.zip
 ```
 
@@ -76,7 +76,7 @@ afterblock-demo-world.zip
 afterblock-SHA256SUMS.txt
 ```
 
-Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the server root before restart. It contains the locally verified `world`, `world_nether`, and `world_the_end` folders with the memory-spine museum already built; it intentionally does not overwrite `server.properties`.
+Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the server root before restart. It contains the locally verified `world`, `world_nether`, and `world_the_end` folders with the memory-spine museum base already built; it intentionally does not overwrite `server.properties`. After installing the current plugin, run `/dreamwall museum build` once to refresh the latest entry atlas.
 
 The known PebbleHost SFTP endpoint from the account screen was:
 
@@ -139,11 +139,11 @@ Expected result:
 - `/dreamwall fetch` reports the Hugging Face Space is reachable.
 - `/dreamwall pack` asks the player to load `AfterBlockMuseum.zip`.
 - `/dreamwall museum where` prints the exact Space-to-world coordinate formula.
-- `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, a central memory spine, entrance signage, and a `YOU ARE HERE` beacon.
-- `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, and the entry beacon.
+- `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, a central memory spine, entrance signage, a physical entry atlas, and a `YOU ARE HERE` beacon.
+- `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, the entry beacon, and the living entry atlas.
 - `/dreamwall demo` places a small pedestal, visible `ItemDisplay`, glowing engraved name/caption, lectern passport book, right-click profile button, and gives a Paper item using `CustomModelData 730002`.
 - `/dreamwall import here` calls the live `quick_curate` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/`ItemDisplay`/engraved nameplate/lectern passport/profile button beside the player, and gives a Paper item using the packet's `custom_model_data`.
-- `/dreamwall import` places the packet-derived artifact at the generated museum coordinates, paints a lit route from the `YOU ARE HERE` entry to that plot, persists a right-click profile button for the relic history, sets the player's compass target, and gives a named route compass. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
+- `/dreamwall import` places the packet-derived artifact at the generated museum coordinates, marks the entry atlas target, paints a lit route from the `YOU ARE HERE` entry to that plot, persists a right-click profile button for the relic history, sets the player's compass target, and gives a named route compass. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
 
 If the Paper item looks like ordinary paper, the plugin is working but the resource pack is not loaded.
 
@@ -152,8 +152,8 @@ For the three-minute video, the best proof order is:
 1. Create a relic in the Space and show the passport/packet coordinate.
 2. Join the Paper server and run `/dreamwall museum build`.
 3. Run `/dreamwall museum check` to prove the map exists.
-4. Run `/dreamwall import` so the same relic appears at the exact generated plot and updates the route trail.
-5. Hold the route compass, walk from the `YOU ARE HERE` beacon along the lit floor route to the plot pad, show the resource-pack item and engraved nameplate, then right-click the profile button for the relic history.
+4. Run `/dreamwall import` so the same relic appears at the exact generated plot, marks the entry atlas, and updates the route trail.
+5. Show the atlas target, hold the route compass, walk from the `YOU ARE HERE` beacon along the lit floor route to the plot pad, show the resource-pack item and engraved nameplate, then right-click the profile button for the relic history.
 
 ## Local Proof
 

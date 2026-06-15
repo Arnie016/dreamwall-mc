@@ -10,11 +10,11 @@ The hackathon Space is the official submission surface. This plugin scaffold is 
 - `/dreamwall fetch` calls the Space app domain and confirms the bridge can reach Hugging Face.
 - `/dreamwall pack` asks the player client to load the Hugging Face-hosted `AfterBlockMuseum.zip` resource pack.
 - `/dreamwall demo` places a safe local pedestal proof, spawns an `ItemDisplay` relic, engraves the name/caption in-world, adds a lectern passport book and profile button, and gives the player a Paper item with `CustomModelData 730002`.
-- `/dreamwall import` calls the live `quick_curate` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, places a packet-derived pedestal/`ItemDisplay`/engraved nameplate/lectern passport/profile button/item at the artifact coordinates, paints a lit route from `YOU ARE HERE` to that plot, and gives the player a route compass.
+- `/dreamwall import` calls the live `quick_curate` Gradio endpoint, parses the returned `dreamwall.museum.v1` packet, places a packet-derived pedestal/`ItemDisplay`/engraved nameplate/lectern passport/profile button/item at the artifact coordinates, marks the living entry atlas, paints a lit route from `YOU ARE HERE` to that plot, and gives the player a route compass.
 - `/dreamwall import here` uses the same live packet but places it two blocks in front of the player for fast video proof.
 - `/dreamwall museum where` prints the coordinate contract used by the Space and server.
-- `/dreamwall museum build` creates the 12 x 12 living museum campus at the configured origin, with plot pads, memory rails, hall gates, banner markers, and a `YOU ARE HERE` entry.
-- `/dreamwall museum check` verifies that all 144 plot pads, relic focus blocks, and the entry beacon exist in the current world.
+- `/dreamwall museum build` creates the 12 x 12 living museum campus at the configured origin, with plot pads, memory rails, hall gates, banner markers, a physical entry atlas, and a `YOU ARE HERE` entry.
+- `/dreamwall museum check` verifies that all 144 plot pads, relic focus blocks, the entry beacon, and the living entry atlas exist in the current world.
 - A scheduled task can be extended to poll approved museum artifacts.
 - The Space now emits `dreamwall.museum.v1`, the main AfterBlock packet for the hackathon demo.
 - The Space also emits `living_canvas.mc.v1` for the secondary wall/canvas mode.
@@ -40,7 +40,7 @@ Implemented `/dreamwall import` V1 behavior:
 2. Place pedestal/sign/painting marker at coordinates.
 3. Display plaque line and owner handle.
 4. Place a written-book passport on a lectern so visitors can open the relic profile/history in Minecraft.
-5. Paint a lit route from the entry beacon to the generated plot.
+5. Mark the entry atlas and paint a lit route from the entry beacon to the generated plot.
 6. Set the player's compass target and give a named route compass for the relic.
 7. Optionally create particles or a simple animation based on artifact type.
 
@@ -134,8 +134,8 @@ The jar will be in `target/dreamwall-paper-bridge-0.1.0.jar`.
 5. Edit `plugins/DreamWall/config.yml` if needed.
 6. Run `/dreamwall fetch` in game or console.
 7. Run `/dreamwall pack` in game and accept the resource pack.
-8. Run `/dreamwall museum build` once to create the coordinate-accurate museum campus.
-9. Run `/dreamwall museum check` to confirm the built world matches the Space coordinate map.
+8. Run `/dreamwall museum build` once to create the coordinate-accurate museum campus and physical entry atlas.
+9. Run `/dreamwall museum check` to confirm the built world matches the Space coordinate map and atlas contract.
 10. Run `/dreamwall demo` in game to place a pedestal proof, visible `ItemDisplay`, engraved name/caption, lectern passport, profile button, and receive the AirPods demo item.
 11. Run `/dreamwall import` to place a live Hugging Face artifact packet at its generated plot, update the route trail, receive the route compass, and right-click the profile button for the relic history, or `/dreamwall import here` for a nearby proof.
 

@@ -141,6 +141,7 @@ def main() -> int:
     resource_pack = ROOT / app.RESOURCE_PACK_PATH
     plugin_jar = ROOT / app.PAPER_PLUGIN_JAR_PATH
     prebuilt_world = ROOT / app.PREBUILT_WORLD_PATH
+    plugin_source = (ROOT / "paper-plugin" / "src" / "main" / "java" / "com" / "dreamwall" / "DreamWallPlugin.java").read_text()
     outputs = app.place_in_museum(
         app.DEFAULT_IMPORT_PROMPT,
         app.DEFAULT_IMPORT_STORY,
@@ -213,6 +214,12 @@ def main() -> int:
             "expected_sha1_constant": app.PAPER_PLUGIN_SHA1,
             "expected_sha256_constant": app.PAPER_PLUGIN_SHA256,
             "plugin_yml": plugin_metadata(plugin_jar),
+            "source_contract": {
+                "builds_entry_atlas": "buildEntryAtlas" in plugin_source,
+                "checks_entry_atlas": "Living entry atlas" in plugin_source,
+                "marks_atlas_on_import": "markLivingAtlasTarget(world, y, plotX, plotZ, title, owner)" in plugin_source,
+                "atlas_target_marker": "Atlas target" in plugin_source,
+            },
         },
         "prebuilt_world": {
             "path": app.PREBUILT_WORLD_PATH,
@@ -256,6 +263,7 @@ def main() -> int:
             proof["resource_pack"]["sha1"] == proof["resource_pack"]["expected_sha1_constant"],
             proof["paper_plugin"]["sha1"] == proof["paper_plugin"]["expected_sha1_constant"],
             proof["paper_plugin"]["sha256"] == proof["paper_plugin"]["expected_sha256_constant"],
+            all(proof["paper_plugin"]["source_contract"].values()),
             proof["prebuilt_world"]["sha1"] == proof["prebuilt_world"]["expected_sha1_constant"],
             proof["prebuilt_world"]["sha256"] == proof["prebuilt_world"]["expected_sha256_constant"],
             all(proof["prebuilt_world"]["zip_entries"].values()),

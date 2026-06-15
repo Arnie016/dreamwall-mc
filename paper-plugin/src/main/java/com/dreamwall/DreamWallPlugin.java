@@ -415,6 +415,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         buildPlotPads(world, originX, originY, originZ, canvasSize, plotSize);
         buildHallGates(world, originX, originY, originZ, plotSize);
         buildEntrance(world, originX, originY, originZ, canvasSize, plotSize, span);
+        buildEntryAtlas(world, originX, originY, originZ, canvasSize, span);
         buildMemorySpine(world, originX, originY, originZ, canvasSize, plotSize, span);
         world.save();
 
@@ -423,7 +424,7 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         }
         sender.sendMessage("AfterBlock Museum campus built. Every Space packet coordinate now lands on a marked plot pad.");
         sender.sendMessage("Built " + (canvasSize * canvasSize)
-                + " plot pads, 9 hall gates, 1 YOU ARE HERE entry beacon, and a living memory spine.");
+                + " plot pads, 9 hall gates, 1 YOU ARE HERE entry beacon, a living entry atlas, and a memory spine.");
         sender.sendMessage("Next: /dreamwall pack, accept the pack, then /dreamwall import or /dreamwall import here.");
     }
 
@@ -456,10 +457,14 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         int centerX = originX + span / 2;
         int entryZ = originZ - 22;
         boolean entryBeacon = world.getBlockAt(centerX, originY + 1, entryZ + 2).getType() == Material.BEACON;
+        int atlasX = atlasOriginX(originX, span, canvasSize);
+        int atlasZ = atlasOriginZ(originZ);
+        boolean entryAtlas = world.getBlockAt(atlasX + canvasSize / 2, originY, atlasZ - 1).getType() == Material.BEACON;
         sender.sendMessage("AfterBlock museum check:");
         sender.sendMessage("Plot pads: " + pads + "/" + (canvasSize * canvasSize));
         sender.sendMessage("Relic focus blocks: " + relicBlocks + "/" + (canvasSize * canvasSize));
         sender.sendMessage("YOU ARE HERE beacon: " + (entryBeacon ? "present" : "missing"));
+        sender.sendMessage("Living entry atlas: " + (entryAtlas ? "present" : "missing"));
         sender.sendMessage("Expected bounds: -192 80 -192 to 160 80 160 unless config overrides gallery-origin or plot-size.");
     }
 
@@ -582,6 +587,41 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         placeStandingSign(world, centerX, y, entryZ + 7, "Route trail", "import relic", "then follow", "lit floor");
     }
 
+    private void buildEntryAtlas(World world, int originX, int y, int originZ, int canvasSize, int span) {
+        int atlasX = atlasOriginX(originX, span, canvasSize);
+        int atlasZ = atlasOriginZ(originZ);
+        for (int dx = -2; dx <= canvasSize + 1; dx++) {
+            for (int dz = -2; dz <= canvasSize + 1; dz++) {
+                boolean border = dx < 0 || dz < 0 || dx >= canvasSize || dz >= canvasSize;
+                setBlock(world, atlasX + dx, y - 1, atlasZ + dz,
+                        border ? Material.GILDED_BLACKSTONE : Material.SMOOTH_BASALT);
+            }
+        }
+        for (int plotZ = 0; plotZ < canvasSize; plotZ++) {
+            for (int plotX = 0; plotX < canvasSize; plotX++) {
+                Material tile = hallAccent(hallIndexForPlot(plotX, plotZ));
+                if (plotX % 4 == 0 || plotZ % 4 == 0) {
+                    tile = Material.CHISELED_POLISHED_BLACKSTONE;
+                }
+                setBlock(world, atlasX + plotX, y - 1, atlasZ + plotZ, tile);
+            }
+        }
+        int entryCol = canvasSize / 2;
+        setBlock(world, atlasX + entryCol, y - 1, atlasZ - 1, Material.LODESTONE);
+        setBlock(world, atlasX + entryCol, y, atlasZ - 1, Material.BEACON);
+        for (int hall = 0; hall < 9; hall++) {
+            int regionX = hall % 3;
+            int regionZ = hall / 3;
+            int bannerX = atlasX + regionX * 4 + 1;
+            int bannerZ = atlasZ + regionZ * 4 + 1;
+            setBlock(world, bannerX, y, bannerZ, bannerForHall(hall));
+        }
+        placeStandingSign(world, atlasX - 5, y, atlasZ - 1, "Living atlas", "same 12x12", "as Space map", "watch import");
+        placeStandingSign(world, atlasX + canvasSize + 4, y, atlasZ - 1, "YOU ARE HERE", "entry beacon", "route compass", "starts here");
+        placeStandingSign(world, atlasX + canvasSize / 2 - 2, y, atlasZ + canvasSize + 2,
+                "Atlas target", "import marks", "the exact plot", "then walk there");
+    }
+
     private void buildMemorySpine(World world, int originX, int y, int originZ, int canvasSize, int plotSize, int span) {
         int centerX = originX + span / 2;
         int startZ = originZ - 14;
@@ -660,6 +700,31 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         setBlock(world, targetX, y, targetZ + 5, Material.GLOWSTONE);
         placeStandingSign(world, centerX - 5, y, entryZ + 2, "Route alive", "last import", "plot " + plotX + "," + plotZ, "follow lights");
         placeStandingSign(world, targetX - 6, y, targetZ + 4, "Arrived", title, owner, hall);
+        markLivingAtlasTarget(world, y, plotX, plotZ, title, owner);
+    }
+
+    private void markLivingAtlasTarget(World world, int y, int plotX, int plotZ, String title, String owner) {
+        int originX = galleryOriginX();
+        int originZ = galleryOriginZ();
+        int canvasSize = canvasSize();
+        int plotSize = plotSize();
+        int span = (canvasSize - 1) * plotSize;
+        int atlasX = atlasOriginX(originX, span, canvasSize);
+        int atlasZ = atlasOriginZ(originZ);
+        int cellX = atlasX + plotX;
+        int cellZ = atlasZ + plotZ;
+        setBlock(world, cellX, y - 1, cellZ, Material.GLOWSTONE);
+        setBlock(world, cellX, y, cellZ, Material.REDSTONE_TORCH);
+        placeStandingSign(world, cellX + 2, y, cellZ, "Atlas target", compactItemName(title),
+                "plot " + plotX + "," + plotZ, compactLore(owner));
+    }
+
+    private int atlasOriginX(int originX, int span, int canvasSize) {
+        return originX + span / 2 - canvasSize / 2;
+    }
+
+    private int atlasOriginZ(int originZ) {
+        return originZ - 13;
     }
 
     private void drawRouteLine(World world, int startX, int startZ, int endX, int endZ, int y, Material accent) {
