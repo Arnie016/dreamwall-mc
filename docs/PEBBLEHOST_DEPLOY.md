@@ -43,7 +43,7 @@ Current hashes from the verified local bundle:
 ```text
 4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5  AfterBlockMuseum.zip
 8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1149f0dc  dreamwall-paper-bridge-0.1.0.jar
-33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3  afterblock-demo-world.zip
+e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a  afterblock-demo-world.zip
 ```
 
 ## Upload Targets
@@ -76,7 +76,7 @@ afterblock-demo-world.zip
 afterblock-SHA256SUMS.txt
 ```
 
-Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the server root before restart. It contains the locally verified `world`, `world_nether`, and `world_the_end` folders with the memory-spine museum base already built; it intentionally does not overwrite `server.properties`. After installing the current plugin, run `/dreamwall museum build` once to refresh the latest entry atlas.
+Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the server root before restart. It contains the locally verified `world`, `world_nether`, and `world_the_end` folders with the memory-spine museum base, 144 plot pads, `YOU ARE HERE` beacon, and living entry atlas already built; it intentionally does not overwrite `server.properties`. Run `/dreamwall museum build` later only if you want to refresh the campus.
 
 The known PebbleHost SFTP endpoint from the account screen was:
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15T12:52:51.812502+00:00",
+  "generated_at": "2026-06-15T17:41:40.602730+00:00",
   "goal": "AfterBlock Hugging Face Space configures a Paper server handoff for an exact-coordinate Minecraft memory museum.",
   "space_url": "https://build-small-hackathon-dreamwall-mc.hf.space",
   "coordinate_contract": {
@@ -78,10 +78,10 @@
   },
   "prebuilt_world": {
     "path": "server-kit/afterblock-demo-world.zip",
-    "sha1": "d5c5d80daf53f5e72bd8860aea884e221a1b9f84",
-    "sha256": "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3",
-    "expected_sha1_constant": "d5c5d80daf53f5e72bd8860aea884e221a1b9f84",
-    "expected_sha256_constant": "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3",
+    "sha1": "c438d7dcb98493f436e0ca32aa6c8f73035fbdc0",
+    "sha256": "e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a",
+    "expected_sha1_constant": "c438d7dcb98493f436e0ca32aa6c8f73035fbdc0",
+    "expected_sha256_constant": "e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a",
     "zip_entries": {
       "world_folder": true,
       "world_nether_folder": true,

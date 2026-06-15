@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-06-15T20:45:00+08:00",
+  "checked_at": "2026-06-16T01:40:55+08:00",
   "scope": "AfterBlock Paper bridge museum campus builder and Space server setup tab",
   "coordinate_contract": {
     "plot_0_0": "-192 80 -192",
@@ -40,13 +40,13 @@
     "resource_pack_sha256": "4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5",
     "plugin_jar_sha1": "93c09d2182737b5f7998ebca259e82dbfa2b71c1",
     "plugin_jar_sha256": "8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1149f0dc",
-    "prebuilt_world_sha1": "d5c5d80daf53f5e72bd8860aea884e221a1b9f84",
-    "prebuilt_world_sha256": "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3"
+    "prebuilt_world_sha1": "c438d7dcb98493f436e0ca32aa6c8f73035fbdc0",
+    "prebuilt_world_sha256": "e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a"
   },
   "notes": [
     "The builder is op-only through the existing dreamwall.use permission.",
     "The actual target server still needs the PebbleHost panel password for SFTP upload.",
-    "The memory spine, configurable import, and engraved relic profile updates were verified by Java 21 compilation, app.py compilation, generated ZIP inspection, jar bytecode/config inspection, and Paper 1.21.4 build/check/restart/check plus post-engraving Java 21 load/check cycles. The later entry-atlas update is verified by source contract, Java compilation, rebuilt jar checksums, generated ZIP inspection, and the packaged demo verifier; the prebuilt world ZIP still needs a Paper runtime refresh before claiming it contains the atlas.",
+    "The memory spine, configurable import, engraved relic profile, and entry-atlas updates were verified by Java 21 compilation, app.py compilation, generated ZIP inspection, jar bytecode/config inspection, Paper 1.21.4 build/check cycles, and a Java 21 Paper runtime rebuild of server-kit/afterblock-demo-world.zip. The refreshed prebuilt world check reported Plot pads 144/144, Relic focus blocks 144/144, YOU ARE HERE beacon present, and Living entry atlas present.",
     "The local dist/pebblehost bundle is ignored by git and prepared for manual upload."
   ]
 }

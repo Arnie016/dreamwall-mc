@@ -13,7 +13,7 @@ Use it with the Space-generated `plugins/DreamWall/config.yml`, then run:
 
 The generated config controls the default prompt, story, and visitor signature used by `/dreamwall import`.
 `/dreamwall museum build` creates the coordinate-accurate campus plus a physical 12x12 entry atlas that `/dreamwall import` marks when the live relic lands.
-`afterblock-demo-world.zip` is optional; unzip it into a clean server root if you want the already-built memory-spine museum base. Run `/dreamwall museum build` once after restart to refresh the latest entry atlas.
+`afterblock-demo-world.zip` is optional; unzip it into a clean server root if you want the already-built memory-spine museum base with the 144 plot pads, `YOU ARE HERE` beacon, and living entry atlas already verified. Run `/dreamwall museum build` later only if you want to refresh the campus.
 
 Current plugin jar checksums:
 
@@ -25,6 +25,6 @@ sha256 8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1149f0dc
 Current prebuilt world checksums:
 
 ```text
-sha1   d5c5d80daf53f5e72bd8860aea884e221a1b9f84
-sha256 33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3
+sha1   c438d7dcb98493f436e0ca32aa6c8f73035fbdc0
+sha256 e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a
 ```

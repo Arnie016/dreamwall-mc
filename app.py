@@ -26,8 +26,8 @@ PAPER_PLUGIN_JAR_PATH = "server-kit/dreamwall-paper-bridge-0.1.0.jar"
 PAPER_PLUGIN_SHA1 = "93c09d2182737b5f7998ebca259e82dbfa2b71c1"
 PAPER_PLUGIN_SHA256 = "8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1149f0dc"
 PREBUILT_WORLD_PATH = "server-kit/afterblock-demo-world.zip"
-PREBUILT_WORLD_SHA1 = "d5c5d80daf53f5e72bd8860aea884e221a1b9f84"
-PREBUILT_WORLD_SHA256 = "33edcf48d00eca44e8076e5f62f5e3289c6686aecbf24e80349e9a6c2f7ed1f3"
+PREBUILT_WORLD_SHA1 = "c438d7dcb98493f436e0ca32aa6c8f73035fbdc0"
+PREBUILT_WORLD_SHA256 = "e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a"
 TEXTURE_PAGE_SIZE = 96
 DEFAULT_IMPORT_PROMPT = "blue school bag from exam week"
 DEFAULT_IMPORT_STORY = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
@@ -1204,7 +1204,7 @@ def server_setup_html() -> str:
         <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
         <code>world_y = {GALLERY_ORIGIN_Y}</code>
       </div>
-      <p class="server-note">For the hackathon demo: use the included prebuilt world as a fast base, then run the museum builder once to refresh the entry atlas. Import the configured relic so the item appears at the exact map address, marks the entry atlas, and gets a route compass, engraved nameplate, lectern passport, and right-click profile button.</p>
+      <p class="server-note">For the hackathon demo: use the included prebuilt world as the atlas-ready base. It already contains the coordinate campus, living entry atlas, and YOU ARE HERE beacon; rerun the museum builder only if you want to refresh it before importing the configured relic.</p>
     </section>
     """
 
@@ -1578,7 +1578,7 @@ def server_owner_profile_manifest(
             {
                 "kit_path": "afterblock-demo-world.zip",
                 "server_path": "afterblock-demo-world.zip",
-                "reason": "Optional prebuilt memory-spine world for a fast hackathon base. Run /dreamwall museum build once after install to refresh the latest entry atlas.",
+                "reason": "Optional prebuilt Paper world with the verified memory spine, 144 plot pads, YOU ARE HERE beacon, and living entry atlas already built.",
             },
         ],
         "first_run_commands": [
@@ -1906,7 +1906,7 @@ This ZIP is self-contained for the server side:
 1. Upload `plugins/dreamwall-paper-bridge-0.1.0.jar` to the server's `plugins/` folder.
 2. Upload `AfterBlockMuseum.zip` to the server root, or use the hosted pack URL below.
 3. Upload `plugins/DreamWall/config.yml` to the same path on the server.
-4. Optional: unzip `afterblock-demo-world.zip` into the server root before restart for a prebuilt memory-spine base. Run `/dreamwall museum build` once after restart to refresh the latest entry atlas.
+4. Optional: unzip `afterblock-demo-world.zip` into the server root before restart for a prebuilt atlas-ready memory-spine world. It already contains the 144 plot pads, `YOU ARE HERE` beacon, and living entry atlas; run `/dreamwall museum build` later only if you want to refresh it.
 5. Restart Paper.
 
 ## First Run
