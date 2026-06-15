@@ -172,8 +172,11 @@ def main() -> int:
         },
         "main_flow_contract": {
             "place_in_museum_outputs": len(outputs),
-            "has_live_paper_handoff": "Live Paper handoff" in handoff,
+            "has_run_in_minecraft_handoff": "Run in Minecraft" in handoff,
             "has_import_command_copy": "/dreamwall import" in handoff,
+            "has_visitor_import_command": "/dreamwall import" in handoff
+            and " | " in handoff
+            and "Visitor command" in handoff,
             "has_xyz_and_cmd": "XYZ" in handoff and "CMD" in handoff,
             "server_zip_output_index": 11,
             "handoff_output_index": 12,
@@ -220,6 +223,9 @@ def main() -> int:
                 "checks_entry_atlas": "Living entry atlas" in plugin_source,
                 "marks_atlas_on_import": "markLivingAtlasTarget(world, y, plotX, plotZ, title, owner)" in plugin_source,
                 "atlas_target_marker": "Atlas target" in plugin_source,
+                "accepts_inline_visitor_import": "joinedArgs(args, inputStart)" in plugin_source
+                and "importInputs(inlineInput)" in plugin_source
+                and "Visitor config accepted" in plugin_source,
             },
         },
         "prebuilt_world": {
@@ -246,8 +252,9 @@ def main() -> int:
     proof["passed"] = all(
         [
             proof["main_flow_contract"]["place_in_museum_outputs"] == 13,
-            proof["main_flow_contract"]["has_live_paper_handoff"],
+            proof["main_flow_contract"]["has_run_in_minecraft_handoff"],
             proof["main_flow_contract"]["has_import_command_copy"],
+            proof["main_flow_contract"]["has_visitor_import_command"],
             proof["main_flow_contract"]["has_xyz_and_cmd"],
             proof["server_config_ui_contract"]["bundle_outputs"] == 3,
             proof["server_config_ui_contract"]["has_install_card"],

@@ -23,8 +23,8 @@ RESOURCE_PACK_URL = "https://huggingface.co/spaces/build-small-hackathon/dreamwa
 RESOURCE_PACK_SHA1 = "03487f018e2062e254b5ea443396f29d099f8b67"
 RESOURCE_PACK_PATH = "resource-pack/AfterBlockMuseum.zip"
 PAPER_PLUGIN_JAR_PATH = "server-kit/dreamwall-paper-bridge-0.1.0.jar"
-PAPER_PLUGIN_SHA1 = "93c09d2182737b5f7998ebca259e82dbfa2b71c1"
-PAPER_PLUGIN_SHA256 = "8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1149f0dc"
+PAPER_PLUGIN_SHA1 = "fd0d87ebcebe6749cbd7023c44d7c7b2c99e2170"
+PAPER_PLUGIN_SHA256 = "22e99a4205b07e9df386519e2c19a14e56aa775fe69c14c77771ac996387cc44"
 PREBUILT_WORLD_PATH = "server-kit/afterblock-demo-world.zip"
 PREBUILT_WORLD_SHA1 = "c438d7dcb98493f436e0ca32aa6c8f73035fbdc0"
 PREBUILT_WORLD_SHA256 = "e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a"
@@ -1220,8 +1220,8 @@ def server_setup_html() -> str:
         <article>
           <span>3</span>
           <h3>Place the relic</h3>
-          <p><code>/dreamwall import</code></p>
-          <p>Lights the route, engraves the name, and places the relic.</p>
+          <p><code>/dreamwall import object | story | @owner</code></p>
+          <p>Paste the command generated after placing a relic in the Space.</p>
         </article>
       </div>
       <details class="server-appendix">
@@ -1243,12 +1243,18 @@ def server_handoff_html(artifact: dict) -> str:
     coords = artifact["minecraft_coordinates"]
     item = artifact.get("resource_pack_item", {})
     cmd = item.get("custom_model_data", 0)
+    import_command = visitor_import_command(artifact)
     return f"""
     <section class="relic-server-handoff">
       <div>
-        <span>Live Paper handoff</span>
+        <span>Run in Minecraft</span>
         <strong>{html_escape(artifact['title'])}</strong>
-        <p>Ready for Minecraft: run <code>/dreamwall import</code> to light the route, engrave the name, and place the relic at plot {artifact['plot']['x']}, {artifact['plot']['z']}.</p>
+        <p>Ready for Minecraft: paste this visitor command to generate the same object, light the route, engrave the name, and place the relic at plot {artifact['plot']['x']}, {artifact['plot']['z']}.</p>
+      </div>
+      <div class="visitor-command-card">
+        <span>Visitor command</span>
+        <code>{html_escape(import_command)}</code>
+        <small>No SFTP or downloads for visitors. The server owner installs the bridge once; every visitor can paste their own object/story/signature.</small>
       </div>
       <div class="handoff-proof">
         <b>XYZ {coords['x']} {coords['y']} {coords['z']}</b>
@@ -1256,6 +1262,18 @@ def server_handoff_html(artifact: dict) -> str:
       </div>
     </section>
     """
+
+
+def minecraft_command_part(value: str, fallback: str, limit: int) -> str:
+    cleaned = clean_text(value, fallback).replace("|", "/")
+    return compact_text(cleaned, limit)
+
+
+def visitor_import_command(artifact: dict) -> str:
+    prompt = minecraft_command_part(artifact.get("source_prompt", DEFAULT_IMPORT_PROMPT), DEFAULT_IMPORT_PROMPT, 84)
+    story = minecraft_command_part(artifact.get("memory_text", DEFAULT_IMPORT_STORY), DEFAULT_IMPORT_STORY, 112)
+    owner = minecraft_command_part(artifact.get("owner_handle") or artifact.get("owner_name") or DEFAULT_IMPORT_OWNER, DEFAULT_IMPORT_OWNER, 32)
+    return f"/dreamwall import {prompt} | {story} | {owner}"
 
 
 def demo_path_html() -> str:
@@ -1317,7 +1335,7 @@ def demo_path_html() -> str:
       <div class="demo-command-strip">
         <code>/dreamwall pack</code>
         <code>/dreamwall museum check</code>
-        <code>/dreamwall import</code>
+        <code>/dreamwall import object | story | @owner</code>
       </div>
       <p class="demo-closing-line">Closing line: AfterBlock turns the things people would throw away into places they can visit.</p>
       <div class="demo-proof-note">
@@ -4366,56 +4384,6 @@ body, .gradio-container {
   min-height: 46px;
   font-weight: 800 !important;
 }
-.relic-server-handoff {
-  display: grid;
-  gap: 8px;
-  background:
-    linear-gradient(90deg, rgba(232,197,111,.16), rgba(69,110,92,.12)),
-    #14130f;
-  border: 1px solid #8b6a3d;
-  box-shadow: inset 0 0 22px rgba(242,193,95,.08);
-  padding: 10px;
-  margin: 8px 0 0;
-}
-.relic-server-handoff span {
-  display: inline-block;
-  width: max-content;
-  color: #1b1308;
-  background: #ffdc8a;
-  border: 1px solid #fff0bd;
-  padding: 3px 7px;
-  font-size: 10px;
-  font-weight: 1000;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-}
-.relic-server-handoff strong {
-  display: block;
-  color: #ffe4a3;
-  font-size: 15px;
-  line-height: 1.15;
-  margin-top: 6px;
-}
-.relic-server-handoff p {
-  margin: 4px 0 0;
-  color: #d8c9a6 !important;
-  font-size: 12px;
-  line-height: 1.35;
-}
-.handoff-proof {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
-}
-.handoff-proof b {
-  min-width: 0;
-  color: #20160c !important;
-  background: #ead7a6 !important;
-  border: 1px solid #9d7c46;
-  padding: 6px 7px;
-  font-size: 11px;
-  overflow-wrap: anywhere;
-}
 .photo-drop-compact .image-container,
 .photo-drop-compact .upload-container {
   min-height: 92px !important;
@@ -5819,6 +5787,63 @@ body, .gradio-container {
   padding: 2px 6px;
   overflow-wrap: anywhere;
 }
+.relic-server-handoff {
+  border: 2px solid #75623d;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(126,182,255,.14), transparent 30%),
+    #151410;
+  color: #f5ddb0;
+  padding: 14px;
+  margin-top: 12px;
+}
+.relic-server-handoff > div:first-child span {
+  color: #f2c15f;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: 11px;
+}
+.relic-server-handoff strong {
+  display: block;
+  color: #ffe4a3;
+  font-size: 22px;
+  margin-top: 4px;
+}
+.visitor-command-card {
+  display: grid;
+  gap: 8px;
+  border: 1px solid #6e7b46;
+  background: #101611;
+  padding: 12px;
+  margin-top: 10px;
+}
+.visitor-command-card span {
+  color: #eaffd4;
+  font-weight: 900;
+}
+.visitor-command-card code {
+  display: block;
+  background: #ead7a6 !important;
+  color: #1b1308 !important;
+  padding: 10px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.visitor-command-card small {
+  color: #d4c4a0;
+}
+.handoff-proof {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.handoff-proof b {
+  border: 1px solid #5c4d32;
+  background: #242017;
+  color: #ffe4a3;
+  padding: 7px 9px;
+}
 .server-formula {
   display: grid;
   grid-template-columns: 180px repeat(3, minmax(0, 1fr));
@@ -6712,10 +6737,6 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                         )
                         quick_button = gr.Button("Place in Museum", variant="primary")
                         with gr.Accordion("Minecraft proof and owner files", open=False):
-                            museum_server_handoff = gr.HTML(
-                                value=INITIAL_MUSEUM_OUTPUTS[12],
-                                label="Live Paper handoff",
-                            )
                             museum_command = gr.Textbox(
                                 value=INITIAL_MUSEUM_OUTPUTS[1],
                                 label="Item command",
@@ -6738,6 +6759,10 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                 with gr.Column(scale=6):
                     museum_model = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[0], label="Artifact model")
                     museum_coordinates = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[2], label="Coordinates")
+                    museum_server_handoff = gr.HTML(
+                        value=INITIAL_MUSEUM_OUTPUTS[12],
+                        label="Run in Minecraft",
+                    )
 
             museum_wall = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[9], label="Persistent museum")
 

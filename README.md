@@ -17,11 +17,16 @@ tags:
   - game
   - agent-trace
   - codex
+  - openai-codex
   - build-small-hackathon
+  - thousand-token-wood
+  - adventure-in-thousand-token-wood
   - tiny-titan
   - off-brand
   - best-demo
   - field-notes
+  - sharing-is-caring
+  - community-choice
 ---
 
 # DreamWall: AfterBlock Museum
@@ -30,7 +35,7 @@ AfterBlock Museum is a Minecraft-native memory museum for the Build Small Hackat
 
 ## Submission Metadata
 
-- **Relevant tags:** `minecraft`, `gradio`, `small-models`, `build-small-hackathon`, `tiny-titan`, `off-brand`, `best-demo`, `field-notes`
+- **Relevant tags:** `minecraft`, `gradio`, `small-models`, `build-small-hackathon`, `thousand-token-wood`, `openai-codex`, `tiny-titan`, `off-brand`, `best-demo`, `field-notes`, `sharing-is-caring`, `community-choice`
 - **Demo video recording:** TODO paste final recording URL after capturing the three-minute Space-to-Minecraft proof.
 - **Social media link:** https://huggingface.co/Wildstash
 - **Team HF usernames:** @Wildstash
@@ -41,7 +46,7 @@ Living Graffiti and Living Moving Canvas remain as secondary modes. They power m
 
 The main cash-prize demo is now simple: relic -> hall -> passport/profile -> live Paper handoff -> exact-coordinate Minecraft museum placement.
 
-The Gradio demo now opens with a clean museum preview: 100 labeled demo artifacts, nine hall wings, curation scores, coordinates, generated Minecraft-style item textures, a live 3D artifact model tied to the same `CustomModelData` used by the server packet, and a visible **Live Paper handoff** card for `/dreamwall import`. Social tags are optional; if a visitor leaves the tag blank, the museum uses the owner name or anonymous label.
+The Gradio demo now opens with a clean museum preview: 100 labeled demo artifacts, nine hall wings, curation scores, coordinates, generated Minecraft-style item textures, a live 3D artifact model tied to the same `CustomModelData` used by the server packet, and a visible **Run in Minecraft** card for `/dreamwall import object | story | @owner`. Social tags are optional; if a visitor leaves the tag blank, the museum uses the owner name or anonymous label.
 
 The main placement form accepts a visitor signature in the fourth field. A value like `@wildstash` becomes the hover/social tag; a plain value like `Arnav` becomes the owner label without adding a social badge.
 
@@ -112,7 +117,7 @@ The MVP emits:
 
 Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
 
-The repo also includes a Paper plugin in [`paper-plugin/`](paper-plugin/) and a prebuilt jar/world in [`server-kit/`](server-kit/). The demo path is `/dreamwall pack`, `/dreamwall museum check`, then `/dreamwall import`; `/dreamwall museum build` is only needed if you skip the prebuilt world or want to refresh the campus. `/dreamwall import` places the live Space packet at its generated XYZ with an atlas marker, route compass, lit floor path, engraved nameplate, lectern passport, and profile button.
+The repo also includes a Paper plugin in [`paper-plugin/`](paper-plugin/) and a prebuilt jar/world in [`server-kit/`](server-kit/). The demo path is `/dreamwall pack`, `/dreamwall museum check`, then the generated visitor command from the Space; `/dreamwall museum build` is only needed if you skip the prebuilt world or want to refresh the campus. `/dreamwall import object | story | @owner` places that visitor's live Space packet at its generated XYZ with an atlas marker, route compass, lit floor path, engraved nameplate, lectern passport, and profile button.
 
 ### Demo Proof
 

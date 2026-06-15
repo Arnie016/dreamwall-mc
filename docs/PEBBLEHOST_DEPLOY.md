@@ -34,7 +34,7 @@ server.properties.append
 README.md
 ```
 
-In that tab, set the default import prompt, story, and visitor signature before downloading the ZIP if `/dreamwall import` should place a specific demo relic. The Space renders a server-owner install card from those values before the download.
+In that tab, set the default import prompt, story, and visitor signature before downloading the ZIP if plain `/dreamwall import` should place a specific demo relic. Visitors can also paste the generated `/dreamwall import object | story | @owner` command from the Space without changing server config.
 The `afterblock-server-profile.json` file is the non-secret install card for a server owner: configured Space URL, world, pack, default relic, upload map, first-run commands, verification commands, and helper file names.
 The generated `UPLOAD_TO_SERVER.md` explains the public upload map, while `install-afterblock-paper.sh` is prefilled for the PebbleHost SFTP endpoint and prompts for the panel password at upload time. No password is stored.
 
@@ -42,7 +42,7 @@ Current hashes from the verified local bundle:
 
 ```text
 4e707a6ee065be5476d300f77bf6d05b382e9dddb8b43a8e8bb13b84dfc44cf5  AfterBlockMuseum.zip
-8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1149f0dc  dreamwall-paper-bridge-0.1.0.jar
+22e99a4205b07e9df386519e2c19a14e56aa775fe69c14c77771ac996387cc44  dreamwall-paper-bridge-0.1.0.jar
 e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a  afterblock-demo-world.zip
 ```
 
@@ -144,7 +144,7 @@ Expected result:
 - `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, the entry beacon, and the living entry atlas.
 - `/dreamwall demo` places a small pedestal, visible `ItemDisplay`, glowing engraved name/caption, lectern passport book, right-click profile button, and gives a Paper item using `CustomModelData 730002`.
 - `/dreamwall import here` calls the live `quick_curate` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/`ItemDisplay`/engraved nameplate/lectern passport/profile button beside the player, and gives a Paper item using the packet's `custom_model_data`.
-- `/dreamwall import` places the packet-derived artifact at the generated museum coordinates, marks the entry atlas target, paints a lit route from the `YOU ARE HERE` entry to that plot, persists a right-click profile button for the relic history, sets the player's compass target, and gives a named route compass. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
+- `/dreamwall import` places the configured default artifact. `/dreamwall import object | story | @owner` lets a visitor place the object/story/signature generated in the Space without editing config. Both forms place the packet-derived artifact at the generated museum coordinates, mark the entry atlas target, paint a lit route from the `YOU ARE HERE` entry to that plot, persist a right-click profile button for the relic history, set the player's compass target, and give a named route compass. The coordinate contract is `x = -192 + plot_x * 32`, `y = 80`, `z = -192 + plot_z * 32`.
 
 If the Paper item looks like ordinary paper, the plugin is working but the resource pack is not loaded.
 
@@ -153,7 +153,7 @@ For the three-minute video, the best proof order is:
 1. Create a relic in the Space and show the passport/packet coordinate.
 2. Join the Paper server and run `/dreamwall pack`.
 3. Run `/dreamwall museum check` to prove the prebuilt map exists.
-4. Run `/dreamwall import` so the same relic appears at the exact generated plot, marks the entry atlas, and updates the route trail.
+4. Run the generated `/dreamwall import object | story | @owner` command so the same visitor relic appears at the exact generated plot, marks the entry atlas, and updates the route trail.
 5. Show the atlas target, hold the route compass, walk from the `YOU ARE HERE` beacon along the lit floor route to the plot pad, show the resource-pack item and engraved nameplate, then right-click the profile button for the relic history.
 
 ## Local Proof

@@ -81,7 +81,8 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         }
         if (args.length > 0 && args[0].equalsIgnoreCase("import")) {
             boolean placeHere = args.length > 1 && args[1].equalsIgnoreCase("here");
-            importArtifact(sender, placeHere);
+            int inputStart = placeHere ? 2 : 1;
+            importArtifact(sender, placeHere, joinedArgs(args, inputStart));
             return true;
         }
         if (args.length > 0 && args[0].equalsIgnoreCase("museum")) {
@@ -99,7 +100,8 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         sender.sendMessage("Use /dreamwall fetch to test Hugging Face reachability.");
         sender.sendMessage("Use /dreamwall pack to load the AfterBlockMuseum resource pack.");
         sender.sendMessage("Use /dreamwall demo in-game to place a safe AfterBlock pedestal and passport proof.");
-        sender.sendMessage("Use /dreamwall import or /dreamwall import here to place a live Space artifact packet.");
+        sender.sendMessage("Use /dreamwall import to place the default Space artifact packet.");
+        sender.sendMessage("Use /dreamwall import object | story | @owner to place a visitor-configured relic.");
         sender.sendMessage("Use /dreamwall museum where to inspect the exact plot map.");
         sender.sendMessage("Use /dreamwall museum build to create the 12x12 living museum campus.");
         return true;
@@ -194,16 +196,20 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         player.sendMessage("Pack SHA1: " + resourcePackSha1());
     }
 
-    private void importArtifact(CommandSender sender, boolean placeHere) {
+    private void importArtifact(CommandSender sender, boolean placeHere, String inlineInput) {
         if (!(sender instanceof Player player)) {
             sender.sendMessage("/dreamwall import must be run by an in-game player.");
             return;
         }
+        String[] inputs = importInputs(inlineInput);
         sender.sendMessage("Importing one live AfterBlock artifact from " + spaceUrl()
-                + " using prompt: " + compactLore(defaultImportPrompt()) + " ...");
+                + " using prompt: " + compactLore(inputs[0]) + " ...");
+        if (!inlineInput.isBlank()) {
+            sender.sendMessage("Visitor config accepted. Format: object | story | owner.");
+        }
         getServer().getScheduler().runTaskAsynchronously(this, () -> {
             try {
-                JsonObject packet = fetchMuseumPacket();
+                JsonObject packet = fetchMuseumPacket(inputs);
                 getServer().getScheduler().runTask(this, () -> placePacketArtifact(player, packet, placeHere));
             } catch (IOException | InterruptedException e) {
                 sender.sendMessage("DreamWall import failed: " + e.getMessage());
@@ -214,12 +220,12 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
         });
     }
 
-    private JsonObject fetchMuseumPacket() throws IOException, InterruptedException {
+    private JsonObject fetchMuseumPacket(String[] inputs) throws IOException, InterruptedException {
         JsonObject payloadJson = new JsonObject();
         JsonArray data = new JsonArray();
-        data.add(defaultImportPrompt());
-        data.add(defaultImportStory());
-        data.add(defaultImportOwner());
+        data.add(inputs[0]);
+        data.add(inputs[1]);
+        data.add(inputs[2]);
         data.add(JsonNull.INSTANCE);
         payloadJson.add("data", data);
         String payload = payloadJson.toString();
@@ -248,6 +254,44 @@ public final class DreamWallPlugin extends JavaPlugin implements Listener {
             }
         }
         throw new IOException("no data event returned by Gradio");
+    }
+
+    private String joinedArgs(String[] args, int start) {
+        if (start >= args.length) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = start; i < args.length; i++) {
+            if (builder.length() > 0) {
+                builder.append(' ');
+            }
+            builder.append(args[i]);
+        }
+        return builder.toString().trim();
+    }
+
+    private String[] importInputs(String inlineInput) {
+        String[] inputs = new String[] { defaultImportPrompt(), defaultImportStory(), defaultImportOwner() };
+        String cleaned = inlineInput == null ? "" : inlineInput.trim();
+        if (cleaned.isBlank()) {
+            return inputs;
+        }
+        String[] parts = cleaned.split("\\|", -1);
+        if (parts.length > 0) {
+            inputs[0] = importPart(parts[0], inputs[0]);
+        }
+        if (parts.length > 1) {
+            inputs[1] = importPart(parts[1], inputs[1]);
+        }
+        if (parts.length > 2) {
+            inputs[2] = importPart(parts[2], inputs[2]);
+        }
+        return inputs;
+    }
+
+    private String importPart(String value, String fallback) {
+        String cleaned = value == null ? "" : value.trim().replaceAll("\\s+", " ");
+        return cleaned.isBlank() ? fallback : cleaned;
     }
 
     private void placePacketArtifact(Player player, JsonObject packet, boolean placeHere) {
