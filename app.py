@@ -28,13 +28,18 @@ PAPER_PLUGIN_SHA256 = "8046f39b9d53ef2421e6e36b635d7f8b922e3c5759e59adfe044670e1
 PREBUILT_WORLD_PATH = "server-kit/afterblock-demo-world.zip"
 PREBUILT_WORLD_SHA1 = "c438d7dcb98493f436e0ca32aa6c8f73035fbdc0"
 PREBUILT_WORLD_SHA256 = "e4634fb17b6aefcb1f075701727cb3c34bb94ce1886dcbb6c729dc0cb4515a6a"
-TEXTURE_PAGE_SIZE = 96
+TEXTURE_PAGE_SIZE = 36
 DEFAULT_IMPORT_PROMPT = "blue school bag from exam week"
 DEFAULT_IMPORT_STORY = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
 DEFAULT_IMPORT_OWNER = "@Wildstash"
 PEBBLEHOST_SFTP_HOST = "uk144.pebblehost.net"
 PEBBLEHOST_SFTP_PORT = "2222"
 PEBBLEHOST_SFTP_USER = "itsarnavsalkade@gmail.com.5ea1f567"
+MINECRAFT_JOIN_ADDRESS = os.getenv("AFTERBLOCK_MINECRAFT_JOIN_ADDRESS", "uk144.pebblehost.net")
+MINECRAFT_JOIN_NOTE = os.getenv(
+    "AFTERBLOCK_MINECRAFT_JOIN_NOTE",
+    "Use the Minecraft port shown in the PebbleHost panel. SFTP port 2222 is only for uploads.",
+)
 
 
 BLOCKS = [
@@ -1044,24 +1049,25 @@ def living_route_map_html(artifact: dict) -> str:
     return f"""
     <section class="living-route-map">
       <div class="route-map-copy">
-        <span>Live route</span>
-        <h4>YOU ARE HERE to {html_escape(artifact['title'])}</h4>
-        <p>The Space preview uses the same 12x12 grid, origin, plot size, and L-shaped route that the Paper bridge builds in Minecraft.</p>
+        <span>Living map</span>
+        <h4>YOU ARE HERE -> {html_escape(artifact['title'])}</h4>
+        <p>The glowing trail marks the walk from the entry beacon to the relic pad. Hover a square to read its plot; the relic square pulses.</p>
       </div>
       <div class="route-map-grid" aria-label="12 by 12 AfterBlock Minecraft plot map">
         {''.join(cells)}
-      </div>
-      <div class="route-map-proof">
-        <div><span>Entry beacon</span><strong>X {entry_x} Y {GALLERY_ORIGIN_Y} Z {entry_z}</strong></div>
-        <div><span>Route elbow</span><strong>X {elbow_x} Y {GALLERY_ORIGIN_Y} Z {elbow_z}</strong></div>
-        <div><span>Relic pad</span><strong>X {coords['x']} Y {coords['y']} Z {coords['z']}</strong></div>
-        <div><span>Formula</span><strong>{GALLERY_ORIGIN_X} + plot * {PLOT_SCALE}</strong></div>
       </div>
       <div class="route-map-legend">
         <span><b class="legend-entry"></b> YOU ARE HERE</span>
         <span><b class="legend-route"></b> lit route</span>
         <span><b class="legend-target"></b> relic plot</span>
       </div>
+      <details class="route-map-proof">
+        <summary>Exact Minecraft coordinates</summary>
+        <div><span>Entry beacon</span><strong>X {entry_x} Y {GALLERY_ORIGIN_Y} Z {entry_z}</strong></div>
+        <div><span>Route elbow</span><strong>X {elbow_x} Y {GALLERY_ORIGIN_Y} Z {elbow_z}</strong></div>
+        <div><span>Relic pad</span><strong>X {coords['x']} Y {coords['y']} Z {coords['z']}</strong></div>
+        <div><span>Formula</span><strong>{GALLERY_ORIGIN_X} + plot * {PLOT_SCALE}</strong></div>
+      </details>
     </section>
     """
 
@@ -1074,10 +1080,10 @@ def minecraft_campus_view_html(artifact: dict) -> str:
     entry_col = CANVAS_SIZE // 2
     entry_x = GALLERY_ORIGIN_X + ((CANVAS_SIZE - 1) * PLOT_SCALE) // 2
     entry_z = GALLERY_ORIGIN_Z - 18
-    tile_w = 30
-    tile_h = 16
-    origin_left = 250
-    origin_top = 28
+    tile_w = 52
+    tile_h = 28
+    origin_left = 360
+    origin_top = 26
 
     def iso_position(x: float, z: float) -> tuple[float, float]:
         return (
@@ -1128,8 +1134,8 @@ def minecraft_campus_view_html(artifact: dict) -> str:
     <section class="minecraft-campus-view">
       <div class="campus-heading">
         <span>In-world view</span>
-        <h4>Entry beacon to relic plot</h4>
-        <p>The diamonds, hall gates, route lights, and target pad use the same plot grid and XYZ formula as the Paper museum builder.</p>
+        <h4>The museum lights the path for {html_escape(artifact['title'])}</h4>
+        <p>The entry beacon, hall gates, route lights, and relic pad mirror the Paper museum world.</p>
       </div>
       <div class="campus-stage" aria-label="Isometric Minecraft-style AfterBlock campus">
         <div class="campus-stage-inner">
@@ -1140,9 +1146,9 @@ def minecraft_campus_view_html(artifact: dict) -> str:
         </div>
       </div>
       <div class="campus-proof-strip">
-        <span>Entry X {entry_x} Y {GALLERY_ORIGIN_Y} Z {entry_z}</span>
-        <span>Plot {plot_x},{plot_z}</span>
-        <span>Relic X {coords['x']} Y {coords['y']} Z {coords['z']}</span>
+        <span>You start at X {entry_x} Y {GALLERY_ORIGIN_Y} Z {entry_z}</span>
+        <span>Walk to plot {plot_x},{plot_z}</span>
+        <span>Relic pad X {coords['x']} Y {coords['y']} Z {coords['z']}</span>
       </div>
     </section>
     """
@@ -1157,61 +1163,73 @@ def waypointcraft_html(artifact: dict) -> str:
     return f"""
     <section class="waypoint-card">
       <header>
-        <h3>Placement Route</h3>
+        <h3>Living Museum Map</h3>
         <p>{html_escape(artifact['hall'])} / {html_escape(artifact['zone'])}</p>
       </header>
-      <div class="waypoint-grid">
-        <div><span>World XYZ</span><strong>{coords['x']} {coords['y']} {coords['z']}</strong></div>
-        <div><span>CustomModelData</span><strong>{item.get('custom_model_data', 0)}</strong></div>
-        <div><span>Base item</span><strong>{html_escape(item.get('recommended_item', 'minecraft:paper'))}</strong></div>
-        <div><span>Model</span><strong>{html_escape(item.get('model', 'afterblock:item/missing'))}</strong></div>
+      <div class="placement-hero-strip">
+        <span>YOU ARE HERE</span>
+        <strong>{html_escape(artifact['title'])}</strong>
+        <em>Plot {artifact['plot']['x']}, {artifact['plot']['z']} -> XYZ {coords['x']} {coords['y']} {coords['z']}</em>
       </div>
       {campus_view}
       {living_map}
-      <code>{html_escape(command)}</code>
+      <details class="waypoint-appendix">
+        <summary>Minecraft proof details</summary>
+        <div class="waypoint-grid">
+          <div><span>World XYZ</span><strong>{coords['x']} {coords['y']} {coords['z']}</strong></div>
+          <div><span>CustomModelData</span><strong>{item.get('custom_model_data', 0)}</strong></div>
+          <div><span>Base item</span><strong>{html_escape(item.get('recommended_item', 'minecraft:paper'))}</strong></div>
+          <div><span>Model</span><strong>{html_escape(item.get('model', 'afterblock:item/missing'))}</strong></div>
+        </div>
+        <code>{html_escape(command)}</code>
+      </details>
     </section>
     """
 
 
 def server_setup_html() -> str:
     return f"""
-    <section class="server-setup">
+    <section class="server-setup join-minecraft">
       <div>
-        <h2>Minecraft Handoff</h2>
-        <p>For the demo, keep this simple: create one relic in the Space, join the Paper museum, then import the same relic at its generated plot.</p>
+        <h2>Join Minecraft</h2>
+        <p>Create a relic in the Space, join the museum world, then place the same relic at its lit plot.</p>
+      </div>
+      <div class="join-card">
+        <span>Server address</span>
+        <strong>{html_escape(MINECRAFT_JOIN_ADDRESS)}</strong>
+        <p>{html_escape(MINECRAFT_JOIN_NOTE)}</p>
       </div>
       <div class="server-grid">
         <article>
           <span>1</span>
-          <h3>You are here</h3>
-          <p>The prebuilt museum world already has the 12x12 atlas, hall gates, lit entry path, and <code>YOU ARE HERE</code> beacon.</p>
+          <h3>Stand at the map</h3>
+          <p>Confirms the museum world, atlas, and entry beacon are live.</p>
           <p><code>/dreamwall museum check</code></p>
         </article>
         <article>
           <span>2</span>
-          <h3>Load the relic look</h3>
+          <h3>See the object</h3>
           <p><code>/dreamwall pack</code></p>
-          <p>This applies the hosted resource pack so the paper item becomes the generated object model.</p>
+          <p>Loads the hosted object models.</p>
         </article>
         <article>
           <span>3</span>
-          <h3>Place the memory</h3>
+          <h3>Place the relic</h3>
           <p><code>/dreamwall import</code></p>
-          <p>The server fetches the Space packet, lights the route, gives a compass, engraves the name, and places the relic at its exact XYZ.</p>
+          <p>Lights the route, engraves the name, and places the relic.</p>
         </article>
       </div>
-      <div class="server-formula">
-        <strong>Coordinate contract</strong>
-        <code>world_x = {GALLERY_ORIGIN_X} + plot_x * {PLOT_SCALE}</code>
-        <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
-        <code>world_y = {GALLERY_ORIGIN_Y}</code>
-      </div>
       <details class="server-appendix">
-        <summary>Server owner appendix</summary>
+        <summary>Owner setup appendix</summary>
         <p>Only open this if you are installing on a host. The appendix contains the Paper plugin, hosted pack URL, optional prebuilt world, config, and SFTP helper. No panel password is included or stored.</p>
         <p><code>{html_escape(PEBBLEHOST_SFTP_USER)}@{html_escape(PEBBLEHOST_SFTP_HOST)}:{html_escape(PEBBLEHOST_SFTP_PORT)}</code></p>
+        <div class="server-formula">
+          <strong>Coordinate contract</strong>
+          <code>world_x = {GALLERY_ORIGIN_X} + plot_x * {PLOT_SCALE}</code>
+          <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
+          <code>world_y = {GALLERY_ORIGIN_Y}</code>
+        </div>
       </details>
-      <p class="server-note">For the three-minute video, do not explain the ZIP. Show the Space relic, the living map, then Minecraft proving the exact in-world placement.</p>
     </section>
     """
 
@@ -1225,7 +1243,7 @@ def server_handoff_html(artifact: dict) -> str:
       <div>
         <span>Live Paper handoff</span>
         <strong>{html_escape(artifact['title'])}</strong>
-        <p>/dreamwall import places this exact relic at plot {artifact['plot']['x']}, {artifact['plot']['z']} with an engraved nameplate, lectern passport, route compass, and profile button.</p>
+        <p>Ready for Minecraft: run <code>/dreamwall import</code> to light the route, engrave the name, and place the relic at plot {artifact['plot']['x']}, {artifact['plot']['z']}.</p>
       </div>
       <div class="handoff-proof">
         <b>XYZ {coords['x']} {coords['y']} {coords['z']}</b>
@@ -2762,32 +2780,38 @@ def texture_inspection_html(items: list[dict], total: int, page_index: int, page
     cards = []
     for item in items:
         preview_url = texture_preview_url(item["id"])
+        command = f"/give @p minecraft:paper[minecraft:custom_model_data={item['custom_model_data']}] 1"
         cards.append(
             f"""
             <article class="texture-inspect-card">
               <img src="{preview_url}" alt="{item['label']}">
               <div>
                 <strong>{item['label']}</strong>
-                <span>{item['kind']} · {item['shape']} · {item.get('element_count', '?')} cuboids</span>
-                <span>{item.get('material', 'materialized')} · {item.get('finish', 'museum finish')}</span>
-                <span>{item.get('model_profile', 'pose')} · {item.get('orientation', 'orientation')}</span>
-                <code>/give @p minecraft:paper[minecraft:custom_model_data={item['custom_model_data']}] 1</code>
+                <span>{item['kind']} · {item.get('material', 'materialized')} · {item.get('finish', 'museum finish')}</span>
+                <span>{item.get('shape', 'object')} model · {item.get('element_count', '?')} cuboids</span>
+                <details>
+                  <summary>Item code</summary>
+                  <code>{html_escape(command)}</code>
+                </details>
               </div>
             </article>
             """
         )
     return f"""
-    <section class="texture-inspector">
+    <section class="texture-inspector texture-atlas">
       <header>
-        <h3>Resource Pack Inspection Wall</h3>
-        <p>{len(items)} visible on page {page_index}/{page_count}; {total} matching relics. Each card maps to a PNG texture, cuboid item model, material finish, pose profile, and Minecraft item code.</p>
+        <div>
+          <span>AfterBlock object atlas</span>
+          <h3>Page {page_index} of {page_count}</h3>
+        </div>
+        <p>{len(items)} relic looks from {total} matching objects. Flip pages like a field guide; commands stay tucked away until needed.</p>
       </header>
       <div>{''.join(cards)}</div>
     </section>
     """
 
 
-def browse_texture_library(kind: str, page: int):
+def _texture_library_payload(kind: str, page: int):
     manifest = resource_manifest()
     if kind and kind != "all":
         manifest = [item for item in manifest if item.get("kind") == kind]
@@ -2821,12 +2845,25 @@ def browse_texture_library(kind: str, page: int):
         ]
         for item in items
     ]
-    status = (
-        f"Showing {len(items)} of {total} items"
-        f" | scroll shelf {page_index}/{page_count}"
-        " | base item: minecraft:paper"
-    )
-    return gallery, rows, texture_inspection_html(items, total, page_index, page_count), status
+    status = f"Object atlas page {page_index}/{page_count} | {total} matching relic looks"
+    return gallery, rows, texture_inspection_html(items, total, page_index, page_count), status, page_index
+
+
+def browse_texture_library(kind: str, page: int):
+    gallery, rows, inspector, status, _page_index = _texture_library_payload(kind, page)
+    return gallery, rows, inspector, status
+
+
+def browse_texture_library_with_page(kind: str, page: int):
+    return _texture_library_payload(kind, page)
+
+
+def browse_texture_previous(kind: str, page: int):
+    return _texture_library_payload(kind, int(page or 1) - 1)
+
+
+def browse_texture_next(kind: str, page: int):
+    return _texture_library_payload(kind, int(page or 1) + 1)
 
 
 def museum_collection(selected: dict, count: int = 100) -> list[dict]:
@@ -4139,12 +4176,17 @@ CSS = """
   --museum-stone: #1f211f;
   --museum-panel: #2b251c;
   --museum-glow: #f2c15f;
+  --cursor-x: 50vw;
+  --cursor-y: 18vh;
 }
 body, .gradio-container {
-  background: #10110f !important;
+  background:
+    radial-gradient(680px circle at var(--cursor-x) var(--cursor-y), rgba(242,193,95,.13), transparent 46%),
+    linear-gradient(135deg, #0d100e 0%, #14120d 34%, #101215 67%, #0a0b09 100%) !important;
   color: var(--mc-ink);
 }
 .gradio-container {
+  position: relative;
   max-width: none !important;
   width: 100% !important;
   padding: 10px 22px 32px !important;
@@ -4180,6 +4222,13 @@ body, .gradio-container {
   padding: 6px 10px;
   margin: 4px 5px 0 0;
   font-weight: 700;
+}
+.gradio-container .tab-nav,
+.gradio-container .tabs {
+  background: rgba(8, 9, 8, .52) !important;
+}
+.gradio-container button[role="tab"] {
+  border-radius: 0 !important;
 }
 .museum-terminal {
   background: #171916;
@@ -5133,10 +5182,13 @@ body, .gradio-container {
   min-height: 46px !important;
 }
 .texture-inspector {
-  background: #15140f;
+  background:
+    radial-gradient(circle at 20% 12%, rgba(255,228,163,.11), transparent 28%),
+    linear-gradient(90deg, #21180f 0 49%, #15110c 50% 100%);
   border: 2px solid #7d6335;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 16px;
+  margin: 12px 0;
+  box-shadow: 0 8px 0 #070604, inset 0 0 30px rgba(0,0,0,.28);
 }
 .texture-inspector header {
   display: flex;
@@ -5144,11 +5196,19 @@ body, .gradio-container {
   gap: 16px;
   align-items: end;
   border-bottom: 1px solid #5c4d32;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
 }
 .texture-inspector h3 {
-  margin: 0;
+  margin: 4px 0 0;
   color: #ffe4a3;
+  font-size: 26px;
+}
+.texture-inspector header span {
+  color: #e7bf78;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 .texture-inspector p {
   margin: 0;
@@ -5158,16 +5218,18 @@ body, .gradio-container {
 }
 .texture-inspector > div {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
 .texture-inspect-card {
   display: grid;
-  grid-template-columns: 104px 1fr;
+  grid-template-columns: 112px 1fr;
   gap: 10px;
-  min-height: 132px;
-  background: #242017;
+  min-height: 128px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.16)),
+    #242017;
   border: 1px solid #5e523d;
   padding: 9px;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
@@ -5178,11 +5240,12 @@ body, .gradio-container {
   box-shadow: 0 8px 0 #080705;
 }
 .texture-inspect-card img {
-  width: 104px;
-  height: 104px;
+  width: 112px;
+  height: 112px;
   object-fit: contain;
   background: radial-gradient(circle at 50% 42%, #332d20, #13120f 72%);
   border: 1px solid #3f382a;
+  filter: drop-shadow(0 14px 12px rgba(0,0,0,.34));
 }
 .texture-inspect-card strong,
 .texture-inspect-card span,
@@ -5198,6 +5261,15 @@ body, .gradio-container {
   color: #cdbd9b;
   font-size: 11px;
   margin-top: 4px;
+}
+.texture-inspect-card details {
+  margin-top: 7px;
+}
+.texture-inspect-card summary {
+  cursor: pointer;
+  color: #ffdc8a;
+  font-size: 11px;
+  font-weight: 900;
 }
 .texture-inspect-card code {
   color: #11100c !important;
@@ -5245,7 +5317,9 @@ body, .gradio-container {
   overflow-wrap: anywhere;
 }
 .waypoint-card {
-  background: #171613;
+  background:
+    radial-gradient(900px circle at 70% 0%, rgba(83,133,119,.16), transparent 40%),
+    #171613;
   border: 2px solid #75623d;
   box-shadow: 0 8px 0 #070604;
   padding: 16px;
@@ -5276,6 +5350,40 @@ body, .gradio-container {
   background: #242017;
   border: 1px solid #5c4d32;
   padding: 12px;
+}
+.placement-hero-strip {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(126,182,255,.18), rgba(242,193,95,.12)),
+    #111512;
+  border: 1px solid #74613b;
+  box-shadow: inset 0 0 24px rgba(242,193,95,.08);
+  padding: 12px;
+  margin-bottom: 14px;
+}
+.placement-hero-strip span {
+  color: #07111d;
+  background: #9fd0ff;
+  border: 1px solid #d9efff;
+  box-shadow: 0 3px 0 #05070a;
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: .08em;
+  padding: 5px 8px;
+}
+.placement-hero-strip strong {
+  color: #ffe4a3;
+  font-size: 22px;
+  line-height: 1.1;
+}
+.placement-hero-strip em {
+  justify-self: end;
+  color: #e6d2a6;
+  font-style: normal;
+  font-weight: 800;
 }
 .minecraft-campus-view {
   margin: 14px 0;
@@ -5319,10 +5427,10 @@ body, .gradio-container {
 }
 .campus-stage {
   position: relative;
-  height: 360px;
+  height: 500px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 14%, rgba(255,219,132,.14), transparent 30%),
+    radial-gradient(circle at 50% 14%, rgba(255,219,132,.18), transparent 30%),
     linear-gradient(180deg, #171309, #080806 68%);
 }
 .campus-stage::before {
@@ -5336,7 +5444,7 @@ body, .gradio-container {
 }
 .campus-stage-inner {
   position: absolute;
-  inset: 18px 0 0;
+  inset: 38px 0 0;
 }
 .campus-tile,
 .campus-gate,
@@ -5347,8 +5455,8 @@ body, .gradio-container {
   place-items: center;
 }
 .campus-tile {
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   transform: rotate(45deg) skew(-10deg, -10deg);
   transform-origin: center;
   background: color-mix(in srgb, var(--hall-color) 24%, #242017);
@@ -5358,7 +5466,7 @@ body, .gradio-container {
 .campus-tile b {
   transform: rotate(-45deg) skew(10deg, 10deg);
   color: rgba(255,241,199,.44);
-  font-size: 7px;
+  font-size: 0;
   line-height: 1;
 }
 .campus-tile.entry-proxy {
@@ -5376,9 +5484,9 @@ body, .gradio-container {
   box-shadow: 0 0 24px color-mix(in srgb, var(--hall-color) 70%, transparent), 5px 5px 0 rgba(0,0,0,.48);
 }
 .campus-gate {
-  width: 78px;
-  min-height: 54px;
-  translate: -24px 0;
+  width: 116px;
+  min-height: 72px;
+  translate: -36px 0;
   color: #ffe4a3;
   background:
     linear-gradient(90deg, #7b5426 0 12px, transparent 12px calc(100% - 12px), #7b5426 calc(100% - 12px)),
@@ -5388,16 +5496,16 @@ body, .gradio-container {
   z-index: 4;
 }
 .campus-gate b {
-  max-width: 68px;
+  max-width: 92px;
   color: #ffe4a3;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.05;
   text-align: center;
 }
 .campus-entry-beacon {
-  width: 54px;
-  min-height: 64px;
-  translate: -14px -12px;
+  width: 68px;
+  min-height: 84px;
+  translate: -16px -18px;
   color: #101018;
   background:
     linear-gradient(180deg, #b9f2ff, #6aa8ff 68%, #1e4d68);
@@ -5411,10 +5519,10 @@ body, .gradio-container {
   text-align: center;
 }
 .campus-relic-pin {
-  min-width: 86px;
-  max-width: 132px;
-  min-height: 36px;
-  translate: -28px 0;
+  min-width: 112px;
+  max-width: 168px;
+  min-height: 44px;
+  translate: -36px -10px;
   color: #1b1308;
   background: #ffe4a3;
   border: 2px solid #fff4c8;
@@ -5455,7 +5563,7 @@ body, .gradio-container {
 }
 .living-route-map {
   display: grid;
-  grid-template-columns: minmax(180px, .86fr) minmax(280px, 1.35fr);
+  grid-template-columns: minmax(190px, .62fr) minmax(360px, 1.45fr);
   gap: 12px;
   align-items: start;
   margin: 14px 0;
@@ -5544,14 +5652,23 @@ body, .gradio-container {
 }
 .route-map-proof {
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  background: #0e0f0d;
+  border: 1px solid #5c4d32;
+  padding: 10px;
+}
+.route-map-proof summary,
+.waypoint-appendix summary {
+  color: #ffe4a3;
+  cursor: pointer;
+  font-weight: 900;
 }
 .route-map-proof div {
+  display: inline-grid;
+  min-width: min(220px, 100%);
   background: #242017;
   border: 1px solid #5c4d32;
   padding: 9px;
+  margin: 8px 6px 0 0;
 }
 .route-map-proof strong {
   display: block;
@@ -5582,8 +5699,16 @@ body, .gradio-container {
 .legend-entry { background: #3b6a88; }
 .legend-route { background: #d6a642; }
 .legend-target { background: #ffe4a3; }
+.waypoint-appendix {
+  background: #0e0f0d;
+  border: 1px solid #5c4d32;
+  padding: 12px;
+}
 .server-setup {
-  background: #151410;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(126,182,255,.13), transparent 30%),
+    radial-gradient(circle at 88% 0%, rgba(242,193,95,.14), transparent 34%),
+    #151410;
   border: 2px solid #75623d;
   box-shadow: 0 8px 0 #070604;
   color: #f5ddb0;
@@ -5596,6 +5721,40 @@ body, .gradio-container {
 }
 .server-setup p {
   color: #d4c4a0 !important;
+}
+.join-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 12px;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(126,182,255,.18), rgba(242,193,95,.1)),
+    #101412;
+  border: 1px solid #6e5d39;
+  padding: 14px;
+  margin-top: 14px;
+}
+.join-card span {
+  grid-row: span 2;
+  color: #07111d;
+  background: #9fd0ff;
+  border: 1px solid #d9efff;
+  font-weight: 1000;
+  padding: 6px 9px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: 11px;
+}
+.join-card strong {
+  display: block;
+  color: #ffe4a3;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+.join-card p {
+  margin: 0;
+  font-size: 12px;
 }
 .server-grid {
   display: grid;
@@ -5638,6 +5797,7 @@ body, .gradio-container {
   background: #0e0f0d;
   border: 1px solid #5c4d32;
   padding: 12px;
+  margin-top: 10px;
 }
 .server-note {
   margin: 16px 0 0;
@@ -6332,6 +6492,16 @@ textarea, input {
   .wall-heading {
     display: block;
   }
+  .texture-inspector > div {
+    grid-template-columns: 1fr;
+  }
+  .placement-hero-strip,
+  .join-card {
+    grid-template-columns: 1fr;
+  }
+  .placement-hero-strip em {
+    justify-self: start;
+  }
   .server-grid,
   .server-formula,
   .server-owner-card header,
@@ -6357,8 +6527,10 @@ textarea, input {
     overflow-x: auto;
   }
   .campus-stage-inner {
-    width: 560px;
-    min-width: 560px;
+    width: 860px;
+    min-width: 860px;
+    transform: scale(.68);
+    transform-origin: top left;
   }
   .living-route-map {
     grid-template-columns: 1fr;
@@ -6368,6 +6540,11 @@ textarea, input {
 
 PASSPORT_SCAN_JS = r"""
 () => {
+  const root = document.documentElement;
+  window.addEventListener("pointermove", (event) => {
+    root.style.setProperty("--cursor-x", `${event.clientX}px`);
+    root.style.setProperty("--cursor-y", `${event.clientY}px`);
+  }, { passive: true });
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
     "&": "&amp;",
     "<": "&lt;",
@@ -6495,23 +6672,6 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                             lines=1,
                             value="@Wildstash",
                         )
-                        quick_button = gr.Button("Place in Museum", variant="primary")
-                        museum_server_handoff = gr.HTML(
-                            value=INITIAL_MUSEUM_OUTPUTS[12],
-                            label="Live Paper handoff",
-                        )
-                        museum_relic_server_download = gr.File(
-                            value=INITIAL_MUSEUM_OUTPUTS[11],
-                            label="Server appendix for this relic",
-                        )
-                        museum_command = gr.Textbox(
-                            value=INITIAL_MUSEUM_OUTPUTS[1],
-                            label="Minecraft command",
-                            lines=2,
-                            max_lines=2,
-                            show_copy_button=True,
-                            elem_classes=["command-copy"],
-                        )
                         quick_image = gr.Image(
                             label="Optional image reference",
                             type="filepath",
@@ -6519,6 +6679,24 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                             height=96,
                             elem_classes=["photo-drop-compact"],
                         )
+                        quick_button = gr.Button("Place in Museum", variant="primary")
+                        with gr.Accordion("Minecraft proof and owner files", open=False):
+                            museum_server_handoff = gr.HTML(
+                                value=INITIAL_MUSEUM_OUTPUTS[12],
+                                label="Live Paper handoff",
+                            )
+                            museum_command = gr.Textbox(
+                                value=INITIAL_MUSEUM_OUTPUTS[1],
+                                label="Item command",
+                                lines=2,
+                                max_lines=2,
+                                show_copy_button=True,
+                                elem_classes=["command-copy"],
+                            )
+                            museum_relic_server_download = gr.File(
+                                value=INITIAL_MUSEUM_OUTPUTS[11],
+                                label="Owner appendix for this relic",
+                            )
                 with gr.Column(scale=6):
                     museum_model = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[0], label="Artifact model")
                     museum_coordinates = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[2], label="Coordinates")
@@ -6540,29 +6718,32 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                             interactive=False,
                         )
 
-        with gr.Tab("Resource Pack"):
+        with gr.Tab("Object Atlas"):
             gr.HTML(
                 """
                 <section class="resource-hero">
-                  <h2>Resource Pack Browser</h2>
-                  <p>Inspect the generated Minecraft item textures and item-code commands without crowding the main museum workflow.</p>
+                  <h2>Object Atlas</h2>
+                  <p>A living field guide for every Minecraft relic look. Pick a kind, flip pages, then open item codes only when you need them.</p>
                 </section>
                 """
             )
             with gr.Row(elem_classes=["resource-controls"]):
                 texture_kind = gr.Dropdown(label="Kind", choices=texture_kind_choices(), value="all")
-                texture_page = gr.Number(label="Shelf", value=1, precision=0)
-                texture_button = gr.Button("Browse Shelf")
+                texture_page = gr.Number(label="Page", value=1, precision=0)
+                texture_prev_button = gr.Button("Previous")
+                texture_button = gr.Button("Open Page")
+                texture_next_button = gr.Button("Next")
             texture_status = gr.Markdown(value=INITIAL_TEXTURE_OUTPUTS[3])
+            texture_inspector = gr.HTML(value=INITIAL_TEXTURE_OUTPUTS[2], label="Object atlas page")
             texture_gallery = gr.Gallery(
                 value=INITIAL_TEXTURE_OUTPUTS[0],
-                label="PNG previews with Minecraft item codes",
-                columns=8,
-                height=920,
+                label="Atlas shelf",
+                columns=6,
+                height=560,
                 object_fit="contain",
                 elem_classes=["resource-gallery"],
             )
-            with gr.Accordion("Model rows and downloads", open=False):
+            with gr.Accordion("Appendix: model rows and files", open=False):
                 texture_table = gr.Dataframe(
                     value=INITIAL_TEXTURE_OUTPUTS[1],
                     headers=["cmd", "label", "kind", "shape", "material", "finish", "profile", "orientation", "itemdisplay", "elements", "model", "give command"],
@@ -6571,14 +6752,14 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                     col_count=(12, "fixed"),
                     interactive=False,
                 )
-                texture_inspector = gr.HTML(value=INITIAL_TEXTURE_OUTPUTS[2], label="Model/material inspection wall")
                 with gr.Row():
-                    gr.File(value=RESOURCE_PACK_PATH, label="Download resource pack")
-                    gr.File(value="assets/afterblock_textures/afterblock_manifest.json", label="Download manifest")
-                    gr.File(value="assets/afterblock_textures/gallery/index.html", label="Download full texture gallery")
+                    gr.File(value=RESOURCE_PACK_PATH, label="Owner file: resource pack")
+                    gr.File(value="assets/afterblock_textures/afterblock_manifest.json", label="Owner file: manifest")
+                    gr.File(value="assets/afterblock_textures/gallery/index.html", label="Owner file: full gallery")
 
-        with gr.Tab("Passport"):
+        with gr.Tab("Passport + Profile"):
             museum_passport = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[4], label="Passport")
+            museum_spirit = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[8])
 
         with gr.Tab("Placement"):
             museum_waypoint = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[3], label="Placement")
@@ -6592,103 +6773,101 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                 show_copy_button=True,
             )
 
-        with gr.Tab("Relic Profile"):
-            museum_spirit = gr.HTML(value=INITIAL_MUSEUM_OUTPUTS[8])
-
         with gr.Tab("Demo Path"):
             gr.HTML(value=demo_path_html(), label="Hackathon demo path")
 
-        with gr.Tab("Minecraft Handoff"):
-            gr.HTML(value=server_setup_html(), label="Minecraft handoff")
-            with gr.Group(elem_classes=["server-config-panel"]):
-                gr.HTML(
-                    """
-                    <section class="server-config-heading">
-                      <h3>Appendix: host install files</h3>
-                      <p>Use this only when installing on PebbleHost or another Paper server. The demo itself should show /dreamwall pack, /dreamwall museum check, and /dreamwall import.</p>
-                    </section>
-                    """
-                )
-                with gr.Row():
-                    server_space_url = gr.Textbox(
-                        label="Public Space URL",
-                        value=PUBLIC_SPACE_URL,
+        with gr.Tab("Join Minecraft"):
+            gr.HTML(value=server_setup_html(), label="Join Minecraft")
+            with gr.Accordion("Owner setup files", open=False):
+                with gr.Group(elem_classes=["server-config-panel"]):
+                    gr.HTML(
+                        """
+                        <section class="server-config-heading">
+                          <h3>Appendix: host install files</h3>
+                          <p>Use this only when installing on PebbleHost or another Paper server. The demo itself should show /dreamwall pack, /dreamwall museum check, and /dreamwall import.</p>
+                        </section>
+                        """
+                    )
+                    with gr.Row():
+                        server_space_url = gr.Textbox(
+                            label="Public Space URL",
+                            value=PUBLIC_SPACE_URL,
+                            lines=1,
+                        )
+                        server_gallery_world = gr.Textbox(
+                            label="Minecraft world",
+                            value="world",
+                            lines=1,
+                        )
+                    server_resource_pack_url = gr.Textbox(
+                        label="Resource pack URL",
+                        value=RESOURCE_PACK_URL,
                         lines=1,
                     )
-                    server_gallery_world = gr.Textbox(
-                        label="Minecraft world",
-                        value="world",
+                    with gr.Row():
+                        server_resource_pack_sha1 = gr.Textbox(
+                            label="Resource pack SHA1",
+                            value=RESOURCE_PACK_SHA1,
+                            lines=1,
+                        )
+                        server_offer_pack = gr.Checkbox(
+                            label="Offer resource pack on join",
+                            value=False,
+                        )
+                    server_import_prompt = gr.Textbox(
+                        label="Default /dreamwall import prompt",
+                        value=DEFAULT_IMPORT_PROMPT,
+                        lines=2,
+                        placeholder="Example: blue school bag from exam week",
+                    )
+                    server_import_story = gr.Textbox(
+                        label="Default /dreamwall import story",
+                        value=DEFAULT_IMPORT_STORY,
+                        lines=3,
+                        placeholder="The caption that becomes the passport/history text",
+                    )
+                    server_import_owner = gr.Textbox(
+                        label="Default visitor signature",
+                        value=DEFAULT_IMPORT_OWNER,
                         lines=1,
+                        placeholder="@handle or display name",
                     )
-                server_resource_pack_url = gr.Textbox(
-                    label="Resource pack URL",
-                    value=RESOURCE_PACK_URL,
-                    lines=1,
-                )
-                with gr.Row():
-                    server_resource_pack_sha1 = gr.Textbox(
-                        label="Resource pack SHA1",
-                        value=RESOURCE_PACK_SHA1,
-                        lines=1,
+                    server_config_button = gr.Button("Build Appendix ZIP")
+                    server_owner_card = gr.HTML(
+                        value=INITIAL_SERVER_OWNER_CARD,
+                        label="Server owner install card",
                     )
-                    server_offer_pack = gr.Checkbox(
-                        label="Offer resource pack on join",
-                        value=False,
+                    server_config_kit = gr.Textbox(
+                        value=INITIAL_SERVER_CONFIG_KIT,
+                        label="Appendix: config.yml and first-run commands",
+                        lines=24,
+                        max_lines=30,
+                        show_copy_button=True,
                     )
-                server_import_prompt = gr.Textbox(
-                    label="Default /dreamwall import prompt",
-                    value=DEFAULT_IMPORT_PROMPT,
-                    lines=2,
-                    placeholder="Example: blue school bag from exam week",
-                )
-                server_import_story = gr.Textbox(
-                    label="Default /dreamwall import story",
-                    value=DEFAULT_IMPORT_STORY,
-                    lines=3,
-                    placeholder="The caption that becomes the passport/history text",
-                )
-                server_import_owner = gr.Textbox(
-                    label="Default visitor signature",
-                    value=DEFAULT_IMPORT_OWNER,
-                    lines=1,
-                    placeholder="@handle or display name",
-                )
-                server_config_button = gr.Button("Build Appendix ZIP")
-                server_owner_card = gr.HTML(
-                    value=INITIAL_SERVER_OWNER_CARD,
-                    label="Server owner install card",
-                )
-                server_config_kit = gr.Textbox(
-                    value=INITIAL_SERVER_CONFIG_KIT,
-                    label="Appendix: config.yml and first-run commands",
-                    lines=24,
-                    max_lines=30,
-                    show_copy_button=True,
-                )
-                server_config_download = gr.File(
-                    value=INITIAL_SERVER_CONFIG_ZIP,
-                    label="Download server appendix ZIP",
-                )
-                with gr.Row():
-                    gr.File(
-                        value=PAPER_PLUGIN_JAR_PATH,
-                        label="Appendix: Paper bridge plugin",
+                    server_config_download = gr.File(
+                        value=INITIAL_SERVER_CONFIG_ZIP,
+                        label="Owner file: server appendix ZIP",
                     )
-                    gr.File(
-                        value=RESOURCE_PACK_PATH,
-                        label="Appendix: resource pack",
+                    with gr.Row():
+                        gr.File(
+                            value=PAPER_PLUGIN_JAR_PATH,
+                            label="Appendix: Paper bridge plugin",
+                        )
+                        gr.File(
+                            value=RESOURCE_PACK_PATH,
+                            label="Appendix: resource pack",
+                        )
+                        gr.File(
+                            value=PREBUILT_WORLD_PATH,
+                            label="Appendix: prebuilt demo world",
+                        )
+                    museum_server_kit = gr.Textbox(
+                        value=INITIAL_MUSEUM_OUTPUTS[10],
+                        label="Current relic appendix",
+                        lines=28,
+                        max_lines=34,
+                        show_copy_button=True,
                     )
-                    gr.File(
-                        value=PREBUILT_WORLD_PATH,
-                        label="Appendix: prebuilt demo world",
-                    )
-            museum_server_kit = gr.Textbox(
-                value=INITIAL_MUSEUM_OUTPUTS[10],
-                label="Current relic appendix",
-                lines=28,
-                max_lines=34,
-                show_copy_button=True,
-            )
 
     quick_button.click(
         place_in_museum,
@@ -6726,10 +6905,22 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
         api_name="server_config_kit",
     )
     texture_button.click(
-        browse_texture_library,
+        browse_texture_library_with_page,
         inputs=[texture_kind, texture_page],
-        outputs=[texture_gallery, texture_table, texture_inspector, texture_status],
+        outputs=[texture_gallery, texture_table, texture_inspector, texture_status, texture_page],
         api_name="browse_textures",
+    )
+    texture_prev_button.click(
+        browse_texture_previous,
+        inputs=[texture_kind, texture_page],
+        outputs=[texture_gallery, texture_table, texture_inspector, texture_status, texture_page],
+        api_name="browse_textures_previous",
+    )
+    texture_next_button.click(
+        browse_texture_next,
+        inputs=[texture_kind, texture_page],
+        outputs=[texture_gallery, texture_table, texture_inspector, texture_status, texture_page],
+        api_name="browse_textures_next",
     )
 
 

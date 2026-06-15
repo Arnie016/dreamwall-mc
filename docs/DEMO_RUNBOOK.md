@@ -9,11 +9,11 @@ AfterBlock Museum preserves ordinary objects as Minecraft artifacts. The Space a
 1. Show the Hugging Face Space.
 2. Type one prompt in **Museum prompt**, for example: "my scratched blue water bottle from school with a moon sticker."
 3. Click **Place in Museum**.
-4. Show the live 3D relic, `CustomModelData`, `/give` command, and **Live Paper handoff** card in the main output.
-5. Show the **Live Paper handoff** card and the **Minecraft Handoff** tab: `/dreamwall pack`, `/dreamwall museum check`, `/dreamwall import`.
-6. Show the living museum map and the `YOU ARE HERE` banner.
-7. Open **Passport** and show the QR/share link plus exact Minecraft coordinates.
-8. Open **Relic Profile** briefly as the artifact's history/lore page.
+4. Show the live 3D relic and the collapsed **Minecraft proof and owner files** card only if you need the command.
+5. Open **Placement** and show the living map, `YOU ARE HERE` banner, and lit route.
+6. Open **Passport + Profile** and show the QR/share link plus the relic history.
+7. Open **Join Minecraft** and show the server address plus the three player commands: `/dreamwall pack`, `/dreamwall museum check`, `/dreamwall import`.
+8. Open **Object Atlas** only as backup proof if a judge asks how many object looks exist.
 9. Open **Packet** only briefly if you need to prove the shared `dreamwall.museum.v1` packet.
 10. Switch to Minecraft and run `/dreamwall pack`, `/dreamwall museum check`, then `/dreamwall import`.
 11. Show the atlas target, hold the route compass, follow the lit floor from `YOU ARE HERE`, and show the resource-pack item, engraved nameplate, profile button, and lectern passport at the packet coordinates.

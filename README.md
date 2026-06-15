@@ -45,7 +45,7 @@ The Gradio demo now opens with a clean museum preview: 100 labeled demo artifact
 
 The main placement form accepts a visitor signature in the fourth field. A value like `@wildstash` becomes the hover/social tag; a plain value like `Arnav` becomes the owner label without adding a social badge.
 
-The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video, plus a **Minecraft Handoff** tab that keeps the judge-facing flow to three commands. Server ZIPs, SFTP details, and install files live in an appendix so the demo does not become a download tutorial.
+The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video, plus a **Join Minecraft** tab that leads with the server address and keeps owner setup files in a collapsed appendix. Server ZIPs, SFTP details, and install files stay out of the main story.
 
 ## Why This Is Different
 
@@ -108,7 +108,7 @@ The MVP emits:
 - generated texture PNGs in `assets/afterblock_textures/items/`
 - resource-pack skeleton in `resource-pack/AfterBlockMuseum/`
 - searchable full texture gallery in `assets/afterblock_textures/gallery/index.html`
-- Gradio Resource Pack Browser endpoint: `browse_textures`
+- Gradio Object Atlas endpoint: `browse_textures`
 
 Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
 
