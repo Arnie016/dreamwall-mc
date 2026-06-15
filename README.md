@@ -17,11 +17,23 @@ tags:
   - game
   - agent-trace
   - codex
+  - build-small-hackathon
+  - tiny-titan
+  - off-brand
+  - best-demo
+  - field-notes
 ---
 
 # DreamWall: AfterBlock Museum
 
 AfterBlock Museum is a Minecraft-native memory museum for the Build Small Hackathon.
+
+## Submission Metadata
+
+- **Relevant tags:** `minecraft`, `gradio`, `small-models`, `build-small-hackathon`, `tiny-titan`, `off-brand`, `best-demo`, `field-notes`
+- **Demo video recording:** TODO paste final recording URL after capturing the three-minute Space-to-Minecraft proof.
+- **Social media link:** https://huggingface.co/Wildstash
+- **Team HF usernames:** @Wildstash
 
 Visitors scan a relic, memory, animal spirit, or prompted painting. The app assigns a museum hall, computes a curation score, awakens a tiny artifact spirit, prints a shareable passport card, and emits a `dreamwall.museum.v1` packet for the Minecraft server.
 
@@ -33,7 +45,7 @@ The Gradio demo now opens with a clean museum preview: 100 labeled demo artifact
 
 The main placement form accepts a visitor signature in the fourth field. A value like `@wildstash` becomes the hover/social tag; a plain value like `Arnav` becomes the owner label without adding a social badge.
 
-The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video, plus a **Minecraft Server** tab and per-relic download that generate copy-ready Paper `config.yml` values for another person's own museum server.
+The Space also includes a **Demo Path** tab with the critique, commands, and shot order for the three-minute hackathon video, plus a **Minecraft Handoff** tab that keeps the judge-facing flow to three commands. Server ZIPs, SFTP details, and install files live in an appendix so the demo does not become a download tutorial.
 
 ## Why This Is Different
 
@@ -100,7 +112,7 @@ The MVP emits:
 
 Each `living_canvas.mc.v1` tile includes a stable `minecraft_origin` and `minecraft_bounds`, so the Paper bridge can place it directly on the 384x384 wall.
 
-The repo also includes a Paper plugin in [`paper-plugin/`](paper-plugin/) and a prebuilt jar in [`server-kit/`](server-kit/). `/dreamwall museum build` creates the 12 x 12 / 144-plot museum plus a physical entry atlas, `/dreamwall museum check` verifies the pads, `YOU ARE HERE` beacon, and atlas, and `/dreamwall import` places the live Space packet at its generated XYZ with an atlas marker, route compass, lit floor path, engraved nameplate, lectern passport, and profile button.
+The repo also includes a Paper plugin in [`paper-plugin/`](paper-plugin/) and a prebuilt jar/world in [`server-kit/`](server-kit/). The demo path is `/dreamwall pack`, `/dreamwall museum check`, then `/dreamwall import`; `/dreamwall museum build` is only needed if you skip the prebuilt world or want to refresh the campus. `/dreamwall import` places the live Space packet at its generated XYZ with an atlas marker, route compass, lit floor path, engraved nameplate, lectern passport, and profile button.
 
 ### Demo Proof
 

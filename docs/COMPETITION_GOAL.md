@@ -31,12 +31,12 @@ One continuous three-minute video:
 1. Open the Hugging Face Space.
 2. Type one ordinary object and one story caption, then click **Place in Museum**.
 3. Show the main 3D relic, `CustomModelData`, `/give` command, and **Live Paper handoff** card.
-4. Show **Download Paper server kit for this relic** so judges understand that each visitor can configure their own Paper server handoff from the Space.
+4. Show the **Live Paper handoff** card and **Minecraft Handoff** tab so judges understand the Space drives the Paper museum without turning the video into a ZIP-install walkthrough.
 5. Show the living museum map, **You are here** banner, and exact XYZ.
 6. Open **Passport** for the QR/share link and route.
 7. Open **Relic Profile** briefly as the artifact's history/lore page.
 8. Open **Packet** and show `dreamwall.museum.v1`.
-9. Switch to Minecraft, run `/dreamwall museum check`, then `/dreamwall import`.
+9. Switch to Minecraft, run `/dreamwall pack`, `/dreamwall museum check`, then `/dreamwall import`.
 10. Show the atlas target, hold the route compass, follow the lit floor from `YOU ARE HERE`, and show the placed item, engraved nameplate, lectern passport, and profile button at the generated plot.
 11. End with: "AfterBlock turns the things people would throw away into places they can visit."
 
@@ -55,6 +55,7 @@ What does not work if over-emphasized:
 - "Spirit" as a standalone feature sounds redundant unless it is framed as the relic profile/history.
 - Generic-looking previews weaken the emotional hook. In the video, pick one object that renders clearly and has a specific caption.
 - PebbleHost setup is not the story. The story is Space -> route compass -> exact in-world relic.
+- Downloads and SFTP belong in the appendix. Lead with the living object and the in-world proof.
 
 Best way to win:
 

@@ -19,7 +19,7 @@ dist/pebblehost/afterblock-demo-world.zip
 dist/pebblehost/SHA256SUMS
 ```
 
-The Hugging Face Space also serves a complete Paper server kit from the `Minecraft Server` tab. That ZIP includes:
+The Hugging Face Space serves a concise `Minecraft Handoff` tab for the demo and keeps install files in an appendix. The appendix ZIP includes:
 
 ```text
 plugins/dreamwall-paper-bridge-0.1.0.jar
@@ -36,7 +36,7 @@ README.md
 
 In that tab, set the default import prompt, story, and visitor signature before downloading the ZIP if `/dreamwall import` should place a specific demo relic. The Space renders a server-owner install card from those values before the download.
 The `afterblock-server-profile.json` file is the non-secret install card for a server owner: configured Space URL, world, pack, default relic, upload map, first-run commands, verification commands, and helper file names.
-The generated `UPLOAD_TO_SERVER.md` explains the public upload map, while `install-afterblock-paper.sh` prints the map by default and only runs an SFTP batch when `AFTERBLOCK_SFTP_HOST` and `AFTERBLOCK_SFTP_USER` are supplied.
+The generated `UPLOAD_TO_SERVER.md` explains the public upload map, while `install-afterblock-paper.sh` is prefilled for the PebbleHost SFTP endpoint and prompts for the panel password at upload time. No password is stored.
 
 Current hashes from the verified local bundle:
 
@@ -58,13 +58,13 @@ AfterBlockMuseum.zip
 Credential-safe helper:
 
 ```bash
-PEBBLEHOST_SFTP_USER="your-panel-sftp-username" bash scripts/pebblehost_upload.sh
+bash scripts/pebblehost_upload.sh
 ```
 
 Preview without connecting:
 
 ```bash
-PEBBLEHOST_SFTP_USER="your-panel-sftp-username" bash scripts/pebblehost_upload.sh --dry-run
+bash scripts/pebblehost_upload.sh --dry-run
 ```
 
 The helper uses the known SFTP host and username, prints local SHA256 hashes, prompts for the PebbleHost panel password through `sftp`, and uploads:
@@ -81,10 +81,12 @@ Optional shortcut for demo servers: unzip `afterblock-demo-world.zip` into the s
 The known PebbleHost SFTP endpoint from the account screen was:
 
 ```text
-sftp://uk144.pebblehost.net:2222
+host: uk144.pebblehost.net
+port: 2222
+user: itsarnavsalkade@gmail.com.5ea1f567
 ```
 
-Use the PebbleHost panel username/password. Do not commit credentials.
+Use the PebbleHost panel password only when SFTP prompts for it. Do not commit credentials.
 
 ## Server Resource Pack
 
@@ -128,7 +130,6 @@ After restarting the server, run these as an op player:
 /dreamwall fetch
 /dreamwall pack
 /dreamwall museum where
-/dreamwall museum build
 /dreamwall museum check
 /dreamwall demo
 /dreamwall import here
@@ -139,7 +140,7 @@ Expected result:
 - `/dreamwall fetch` reports the Hugging Face Space is reachable.
 - `/dreamwall pack` asks the player to load `AfterBlockMuseum.zip`.
 - `/dreamwall museum where` prints the exact Space-to-world coordinate formula.
-- `/dreamwall museum build` creates the 12 x 12 AfterBlock campus: plot pads, hall gates, banner markers, a central memory spine, entrance signage, a physical entry atlas, and a `YOU ARE HERE` beacon.
+- `/dreamwall museum build` is optional if the prebuilt demo world was installed; it refreshes the 12 x 12 AfterBlock campus if needed.
 - `/dreamwall museum check` confirms the current world contains 144 plot pads, 144 relic focus blocks, the entry beacon, and the living entry atlas.
 - `/dreamwall demo` places a small pedestal, visible `ItemDisplay`, glowing engraved name/caption, lectern passport book, right-click profile button, and gives a Paper item using `CustomModelData 730002`.
 - `/dreamwall import here` calls the live `quick_curate` endpoint, parses `dreamwall.museum.v1`, places a packet-derived pedestal/`ItemDisplay`/engraved nameplate/lectern passport/profile button beside the player, and gives a Paper item using the packet's `custom_model_data`.
@@ -150,8 +151,8 @@ If the Paper item looks like ordinary paper, the plugin is working but the resou
 For the three-minute video, the best proof order is:
 
 1. Create a relic in the Space and show the passport/packet coordinate.
-2. Join the Paper server and run `/dreamwall museum build`.
-3. Run `/dreamwall museum check` to prove the map exists.
+2. Join the Paper server and run `/dreamwall pack`.
+3. Run `/dreamwall museum check` to prove the prebuilt map exists.
 4. Run `/dreamwall import` so the same relic appears at the exact generated plot, marks the entry atlas, and updates the route trail.
 5. Show the atlas target, hold the route compass, walk from the `YOU ARE HERE` beacon along the lit floor route to the plot pad, show the resource-pack item and engraved nameplate, then right-click the profile button for the relic history.
 
@@ -187,5 +188,4 @@ Proof file:
 
 ```text
 artifacts/stress/afterblock_demo_proof_manifest.json
-artifacts/stress/paper_plugin_local_load_test.json
 ```

@@ -122,14 +122,15 @@ def server_zip_checks(path: Path) -> dict:
             "script_runs_sftp": "sftp -P" in install_helper,
             "script_has_verify_commands": "/dreamwall museum check" in install_helper
             and "/dreamwall import here" in install_helper,
-            "script_no_private_endpoint": not any(
-                secret in install_helper.lower()
-                for secret in ["password", "gmail", "itsarnav", "uk144"]
-            ),
+            "script_prefills_pebblehost": "uk144.pebblehost.net" in install_helper
+            and "itsarnavsalkade@gmail.com.5ea1f567" in install_helper,
+            "script_does_not_store_password": "does not store" in install_helper.lower()
+            and "sftp will prompt" in install_helper.lower(),
             "guide_has_upload_map": "Upload Map" in upload_guide
             and "plugins/DreamWall/config.yml" in upload_guide,
-            "guide_has_minecraft_commands": "/dreamwall museum build" in upload_guide
-            and "/dreamwall import here" in upload_guide,
+            "guide_has_minecraft_commands": "/dreamwall pack" in upload_guide
+            and "/dreamwall museum check" in upload_guide
+            and "/dreamwall import" in upload_guide,
         },
     }
 

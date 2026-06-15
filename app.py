@@ -32,6 +32,9 @@ TEXTURE_PAGE_SIZE = 96
 DEFAULT_IMPORT_PROMPT = "blue school bag from exam week"
 DEFAULT_IMPORT_STORY = "It carried my laptop, exam panic, snacks, and the mornings I kept showing up."
 DEFAULT_IMPORT_OWNER = "@Wildstash"
+PEBBLEHOST_SFTP_HOST = "uk144.pebblehost.net"
+PEBBLEHOST_SFTP_PORT = "2222"
+PEBBLEHOST_SFTP_USER = "itsarnavsalkade@gmail.com.5ea1f567"
 
 
 BLOCKS = [
@@ -551,6 +554,7 @@ def object_guess_for(input_type: str, source_prompt: str, memory_text: str) -> s
         ("phone", ["phone", "iphone", "android", "smartphone", "mobile"]),
         ("water bottle", ["water bottle", "waater", "bottle", "canteen", "thermos"]),
         ("plush toy", ["teddy", "teddy bear", "bear", "plush", "soft toy", "stuffed"]),
+        ("game controller", ["xbox controller", "xbox", "controller", "gamepad", "game controller", "console controller"]),
         ("sticker", ["sticker", "decal", "label", "logo", "openai"]),
         ("shoes", ["shoe", "shoes", "sneaker", "sneakers", "trainers"]),
         ("book", ["book", "novel", "comic", "star wars", "cover"]),
@@ -583,6 +587,8 @@ def hall_for_artifact(input_type: str, object_guess: str, source_prompt: str, me
         return "Hall of Soft Things", "the memory is quiet, protective, and intimate"
     if any(word in text for word in ["sticker", "decal", "logo", "signal", "lost", "radio", "noise"]):
         return "Hall of Lost Signals", "the artifact carries private signal through public static"
+    if any(word in text for word in ["xbox", "controller", "gamepad", "console", "thumbstick"]):
+        return "Hall of Worlds", "it made imaginary worlds respond to the owner's hands"
     if any(word in text for word in ["airpods", "bag", "bottle", "water", "phone", "shoe", "friend", "carried", "companion"]):
         return "Hall of Companions", "it stayed close to the owner through ordinary days"
     if any(word in text for word in ["exam", "trade", "turning", "changed", "panic"]):
@@ -665,6 +671,7 @@ def spirit_for_artifact(title: str, object_guess: str, memory_text: str, hall: s
         "phone": ["signal-lit", "pocket-sized", "watchful"],
         "water bottle": ["clear", "steady", "everyday"],
         "plush toy": ["soft", "protective", "sleep-worn"],
+        "game controller": ["responsive", "world-opening", "thumb-worn"],
         "sticker": ["signal-marked", "thin", "identity-bound"],
         "shoes": ["road-worn", "patient", "routine-bound"],
         "painting": ["mythic", "paint-lit", "protective"],
@@ -689,6 +696,8 @@ def spirit_for_artifact(title: str, object_guess: str, memory_text: str, hall: s
         first_line = "I kept ordinary stamina within reach."
     elif object_guess == "plush toy":
         first_line = "I guarded sleep without needing to explain why."
+    elif object_guess == "game controller":
+        first_line = "I made faraway worlds answer through your hands."
     elif object_guess == "sticker":
         first_line = "I turned a surface into a signal."
     elif object_guess == "shoes":
@@ -1168,34 +1177,27 @@ def server_setup_html() -> str:
     return f"""
     <section class="server-setup">
       <div>
-        <h2>Minecraft Server Setup</h2>
-        <p>The Space is the creation terminal. The Paper server is the persistent museum: one 12x12 campus, 144 exact plot addresses, and every relic packet lands at its generated XYZ.</p>
+        <h2>Minecraft Handoff</h2>
+        <p>For the demo, keep this simple: create one relic in the Space, join the Paper museum, then import the same relic at its generated plot.</p>
       </div>
       <div class="server-grid">
         <article>
           <span>1</span>
-          <h3>Upload</h3>
-          <p>Download the Paper server kit below, then upload the included plugin jar and resource pack.</p>
-          <p><code>plugins/dreamwall-paper-bridge-0.1.0.jar</code></p>
-          <p><code>AfterBlockMuseum.zip</code></p>
+          <h3>You are here</h3>
+          <p>The prebuilt museum world already has the 12x12 atlas, hall gates, lit entry path, and <code>YOU ARE HERE</code> beacon.</p>
+          <p><code>/dreamwall museum check</code></p>
         </article>
         <article>
           <span>2</span>
-          <h3>Load Pack</h3>
+          <h3>Load the relic look</h3>
           <p><code>/dreamwall pack</code></p>
-          <p>Pack URL: <code>{html_escape(RESOURCE_PACK_URL)}</code></p>
+          <p>This applies the hosted resource pack so the paper item becomes the generated object model.</p>
         </article>
         <article>
           <span>3</span>
-          <h3>Build Museum</h3>
-          <p><code>/dreamwall museum build</code></p>
-          <p>Creates the living 12x12 entry atlas, hall gates, memory spine, and entry beacon at plot (0,0) XYZ <code>-192 80 -192</code>. Verify it with <code>/dreamwall museum check</code>.</p>
-        </article>
-        <article>
-          <span>4</span>
-          <h3>Place Relics</h3>
+          <h3>Place the memory</h3>
           <p><code>/dreamwall import</code></p>
-          <p>Imports a Space packet at the generated coordinate, lights the route, sets the compass target, and gives the route compass. Use <code>/dreamwall import here</code> for fast nearby proof.</p>
+          <p>The server fetches the Space packet, lights the route, gives a compass, engraves the name, and places the relic at its exact XYZ.</p>
         </article>
       </div>
       <div class="server-formula">
@@ -1204,7 +1206,12 @@ def server_setup_html() -> str:
         <code>world_z = {GALLERY_ORIGIN_Z} + plot_z * {PLOT_SCALE}</code>
         <code>world_y = {GALLERY_ORIGIN_Y}</code>
       </div>
-      <p class="server-note">For the hackathon demo: use the included prebuilt world as the atlas-ready base. It already contains the coordinate campus, living entry atlas, and YOU ARE HERE beacon; rerun the museum builder only if you want to refresh it before importing the configured relic.</p>
+      <details class="server-appendix">
+        <summary>Server owner appendix</summary>
+        <p>Only open this if you are installing on a host. The appendix contains the Paper plugin, hosted pack URL, optional prebuilt world, config, and SFTP helper. No panel password is included or stored.</p>
+        <p><code>{html_escape(PEBBLEHOST_SFTP_USER)}@{html_escape(PEBBLEHOST_SFTP_HOST)}:{html_escape(PEBBLEHOST_SFTP_PORT)}</code></p>
+      </details>
+      <p class="server-note">For the three-minute video, do not explain the ZIP. Show the Space relic, the living map, then Minecraft proving the exact in-world placement.</p>
     </section>
     """
 
@@ -1286,7 +1293,6 @@ def demo_path_html() -> str:
       </ol>
       <div class="demo-command-strip">
         <code>/dreamwall pack</code>
-        <code>/dreamwall museum build</code>
         <code>/dreamwall museum check</code>
         <code>/dreamwall import</code>
       </div>
@@ -1354,9 +1360,9 @@ gallery-facing: "east"
             "",
             "3) First-run in-game commands",
             "/dreamwall pack",
-            "/dreamwall museum build",
             "/dreamwall museum check",
             "/dreamwall import",
+            "Optional if the prebuilt world was not installed: /dreamwall museum build",
             "",
             "4) Expected proof",
             "AfterBlock museum check:",
@@ -1405,9 +1411,9 @@ def server_config_kit_text(
             "",
             "First-run commands",
             "/dreamwall pack",
-            "/dreamwall museum build",
             "/dreamwall museum check",
             "/dreamwall import",
+            "Optional if the prebuilt world was not installed: /dreamwall museum build",
             "",
             "Default relic imported by /dreamwall import",
             f"Prompt: {clean_text(import_prompt, DEFAULT_IMPORT_PROMPT)}",
@@ -1516,7 +1522,6 @@ def server_demo_proof_manifest(
         },
         "expected_commands": [
             "/dreamwall pack",
-            "/dreamwall museum build",
             "/dreamwall museum check",
             "/dreamwall import",
         ],
@@ -1563,7 +1568,7 @@ def server_owner_profile_manifest(
             {
                 "kit_path": "plugins/dreamwall-paper-bridge-0.1.0.jar",
                 "server_path": "plugins/dreamwall-paper-bridge-0.1.0.jar",
-                "reason": "Paper command bridge for /dreamwall pack, museum build, museum check, and import.",
+                "reason": "Paper command bridge for /dreamwall pack, museum check, import, and optional museum rebuild.",
             },
             {
                 "kit_path": "plugins/DreamWall/config.yml",
@@ -1583,7 +1588,6 @@ def server_owner_profile_manifest(
         ],
         "first_run_commands": [
             "/dreamwall pack",
-            "/dreamwall museum build",
             "/dreamwall museum check",
             "/dreamwall import",
         ],
@@ -1685,7 +1689,7 @@ def server_owner_install_card_html(
           <div class="server-owner-command-strip">{verify}</div>
         </div>
       </div>
-      <p class="server-owner-note">Download the complete Paper server kit ZIP below. It includes this card as <code>afterblock-server-profile.json</code>, plus <code>UPLOAD_TO_SERVER.md</code> and <code>install-afterblock-paper.sh</code>; it does not contain any server panel or SFTP secret.</p>
+      <p class="server-owner-note">Appendix ZIP below: it includes this card as <code>afterblock-server-profile.json</code>, plus <code>UPLOAD_TO_SERVER.md</code> and <code>install-afterblock-paper.sh</code>; it does not contain any server panel password or SFTP secret.</p>
     </section>
     """
 
@@ -1726,22 +1730,24 @@ If your host has a web file manager, upload the files above, restart Paper, then
 From this ZIP folder, run:
 
 ```bash
-AFTERBLOCK_SFTP_HOST="your-sftp-host" \\
-AFTERBLOCK_SFTP_PORT="2222" \\
-AFTERBLOCK_SFTP_USER="your-sftp-user" \\
+AFTERBLOCK_SFTP_HOST="{PEBBLEHOST_SFTP_HOST}" \\
+AFTERBLOCK_SFTP_PORT="{PEBBLEHOST_SFTP_PORT}" \\
+AFTERBLOCK_SFTP_USER="{PEBBLEHOST_SFTP_USER}" \\
 sh install-afterblock-paper.sh
 ```
 
 `AFTERBLOCK_SERVER_ROOT` is optional and defaults to `.`.
+The SFTP password is typed only into the SFTP prompt from your host panel password. It is not stored in this kit.
 
 ## Minecraft First Run
 
 ```text
 /dreamwall pack
-/dreamwall museum build
 /dreamwall museum check
 /dreamwall import
 ```
+
+Only run `/dreamwall museum build` if the prebuilt demo world was not installed.
 
 Fast nearby proof:
 
@@ -1771,9 +1777,9 @@ def server_upload_helper_sh() -> str:
 set -eu
 
 ROOT="${AFTERBLOCK_SERVER_ROOT:-.}"
-HOST="${AFTERBLOCK_SFTP_HOST:-}"
-PORT="${AFTERBLOCK_SFTP_PORT:-22}"
-USER_NAME="${AFTERBLOCK_SFTP_USER:-}"
+HOST="${AFTERBLOCK_SFTP_HOST:-uk144.pebblehost.net}"
+PORT="${AFTERBLOCK_SFTP_PORT:-2222}"
+USER_NAME="${AFTERBLOCK_SFTP_USER:-itsarnavsalkade@gmail.com.5ea1f567}"
 
 required_files="
 plugins/dreamwall-paper-bridge-0.1.0.jar
@@ -1811,19 +1817,20 @@ Upload map:
 
 After restart, run in Minecraft:
   /dreamwall pack
-  /dreamwall museum build
   /dreamwall museum check
   /dreamwall import
   /dreamwall import here
+
+Only run /dreamwall museum build if you did not install the prebuilt demo world.
 MAP
 
 if [ -z "$HOST" ] || [ -z "$USER_NAME" ]; then
   cat <<'ENV'
 
 No SFTP target was provided, so nothing was uploaded.
-To run the guided upload, set AFTERBLOCK_SFTP_HOST and AFTERBLOCK_SFTP_USER:
+To override the prefilled PebbleHost target, set AFTERBLOCK_SFTP_HOST and AFTERBLOCK_SFTP_USER:
 
-  AFTERBLOCK_SFTP_HOST="your-sftp-host" AFTERBLOCK_SFTP_PORT="2222" AFTERBLOCK_SFTP_USER="your-sftp-user" sh install-afterblock-paper.sh
+  AFTERBLOCK_SFTP_HOST="other-sftp-host" AFTERBLOCK_SFTP_PORT="2222" AFTERBLOCK_SFTP_USER="other-sftp-user" sh install-afterblock-paper.sh
 
 ENV
   exit 0
@@ -1846,6 +1853,7 @@ EOF
 
 echo
 echo "Opening SFTP batch for $USER_NAME@$HOST:$PORT"
+echo "SFTP will prompt for your panel password; the kit does not store it."
 sftp -P "$PORT" -b "$batch_file" "$USER_NAME@$HOST"
 """
 
@@ -1913,10 +1921,11 @@ This ZIP is self-contained for the server side:
 
 ```text
 /dreamwall pack
-/dreamwall museum build
 /dreamwall museum check
 /dreamwall import
 ```
+
+Only run `/dreamwall museum build` if the prebuilt demo world was not installed.
 
 Use `/dreamwall import here` for a fast nearby proof during recording.
 
@@ -1966,7 +1975,7 @@ README.md
 ## Upload Helper
 
 `UPLOAD_TO_SERVER.md` gives the file-manager path and the exact first-run Minecraft commands.
-`install-afterblock-paper.sh` can create and run an SFTP batch when `AFTERBLOCK_SFTP_HOST` and `AFTERBLOCK_SFTP_USER` are set; otherwise it only prints the upload map.
+`install-afterblock-paper.sh` is prefilled for the PebbleHost SFTP target `{PEBBLEHOST_SFTP_USER}@{PEBBLEHOST_SFTP_HOST}:{PEBBLEHOST_SFTP_PORT}` and prompts for the panel password at upload time. No password is stored.
 
 ## Demo Proof File
 
@@ -2110,6 +2119,8 @@ def texture_key_for(object_guess: str) -> str:
         "plush_toy": "plush_toy",
         "sticker": "sticker",
         "shoes": "shoes",
+        "controller": "game_controller",
+        "xbox_controller": "game_controller",
     }
     return aliases.get(key, key)
 
@@ -2479,6 +2490,37 @@ def artifact_model_html(artifact: dict) -> str:
     cube(0, .38, -.14, .28, .16, .06, makeMat('#70685a', {{ roughness: .72 }}));
   }}
 
+  function renderController() {{
+    const shell = makeMat('#20242b', {{ roughness: .68, metalness: .08 }});
+    const grip = makeMat('#13161b', {{ roughness: .84 }});
+    const seamMat = makeMat('#58606b', {{ roughness: .5, metalness: .12 }});
+    const stick = makeMat('#0b0d10', {{ roughness: .9 }});
+    const buttonA = makeMat('#6fe08e', {{ roughness: .36, emissive: '#34ad56', emissiveStrength: .12 }});
+    const buttonB = makeMat('#e85d53', {{ roughness: .36, emissive: '#b9322d', emissiveStrength: .1 }});
+    const buttonX = makeMat('#5db4ff', {{ roughness: .34, emissive: '#2279c4', emissiveStrength: .12 }});
+    const buttonY = makeMat('#f2d463', {{ roughness: .34, emissive: '#b9941f', emissiveStrength: .1 }});
+    const body = cube(0, .88, -.02, 1.42, .62, .22, shell);
+    body.rotation.z = -.02;
+    const leftGrip = cube(-.56, .52, .02, .34, .56, .28, grip);
+    const rightGrip = cube(.56, .52, .02, .34, .56, .28, grip);
+    leftGrip.rotation.z = .24;
+    rightGrip.rotation.z = -.24;
+    cube(0, 1.08, -.16, .38, .16, .06, seamMat);
+    cube(-.38, .93, -.18, .24, .24, .08, stick);
+    cube(.2, .76, -.18, .24, .24, .08, stick);
+    cube(-.38, .93, -.24, .14, .14, .08, makeMat('#2c323a', {{ roughness: .88 }}));
+    cube(.2, .76, -.24, .14, .14, .08, makeMat('#2c323a', {{ roughness: .88 }}));
+    cube(-.08, .76, -.2, .26, .08, .06, seamMat);
+    cube(-.08, .76, -.2, .08, .26, .06, seamMat);
+    cube(.55, 1.0, -.19, .13, .13, .07, buttonY);
+    cube(.68, .88, -.19, .13, .13, .07, buttonB);
+    cube(.42, .88, -.19, .13, .13, .07, buttonX);
+    cube(.55, .76, -.19, .13, .13, .07, buttonA);
+    cube(-.48, 1.27, -.02, .34, .12, .18, seamMat);
+    cube(.48, 1.27, -.02, .34, .12, .18, seamMat);
+    cube(0, .96, -.2, .1, .1, .06, blueGlow);
+  }}
+
   function renderBag() {{
     const body = makeMat('#334f86', {{ roughness: .82 }});
     const panel = makeMat('#5f78b8', {{ roughness: .72 }});
@@ -2626,6 +2668,8 @@ def artifact_model_html(artifact: dict) -> str:
     renderPlushToy();
   }} else if (shapeText.includes('sticker') || shapeText.includes('decal') || shapeText.includes('logo')) {{
     renderSticker();
+  }} else if (shapeText.includes('controller') || shapeText.includes('gamepad') || shapeText.includes('xbox')) {{
+    renderController();
   }} else if (shapeText.includes('remote')) {{
     renderRemote();
   }} else {{
@@ -2686,6 +2730,9 @@ def artifact_model_html(artifact: dict) -> str:
   function tick(t) {{
     group.rotation.y = dragging ? targetYaw * .08 : Math.sin(t * .00045) * .12 - .2;
     group.position.y = Math.sin(t * .0012) * .035;
+    const pulse = 1 + Math.sin(t * .0021) * .012;
+    group.scale.set(pulse, pulse, pulse);
+    rim.intensity = 10 + Math.sin(t * .0018) * 2.4;
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
   }}
@@ -3574,6 +3621,7 @@ def artifact_title(prompt: str, seed: int, moods: list[str], object_guess: str |
         "phone": "Phone",
         "water bottle": "Water Bottle",
         "plush toy": "Teddy Bear" if "teddy" in prompt_text or "bear" in prompt_text else "Plush Toy",
+        "game controller": "Xbox Controller" if "xbox" in prompt_text else "Game Controller",
         "sticker": "OpenAI Sticker" if "openai" in prompt_text else "Sticker",
         "shoes": "Shoe" if "shoe" in prompt_text and "shoes" not in prompt_text else "Shoes",
         "painting": "Painting",
@@ -5551,7 +5599,7 @@ body, .gradio-container {
 }
 .server-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin: 18px 0;
 }
@@ -5595,6 +5643,20 @@ body, .gradio-container {
   margin: 16px 0 0;
   border-left: 4px solid #f25a0b;
   padding-left: 12px;
+}
+.server-appendix {
+  margin-top: 12px;
+  background: #0e0f0d;
+  border: 1px solid #5c4d32;
+  padding: 12px;
+}
+.server-appendix summary {
+  color: #ffe4a3;
+  cursor: pointer;
+  font-weight: 800;
+}
+.server-appendix p {
+  margin: 10px 0 0;
 }
 .server-config-panel {
   margin-top: 18px;
@@ -6440,7 +6502,7 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                         )
                         museum_relic_server_download = gr.File(
                             value=INITIAL_MUSEUM_OUTPUTS[11],
-                            label="Download Paper server kit for this relic",
+                            label="Server appendix for this relic",
                         )
                         museum_command = gr.Textbox(
                             value=INITIAL_MUSEUM_OUTPUTS[1],
@@ -6536,14 +6598,14 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
         with gr.Tab("Demo Path"):
             gr.HTML(value=demo_path_html(), label="Hackathon demo path")
 
-        with gr.Tab("Minecraft Server"):
-            gr.HTML(value=server_setup_html(), label="Minecraft server setup")
+        with gr.Tab("Minecraft Handoff"):
+            gr.HTML(value=server_setup_html(), label="Minecraft handoff")
             with gr.Group(elem_classes=["server-config-panel"]):
                 gr.HTML(
                     """
                     <section class="server-config-heading">
-                      <h3>Configure your Paper museum</h3>
-                      <p>Keep the coordinate contract fixed, then set the Space, pack, world, and default relic that /dreamwall import should place.</p>
+                      <h3>Appendix: host install files</h3>
+                      <p>Use this only when installing on PebbleHost or another Paper server. The demo itself should show /dreamwall pack, /dreamwall museum check, and /dreamwall import.</p>
                     </section>
                     """
                 )
@@ -6591,38 +6653,38 @@ with gr.Blocks(css=CSS, js=PASSPORT_SCAN_JS, title="AfterBlock Museum") as demo:
                     lines=1,
                     placeholder="@handle or display name",
                 )
-                server_config_button = gr.Button("Build Server Config")
+                server_config_button = gr.Button("Build Appendix ZIP")
                 server_owner_card = gr.HTML(
                     value=INITIAL_SERVER_OWNER_CARD,
                     label="Server owner install card",
                 )
                 server_config_kit = gr.Textbox(
                     value=INITIAL_SERVER_CONFIG_KIT,
-                    label="plugins/DreamWall/config.yml and first-run commands",
+                    label="Appendix: config.yml and first-run commands",
                     lines=24,
                     max_lines=30,
                     show_copy_button=True,
                 )
                 server_config_download = gr.File(
                     value=INITIAL_SERVER_CONFIG_ZIP,
-                    label="Download complete Paper server kit ZIP",
+                    label="Download server appendix ZIP",
                 )
                 with gr.Row():
                     gr.File(
                         value=PAPER_PLUGIN_JAR_PATH,
-                        label="Download Paper bridge plugin",
+                        label="Appendix: Paper bridge plugin",
                     )
                     gr.File(
                         value=RESOURCE_PACK_PATH,
-                        label="Download resource pack",
+                        label="Appendix: resource pack",
                     )
                     gr.File(
                         value=PREBUILT_WORLD_PATH,
-                        label="Download prebuilt demo world",
+                        label="Appendix: prebuilt demo world",
                     )
             museum_server_kit = gr.Textbox(
                 value=INITIAL_MUSEUM_OUTPUTS[10],
-                label="Current relic server kit",
+                label="Current relic appendix",
                 lines=28,
                 max_lines=34,
                 show_copy_button=True,

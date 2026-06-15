@@ -5,17 +5,17 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BUNDLE_DIR="${ROOT_DIR}/dist/pebblehost"
 HOST="${PEBBLEHOST_SFTP_HOST:-uk144.pebblehost.net}"
 PORT="${PEBBLEHOST_SFTP_PORT:-2222}"
-USER_NAME="${PEBBLEHOST_SFTP_USER:-}"
+USER_NAME="${PEBBLEHOST_SFTP_USER:-itsarnavsalkade@gmail.com.5ea1f567}"
 DRY_RUN=false
 
 if [[ "${1:-}" == "--dry-run" ]]; then
   DRY_RUN=true
 elif [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-  echo "Usage: PEBBLEHOST_SFTP_USER='panel-user' bash scripts/pebblehost_upload.sh [--dry-run]"
+  echo "Usage: bash scripts/pebblehost_upload.sh [--dry-run]"
   exit 0
 elif [[ -n "${1:-}" ]]; then
   echo "Unknown argument: ${1}" >&2
-  echo "Usage: PEBBLEHOST_SFTP_USER='panel-user' bash scripts/pebblehost_upload.sh [--dry-run]" >&2
+  echo "Usage: bash scripts/pebblehost_upload.sh [--dry-run]" >&2
   exit 1
 fi
 
@@ -36,12 +36,6 @@ done
 
 if ! command -v sftp >/dev/null 2>&1; then
   echo "sftp is not available on PATH." >&2
-  exit 1
-fi
-
-if [[ -z "${USER_NAME}" ]]; then
-  echo "Set PEBBLEHOST_SFTP_USER before running this helper." >&2
-  echo "Example: PEBBLEHOST_SFTP_USER='panel-user@example.com.id' bash scripts/pebblehost_upload.sh" >&2
   exit 1
 fi
 
@@ -82,6 +76,6 @@ sftp -P "${PORT}" -b "${batch_file}" "${USER_NAME}@${HOST}"
 echo
 echo "Upload finished. Restart the server, then run:"
 echo "/dreamwall pack"
-echo "/dreamwall museum build"
 echo "/dreamwall museum check"
 echo "/dreamwall import"
+echo "Only run /dreamwall museum build if you did not install the prebuilt demo world."
