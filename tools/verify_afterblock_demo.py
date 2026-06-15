@@ -127,6 +127,7 @@ def main() -> int:
         None,
     )
     server_bundle = app.server_config_bundle()
+    demo_path = app.demo_path_html()
     server_zip = Path(outputs[11])
     handoff = outputs[12]
 
@@ -161,6 +162,14 @@ def main() -> int:
             "has_verify_commands": "/dreamwall museum check" in server_bundle[2]
             and "/dreamwall import here" in server_bundle[2],
             "mentions_profile_json": "afterblock-server-profile.json" in server_bundle[2],
+        },
+        "demo_path_contract": {
+            "has_judge_scorecard": "judge-scorecard" in demo_path,
+            "has_winning_signal": "Winning signal" in demo_path,
+            "cuts_feature_buffet": "Do not demo a feature buffet" in demo_path,
+            "has_route_proof": "/dreamwall museum check" in demo_path
+            and "route compass" in demo_path,
+            "has_space_to_server_contract": "Space-to-server contract" in demo_path,
         },
         "resource_pack": {
             "path": app.RESOURCE_PACK_PATH,
@@ -214,6 +223,11 @@ def main() -> int:
             proof["server_config_ui_contract"]["has_upload_map"],
             proof["server_config_ui_contract"]["has_verify_commands"],
             proof["server_config_ui_contract"]["mentions_profile_json"],
+            proof["demo_path_contract"]["has_judge_scorecard"],
+            proof["demo_path_contract"]["has_winning_signal"],
+            proof["demo_path_contract"]["cuts_feature_buffet"],
+            proof["demo_path_contract"]["has_route_proof"],
+            proof["demo_path_contract"]["has_space_to_server_contract"],
             proof["resource_pack"]["valid"],
             proof["resource_pack"]["sha1"] == proof["resource_pack"]["expected_sha1_constant"],
             proof["paper_plugin"]["sha1"] == proof["paper_plugin"]["expected_sha1_constant"],

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15T11:16:43.118186+00:00",
+  "generated_at": "2026-06-15T11:32:09.316665+00:00",
   "goal": "AfterBlock Hugging Face Space configures a Paper server handoff for an exact-coordinate Minecraft memory museum.",
   "space_url": "https://build-small-hackathon-dreamwall-mc.hf.space",
   "coordinate_contract": {
@@ -27,6 +27,13 @@
     "has_upload_map": true,
     "has_verify_commands": true,
     "mentions_profile_json": true
+  },
+  "demo_path_contract": {
+    "has_judge_scorecard": true,
+    "has_winning_signal": true,
+    "cuts_feature_buffet": true,
+    "has_route_proof": true,
+    "has_space_to_server_contract": true
   },
   "resource_pack": {
     "path": "resource-pack/AfterBlockMuseum.zip",

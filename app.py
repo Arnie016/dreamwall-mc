@@ -1253,6 +1253,28 @@ def demo_path_html() -> str:
           </ul>
         </article>
       </div>
+      <div class="judge-scorecard">
+        <article>
+          <span>Winning signal</span>
+          <strong>One memory becomes a place</strong>
+          <p>Lead with the Space creating a relic, then prove that the same relic exists at an exact Minecraft coordinate.</p>
+        </article>
+        <article>
+          <span>Risk to cut</span>
+          <strong>Do not demo a feature buffet</strong>
+          <p>Skip auctions, large texture browsing, and abstract spirit talk unless a judge asks. They dilute the Minecraft proof.</p>
+        </article>
+        <article>
+          <span>Judge proof</span>
+          <strong>Walk the route</strong>
+          <p>Show <code>/dreamwall museum check</code>, the route compass, the engraved nameplate, the lectern passport, and the profile button.</p>
+        </article>
+        <article>
+          <span>Why this is hard to copy</span>
+          <strong>Space-to-server contract</strong>
+          <p>The packet, resource pack, server kit, exact XYZ formula, and visible install card all describe the same museum state.</p>
+        </article>
+      </div>
       <ol class="demo-script">
         <li><b>0:00</b> Type one relic and story caption in Place in Museum.</li>
         <li><b>0:25</b> Show the generated Minecraft-style model, hall, plot, and command.</li>
@@ -5541,6 +5563,28 @@ body, .gradio-container {
   font-weight: 900;
   margin-bottom: 8px;
 }
+.judge-scorecard {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.judge-scorecard article {
+  border-color: #775c30;
+  background:
+    linear-gradient(180deg, rgba(242, 193, 95, .12), transparent),
+    #191611;
+}
+.judge-scorecard strong {
+  display: block;
+  color: #ffe4a3;
+  margin-bottom: 6px;
+}
+.judge-scorecard code {
+  background: #ead7a6 !important;
+  color: #1b1308 !important;
+  padding: 2px 5px;
+}
 .demo-path ul,
 .demo-script {
   margin: 0;
@@ -6047,6 +6091,7 @@ textarea, input {
   .server-owner-card header,
   .server-owner-grid,
   .server-owner-columns,
+  .judge-scorecard,
   .demo-path-grid,
   .demo-command-strip,
   .demo-proof-note,
