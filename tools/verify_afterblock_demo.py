@@ -73,6 +73,8 @@ def server_zip_checks(path: Path) -> dict:
         "afterblock-demo-world.zip",
         "afterblock-demo-proof.json",
         "afterblock-server-profile.json",
+        "UPLOAD_TO_SERVER.md",
+        "install-afterblock-paper.sh",
         "server.properties.append",
         "README.md",
     ]
@@ -80,6 +82,8 @@ def server_zip_checks(path: Path) -> dict:
         config = zf.read("plugins/DreamWall/config.yml").decode("utf-8")
         demo_proof = json.loads(zf.read("afterblock-demo-proof.json").decode("utf-8"))
         server_profile = json.loads(zf.read("afterblock-server-profile.json").decode("utf-8"))
+        upload_guide = zf.read("UPLOAD_TO_SERVER.md").decode("utf-8")
+        install_helper = zf.read("install-afterblock-paper.sh").decode("utf-8")
     return {
         "file": path.name,
         "required_files_present": {name: name in names for name in required},
@@ -108,7 +112,24 @@ def server_zip_checks(path: Path) -> dict:
             ),
             "upload_map": len(server_profile.get("upload_map", [])) >= 4,
             "museum_check": "/dreamwall museum check" in server_profile.get("verification_commands", []),
+            "helper_files": set(server_profile.get("helper_files", []))
+            >= {"UPLOAD_TO_SERVER.md", "install-afterblock-paper.sh"},
             "no_password": "password" not in json.dumps(server_profile).lower().replace("no password", ""),
+        },
+        "upload_helper_contract": {
+            "script_has_sftp_env": "AFTERBLOCK_SFTP_HOST" in install_helper
+            and "AFTERBLOCK_SFTP_USER" in install_helper,
+            "script_runs_sftp": "sftp -P" in install_helper,
+            "script_has_verify_commands": "/dreamwall museum check" in install_helper
+            and "/dreamwall import here" in install_helper,
+            "script_no_private_endpoint": not any(
+                secret in install_helper.lower()
+                for secret in ["password", "gmail", "itsarnav", "uk144"]
+            ),
+            "guide_has_upload_map": "Upload Map" in upload_guide
+            and "plugins/DreamWall/config.yml" in upload_guide,
+            "guide_has_minecraft_commands": "/dreamwall museum build" in upload_guide
+            and "/dreamwall import here" in upload_guide,
         },
     }
 
@@ -162,6 +183,8 @@ def main() -> int:
             "has_verify_commands": "/dreamwall museum check" in server_bundle[2]
             and "/dreamwall import here" in server_bundle[2],
             "mentions_profile_json": "afterblock-server-profile.json" in server_bundle[2],
+            "mentions_upload_helper": "UPLOAD_TO_SERVER.md" in server_bundle[2]
+            and "install-afterblock-paper.sh" in server_bundle[2],
         },
         "demo_path_contract": {
             "has_judge_scorecard": "judge-scorecard" in demo_path,
@@ -223,6 +246,7 @@ def main() -> int:
             proof["server_config_ui_contract"]["has_upload_map"],
             proof["server_config_ui_contract"]["has_verify_commands"],
             proof["server_config_ui_contract"]["mentions_profile_json"],
+            proof["server_config_ui_contract"]["mentions_upload_helper"],
             proof["demo_path_contract"]["has_judge_scorecard"],
             proof["demo_path_contract"]["has_winning_signal"],
             proof["demo_path_contract"]["cuts_feature_buffet"],
@@ -239,6 +263,7 @@ def main() -> int:
             all(proof["per_relic_server_zip"]["config_contains"].values()),
             all(proof["per_relic_server_zip"]["demo_proof_contract"].values()),
             all(proof["per_relic_server_zip"]["server_profile_contract"].values()),
+            all(proof["per_relic_server_zip"]["upload_helper_contract"].values()),
         ]
     )
 

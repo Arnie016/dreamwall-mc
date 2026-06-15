@@ -28,12 +28,15 @@ AfterBlockMuseum.zip
 afterblock-demo-world.zip
 afterblock-demo-proof.json
 afterblock-server-profile.json
+UPLOAD_TO_SERVER.md
+install-afterblock-paper.sh
 server.properties.append
 README.md
 ```
 
 In that tab, set the default import prompt, story, and visitor signature before downloading the ZIP if `/dreamwall import` should place a specific demo relic. The Space renders a server-owner install card from those values before the download.
-The `afterblock-server-profile.json` file is the non-secret install card for a server owner: configured Space URL, world, pack, default relic, upload map, first-run commands, and verification commands.
+The `afterblock-server-profile.json` file is the non-secret install card for a server owner: configured Space URL, world, pack, default relic, upload map, first-run commands, verification commands, and helper file names.
+The generated `UPLOAD_TO_SERVER.md` explains the public upload map, while `install-afterblock-paper.sh` prints the map by default and only runs an SFTP batch when `AFTERBLOCK_SFTP_HOST` and `AFTERBLOCK_SFTP_USER` are supplied.
 
 Current hashes from the verified local bundle:
 

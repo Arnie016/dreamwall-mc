@@ -1427,6 +1427,7 @@ def server_config_kit_text(
             "Resource pack: resource-pack/AfterBlockMuseum.zip",
             "Prebuilt world: server-kit/afterblock-demo-world.zip",
             "ZIP metadata: afterblock-server-profile.json and afterblock-demo-proof.json",
+            "Upload helper: UPLOAD_TO_SERVER.md and install-afterblock-paper.sh",
         ]
     )
 
@@ -1588,6 +1589,10 @@ def server_owner_profile_manifest(
             "/dreamwall museum check",
             "/dreamwall import here",
         ],
+        "helper_files": [
+            "UPLOAD_TO_SERVER.md",
+            "install-afterblock-paper.sh",
+        ],
         "coordinate_contract": {
             "world": clean_gallery_world,
             "origin": {"x": GALLERY_ORIGIN_X, "y": GALLERY_ORIGIN_Y, "z": GALLERY_ORIGIN_Z},
@@ -1678,9 +1683,169 @@ def server_owner_install_card_html(
           <div class="server-owner-command-strip">{verify}</div>
         </div>
       </div>
-      <p class="server-owner-note">Download the complete Paper server kit ZIP below. It includes this card as <code>afterblock-server-profile.json</code>; it does not contain any server panel or SFTP secret.</p>
+      <p class="server-owner-note">Download the complete Paper server kit ZIP below. It includes this card as <code>afterblock-server-profile.json</code>, plus <code>UPLOAD_TO_SERVER.md</code> and <code>install-afterblock-paper.sh</code>; it does not contain any server panel or SFTP secret.</p>
     </section>
     """
+
+
+def server_upload_guide_md(
+    clean_space_url: str,
+    clean_pack_url: str,
+    clean_pack_sha1: str,
+    clean_gallery_world: str,
+) -> str:
+    return f"""# Upload AfterBlock to a Paper Server
+
+This public kit is safe to share. It contains the Paper plugin, config, resource pack, demo proof files, and a helper script, but no server secret.
+
+## Upload Map
+
+```text
+plugins/dreamwall-paper-bridge-0.1.0.jar -> plugins/dreamwall-paper-bridge-0.1.0.jar
+plugins/DreamWall/config.yml -> plugins/DreamWall/config.yml
+AfterBlockMuseum.zip -> AfterBlockMuseum.zip
+afterblock-demo-world.zip -> afterblock-demo-world.zip
+server.properties.append -> optional server.properties reference
+```
+
+The resource pack can also stay hosted here:
+
+```text
+{clean_pack_url}
+sha1={clean_pack_sha1}
+```
+
+## File Manager Path
+
+If your host has a web file manager, upload the files above, restart Paper, then run the Minecraft commands below as an op player.
+
+## SFTP Helper
+
+From this ZIP folder, run:
+
+```bash
+AFTERBLOCK_SFTP_HOST="your-sftp-host" \\
+AFTERBLOCK_SFTP_PORT="2222" \\
+AFTERBLOCK_SFTP_USER="your-sftp-user" \\
+sh install-afterblock-paper.sh
+```
+
+`AFTERBLOCK_SERVER_ROOT` is optional and defaults to `.`.
+
+## Minecraft First Run
+
+```text
+/dreamwall pack
+/dreamwall museum build
+/dreamwall museum check
+/dreamwall import
+```
+
+Fast nearby proof:
+
+```text
+/dreamwall import here
+```
+
+Expected proof in `{clean_gallery_world}`:
+
+```text
+144 plot pads
+YOU ARE HERE beacon
+route compass from entry to the generated plot
+engraved nameplate, passport lectern, profile button, and CustomModelData item
+```
+
+Space endpoint:
+
+```text
+{clean_space_url}/gradio_api/call/quick_curate
+```
+"""
+
+
+def server_upload_helper_sh() -> str:
+    return """#!/usr/bin/env sh
+set -eu
+
+ROOT="${AFTERBLOCK_SERVER_ROOT:-.}"
+HOST="${AFTERBLOCK_SFTP_HOST:-}"
+PORT="${AFTERBLOCK_SFTP_PORT:-22}"
+USER_NAME="${AFTERBLOCK_SFTP_USER:-}"
+
+required_files="
+plugins/dreamwall-paper-bridge-0.1.0.jar
+plugins/DreamWall/config.yml
+AfterBlockMuseum.zip
+afterblock-demo-world.zip
+afterblock-demo-proof.json
+afterblock-server-profile.json
+server.properties.append
+"
+
+echo "AfterBlock Paper server kit"
+echo
+
+missing=0
+for file in $required_files; do
+  if [ ! -e "$file" ]; then
+    echo "Missing: $file"
+    missing=1
+  fi
+done
+
+if [ "$missing" -ne 0 ]; then
+  echo
+  echo "Run this script from the unzipped afterblock-paper-server-kit folder."
+  exit 1
+fi
+
+cat <<'MAP'
+Upload map:
+  plugins/dreamwall-paper-bridge-0.1.0.jar -> plugins/dreamwall-paper-bridge-0.1.0.jar
+  plugins/DreamWall/config.yml -> plugins/DreamWall/config.yml
+  AfterBlockMuseum.zip -> AfterBlockMuseum.zip
+  afterblock-demo-world.zip -> afterblock-demo-world.zip
+
+After restart, run in Minecraft:
+  /dreamwall pack
+  /dreamwall museum build
+  /dreamwall museum check
+  /dreamwall import
+  /dreamwall import here
+MAP
+
+if [ -z "$HOST" ] || [ -z "$USER_NAME" ]; then
+  cat <<'ENV'
+
+No SFTP target was provided, so nothing was uploaded.
+To run the guided upload, set AFTERBLOCK_SFTP_HOST and AFTERBLOCK_SFTP_USER:
+
+  AFTERBLOCK_SFTP_HOST="your-sftp-host" AFTERBLOCK_SFTP_PORT="2222" AFTERBLOCK_SFTP_USER="your-sftp-user" sh install-afterblock-paper.sh
+
+ENV
+  exit 0
+fi
+
+batch_file="${TMPDIR:-/tmp}/afterblock-sftp-batch.$$"
+trap 'rm -f "$batch_file"' EXIT
+
+cat > "$batch_file" <<EOF
+-mkdir ${ROOT}/plugins
+-mkdir ${ROOT}/plugins/DreamWall
+put plugins/dreamwall-paper-bridge-0.1.0.jar ${ROOT}/plugins/dreamwall-paper-bridge-0.1.0.jar
+put plugins/DreamWall/config.yml ${ROOT}/plugins/DreamWall/config.yml
+put AfterBlockMuseum.zip ${ROOT}/AfterBlockMuseum.zip
+put afterblock-demo-world.zip ${ROOT}/afterblock-demo-world.zip
+put afterblock-demo-proof.json ${ROOT}/afterblock-demo-proof.json
+put afterblock-server-profile.json ${ROOT}/afterblock-server-profile.json
+put server.properties.append ${ROOT}/server.properties.append
+EOF
+
+echo
+echo "Opening SFTP batch for $USER_NAME@$HOST:$PORT"
+sftp -P "$PORT" -b "$batch_file" "$USER_NAME@$HOST"
+"""
 
 
 def server_config_zip(
@@ -1786,13 +1951,20 @@ AfterBlockMuseum.zip
 afterblock-demo-world.zip
 afterblock-demo-proof.json
 afterblock-server-profile.json
+UPLOAD_TO_SERVER.md
+install-afterblock-paper.sh
 server.properties.append
 README.md
 ```
 
 ## Server Owner Profile
 
-`afterblock-server-profile.json` is the shareable install card for a server owner. It includes the configured Space URL, world, resource pack, default relic, upload map, first-run commands, and verification commands without storing any panel or SFTP password.
+`afterblock-server-profile.json` is the shareable install card for a server owner. It includes the configured Space URL, world, resource pack, default relic, upload map, first-run commands, verification commands, and helper file names without storing any panel or SFTP secret.
+
+## Upload Helper
+
+`UPLOAD_TO_SERVER.md` gives the file-manager path and the exact first-run Minecraft commands.
+`install-afterblock-paper.sh` can create and run an SFTP batch when `AFTERBLOCK_SFTP_HOST` and `AFTERBLOCK_SFTP_USER` are set; otherwise it only prints the upload map.
 
 ## Demo Proof File
 
@@ -1816,6 +1988,16 @@ resource-pack-sha1={clean_pack_sha1}
         zf.writestr("plugins/DreamWall/config.yml", config)
         zf.writestr("README.md", readme)
         zf.writestr("server.properties.append", server_properties)
+        zf.writestr(
+            "UPLOAD_TO_SERVER.md",
+            server_upload_guide_md(
+                clean_space_url,
+                clean_pack_url,
+                clean_pack_sha1,
+                clean_gallery_world,
+            ),
+        )
+        zf.writestr("install-afterblock-paper.sh", server_upload_helper_sh())
         zf.writestr("afterblock-demo-proof.json", json.dumps(proof_manifest, indent=2) + "\n")
         zf.writestr("afterblock-server-profile.json", json.dumps(owner_profile, indent=2) + "\n")
         if os.path.exists(PAPER_PLUGIN_JAR_PATH):
