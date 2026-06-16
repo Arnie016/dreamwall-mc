@@ -36,8 +36,8 @@ AfterBlock Museum is a Minecraft-native memory museum for the Build Small Hackat
 ## Submission Metadata
 
 - **Relevant tags:** `minecraft`, `gradio`, `small-models`, `build-small-hackathon`, `thousand-token-wood`, `openai-codex`, `tiny-titan`, `off-brand`, `best-demo`, `field-notes`, `sharing-is-caring`, `community-choice`
-- **Demo video recording:** TODO paste final recording URL after capturing the three-minute Space-to-Minecraft proof.
-- **Social media link:** https://huggingface.co/Wildstash
+- **Demo video recording:** https://www.youtube.com/watch?v=3Lmuy-rJ588
+- **Social media link:** [https://huggingface.co/Wildstash](https://x.com/bitepdf/status/2066671156393128099?s=20)
 - **Team HF usernames:** @Wildstash
 
 Visitors scan a relic, memory, animal spirit, or prompted painting. The app assigns a museum hall, computes a curation score, awakens a tiny artifact spirit, prints a shareable passport card, and emits a `dreamwall.museum.v1` packet for the Minecraft server.
